@@ -41,7 +41,7 @@ public abstract class Match {
 
     @Override public String toString() {
         return String
-                .format("Match { %s - %s %s result - %s }", homeTeamName, awayTeamName, DATE_FORMAT.format(startDate),
+                .format("Match { [%s] %s - %s result - %s }", DATE_FORMAT.format(startDate), homeTeamName, awayTeamName,
                         result);
     }
 }

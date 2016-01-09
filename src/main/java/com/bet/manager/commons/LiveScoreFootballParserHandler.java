@@ -58,9 +58,9 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
             throw new IllegalArgumentException("Start time cannot be null or empty");
         }
 
-        if (homeTeam.equals(awayTeam)) {
-            throw new IllegalStateException("Home team '" + homeTeam + "' cannot be the same as away team");
-        }
+//        if (homeTeam.equals(awayTeam)) {
+//            throw new IllegalStateException("Home team '" + homeTeam + "' cannot be the same as away team");
+//        }
 
         Date finalDate;
         String finalDateString = "";
