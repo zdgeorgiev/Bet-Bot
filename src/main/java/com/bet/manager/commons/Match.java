@@ -40,11 +40,8 @@ public abstract class Match {
     }
 
     @Override public String toString() {
-        return "Match{" +
-                "homeTeamName='" + homeTeamName + '\'' +
-                ", awayTeamName='" + awayTeamName + '\'' +
-                ", startDate=" + DATE_FORMAT.format(startDate) +
-                ", result='" + result + '\'' +
-                '}';
+        return String
+                .format("Match { %s - %s %s result - %s }", homeTeamName, awayTeamName, DATE_FORMAT.format(startDate),
+                        result);
     }
 }

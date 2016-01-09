@@ -29,9 +29,9 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
     private static final Calendar cal = Calendar.getInstance();
 
     @Override
-    public Match parse(String matchAsHtmlString, String startingDate) {
+    public Match parse(String matchHtml, String startingDate) {
 
-        Element doc = Jsoup.parse(matchAsHtmlString);
+        Element doc = Jsoup.parse(matchHtml);
 
         String homeTeam = doc.select(HOME_TEAM_DIV_SELECTOR).first().text();
         String awayTeam = doc.select(AWAY_TEAM_DIV_SELECTOR).first().text();
