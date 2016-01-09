@@ -23,6 +23,7 @@ local.properties
 # JIdea specific git ignore
 *.iml
 .idea/
+.idea/workspace.xml
 
 
 # Filesystem tmp files
