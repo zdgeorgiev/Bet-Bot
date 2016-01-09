@@ -1,5 +1,7 @@
 package com.bet.manager.commons;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class Match {
@@ -8,6 +10,8 @@ public abstract class Match {
     private String awayTeamName;
     private Date startDate;
     private String result;
+
+    private final static DateFormat DATE_FORMAT = new SimpleDateFormat("MMMMM d YYYY HH:mm");
 
     public Match(String homeTeamName, String awayTeamName, Date startDate) {
         this.homeTeamName = homeTeamName;
@@ -39,7 +43,7 @@ public abstract class Match {
         return "Match{" +
                 "homeTeamName='" + homeTeamName + '\'' +
                 ", awayTeamName='" + awayTeamName + '\'' +
-                ", startDate=" + startDate +
+                ", startDate=" + DATE_FORMAT.format(startDate) +
                 ", result='" + result + '\'' +
                 '}';
     }

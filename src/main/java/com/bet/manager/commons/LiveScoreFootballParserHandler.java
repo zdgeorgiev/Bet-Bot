@@ -8,20 +8,28 @@ import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class LiveScoreFootballParserHandler implements IParserHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(LiveScoreFootballParserHandler.class);
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy at hh:mm");
-
-    private static final String HOME_TEAM_DIV_SELECTOR = "div.ply tright name";
-    private static final String AWAY_TEAM_SELECTOR = "div.ply name";
+    private static final String HOME_TEAM_DIV_SELECTOR = "div.ply.tright.name";
+    private static final String AWAY_TEAM_SELECTOR = "div.ply.name";
     private static final String START_TIME_SELECTOR = "div.min";
 
+    private final static DateFormat DATE_FORMAT = new SimpleDateFormat("MMMMM d yyyy HH:mm");
+
+    static {
+        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GTM"));
+    }
+
+    private static final Calendar cal = Calendar.getInstance();
+
     @Override
-    public Match parse(String matchAsHtmlString, Date startingDate) {
+    public Match parse(String matchAsHtmlString, String startingDate) {
 
         Element doc = Jsoup.parse(matchAsHtmlString);
 
@@ -29,16 +37,19 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
         String awayTeam = doc.select(AWAY_TEAM_SELECTOR).first().text();
         String startTime = doc.select(START_TIME_SELECTOR).first().text();
 
-        String startDateString = startingDate.toString() + startTime;
+        String[] timeTokens = startTime.split(":");
+        Integer hours = Integer.parseInt(timeTokens[0]);
+        Integer minutes = Integer.parseInt(timeTokens[1]);
 
-        Date exatclyStartingDate = null;
+        Date finalDate;
+        String finalDateString = "";
         try {
-            exatclyStartingDate = DATE_FORMAT.parse(startDateString);
+            finalDateString = startingDate + " " + cal.get(Calendar.YEAR) + " " + hours + ":" + minutes;
+            finalDate = DATE_FORMAT.parse(finalDateString);
         } catch (ParseException e) {
-            LOG.error("Cannot parse date {}", startDateString);
-            e.printStackTrace();
+            throw new IllegalStateException("Cannot parse date - '" + finalDateString + "'");
         }
 
-        return new FootballMatch(homeTeam, awayTeam, exatclyStartingDate);
+        return new FootballMatch(homeTeam, awayTeam, finalDate);
     }
 }
