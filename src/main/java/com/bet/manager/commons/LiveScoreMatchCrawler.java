@@ -23,10 +23,10 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
 
     private final String HTML_BODY_OPEN_TAG = "<body";
     private final String HTML_BODY_CLOSE_TAG = "</body";
-    private final String HTML_TARGET_DIV_CONTENT_SELECTOR = "div.content";
+    private final String HTML_TARGET_CONTENT_DIV_SELECTOR = "div.content";
 
     private final String START_DATE_MATCHES_CLASS_NAME = "tright fs11";
-    private final String MATCH_ENTRY = "row-gray";
+    private final String MATCH_ENTRY_CLASS_NAME = "row-gray";
 
     @Override
     public List<Match> getMatches(String content, IParserHandler handler) {
@@ -34,7 +34,7 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
         Document doc = Jsoup.parse(content);
         List<Match> matches = new ArrayList<>();
 
-        Element contentDiv = doc.select(HTML_TARGET_DIV_CONTENT_SELECTOR).first();
+        Element contentDiv = doc.select(HTML_TARGET_CONTENT_DIV_SELECTOR).first();
 
         if (contentDiv == null) {
             throw new IllegalArgumentException("HTML content is invalid.");
@@ -46,7 +46,7 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
 
             if (div.className().equals(START_DATE_MATCHES_CLASS_NAME)) {
                 startDate = div.text();
-            } else if (div.className().contains(MATCH_ENTRY)) {
+            } else if (div.className().contains(MATCH_ENTRY_CLASS_NAME)) {
 
                 Match m = handler.parse(div.toString(), startDate);
 
