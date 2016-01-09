@@ -41,6 +41,7 @@
     <junit.version>4.10</junit.version>
     <commons-io.version>2.4</commons-io.version>
     <org.jsoup.version>1.8.3</org.jsoup.version>
+    <junit.version>4.12</junit.version>
   </properties>
 
   <dependencies>
@@ -78,7 +79,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${junit.version}</version>
     </dependency>
   </dependencies>
 
