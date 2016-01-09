@@ -2,6 +2,7 @@ package com.bet.manager.commons;
 
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
@@ -36,8 +37,12 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
 
         Element contentDiv = doc.select(HTML_TARGET_CONTENT_DIV_SELECTOR).first();
 
-        if (contentDiv == null) {
-            throw new IllegalArgumentException("HTML content is invalid.");
+        if (StringUtil.isBlank(content)) {
+            throw new IllegalArgumentException("HTML content is invalid");
+        }
+
+        if (handler == null) {
+            throw new IllegalArgumentException("Parser handler cannot be null");
         }
 
         String startDate = "";
@@ -51,7 +56,6 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
                 Match m = handler.parse(div.toString(), startDate);
 
                 matches.add(m);
-                LOG.info("Successfully created - {}", m);
             }
         }
 
@@ -66,6 +70,10 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
 
     @Override
     public String crawl(URL page) {
+
+        if (page == null) {
+            throw new IllegalArgumentException("URL page handler cannot be null");
+        }
 
         String content;
         try (InputStream is = new BufferedInputStream(page.openStream())) {

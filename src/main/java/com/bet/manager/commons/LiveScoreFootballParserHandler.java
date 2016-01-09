@@ -1,5 +1,6 @@
 package com.bet.manager.commons;
 
+import org.jsoup.helper.StringUtil;
 import org.slf4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -16,6 +17,8 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(LiveScoreFootballParserHandler.class);
 
+    private static final Calendar cal = Calendar.getInstance();
+
     private static final String HOME_TEAM_DIV_SELECTOR = "div.ply.tright.name";
     private static final String AWAY_TEAM_DIV_SELECTOR = "div.ply.name";
     private static final String START_TIME_DIV_SELECTOR = "div.min";
@@ -26,16 +29,38 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
         DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("GTM"));
     }
 
-    private static final Calendar cal = Calendar.getInstance();
-
     @Override
     public Match parse(String matchHtml, String startingDate) {
+
+        if (StringUtil.isBlank(matchHtml)) {
+            throw new IllegalArgumentException("Html containing the match cannot be null or empty");
+        }
+
+        if (StringUtil.isBlank(startingDate)) {
+            throw new IllegalArgumentException("Starting date cannot be null or empty");
+        }
 
         Element doc = Jsoup.parse(matchHtml);
 
         String homeTeam = doc.select(HOME_TEAM_DIV_SELECTOR).first().text();
         String awayTeam = doc.select(AWAY_TEAM_DIV_SELECTOR).first().text();
         String startTime = doc.select(START_TIME_DIV_SELECTOR).first().text();
+
+        if (StringUtil.isBlank(homeTeam)) {
+            throw new IllegalArgumentException("Home team name cannot be null or empty");
+        }
+
+        if (StringUtil.isBlank(awayTeam)) {
+            throw new IllegalArgumentException("Away team name cannot be null or empty");
+        }
+
+        if (StringUtil.isBlank(startTime)) {
+            throw new IllegalArgumentException("Start time cannot be null or empty");
+        }
+
+        if (homeTeam.equals(awayTeam)) {
+            throw new IllegalStateException("Home team '" + homeTeam + "' cannot be the same as away team");
+        }
 
         Date finalDate;
         String finalDateString = "";
@@ -46,6 +71,8 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
             throw new IllegalArgumentException("Cannot parse date - '" + finalDateString + "'");
         }
 
-        return new FootballMatch(homeTeam, awayTeam, finalDate);
+        Match m = new FootballMatch(homeTeam, awayTeam, finalDate);
+        LOG.info("Successfully parsed - {}", m);
+        return m;
     }
 }
