@@ -44,4 +44,27 @@ public abstract class Match {
                 .format("Match { [%s] %s - %s result - %s }", DATE_FORMAT.format(startDate), homeTeamName, awayTeamName,
                         result);
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        Match match = (Match) o;
+
+        if (!homeTeamName.equals(match.homeTeamName))
+            return false;
+        if (!awayTeamName.equals(match.awayTeamName))
+            return false;
+        return startDate.equals(match.startDate);
+
+    }
+
+    @Override public int hashCode() {
+        int result = homeTeamName.hashCode();
+        result = 31 * result + awayTeamName.hashCode();
+        result = 31 * result + startDate.hashCode();
+        return result;
+    }
 }

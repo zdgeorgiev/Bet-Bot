@@ -64,11 +64,6 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
     }
 
     @Override
-    public void scheduleForNextExecution(Date date) {
-        throw new NotImplementedException();
-    }
-
-    @Override
     public String crawl(URL page) {
 
         if (page == null) {
@@ -87,5 +82,10 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
 
         LOG.info("Successfully crawled url - {}", page.toString());
         return content.substring(bodyOpenTagIndex, bodyCloseTagIndex + HTML_BODY_CLOSE_TAG.length());
+    }
+
+    @Override
+    public void scheduleForNextExecution(Date date) {
+        throw new NotImplementedException();
     }
 }
