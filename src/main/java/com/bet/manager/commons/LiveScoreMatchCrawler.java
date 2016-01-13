@@ -29,8 +29,14 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
     private final String START_DATE_MATCHES_CLASS_NAME = "tright fs11";
     private final String MATCH_ENTRY_CLASS_NAME = "row-gray";
 
+    private IParserHandler parserHandler;
+
+    public LiveScoreMatchCrawler(IParserHandler parserHandler) {
+        this.parserHandler = parserHandler;
+    }
+
     @Override
-    public List<Match> getMatches(String content, IParserHandler handler) {
+    public List<Match> getMatches(String content) {
 
         Document doc = Jsoup.parse(content);
         List<Match> matches = new ArrayList<>();
@@ -41,10 +47,6 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
             throw new IllegalArgumentException("HTML content is invalid");
         }
 
-        if (handler == null) {
-            throw new IllegalArgumentException("Parser handler cannot be null");
-        }
-
         String startDate = "";
 
         for (Element div : contentDiv.getAllElements()) {
@@ -53,7 +55,7 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
                 startDate = div.text();
             } else if (div.className().contains(MATCH_ENTRY_CLASS_NAME)) {
 
-                Match m = handler.parse(div.toString(), startDate);
+                Match m = parserHandler.parse(div.toString(), startDate);
 
                 matches.add(m);
             }

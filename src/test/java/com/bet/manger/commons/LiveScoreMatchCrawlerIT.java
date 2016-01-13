@@ -21,7 +21,7 @@ public class LiveScoreMatchCrawlerIT {
 
     @BeforeClass
     public static void init() {
-        crawler = new LiveScoreMatchCrawler();
+        crawler = new LiveScoreMatchCrawler(new LiveScoreFootballParserHandler());
         format = new SimpleDateFormat("d MMMMM yyyy HH:mm");
         format.setTimeZone(TimeZone.getTimeZone("EET"));
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -31,7 +31,7 @@ public class LiveScoreMatchCrawlerIT {
     public void testWithFullContent() throws ParseException {
         String content = TestUtils.getResource("live-score-full-content.txt", LiveScoreMatchCrawler.class);
 
-        List<Match> actual = crawler.getMatches(content, new LiveScoreFootballParserHandler());
+        List<Match> actual = crawler.getMatches(content);
 
         List<Match> expected = new ArrayList<Match>() {
             {

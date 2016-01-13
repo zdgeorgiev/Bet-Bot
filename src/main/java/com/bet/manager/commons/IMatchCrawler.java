@@ -14,10 +14,9 @@ public interface IMatchCrawler {
      * Parse all matches from given content and store them in <class>List</class>
      *
      * @param content - html content containing the matches
-     * @param handler - handler is specific match parser
      * @return the collection from all parsed matches
      */
-    List<Match> getMatches(String content, IParserHandler handler);
+    List<Match> getMatches(String content);
 
     /**
      * Crawling a given URL page and return its content as string.
