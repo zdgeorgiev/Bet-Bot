@@ -21,7 +21,7 @@ public class LiveScoreMatchCrawlerIT {
 
     @BeforeClass
     public static void init() {
-        crawler = new LiveScoreMatchCrawler(new LiveScoreFootballParserHandler());
+        crawler = new LiveScoreMatchCrawler();
         format = new SimpleDateFormat("d MMMMM yyyy HH:mm");
         format.setTimeZone(TimeZone.getTimeZone("EET"));
         currentYear = Calendar.getInstance().get(Calendar.YEAR);

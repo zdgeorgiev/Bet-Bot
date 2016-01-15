@@ -1,8 +1,7 @@
 package com.bet.manger.commons;
 
 import com.bet.manager.commons.FootballMatch;
-import com.bet.manager.commons.IParserHandler;
-import com.bet.manager.commons.LiveScoreFootballParserHandler;
+import com.bet.manager.commons.LiveScoreFootballParser;
 import com.bet.manager.commons.Match;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -11,38 +10,37 @@ import org.junit.Test;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
 public class LiveScoreFootballParserHandlerTest {
 
-    private static IParserHandler handler;
+    private static LiveScoreFootballParser parser;
     private static DateFormat format;
 
     @BeforeClass
     public static void init() {
-        handler = new LiveScoreFootballParserHandler();
+        parser = new LiveScoreFootballParser();
         format = new SimpleDateFormat("d MMMMM yyyy HH:mm");
     }
 
     @Test
     public void testValidHtmlParsing() throws ParseException {
-        String content = TestUtils.getResource("livescore-match.txt", LiveScoreFootballParserHandler.class);
+        String content = TestUtils.getResource("livescore-match.txt", LiveScoreFootballParser.class);
 
         Match expected = new FootballMatch("Tottenham Hotspur", "Sunderland", format.parse("1 January 2016 14:45"));
-        Match actual = handler.parse(content, "January 1");
+        Match actual = parser.parse(content, "January 1");
 
         Assert.assertEquals(expected, actual);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testInvalidHtmlParsing() throws ParseException {
-        String content = TestUtils.getResource("livescore-same-teams.txt", LiveScoreFootballParserHandler.class);
-        handler.parse(content, "January 1");
+        String content = TestUtils.getResource("livescore-same-teams.txt", LiveScoreFootballParser.class);
+        parser.parse(content, "January 1");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidDate() throws ParseException {
-        String content = TestUtils.getResource("livescore-match.txt", LiveScoreFootballParserHandler.class);
-        handler.parse(content, "WTF");
+        String content = TestUtils.getResource("livescore-match.txt", LiveScoreFootballParser.class);
+        parser.parse(content, "WTF");
     }
 }

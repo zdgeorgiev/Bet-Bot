@@ -13,9 +13,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class LiveScoreFootballParserHandler implements IParserHandler {
+public class LiveScoreFootballParser {
 
-    private static final Logger LOG = LoggerFactory.getLogger(LiveScoreFootballParserHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LiveScoreFootballParser.class);
 
     private static final Calendar cal = Calendar.getInstance();
 
@@ -36,7 +36,6 @@ public class LiveScoreFootballParserHandler implements IParserHandler {
      *                     in specific date format [MMMMM d]
      * @return <class>Match</class> object
      */
-    @Override
     public Match parse(String matchHtml, String startingDate) {
 
         if (StringUtil.isBlank(matchHtml)) {

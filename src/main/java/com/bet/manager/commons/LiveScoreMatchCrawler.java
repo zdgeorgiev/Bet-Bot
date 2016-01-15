@@ -29,10 +29,10 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
     private final String START_DATE_MATCHES_CLASS_NAME = "tright fs11";
     private final String MATCH_ENTRY_CLASS_NAME = "row-gray";
 
-    private IParserHandler parserHandler;
+    private final LiveScoreFootballParser parser;
 
-    public LiveScoreMatchCrawler(IParserHandler parserHandler) {
-        this.parserHandler = parserHandler;
+    public LiveScoreMatchCrawler() {
+        this.parser = new LiveScoreFootballParser();
     }
 
     @Override
@@ -55,7 +55,7 @@ public class LiveScoreMatchCrawler implements IMatchCrawler {
                 startDate = div.text();
             } else if (div.className().contains(MATCH_ENTRY_CLASS_NAME)) {
 
-                Match m = parserHandler.parse(div.toString(), startDate);
+                Match m = parser.parse(div.toString(), startDate);
 
                 matches.add(m);
             }

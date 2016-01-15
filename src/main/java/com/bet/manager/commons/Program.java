@@ -13,8 +13,6 @@ public class Program {
         IMatchCrawler crawler = new LiveScoreMatchCrawler(parserHandler);
         String liveScoreContent = crawler.crawl(liveScoreURL);
 
-        for (Match m : crawler.getMatches(liveScoreContent)) {
-            System.out.println(m);
-        }
+        crawler.getMatches(liveScoreContent).stream().forEach((x) -> System.out.println(x));
     }
 }
