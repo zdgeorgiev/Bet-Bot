@@ -1,6 +1,5 @@
 package com.bet.manger.commons;
 
-import com.bet.manager.commons.LiveScoreFootballParserHandler;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.helper.StringUtil;
 
