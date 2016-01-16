@@ -14,15 +14,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class LiveScoreMatchCreatorIT {
+public class LiveScoreMatchParserIT {
 
-    private static IMatchParser crawler;
+    private static IMatchParser parser;
     private static DateFormat format;
     private static int currentYear;
 
     @BeforeClass
     public static void init() {
-        crawler = new LiveScoreMatchParser();
+        parser = new LiveScoreMatchParser();
         format = new SimpleDateFormat("d MMMMM yyyy HH:mm");
         format.setTimeZone(TimeZone.getTimeZone("EET"));
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -32,7 +32,7 @@ public class LiveScoreMatchCreatorIT {
     public void testWithFullContent() throws ParseException {
         String content = TestUtils.getResource("live-score-full-content.txt", LiveScoreMatchParser.class);
 
-        List<Match> actual = crawler.parseAll(content);
+        List<Match> actual = parser.parseAll(content);
 
         List<Match> expected = new ArrayList<Match>() {
             {

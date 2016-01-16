@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class LiveScoreMatchParserTest {
+public class LiveScoreMatchUtilsTest {
 
     private static LiveScoreMatchUtils parser;
     private static DateFormat format;

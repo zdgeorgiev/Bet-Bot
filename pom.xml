@@ -118,7 +118,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/zdgeorgiev/Bet-Bot.git</connection>
-    <tag>master</tag>
+    <tag>HEAD</tag>
   </scm>
 
 </project>

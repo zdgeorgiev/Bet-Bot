@@ -9,10 +9,10 @@ public class Program {
 
         URL liveScoreURL = new URL("http://www.livescore.com/soccer/england/premier-league/fixtures/7-days/");
 
-        IMatchParser crawler = new LiveScoreMatchParser();
+        IWebCrawler crawler = new LiveScoreCrawler();
+        IMatchParser parser = new LiveScoreMatchParser();
 
-        String liveScoreContent = new LiveScoreCrawler().crawl(liveScoreURL);
-
-        crawler.parseAll(liveScoreContent).stream().forEach((x) -> System.out.println(x));
+        String liveScoreContent = crawler.crawl(liveScoreURL);
+        parser.parseAll(liveScoreContent).stream().forEach((x) -> System.out.println(x));
     }
 }
