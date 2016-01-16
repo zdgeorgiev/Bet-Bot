@@ -1,9 +1,10 @@
-package com.bet.manger.commons;
+package com.bet.manger.commons.it;
 
 import com.bet.manager.commons.*;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.bet.manger.commons.TestUtils;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,15 +14,15 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-public class LiveScoreMatchCrawlerIT {
+public class LiveScoreMatchCreatorIT {
 
-    private static IMatchCrawler crawler;
+    private static IMatchParser crawler;
     private static DateFormat format;
     private static int currentYear;
 
     @BeforeClass
     public static void init() {
-        crawler = new LiveScoreMatchCrawler();
+        crawler = new LiveScoreMatchParser();
         format = new SimpleDateFormat("d MMMMM yyyy HH:mm");
         format.setTimeZone(TimeZone.getTimeZone("EET"));
         currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -29,9 +30,9 @@ public class LiveScoreMatchCrawlerIT {
 
     @Test
     public void testWithFullContent() throws ParseException {
-        String content = TestUtils.getResource("live-score-full-content.txt", LiveScoreMatchCrawler.class);
+        String content = TestUtils.getResource("live-score-full-content.txt", LiveScoreMatchParser.class);
 
-        List<Match> actual = crawler.getMatches(content);
+        List<Match> actual = crawler.parseAll(content);
 
         List<Match> expected = new ArrayList<Match>() {
             {
