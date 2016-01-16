@@ -1,7 +1,5 @@
 package com.bet.manager.commons;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class Match {
@@ -9,14 +7,13 @@ public abstract class Match {
     private String homeTeamName;
     private String awayTeamName;
     private Date startDate;
-    private String result;
+    private Result result;
 
-    private final static DateFormat DATE_FORMAT = new SimpleDateFormat("MMMMM d YYYY HH:mm");
-
-    public Match(String homeTeamName, String awayTeamName, Date startDate) {
+    public Match(String homeTeamName, String awayTeamName, Date startDate, Result result) {
         this.homeTeamName = homeTeamName;
         this.awayTeamName = awayTeamName;
         this.startDate = startDate;
+        this.result = result;
     }
 
     public String getHomeTeamName() {
@@ -27,12 +24,16 @@ public abstract class Match {
         return awayTeamName;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public String getResult() {
+        return result.getScore();
     }
 
-    public String getResult() {
-        return result;
+    public String getWinner() {
+        return this.result.getWinner();
+    }
+
+    public void setResult(String result) {
+        this.result.setScore(result);
     }
 
     public Date getStartDate() {
@@ -41,8 +42,11 @@ public abstract class Match {
 
     @Override public String toString() {
         return String
-                .format("Match { [%s] %s - %s result - %s }", DATE_FORMAT.format(startDate), homeTeamName, awayTeamName,
-                        result);
+                .format("Match { [%s] %s %s - %s }",
+                        DateFormats.LiVE_SCORE_MATCH_DATE_FORMAT.format(getStartDate()),
+                        getResult(),
+                        getHomeTeamName(),
+                        getAwayTeamName());
     }
 
     @Override public boolean equals(Object o) {

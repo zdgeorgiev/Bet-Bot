@@ -2,6 +2,7 @@ package com.bet.manager.commons;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class Program {
 
@@ -13,6 +14,7 @@ public class Program {
         IMatchParser parser = new LiveScoreMatchParser();
 
         String liveScoreContent = crawler.crawl(liveScoreURL);
-        parser.parseAll(liveScoreContent).stream().forEach((x) -> System.out.println(x));
+        List<Match> matches = parser.parseAll(liveScoreContent);
+        matches.stream().forEach((x) -> System.out.println(x));
     }
 }

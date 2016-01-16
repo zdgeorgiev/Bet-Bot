@@ -25,7 +25,7 @@ public class LiveScoreCrawler implements IWebCrawler {
 
     private void checkValidPage(URL page) {
         if (page == null) {
-            throw new IllegalArgumentException("URL page handler cannot be null");
+            throw new IllegalArgumentException("URL page cannot be null - '" + page.toString() + "'");
         }
     }
 
@@ -38,7 +38,7 @@ public class LiveScoreCrawler implements IWebCrawler {
 
         String pageBody = content.substring(bodyOpenTagIndex, bodyCloseTagIndex + HTML_BODY_CLOSE_TAG.length());
 
-        log.info("Successfully crawled url - {}", page.getPath());
+        log.info("Successfully crawled url - '{}'", page.toString());
         return pageBody;
     }
 
@@ -47,7 +47,7 @@ public class LiveScoreCrawler implements IWebCrawler {
         try (InputStream is = new BufferedInputStream(page.openStream())) {
             return IOUtils.toString(is, Charset.forName("UTF-8"));
         } catch (IOException e) {
-            throw new IllegalStateException("Cannot read url - " + page.getPath());
+            throw new IllegalStateException("Cannot read url - '" + page.toString() + "'");
         }
     }
 }

@@ -18,17 +18,15 @@ public class LiveScoreMatchParser implements IMatchParser {
     private final String START_DATE_MATCHES_CLASS_NAME = "tright fs11";
     private final String MATCH_ENTRY_CLASS_NAME = "row-gray";
 
-    private LiveScoreMatchUtils parser;
-
     public LiveScoreMatchParser() {
-        this.parser = new LiveScoreMatchUtils();
+
     }
 
     @Override
     public List<Match> parseAll(String content) {
 
         if (StringUtil.isBlank(content)) {
-            throw new IllegalArgumentException("HTML content is invalid");
+            throw new IllegalArgumentException("HTML containing the matches is invalid");
         }
 
         Element contentDiv = getContentDiv(content);
@@ -46,7 +44,7 @@ public class LiveScoreMatchParser implements IMatchParser {
             }
         }
 
-        log.info("Done.. Total matches crawled: {}", matches.size());
+        log.info("Done.. Total matches crawled: '{}'", matches.size());
         return matches;
     }
 
@@ -63,7 +61,7 @@ public class LiveScoreMatchParser implements IMatchParser {
     }
 
     private void addMatch(Element div, String startDate, List<Match> matches) {
-        Match m = parser.create(div, startDate);
+        Match m = LiveScoreMatchUtils.create(div, startDate);
 
         if (m != null) {
             matches.add(m);
