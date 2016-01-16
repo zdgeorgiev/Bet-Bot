@@ -6,13 +6,8 @@ public class FootballResult extends Result {
 
     private static final String SCORE_DELIMITER = "-";
 
-    public FootballResult(String firstTeam, String secondTeam, String score) {
-        super(firstTeam, secondTeam);
-        this.score = score;
-    }
-
-    public FootballResult(String homeTeam, String awayTeam) {
-        this(homeTeam, awayTeam, "");
+    public FootballResult(String firstTeam, String secondTeam) {
+        super(firstTeam, secondTeam, SCORE_DELIMITER);
     }
 
     @Override public String getScore() {
@@ -31,7 +26,7 @@ public class FootballResult extends Result {
             return ResultMessages.UNKNOWN_WINNER;
         }
 
-        String[] tokens = this.score.split(FootballResult.SCORE_DELIMITER);
+        String[] tokens = this.score.split(this.delimiter);
         Integer homeTeamGoals = Integer.parseInt(tokens[0]);
         Integer awayTeamGoals = Integer.parseInt(tokens[1]);
 

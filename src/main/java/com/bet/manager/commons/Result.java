@@ -17,9 +17,16 @@ public abstract class Result {
      */
     protected final String awayTeam;
 
-    public Result(String homeTeam, String awayTeam) {
+    /**
+     * delimiter that is used in the score
+     * example: 2-2 (delimiter is - )
+     */
+    protected final String delimiter;
+
+    public Result(String homeTeam, String awayTeam, String delimiter) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.delimiter = delimiter;
     }
 
     public void setScore(String score) {
