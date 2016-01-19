@@ -21,10 +21,6 @@ public class LiveScoreMatchUtils {
     private static final String TEAM_DIV_SELECTOR = "div.ply.name";
     private static final String START_TIME_DIV_SELECTOR = "div.min";
 
-    public LiveScoreMatchUtils() {
-
-    }
-
     /**
      * Return match created from div html for starting date only if
      * there is no errors occurred during the creation, else it will
@@ -49,8 +45,18 @@ public class LiveScoreMatchUtils {
             return null;
         }
 
-        Date startDate = addTimeToDate(date, startTime);
-        return createMatch(homeTeam, awayTeam, startDate);
+        Date startDate;
+
+        try {
+            startDate = addTimeToDate(date, startTime);
+        } catch (IllegalStateException e) {
+            log.error("Cannot add time ('{}') to date ('{}')", startTime, date);
+            return null;
+        }
+
+        Match m = new FootballMatch(homeTeam, awayTeam, startDate);
+        log.info("Successfully parsed - '{}'", m);
+        return m;
     }
 
     private static String getHomeTeam(Element div) {
@@ -115,7 +121,7 @@ public class LiveScoreMatchUtils {
         return true;
     }
 
-    private static Date addTimeToDate(String date, String time) {
+    private static Date addTimeToDate(String date, String time) throws IllegalStateException {
 
         Date finalDate;
         String finalDateString = "";
@@ -124,16 +130,9 @@ public class LiveScoreMatchUtils {
             finalDateString = String.format("%s %s %s", date, cal.get(Calendar.YEAR), time);
             finalDate = DateFormats.LiVE_SCORE_MATCH_DATE_FORMAT.parse(finalDateString);
         } catch (ParseException e) {
-            log.error("Cannot parse date - '" + finalDateString + "'");
-            throw new IllegalStateException();
+            throw new IllegalStateException(e);
         }
 
         return finalDate;
-    }
-
-    private static Match createMatch(String homeTeam, String awayTeam, Date startDate) {
-        Match m = new FootballMatch(homeTeam, awayTeam, startDate);
-        log.info("Successfully parsed - '{}'", m);
-        return m;
     }
 }

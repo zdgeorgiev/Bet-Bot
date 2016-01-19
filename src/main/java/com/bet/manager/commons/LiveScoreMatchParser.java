@@ -24,7 +24,7 @@ public class LiveScoreMatchParser implements IMatchParser {
     }
 
     @Override
-    public List<Match> parseAll(String content) {
+    public List<Match> parse(String content) {
 
         if (StringUtil.isBlank(content)) {
             throw new IllegalArgumentException("HTML containing the matches is invalid");
@@ -34,18 +34,25 @@ public class LiveScoreMatchParser implements IMatchParser {
         String startDate = "";
         List<Match> matches = new ArrayList<>();
 
+        int totalMatches = 0;
+
         for (Element div : contentDiv.getAllElements()) {
 
             if (isDateClass(div)) {
 
                 startDate = div.text();
             } else if (isMatchClass(div)) {
+                totalMatches++;
 
-                addMatch(div, startDate, matches);
+                Match m = LiveScoreMatchUtils.parse(div, startDate);
+
+                if (m != null) {
+                    matches.add(m);
+                }
             }
         }
 
-        log.info("Done.. Total matches crawled: {}", matches.size());
+        log.info("Matches Crawled: {}, Skipped : {}", matches.size(), totalMatches - matches.size());
         return matches;
     }
 
@@ -59,13 +66,5 @@ public class LiveScoreMatchParser implements IMatchParser {
 
     private boolean isMatchClass(Element div) {
         return div.className().contains(MATCH_ENTRY_CLASS_NAME);
-    }
-
-    private void addMatch(Element div, String startDate, List<Match> matches) {
-        Match m = LiveScoreMatchUtils.parse(div, startDate);
-
-        if (m != null) {
-            matches.add(m);
-        }
     }
 }

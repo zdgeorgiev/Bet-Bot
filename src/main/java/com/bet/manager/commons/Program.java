@@ -14,7 +14,7 @@ public class Program {
         IMatchParser parser = new LiveScoreMatchParser();
 
         String liveScoreContent = crawler.crawl(liveScoreURL);
-        List<Match> matches = parser.parseAll(liveScoreContent);
+        List<Match> matches = parser.parse(liveScoreContent);
         matches.stream().forEach((x) -> System.out.println(x));
     }
 }

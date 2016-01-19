@@ -26,7 +26,7 @@ public class LiveScoreMatchParserIT {
     public void testWithFullContent() throws ParseException {
         String content = ResourceUtils.getContent("live-score-full-content.txt", LiveScoreMatchParser.class);
 
-        List<Match> actual = parser.parseAll(content);
+        List<Match> actual = parser.parse(content);
 
         List<Match> expected = new ArrayList<Match>() {
             {
