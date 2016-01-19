@@ -1,5 +1,8 @@
-package com.bet.manager.commons;
+package com.bet.manager.utils;
 
+import com.bet.manager.commons.DateFormats;
+import com.bet.manager.commons.FootballMatch;
+import com.bet.manager.commons.Match;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
@@ -32,7 +35,7 @@ public class LiveScoreMatchUtils {
      *             in specific date format [MMMMM d]
      * @return <class>Match</class> object
      */
-    public static Match create(Element div, String date) {
+    public static Match parse(Element div, String date) {
 
         String homeTeam = getHomeTeam(div);
         String awayTeam = getAwayTeam(div);
@@ -121,7 +124,7 @@ public class LiveScoreMatchUtils {
             finalDateString = String.format("%s %s %s", date, cal.get(Calendar.YEAR), time);
             finalDate = DateFormats.LiVE_SCORE_MATCH_DATE_FORMAT.parse(finalDateString);
         } catch (ParseException e) {
-            log.error("Cannot create date - '" + finalDateString + "'");
+            log.error("Cannot parse date - '" + finalDateString + "'");
             throw new IllegalStateException();
         }
 

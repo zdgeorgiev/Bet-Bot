@@ -1,5 +1,6 @@
 package com.bet.manager.commons;
 
+import com.bet.manager.utils.LiveScoreMatchUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Element;
@@ -44,7 +45,7 @@ public class LiveScoreMatchParser implements IMatchParser {
             }
         }
 
-        log.info("Done.. Total matches crawled: '{}'", matches.size());
+        log.info("Done.. Total matches crawled: {}", matches.size());
         return matches;
     }
 
@@ -61,7 +62,7 @@ public class LiveScoreMatchParser implements IMatchParser {
     }
 
     private void addMatch(Element div, String startDate, List<Match> matches) {
-        Match m = LiveScoreMatchUtils.create(div, startDate);
+        Match m = LiveScoreMatchUtils.parse(div, startDate);
 
         if (m != null) {
             matches.add(m);

@@ -1,4 +1,4 @@
-package com.bet.manger.commons;
+package com.bet.manager.utils;
 
 import org.apache.commons.io.IOUtils;
 import org.jsoup.helper.StringUtil;
@@ -7,9 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-public class TestUtils {
+public class ResourceUtils {
 
-    public static String getResource(String path, Class c) {
+    public static String getContent(String path, Class c) {
 
         String content = "";
 

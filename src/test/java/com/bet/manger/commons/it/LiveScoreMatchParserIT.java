@@ -1,7 +1,7 @@
 package com.bet.manger.commons.it;
 
 import com.bet.manager.commons.*;
-import com.bet.manger.commons.TestUtils;
+import com.bet.manager.utils.ResourceUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -24,7 +24,7 @@ public class LiveScoreMatchParserIT {
 
     @Test
     public void testWithFullContent() throws ParseException {
-        String content = TestUtils.getResource("live-score-full-content.txt", LiveScoreMatchParser.class);
+        String content = ResourceUtils.getContent("live-score-full-content.txt", LiveScoreMatchParser.class);
 
         List<Match> actual = parser.parseAll(content);
 
