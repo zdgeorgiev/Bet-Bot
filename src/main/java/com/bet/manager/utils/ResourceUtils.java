@@ -9,20 +9,20 @@ import java.nio.charset.Charset;
 
 public class ResourceUtils {
 
-    public static String getContent(String path, Class c) {
+	public static String getContent(String path, Class c) {
 
-        String content = "";
+		String content;
 
-        try (InputStream is = c.getClassLoader().getResourceAsStream(path)) {
-            content = IOUtils.toString(is, Charset.forName("UTF-8"));
-        } catch (IOException e) {
-            throw new IllegalStateException("Cannot read the resource " + path);
-        }
+		try (InputStream is = c.getClassLoader().getResourceAsStream(path)) {
+			content = IOUtils.toString(is, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			throw new IllegalStateException("Cannot read the resource " + path);
+		}
 
-        if (StringUtil.isBlank(content)) {
-            throw new IllegalStateException("Resource " + path + " content cannot be empty.");
-        }
+		if (StringUtil.isBlank(content)) {
+			throw new IllegalStateException("Resource " + path + " content cannot be empty.");
+		}
 
-        return content;
-    }
+		return content;
+	}
 }
