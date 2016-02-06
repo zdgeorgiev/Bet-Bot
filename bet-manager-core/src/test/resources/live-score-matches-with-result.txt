@@ -1,0 +1,26 @@
+<div class="content">
+    <div class="cal-wrap">
+        <div class="cal clear"> <a href="/soccer/england/premier-league/" class="first col-4 ">Live Table</a> <a href="/soccer/england/premier-league/fixtures/7-days/" class="col-4 selected">Fixtures</a> <a href="/soccer/england/premier-league/results/30-days/" class="col-4 ">Results</a> </div>
+    </div>
+    <div class="row row-tall mt4"> <a href="/soccer/england/"><strong>England</strong></a> - <span>Premier League - Fixtures</span> </div>
+    <div class="cal row"> <a class="col-3 " href="/soccer/england/premier-league/fixtures/">Today</a> <a class="col-3 selected" href="/soccer/england/premier-league/fixtures/7-days/">Next 7 Days</a> <a class="col-3 " href="/soccer/england/premier-league/fixtures/30-days/">Next 30 Days</a> <a class="col-3 " href="/soccer/england/premier-league/fixtures/all/">All</a> </div>
+    <div class="row row-tall">
+        <div class="tright fs11"> January 12 </div>
+    </div>
+    <div data-esd="20160112214500" data-type="evt" data-eid="1988911" data-pid="1" class="row-gray even">
+        <div class="min"> 21:45 </div>
+        <div class="ply tright name"> AFC Bournemouth </div>
+        <div class="sco"> <a class="scorelink" href="/soccer/england/premier-league/afc-bournemouth-vs-west-ham-united/1-1988911/">3 - 3</a> </div>
+        <div class="ply name"> West Ham United </div>
+        <div data-type="star" class="star"><i class="ico ico-star"></i>
+        </div>
+    </div>
+    <div data-esd="20160112214500" data-type="evt" data-eid="1988910" data-pid="1" class="row-gray ">
+        <div class="min"> 21:45 </div>
+        <div class="ply tright name"> Aston Villa </div>
+        <div class="sco"> <a class="scorelink" href="/soccer/england/premier-league/aston-villa-vs-crystal-palace/1-1988910/">2 - 1</a> </div>
+        <div class="ply name"> Crystal Palace </div>
+        <div data-type="star" class="star"><i class="ico ico-star"></i>
+        </div>
+    </div>
+</div>

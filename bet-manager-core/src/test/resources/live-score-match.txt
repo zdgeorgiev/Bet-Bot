@@ -1,8 +1,0 @@
-<div data-esd="20160116144500" data-type="evt" data-eid="1988929" data-pid="1" class="row-gray even">
-    <div class="min"> 14:45 </div>
-    <div class="ply tright name"> Tottenham Hotspur </div>
-    <div class="sco"> ? - ? </div>
-    <div class="ply name"> Sunderland </div>
-    <div data-type="star" class="star"><i class="ico ico-star"></i>
-    </div>
-</div>

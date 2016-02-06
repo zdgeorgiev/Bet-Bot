@@ -1,6 +1,5 @@
 package com.bet.manager.model;
 
-import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.util.FootballResultBuilder;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -8,36 +7,40 @@ import org.testng.annotations.Test;
 
 public class FootballResultBuilderTest {
 
-	private static FootballResultBuilder matchResult;
+	private static FootballResultBuilder builder;
 
 	@BeforeClass
 	public void init() {
-		matchResult = new FootballResultBuilder().setHomeTeam("Arsenal").setAwayTeam("Liverpool");
+		builder = new FootballResultBuilder();
 	}
 
 	@Test
-	public void testGetCorrectWinner() {
-		FootballResult m = matchResult.setScore("2-1").build();
-		Assert.assertEquals(m.getWinner(), "Arsenal");
+	public void testGetCorrectWinnerCodeForHomeWin() {
+		FootballResult m = builder.setScore("2-1").build();
+		Assert.assertEquals(m.getWinnerCode(), 1);
 	}
 
 	@Test
-	public void testCorrectTieScore() {
-		FootballResult m = matchResult.setScore("2-2").build();
-		Assert.assertEquals(m.getScore(), "2-2");
+	public void testGetCorrectWinnerCodeForAwayWin() {
+		FootballResult m = builder.setScore("2-3").build();
+		Assert.assertEquals(m.getWinnerCode(), 2);
 	}
 
 	@Test
-	public void testUnknownScore() {
-		FootballResult m =
-				new FootballResultBuilder().setHomeTeam("Arsenal").setAwayTeam("Liverpool").build();
-		Assert.assertEquals(m.getScore(), ResultMessages.UNKNOWN_SCORE);
+	public void testCorrectWinnerCodeFromTieScore() {
+		FootballResult m = builder.setScore("2-2").build();
+		Assert.assertEquals(m.getWinnerCode(), 0);
 	}
 
 	@Test
-	public void testUnknownWinnerOutput() {
-		FootballResult m =
-				new FootballResultBuilder().setHomeTeam("Arsenal").setAwayTeam("Liverpool").build();
-		Assert.assertEquals(m.getWinner(), ResultMessages.UNKNOWN_WINNER);
+	public void testWithUnknownScore() {
+		FootballResult m = builder.setScore("").build();
+		Assert.assertEquals(m.getWinnerCode(), -1);
+	}
+
+	@Test
+	public void testWithUnknownScore2() {
+		FootballResult m = builder.setScore("? - ?").build();
+		Assert.assertEquals(m.getWinnerCode(), -1);
 	}
 }

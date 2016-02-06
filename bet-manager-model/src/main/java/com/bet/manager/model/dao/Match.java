@@ -26,6 +26,11 @@ public abstract class Match {
 	 */
 	private Result result;
 
+	/**
+	 * winner in the current match
+	 */
+	private String winner;
+
 	public String getHomeTeam() {
 		return homeTeam;
 	}
@@ -40,6 +45,10 @@ public abstract class Match {
 
 	public Result getResult() {
 		return result;
+	}
+
+	public String getWinner() {
+		return winner;
 	}
 
 	public void setHomeTeam(String homeTeam) {
@@ -58,11 +67,15 @@ public abstract class Match {
 		this.result = result;
 	}
 
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
+
 	@Override public String toString() {
 		return String
 				.format("Match { [%s] %s %s - %s }",
-						DateFormats.LiVE_SCORE_MATCH_DATE_FORMAT.format(getStartDate()),
-						getResult(),
+						DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.format(getStartDate()),
+						getResult().toString(),
 						getHomeTeam(),
 						getAwayTeam());
 	}

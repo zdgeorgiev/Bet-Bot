@@ -2,7 +2,7 @@ package com.bet.manager.model.util;
 
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.FootballResult;
-import org.jsoup.helper.StringUtil;
+import org.apache.commons.lang.StringUtils;
 
 public class FootballResultBuilder {
 
@@ -12,40 +12,10 @@ public class FootballResultBuilder {
 		result = new FootballResult();
 	}
 
-	public FootballResultBuilder setHomeTeam(String homeTeam) {
-
-		if (StringUtil.isBlank(homeTeam)) {
-			throw new IllegalArgumentException("Home team name cannot be empty");
-		}
-
-		result.setHomeTeam(homeTeam);
-		return this;
-	}
-
-	public FootballResultBuilder setAwayTeam(String awayTeam) {
-
-		if (StringUtil.isBlank(awayTeam)) {
-			throw new IllegalArgumentException("Away team name cannot be empty");
-		}
-
-		result.setAwayTeam(awayTeam);
-		return this;
-	}
-
-	public FootballResultBuilder setResultDelimiter(String scoreDelimiter) {
-
-		if (StringUtil.isBlank(scoreDelimiter)) {
-			throw new IllegalArgumentException("Score delimiter cannot be empty");
-		}
-
-		result.setScoreDelimiter(scoreDelimiter);
-		return this;
-	}
-
 	public FootballResultBuilder setScore(String score) {
 
-		if (StringUtil.isBlank(score)) {
-			result.setScore(ResultMessages.UNKNOWN_SCORE);
+		if (StringUtils.isBlank(score) || score.matches("d - d")) {
+			result.setScore(ResultMessages.UNKNOWN_WINNER);
 		} else {
 			result.setScore(score);
 		}
@@ -54,9 +24,6 @@ public class FootballResultBuilder {
 	}
 
 	public FootballResult build() {
-		setHomeTeam(result.getHomeTeam());
-		setAwayTeam(result.getAwayTeam());
-		setResultDelimiter(result.getScoreDelimiter());
 		setScore(result.getScore());
 		setWinner();
 		return result;
@@ -64,19 +31,19 @@ public class FootballResultBuilder {
 
 	private FootballResultBuilder setWinner() {
 
-		if (result.getScore().equals(ResultMessages.UNKNOWN_SCORE)) {
-			result.setWinner(ResultMessages.UNKNOWN_WINNER);
+		if (result.getScore().equals(ResultMessages.UNKNOWN_WINNER)) {
+			result.setWinnerCode(-1);
 		} else {
 			String[] tokens = result.getScore().split(result.getScoreDelimiter());
-			Integer homeTeamGoals = Integer.parseInt(tokens[0]);
-			Integer awayTeamGoals = Integer.parseInt(tokens[1]);
+			Integer homeTeamGoals = Integer.parseInt(tokens[0].trim());
+			Integer awayTeamGoals = Integer.parseInt(tokens[1].trim());
 
 			if (homeTeamGoals > awayTeamGoals) {
-				result.setWinner(result.getHomeTeam());
+				result.setWinnerCode(1);
 			} else if (homeTeamGoals < awayTeamGoals) {
-				result.setWinner(result.getAwayTeam());
+				result.setWinnerCode(2);
 			} else {
-				result.setWinner(ResultMessages.TIE_SCORE);
+				result.setWinnerCode(0);
 			}
 		}
 

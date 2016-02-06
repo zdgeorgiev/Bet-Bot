@@ -1,27 +1,31 @@
 package com.bet.manager.core;
 
-import com.bet.manager.core.util.LiveScoreMatchUtils;
+import com.bet.manager.commons.DateFormats;
 import com.bet.manager.model.dao.Match;
+import com.bet.manager.model.util.FootballMatchBuilder;
+import com.bet.manager.model.util.FootballResultBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LiveScoreMatchParser implements IMatchParser {
 
 	private static final Logger log = LoggerFactory.getLogger(LiveScoreMatchParser.class);
 
-	private final String HTML_TARGET_CONTENT_DIV_SELECTOR = "div.content";
-
-	private final String START_DATE_MATCHES_CLASS_NAME = "tright fs11";
-	private final String MATCH_ENTRY_CLASS_NAME = "row-gray";
+	private static final String HTML_TARGET_CONTENT_DIV_SELECTOR = "div.content";
+	private static final String TEAM_DIV_SELECTOR = "div.ply.name";
+	private static final String DATE_AND_TIME_DIV_ATTRIBUTE = "data-esd";
+	private static final String MATCH_ENTRY_CLASS_NAME = "row-gray";
+	private static final String MATCH_SCORE_CLASS_NAME = "div.sco";
 
 	public LiveScoreMatchParser() {
-
 	}
 
 	@Override
@@ -32,23 +36,21 @@ public class LiveScoreMatchParser implements IMatchParser {
 		}
 
 		Element contentDiv = getContentDiv(content);
-		String startDate = "";
 		List<Match> matches = new ArrayList<>();
 
 		int totalMatches = 0;
 
 		for (Element div : contentDiv.getAllElements()) {
 
-			if (isDateClass(div)) {
-
-				startDate = div.text();
-			} else if (isMatchClass(div)) {
+			if (isMatchEntry(div)) {
 				totalMatches++;
 
-				Match m = LiveScoreMatchUtils.parse(div, startDate);
-
-				if (m != null) {
+				try {
+					Match m = parseMatch(div);
 					matches.add(m);
+				} catch (Exception e) {
+					log.error("Failed to create match with div - {}",
+							div.toString().replace(System.lineSeparator(), ""), e);
 				}
 			}
 		}
@@ -61,11 +63,49 @@ public class LiveScoreMatchParser implements IMatchParser {
 		return Jsoup.parse(content).select(HTML_TARGET_CONTENT_DIV_SELECTOR).first();
 	}
 
-	private boolean isDateClass(Element div) {
-		return div.className().equals(START_DATE_MATCHES_CLASS_NAME);
+	private boolean isMatchEntry(Element div) {
+		return div.className().contains(MATCH_ENTRY_CLASS_NAME);
 	}
 
-	private boolean isMatchClass(Element div) {
-		return div.className().contains(MATCH_ENTRY_CLASS_NAME);
+	public Match parseMatch(Element div) throws ParseException {
+
+		String homeTeam = getHomeTeam(div);
+		String awayTeam = getAwayTeam(div);
+		Date startDate = getStartDateAndTime(div);
+		String score = getScore(div);
+
+		Match m = new FootballMatchBuilder()
+				.setHomeTeamName(homeTeam)
+				.setAwayTeamName(awayTeam)
+				.setStartDate(startDate)
+				.setResult(new FootballResultBuilder().setScore(score).build())
+				.build();
+
+		log.info("Successfully parsed - '{}'", m);
+		return m;
+	}
+
+	private String getHomeTeam(Element div) {
+		return getTeam(div, true);
+	}
+
+	private String getAwayTeam(Element div) {
+		return getTeam(div, false);
+	}
+
+	private String getTeam(Element div, boolean isHomeTeam) {
+		int index = isHomeTeam == true ? 0 : 1;
+		return div.select(TEAM_DIV_SELECTOR).get(index).text().trim();
+	}
+
+	private Date getStartDateAndTime(Element div) throws ParseException {
+		String dateAndTime = div.attr(DATE_AND_TIME_DIV_ATTRIBUTE);
+		Date date = DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse(dateAndTime);
+		return date;
+	}
+
+	private String getScore(Element div) {
+		String score = div.select(MATCH_SCORE_CLASS_NAME).first().text().trim();
+		return score;
 	}
 }

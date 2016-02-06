@@ -1,18 +1,18 @@
 package com.bet.manager.core;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 public class LiveScoreCrawler implements IWebCrawler {
 
 	private static final Logger log = LoggerFactory.getLogger(LiveScoreCrawler.class);
+	public static final String USER_AGENT = "Mozilla/5.0";
 
 	private final String HTML_BODY_OPEN_TAG = "<body";
 	private final String HTML_BODY_CLOSE_TAG = "</body";
@@ -44,10 +44,35 @@ public class LiveScoreCrawler implements IWebCrawler {
 
 	private String getContent(URL page) {
 
-		try (InputStream is = new BufferedInputStream(page.openStream())) {
-			return IOUtils.toString(is, Charset.forName("UTF-8"));
-		} catch (IOException e) {
-			throw new IllegalStateException("Cannot read url - '" + page.toString() + "'");
+		String content;
+
+		try {
+			HttpURLConnection con = (HttpURLConnection) page.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("User-Agent", USER_AGENT);
+
+			log.debug("Sending 'GET' request to URL : {}", page);
+
+			try (BufferedReader in = new BufferedReader(
+					new InputStreamReader(con.getInputStream()))) {
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+
+				while ((inputLine = in.readLine()) != null) {
+					response.append(inputLine);
+				}
+
+				content = response.toString();
+			}
+
+			if (StringUtils.isBlank(content)) {
+				throw new IllegalStateException("Content of the page '" + page.toString() + "' cannot be empty.");
+			}
+
+			return content;
+
+		} catch (Exception e) {
+			throw new IllegalStateException("Cannot get content of the page '" + page.toString() + "'.");
 		}
 	}
 }
