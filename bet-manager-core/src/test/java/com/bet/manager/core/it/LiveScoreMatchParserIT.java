@@ -56,7 +56,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithResults() {
 		String content =
-				ResourceUtils.getContent("live-score-full-content-with-results.txt", LiveScoreMatchParser.class);
+				ResourceUtils.getContent("live-score-matches-with-results.txt", LiveScoreMatchParser.class);
 
 		List<Match> actual = parser.parse(content);
 
@@ -73,6 +73,44 @@ public class LiveScoreMatchParserIT {
 		};
 
 		Assert.assertEquals(actual, expected);
+
+		Assert.assertEquals(actual.get(0).getWinner(), expected.get(0).getWinner());
+		Assert.assertEquals(actual.get(0).getResult().getScore(), expected.get(0).getResult().getScore());
+
+		Assert.assertEquals(actual.get(1).getWinner(), expected.get(1).getWinner());
+		Assert.assertEquals(actual.get(1).getResult().getScore(), expected.get(1).getResult().getScore());
+	}
+
+	@Test
+	public void testWithFullContentWithMatchesWithResultsAndSomeWithout() {
+		String content =
+				ResourceUtils.getContent("live-score-matches-with-results-and-without.txt", LiveScoreMatchParser.class);
+
+		List<Match> actual = parser.parse(content);
+
+		List<Match> expected = new ArrayList<Match>() {
+			{
+				Match m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
+				m.setResult(new FootballResultBuilder().setScore("3-3").build());
+				add(m);
+
+				add(createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45"));
+
+				Match m2 = createMatch("Levski", "CSKA", "January 12 2016 21:45");
+				m2.setResult(new FootballResultBuilder().setScore("2-3").build());
+				add(m2);
+			}
+		};
+
+		Assert.assertEquals(actual, expected);
+
+		Assert.assertEquals(actual.get(0).getWinner(), expected.get(0).getWinner());
+		Assert.assertEquals(actual.get(0).getResult().getScore(), expected.get(0).getResult().getScore());
+
+		Assert.assertEquals(actual.get(1).getWinner(), expected.get(1).getWinner());
+
+		Assert.assertEquals(actual.get(2).getWinner(), expected.get(2).getWinner());
+		Assert.assertEquals(actual.get(2).getResult().getScore(), expected.get(2).getResult().getScore());
 	}
 
 	@Test
