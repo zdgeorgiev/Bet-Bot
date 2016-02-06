@@ -14,10 +14,10 @@ public class FootballResultBuilder {
 
 	public FootballResultBuilder setScore(String score) {
 
-		if (StringUtils.isBlank(score) || score.matches("d - d")) {
-			result.setScore(ResultMessages.UNKNOWN_WINNER);
+		if (StringUtils.isBlank(score)) {
+			result.setScore(ResultMessages.UNKNOWN_SCORE);
 		} else {
-			result.setScore(score);
+			result.setScore(score.replace(" ", ""));
 		}
 
 		return this;
@@ -31,12 +31,12 @@ public class FootballResultBuilder {
 
 	private FootballResultBuilder setWinner() {
 
-		if (result.getScore().equals(ResultMessages.UNKNOWN_WINNER)) {
+		if (result.getScore().equals(ResultMessages.UNKNOWN_SCORE)) {
 			result.setWinnerCode(-1);
 		} else {
 			String[] tokens = result.getScore().split(result.getScoreDelimiter());
-			Integer homeTeamGoals = Integer.parseInt(tokens[0].trim());
-			Integer awayTeamGoals = Integer.parseInt(tokens[1].trim());
+			Integer homeTeamGoals = Integer.parseInt(tokens[0]);
+			Integer awayTeamGoals = Integer.parseInt(tokens[1]);
 
 			if (homeTeamGoals > awayTeamGoals) {
 				result.setWinnerCode(1);

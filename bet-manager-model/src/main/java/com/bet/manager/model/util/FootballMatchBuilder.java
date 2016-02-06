@@ -69,9 +69,8 @@ public class FootballMatchBuilder {
 	}
 
 	private void setWinner() {
-
 		if (match.getResult() == null) {
-			match.setWinner(ResultMessages.UNKNOWN_WINNER);
+			match.setWinner(ResultMessages.NO_WINNER);
 			return;
 		}
 
@@ -85,10 +84,10 @@ public class FootballMatchBuilder {
 			match.setWinner(match.getAwayTeam());
 			break;
 		case 0:
-			match.setWinner(ResultMessages.TIE);
+			match.setWinner(ResultMessages.NO_WINNER);
 			break;
 		case -1:
-			match.setWinner(ResultMessages.UNKNOWN_WINNER);
+			match.setWinner(ResultMessages.NO_WINNER);
 			break;
 		default:
 			throw new IllegalStateException("Invalid winner code " + winnerCode);

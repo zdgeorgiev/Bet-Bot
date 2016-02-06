@@ -1,6 +1,7 @@
 package com.bet.manager.model.dao;
 
 import com.bet.manager.commons.DateFormats;
+import com.bet.manager.commons.ResultMessages;
 
 import java.util.Date;
 
@@ -65,17 +66,44 @@ public abstract class Match {
 
 	public void setResult(Result result) {
 		this.result = result;
+		setWinner();
 	}
 
 	public void setWinner(String winner) {
 		this.winner = winner;
 	}
 
+	private void setWinner() {
+		if (getResult() == null) {
+			setWinner(ResultMessages.NO_WINNER);
+			return;
+		}
+
+		int winnerCode = getResult().getWinnerCode();
+
+		switch (winnerCode) {
+		case 1:
+			setWinner(getHomeTeam());
+			break;
+		case 2:
+			setWinner(getAwayTeam());
+			break;
+		case 0:
+			setWinner(ResultMessages.NO_WINNER);
+			break;
+		case -1:
+			setWinner(ResultMessages.NO_WINNER);
+			break;
+		default:
+			throw new IllegalStateException("Invalid winner code " + winnerCode);
+		}
+	}
+
 	@Override public String toString() {
 		return String
 				.format("Match { [%s] %s %s - %s }",
 						DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.format(getStartDate()),
-						getResult().toString(),
+						getResult() == null ? ResultMessages.UNKNOWN_SCORE : getResult().toString(),
 						getHomeTeam(),
 						getAwayTeam());
 	}

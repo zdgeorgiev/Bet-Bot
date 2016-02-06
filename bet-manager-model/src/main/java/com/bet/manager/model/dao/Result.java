@@ -47,6 +47,6 @@ public abstract class Result {
 
 	@Override
 	public String toString() {
-		return StringUtils.isBlank(score) ? ResultMessages.UNKNOWN_WINNER : score;
+		return StringUtils.isBlank(score) ? ResultMessages.UNKNOWN_SCORE : score;
 	}
 }
