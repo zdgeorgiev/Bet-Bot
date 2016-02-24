@@ -1,9 +1,8 @@
 package com.bet.manager.core;
 
 import com.bet.manager.commons.DateFormats;
-import com.bet.manager.model.dao.Match;
-import com.bet.manager.model.util.FootballMatchBuilder;
-import com.bet.manager.model.util.FootballResultBuilder;
+import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.util.FootballMatchBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Element;
@@ -78,7 +77,7 @@ public class LiveScoreMatchParser implements IMatchParser {
 				.setHomeTeamName(homeTeam)
 				.setAwayTeamName(awayTeam)
 				.setStartDate(startDate)
-				.setResult(new FootballResultBuilder().setScore(score).build())
+				.setResult(score)
 				.build();
 
 		log.info("Successfully parsed - '{}'", m);
@@ -94,18 +93,16 @@ public class LiveScoreMatchParser implements IMatchParser {
 	}
 
 	private String getTeam(Element div, boolean isHomeTeam) {
-		int index = isHomeTeam == true ? 0 : 1;
+		int index = isHomeTeam ? 0 : 1;
 		return div.select(TEAM_DIV_SELECTOR).get(index).text().trim();
 	}
 
 	private Date getStartDateAndTime(Element div) throws ParseException {
 		String dateAndTime = div.attr(DATE_AND_TIME_DIV_ATTRIBUTE);
-		Date date = DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse(dateAndTime);
-		return date;
+		return DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse(dateAndTime);
 	}
 
 	private String getScore(Element div) {
-		String score = div.select(MATCH_SCORE_CLASS_NAME).first().text().trim();
-		return score;
+		return div.select(MATCH_SCORE_CLASS_NAME).first().text().trim();
 	}
 }

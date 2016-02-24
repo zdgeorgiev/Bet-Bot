@@ -9,37 +9,20 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LiveScoreCrawler implements IWebCrawler {
+public class WebCrawler {
 
-	private static final Logger log = LoggerFactory.getLogger(LiveScoreCrawler.class);
-	public static final String USER_AGENT = "Mozilla/5.0";
+	private static final Logger log = LoggerFactory.getLogger(WebCrawler.class);
+	private static final String USER_AGENT = "Mozilla/5.0";
 
-	private final String HTML_BODY_OPEN_TAG = "<body";
-	private final String HTML_BODY_CLOSE_TAG = "</body";
-
-	@Override
 	public String crawl(URL page) {
 		checkValidPage(page);
-		return getContentBody(page);
+		return getContent(page);
 	}
 
 	private void checkValidPage(URL page) {
 		if (page == null) {
-			throw new IllegalArgumentException("URL page cannot be null - '" + page.toString() + "'");
+			throw new IllegalArgumentException("URL page cannot be null");
 		}
-	}
-
-	private String getContentBody(URL page) {
-
-		String content = getContent(page);
-
-		int bodyOpenTagIndex = content.indexOf(HTML_BODY_OPEN_TAG);
-		int bodyCloseTagIndex = content.indexOf(HTML_BODY_CLOSE_TAG);
-
-		String pageBody = content.substring(bodyOpenTagIndex, bodyCloseTagIndex + HTML_BODY_CLOSE_TAG.length());
-
-		log.info("Successfully crawled url - '{}'", page.toString());
-		return pageBody;
 	}
 
 	private String getContent(URL page) {
@@ -56,7 +39,7 @@ public class LiveScoreCrawler implements IWebCrawler {
 			try (BufferedReader in = new BufferedReader(
 					new InputStreamReader(con.getInputStream()))) {
 				String inputLine;
-				StringBuffer response = new StringBuffer();
+				StringBuilder response = new StringBuilder();
 
 				while ((inputLine = in.readLine()) != null) {
 					response.append(inputLine);
@@ -69,6 +52,7 @@ public class LiveScoreCrawler implements IWebCrawler {
 				throw new IllegalStateException("Content of the page '" + page.toString() + "' cannot be empty.");
 			}
 
+			log.info("Successfully crawled url - '{}'", page.toString());
 			return content;
 
 		} catch (Exception e) {

@@ -1,12 +1,11 @@
-package com.bet.manager.model;
+package com.bet.manager.models;
 
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.model.dao.Match;
-import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
-import com.bet.manager.model.exceptions.InvalidMatchDateException;
-import com.bet.manager.model.util.FootballMatchBuilder;
-import com.bet.manager.model.util.FootballResultBuilder;
+import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
+import com.bet.manager.models.exceptions.InvalidMatchDateException;
+import com.bet.manager.models.util.FootballMatchBuilder;
 import junit.framework.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -30,7 +29,7 @@ public class FootballMatchBuilderTest {
 
 		Match match = builder
 				.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20160101220000"))
-				.setResult(new FootballResultBuilder().setScore("2-1").build())
+				.setResult("2-1")
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());
@@ -45,14 +44,14 @@ public class FootballMatchBuilderTest {
 
 		Match match = builder
 				.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20160101220000"))
-				.setResult(new FootballResultBuilder().setScore("2-2").build())
+				.setResult("2-2")
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());
 		Assert.assertEquals("CSKA", match.getAwayTeam());
 		Assert.assertEquals("January 1 2016 22:00",
 				DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.format(match.getStartDate()));
-		Assert.assertEquals(ResultMessages.NO_WINNER, match.getWinner());
+		Assert.assertEquals(ResultMessages.TIE_RESULT, match.getWinner());
 	}
 
 	@Test
@@ -60,7 +59,7 @@ public class FootballMatchBuilderTest {
 
 		Match match = builder
 				.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20160101220000"))
-				.setResult(new FootballResultBuilder().setScore("? - ?").build())
+				.setResult("? - ?")
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());

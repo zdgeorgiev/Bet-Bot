@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchUtils.java" />
+    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="Huge refactoring. Replaced the SL4J logging instead of logback. Added Utils class for matches with equal operation. Removed the interface of ICrawler concept, because the crawler is very basic class and its the same for every case.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/FootballMatch.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/dao/Match.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/repositories/MatchRepository.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchUtils.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/IWebCrawler.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/resources/log4j.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballMatch.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballResult.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/repositories/MatchRepository.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchUtils.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballResultBuilder.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballResultBuilderTest.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreCrawler.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/WebCrawler.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EmptyTeamNameException.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/EmptyTeamNameException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EqualHomeAndAwayTeamException.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/EqualHomeAndAwayTeamException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/InvalidMatchDateException.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/InvalidMatchDateException.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchBuilder.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java" afterPath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java" afterPath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/IMatchParser.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/IMatchParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballResultBuilder.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballResultBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java" afterPath="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager.iml" afterPath="$PROJECT_DIR$/bet-manager.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
     </list>
     <ignored path="bet-manager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,11 +68,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Match.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/dao/Match.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="94" column="39" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#831#832#0" expanded="true" />
+                <element signature="e#851#852#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="LiveScoreMatchParserIT.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="88" column="51" selection-start-line="88" selection-start-column="51" selection-end-line="88" selection-end-column="51" />
+              <caret line="146" column="5" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -59,28 +94,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="live-score-matches-with-results-and-without.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-results-and-without.txt">
+      <file leaf-file-name="ResultMessages.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FootballMatchBuilderTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java">
+      <file leaf-file-name="DateFormats.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/DateFormats.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="89" column="52" selection-start-line="89" selection-start-column="43" selection-end-line="89" selection-end-column="52" />
+              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FootballResultBuilder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballResultBuilder.java">
+      <file leaf-file-name="ResourceUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
@@ -89,11 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Program.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Program.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.681388">
+              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -101,63 +136,52 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Result.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java">
+      <file leaf-file-name="logback.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-              <folding>
-                <element signature="e#809#810#0" expanded="true" />
-                <element signature="e#834#835#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FootballMatchUtils.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16901408">
-              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+            <state vertical-scroll-proportion="-12.666667">
+              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FootballResult.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballResult.java">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FootballMatchBuilder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state vertical-scroll-proportion="-21.148148">
+              <caret line="101" column="10" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
               <folding>
-                <element signature="e#539#540#0" expanded="true" />
-                <element signature="e#573#574#0" expanded="true" />
+                <marker date="1456356985472" expanded="true" signature="1553:1702" placeholder="..." />
+                <marker date="1456356985472" expanded="true" signature="1719:1865" placeholder="..." />
+                <marker date="1456356985472" expanded="true" signature="1882:2030" placeholder="..." />
+                <marker date="1456356985472" expanded="true" signature="2047:2188" placeholder="..." />
+                <marker date="1456356985472" expanded="true" signature="2205:2348" placeholder="..." />
+                <marker date="1456356985472" expanded="true" signature="2366:2509" placeholder="..." />
+                <marker date="1456356985472" expanded="true" signature="2526:2675" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Match.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java">
+      <file leaf-file-name="WebCrawler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/WebCrawler.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="105" column="33" selection-start-line="105" selection-start-column="24" selection-end-line="105" selection-end-column="33" />
+              <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LiveScoreMatchParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#708#709#0" expanded="true" />
-                <element signature="e#728#729#0" expanded="true" />
-                <element signature="e#1132#1133#0" expanded="true" />
-                <element signature="e#1159#1160#0" expanded="true" />
+                <element signature="e#2959#2960#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -184,12 +208,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/Match.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/ResultBuilder.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/Result.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/utils/LiveScoreMatchUtils.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/ResultMessages.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/core/model/it/LiveScoreMatchParserIT.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/model/unit/LiveScoreMatchUtilsTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/unit/LiveScoreMatchUtilsTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/core/model/dao/Result.java" />
@@ -203,7 +221,6 @@
         <option value="$PROJECT_DIR$/bet-manager-model/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-core/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchFactory.java" />
-        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/resources.properties" />
         <option value="$PROJECT_DIR$/log4j.properties" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/LiveScoreMatchUtils.java" />
@@ -213,28 +230,35 @@
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-match-with-invalid-month-date.txt" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-match-with-invalid-start-date.txt" />
         <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/DateFormats.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreCrawler.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EqualHomeAndAwayTeamException.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EmptyTeamNameException.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/InvalidMatchDateException.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballMatch.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-full-content-with-only-one-valid-match.txt" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballResult.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-full-content.txt" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-result.txt" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballResultBuilderTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballResultBuilder.java" />
-        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-results-and-without.txt" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EmptyMatchResultException.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballMatch.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java" />
+        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreCrawler.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/resources/log4j.properties" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml" />
+        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/dao/Match.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/WebCrawler.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java" />
       </list>
     </option>
   </component>
@@ -246,9 +270,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="-4" />
+    <option name="y" value="21" />
     <option name="width" value="1920" />
-    <option name="height" value="1084" />
+    <option name="height" value="1059" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -298,6 +322,8 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -356,7 +382,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -386,7 +412,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -416,7 +442,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -450,7 +476,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -484,7 +510,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -518,7 +544,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -537,24 +563,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="bet-manager-core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="target" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -732,10 +740,42 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager-commons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="commons" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -793,7 +833,7 @@
     <configuration default="false" name="FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
-          <option name="PATTERN" value="com.bet.manager.model.*" />
+          <option name="PATTERN" value="com.bet.manager.models.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -802,8 +842,74 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="SUITE_NAME" />
       <option name="PACKAGE_NAME" value="com.bet.manager.model" />
-      <option name="MAIN_CLASS_NAME" value="com.bet.manager.model.FootballMatchBuilderTest" />
+      <option name="MAIN_CLASS_NAME" value="com.bet.manager.models.FootballMatchBuilderTest" />
       <option name="METHOD_NAME" value="testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="false" name="FootballMatchBuilderTest" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.bet.manager.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="bet-manager" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" value="com.bet.manager.model" />
+      <option name="MAIN_CLASS_NAME" value="com.bet.manager.models.FootballMatchBuilderTest" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="false" name="LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" type="TestNG" factoryName="TestNG" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.bet.manager.core.it.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="bet-manager" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" value="com.bet.manager.core.it" />
+      <option name="MAIN_CLASS_NAME" value="com.bet.manager.core.it.LiveScoreMatchParserIT" />
+      <option name="METHOD_NAME" value="testWithFullContentWithMatchesWithResults" />
       <option name="GROUP_NAME" />
       <option name="TEST_OBJECT" value="METHOD" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -848,6 +954,17 @@
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="INTERPRETER_PATH" value="/bin/bash" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
       <module name="" />
       <envs />
       <method />
@@ -1095,15 +1212,19 @@
       </MavenSettings>
       <method />
     </configuration>
-    <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="Application.Program" />
-      <item index="1" class="java.lang.String" itemvalue="Maven.mvn integration-test debug" />
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Maven.mvn integration-test debug" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Program" />
       <item index="2" class="java.lang.String" itemvalue="TestNG.FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" />
+      <item index="3" class="java.lang.String" itemvalue="TestNG.FootballMatchBuilderTest" />
+      <item index="4" class="java.lang.String" itemvalue="TestNG.LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Application.Program" />
-        <item index="1" class="java.lang.String" itemvalue="TestNG.FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" />
+        <item index="1" class="java.lang.String" itemvalue="TestNG.LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" />
+        <item index="2" class="java.lang.String" itemvalue="TestNG.FootballMatchBuilderTest" />
+        <item index="3" class="java.lang.String" itemvalue="TestNG.FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" />
       </list>
     </recent_temporary>
   </component>
@@ -1202,29 +1323,35 @@
       <option name="project" value="LOCAL" />
       <updated>1454774248015</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Refactored">
+      <created>1454774561812</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1454774561812</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="FootballMatchBuilderTest_testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult - 2016.02.06 at 13h 52m 48s.xml">
-      <configuration name="FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" configurationId="TestNG" />
+    <history-entry file="FootballMatchBuilderTest - 2016.02.11 at 11h 31m 22s.xml">
+      <configuration name="FootballMatchBuilderTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="FootballMatchBuilderTest_testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult - 2016.02.06 at 13h 53m 31s.xml">
-      <configuration name="FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" configurationId="TestNG" />
+    <history-entry file="FootballMatchBuilderTest - 2016.02.11 at 11h 31m 44s.xml">
+      <configuration name="FootballMatchBuilderTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="FootballMatchBuilderTest_testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult - 2016.02.06 at 13h 55m 28s.xml">
-      <configuration name="FootballMatchBuilderTest.testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult" configurationId="TestNG" />
+    <history-entry file="FootballMatchBuilderTest - 2016.02.11 at 11h 32m 03s.xml">
+      <configuration name="FootballMatchBuilderTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="LiveScoreMatchParserIT_testWithFullContentWithMatchesWithResults - 2016.02.06 at 03h 00m 20s.xml">
-      <configuration name="LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" configurationId="TestNG" />
+    <history-entry file="FootballMatchBuilderTest - 2016.02.11 at 11h 32m 20s.xml">
+      <configuration name="FootballMatchBuilderTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="LiveScoreMatchParserIT_testWithFullContentWithMatchesWithResults - 2016.02.06 at 03h 02m 45s.xml">
-      <configuration name="LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" configurationId="TestNG" />
+    <history-entry file="FootballMatchBuilderTest - 2016.02.11 at 11h 32m 53s.xml">
+      <configuration name="FootballMatchBuilderTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="LiveScoreMatchParserIT_testWithFullContentWithMatchesWithResults - 2016.02.06 at 03h 05m 27s.xml">
-      <configuration name="LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" configurationId="TestNG" />
+    <history-entry file="FootballMatchBuilderTest - 2016.02.11 at 11h 51m 33s.xml">
+      <configuration name="FootballMatchBuilderTest" configurationId="TestNG" />
     </history-entry>
-    <history-entry file="LiveScoreMatchParserIT_testWithFullContentWithMatchesWithResults - 2016.02.06 at 03h 13m 39s.xml">
+    <history-entry file="LiveScoreMatchParserIT_testWithFullContentWithMatchesWithResults - 2016.02.11 at 11h 51m 40s.xml">
       <configuration name="LiveScoreMatchParserIT.testWithFullContentWithMatchesWithResults" configurationId="TestNG" />
     </history-entry>
     <history-entry file="LiveScoreMatchParserIT_testWithFullContentWithMatchesWithoutResults - 2016.02.06 at 03h 16m 49s.xml">
@@ -1238,11 +1365,11 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
+    <frame x="0" y="21" width="1920" height="1059" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1255,7 +1382,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32489878" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32489878" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1282,15 +1409,16 @@
     <MESSAGE value="Refactor" />
     <MESSAGE value="Implement result abstract class to hold the result for the match, and added tests for it + refactoring." />
     <MESSAGE value="Added delimiter as property and also to the constructor for each Result classes" />
-    <MESSAGE value="Refactored" />
     <MESSAGE value="refactored&#10;" />
     <MESSAGE value="huge refactoring and re-design for the skeleton of the app. Added new test cases and de-couple the result class from useless props. Added exceptions for match class&#10;" />
     <MESSAGE value="Refactored and added tests." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored and added tests." />
+    <MESSAGE value="Refactored" />
+    <MESSAGE value="Huge refactoring. Replaced the SL4J logging instead of logback. Added Utils class for matches with equal operation. Removed the interface of ICrawler concept, because the crawler is very basic class and its the same for every case." />
+    <option name="LAST_COMMIT_MESSAGE" value="Huge refactoring. Replaced the SL4J logging instead of logback. Added Utils class for matches with equal operation. Removed the interface of ICrawler concept, because the crawler is very basic class and its the same for every case." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="108" />
+      <option name="time" value="115" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1299,10 +1427,72 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java">
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <caret line="15" column="80" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/dao/Match.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#831#832#0" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/FootballMatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding>
+            <element signature="e#143#144#0" expanded="false" />
+            <element signature="e#178#179#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="59" selection-start-line="64" selection-start-column="59" selection-end-line="64" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="142" column="1" selection-start-line="142" selection-start-column="1" selection-end-line="142" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1313,18 +1503,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-log4j12/1.7.13/slf4j-log4j12-1.7.13.jar!/org/slf4j/impl/Log4jLoggerAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3494424">
-          <caret line="117" column="16" selection-start-line="117" selection-start-column="16" selection-end-line="117" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-api/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1332,7 +1514,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.37345132">
           <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1340,7 +1521,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0973451">
           <caret line="676" column="23" selection-start-line="676" selection-start-column="23" selection-end-line="676" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1348,7 +1528,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1364,7 +1543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2007435">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1372,7 +1550,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33228347">
           <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1380,14 +1557,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.0">
           <caret line="21" column="29" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/testng/testng/6.9.8/testng-6.9.8.jar!/org/testng/internal/MethodInvocationHelper.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3494424">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1400,27 +1569,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar!/org/slf4j/LoggerFactory.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.555555">
           <caret line="218" column="0" selection-start-line="218" selection-start-column="0" selection-end-line="218" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1428,111 +1580,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/helper/StringUtil.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.037037">
-          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/nodes/Node.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.0">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/Jsoup.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.888889">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="e#900#901#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/nodes/Element.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.888889">
-          <caret line="172" column="20" selection-start-line="172" selection-start-column="20" selection-end-line="172" selection-end-column="20" />
-          <folding>
-            <element signature="e#5089#5090#0" expanded="true" />
-            <element signature="e#5143#5144#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/select/Elements.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.888889">
-          <caret line="369" column="19" selection-start-line="369" selection-start-column="19" selection-end-line="369" selection-end-column="19" />
-          <folding>
-            <element signature="e#8576#8577#0" expanded="true" />
-            <element signature="e#8639#8640#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/DateFormats.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.666667">
-          <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/repositories/MatchRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EqualHomeAndAwayTeamException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-          <folding>
-            <element signature="e#167#168#0" expanded="false" />
-            <element signature="e#188#189#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/InvalidMatchDateException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-          <folding>
-            <element signature="e#159#160#0" expanded="false" />
-            <element signature="e#180#181#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/exceptions/EmptyTeamNameException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0375">
-          <caret line="2" column="60" selection-start-line="2" selection-start-column="60" selection-end-line="2" selection-end-column="60" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1540,6 +1587,110 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="46" column="48" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar!/org/slf4j/helpers/MessageFormatter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39542484">
+          <caret line="128" column="24" selection-start-line="128" selection-start-column="24" selection-end-line="128" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-full-content-with-no-results.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="46" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.4/commons-io-2.4.jar!/org/apache/commons/io/IOUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.888889">
+          <caret line="246" column="25" selection-start-line="246" selection-start-column="25" selection-end-line="246" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-results-and-without.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-results.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="25" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/FootballMatch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding>
+            <element signature="e#143#144#0" expanded="false" />
+            <element signature="e#178#179#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="39" selection-start-line="63" selection-start-column="39" selection-end-line="63" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="5" selection-start-line="89" selection-start-column="5" selection-end-line="89" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/repositories/MatchRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/InvalidMatchDateException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/EqualHomeAndAwayTeamException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/EmptyTeamNameException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1552,144 +1703,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.7.13/slf4j-api-1.7.13.jar!/org/slf4j/helpers/MessageFormatter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39542484">
-          <caret line="128" column="24" selection-start-line="128" selection-start-column="24" selection-end-line="128" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/IWebCrawler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-full-content-with-no-results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="46" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreCrawler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2834646">
-          <caret line="58" column="59" selection-start-line="58" selection-start-column="59" selection-end-line="58" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballMatch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/testng/testng/6.9.8/testng-6.9.8.jar!/org/testng/internal/Invoker.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09477124">
-          <caret line="455" column="0" selection-start-line="455" selection-start-column="0" selection-end-line="455" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/commons-io/commons-io/2.4/commons-io-2.4.jar!/org/apache/commons/io/IOUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.888889">
-          <caret line="246" column="25" selection-start-line="246" selection-start-column="25" selection-end-line="246" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballResultBuilderTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-results.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="43" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14084508">
-          <caret line="5" column="48" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
+    <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/DateFormats.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="51" selection-start-line="88" selection-start-column="51" selection-end-line="88" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#539#540#0" expanded="true" />
-            <element signature="e#573#574#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/FootballResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/live-score-matches-with-results-and-without.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="42" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/model/FootballMatchBuilderTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="52" selection-start-line="89" selection-start-column="43" selection-end-line="89" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballResultBuilder.java">
+    <entry file="file://$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ResourceUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
@@ -1697,46 +1727,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.148148">
+          <caret line="101" column="10" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
+          <folding>
+            <marker date="1456356985472" expanded="true" signature="1553:1702" placeholder="..." />
+            <marker date="1456356985472" expanded="true" signature="1719:1865" placeholder="..." />
+            <marker date="1456356985472" expanded="true" signature="1882:2030" placeholder="..." />
+            <marker date="1456356985472" expanded="true" signature="2047:2188" placeholder="..." />
+            <marker date="1456356985472" expanded="true" signature="2205:2348" placeholder="..." />
+            <marker date="1456356985472" expanded="true" signature="2366:2509" placeholder="..." />
+            <marker date="1456356985472" expanded="true" signature="2526:2675" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.666667">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="146" column="5" selection-start-line="146" selection-start-column="5" selection-end-line="146" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/dao/Match.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="39" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#831#832#0" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/WebCrawler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="71" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/LiveScoreMatchParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2959#2960#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="1" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.681388">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Result.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="e#809#810#0" expanded="true" />
-            <element signature="e#834#835#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/dao/Match.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="105" column="33" selection-start-line="105" selection-start-column="24" selection-end-line="105" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#708#709#0" expanded="true" />
-            <element signature="e#728#729#0" expanded="true" />
-            <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1159#1160#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/model/util/FootballMatchUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16901408">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>

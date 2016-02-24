@@ -1,11 +1,9 @@
-package com.bet.manager.model.util;
+package com.bet.manager.models.util;
 
-import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.model.FootballMatch;
-import com.bet.manager.model.dao.Result;
-import com.bet.manager.model.exceptions.EmptyTeamNameException;
-import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
-import com.bet.manager.model.exceptions.InvalidMatchDateException;
+import com.bet.manager.models.FootballMatch;
+import com.bet.manager.models.exceptions.EmptyTeamNameException;
+import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
+import com.bet.manager.models.exceptions.InvalidMatchDateException;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
@@ -48,7 +46,7 @@ public class FootballMatchBuilder {
 		return this;
 	}
 
-	public FootballMatchBuilder setResult(Result result) {
+	public FootballMatchBuilder setResult(String result) {
 		match.setResult(result);
 		return this;
 	}
@@ -63,34 +61,7 @@ public class FootballMatchBuilder {
 		}
 
 		setStartDate(match.getStartDate());
-		setResult(match.getResult());
-		setWinner();
+		FootballMatchUtils.setResultAndWinner(match, match.getResult());
 		return match;
-	}
-
-	private void setWinner() {
-		if (match.getResult() == null) {
-			match.setWinner(ResultMessages.NO_WINNER);
-			return;
-		}
-
-		int winnerCode = match.getResult().getWinnerCode();
-
-		switch (winnerCode) {
-		case 1:
-			match.setWinner(match.getHomeTeam());
-			break;
-		case 2:
-			match.setWinner(match.getAwayTeam());
-			break;
-		case 0:
-			match.setWinner(ResultMessages.NO_WINNER);
-			break;
-		case -1:
-			match.setWinner(ResultMessages.NO_WINNER);
-			break;
-		default:
-			throw new IllegalStateException("Invalid winner code " + winnerCode);
-		}
 	}
 }

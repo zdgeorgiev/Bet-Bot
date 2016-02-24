@@ -1,6 +1,6 @@
 package com.bet.manager.core;
 
-import com.bet.manager.model.dao.Match;
+import com.bet.manager.models.dao.Match;
 import org.apache.log4j.BasicConfigurator;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class Program {
 
 		BasicConfigurator.configure();
 
-		IWebCrawler crawler = new LiveScoreCrawler();
+		WebCrawler crawler = new WebCrawler();
 		IMatchParser parser = new LiveScoreMatchParser();
 
 		List<Match> matches =

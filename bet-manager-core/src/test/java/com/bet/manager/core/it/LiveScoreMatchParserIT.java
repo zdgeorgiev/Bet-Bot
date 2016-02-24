@@ -3,10 +3,10 @@ package com.bet.manager.core.it;
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.util.ResourceUtils;
 import com.bet.manager.core.LiveScoreMatchParser;
-import com.bet.manager.model.FootballMatch;
-import com.bet.manager.model.dao.Match;
-import com.bet.manager.model.util.FootballMatchBuilder;
-import com.bet.manager.model.util.FootballResultBuilder;
+import com.bet.manager.models.FootballMatch;
+import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.util.FootballMatchBuilder;
+import com.bet.manager.models.util.FootballMatchUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -50,7 +50,12 @@ public class LiveScoreMatchParserIT {
 			}
 		};
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(actual.size(), expected.size());
+		for (int i = 0; i < actual.size(); i++) {
+			Assert.assertTrue(FootballMatchUtils.equals(
+					(FootballMatch) actual.get(i),
+					(FootballMatch) expected.get(i)));
+		}
 	}
 
 	@Test
@@ -63,22 +68,21 @@ public class LiveScoreMatchParserIT {
 		List<Match> expected = new ArrayList<Match>() {
 			{
 				Match m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
-				m.setResult(new FootballResultBuilder().setScore("3-3").build());
+				FootballMatchUtils.setResultAndWinner(m, "3-3");
 				add(m);
 
 				Match m2 = createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45");
-				m2.setResult(new FootballResultBuilder().setScore("2-1").build());
+				FootballMatchUtils.setResultAndWinner(m2, "2-1");
 				add(m2);
 			}
 		};
 
-		Assert.assertEquals(actual, expected);
-
-		Assert.assertEquals(actual.get(0).getWinner(), expected.get(0).getWinner());
-		Assert.assertEquals(actual.get(0).getResult().getScore(), expected.get(0).getResult().getScore());
-
-		Assert.assertEquals(actual.get(1).getWinner(), expected.get(1).getWinner());
-		Assert.assertEquals(actual.get(1).getResult().getScore(), expected.get(1).getResult().getScore());
+		Assert.assertEquals(actual.size(), expected.size());
+		for (int i = 0; i < actual.size(); i++) {
+			Assert.assertTrue(FootballMatchUtils.equals(
+					(FootballMatch) actual.get(i),
+					(FootballMatch) expected.get(i)));
+		}
 	}
 
 	@Test
@@ -91,26 +95,23 @@ public class LiveScoreMatchParserIT {
 		List<Match> expected = new ArrayList<Match>() {
 			{
 				Match m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
-				m.setResult(new FootballResultBuilder().setScore("3-3").build());
+				FootballMatchUtils.setResultAndWinner(m, "3-3");
 				add(m);
 
 				add(createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45"));
 
 				Match m2 = createMatch("Levski", "CSKA", "January 12 2016 21:45");
-				m2.setResult(new FootballResultBuilder().setScore("2-3").build());
+				FootballMatchUtils.setResultAndWinner(m2, "2-3");
 				add(m2);
 			}
 		};
 
-		Assert.assertEquals(actual, expected);
-
-		Assert.assertEquals(actual.get(0).getWinner(), expected.get(0).getWinner());
-		Assert.assertEquals(actual.get(0).getResult().getScore(), expected.get(0).getResult().getScore());
-
-		Assert.assertEquals(actual.get(1).getWinner(), expected.get(1).getWinner());
-
-		Assert.assertEquals(actual.get(2).getWinner(), expected.get(2).getWinner());
-		Assert.assertEquals(actual.get(2).getResult().getScore(), expected.get(2).getResult().getScore());
+		Assert.assertEquals(actual.size(), expected.size());
+		for (int i = 0; i < actual.size(); i++) {
+			Assert.assertTrue(FootballMatchUtils.equals(
+					(FootballMatch) actual.get(i),
+					(FootballMatch) expected.get(i)));
+		}
 	}
 
 	@Test
@@ -123,7 +124,9 @@ public class LiveScoreMatchParserIT {
 		Match expected = createMatch("Manchester City", "Everton", "January 13 2016 21:45");
 
 		Assert.assertEquals(actual.size(), 1);
-		Assert.assertEquals(actual.get(0), expected);
+		Assert.assertTrue(FootballMatchUtils.equals(
+				(FootballMatch) actual.get(0),
+				(FootballMatch) expected));
 	}
 
 	private FootballMatch createMatch(String homeTeam, String awayTeam, String date) {
