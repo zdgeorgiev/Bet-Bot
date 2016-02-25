@@ -7,13 +7,13 @@ import org.apache.commons.lang.StringUtils;
 
 public class FootballMatchUtils {
 
-	public static boolean equals(FootballMatch actual, FootballMatch expected) {
+	public static boolean equals(FootballMatch firstMatch, FootballMatch secondMatch) {
 
-		return actual.getHomeTeam().equals(expected.getHomeTeam()) &&
-				actual.getAwayTeam().equals(expected.getAwayTeam()) &&
-				actual.getStartDate().equals(expected.getStartDate()) &&
-				equalsWithNull(actual.getResult(), expected.getResult()) &&
-				equalsWithNull(actual.getWinner(), expected.getWinner());
+		return firstMatch.getHomeTeam().equals(secondMatch.getHomeTeam()) &&
+				firstMatch.getAwayTeam().equals(secondMatch.getAwayTeam()) &&
+				firstMatch.getStartDate().equals(secondMatch.getStartDate()) &&
+				equalsWithNull(firstMatch.getResult(), secondMatch.getResult()) &&
+				equalsWithNull(firstMatch.getWinner(), secondMatch.getWinner());
 	}
 
 	private static boolean equalsWithNull(String firstProp, String secondProp) {
