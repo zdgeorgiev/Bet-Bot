@@ -1,7 +1,7 @@
 package com.bet.manager.core.it;
 
 import com.bet.manager.commons.DateFormats;
-import com.bet.manager.commons.util.ResourceUtils;
+import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.LiveScoreMatchParser;
 import com.bet.manager.models.FootballMatch;
 import com.bet.manager.models.dao.Match;
@@ -28,7 +28,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithoutResults() {
 		String content =
-				ResourceUtils.getContent("live-score-full-content-with-no-results.txt", LiveScoreMatchParser.class);
+				ClasspathUtils.getContent("live-score-full-content-with-no-results.txt");
 
 		List<Match> actual = parser.parse(content);
 
@@ -61,7 +61,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithResults() {
 		String content =
-				ResourceUtils.getContent("live-score-matches-with-results.txt", LiveScoreMatchParser.class);
+				ClasspathUtils.getContent("live-score-matches-with-results.txt");
 
 		List<Match> actual = parser.parse(content);
 
@@ -88,7 +88,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithResultsAndSomeWithout() {
 		String content =
-				ResourceUtils.getContent("live-score-matches-with-results-and-without.txt", LiveScoreMatchParser.class);
+				ClasspathUtils.getContent("live-score-matches-with-results-and-without.txt");
 
 		List<Match> actual = parser.parse(content);
 
@@ -116,8 +116,8 @@ public class LiveScoreMatchParserIT {
 
 	@Test
 	public void testWithFullContentButOnlyOneValidMatchOutOf5() {
-		String content = ResourceUtils
-				.getContent("live-score-full-content-with-only-one-valid-match.txt", LiveScoreMatchParser.class);
+		String content = ClasspathUtils
+				.getContent("live-score-full-content-with-only-one-valid-match.txt");
 
 		List<Match> actual = parser.parse(content);
 
