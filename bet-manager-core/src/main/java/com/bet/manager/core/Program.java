@@ -31,6 +31,6 @@ public class Program {
 		File inputFile = new File("bet-manager-core/src/test/resources/post_standing_1.xml");
 		String content = FileUtils.readFileToString(inputFile);
 
-		DataCrawlerUtils.createDataForRound(content, 2011, 1);
+		//DataCrawler.createDataForRound(content, 2011, 1);
 	}
 }

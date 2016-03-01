@@ -28,7 +28,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithoutResults() {
 		String content =
-				ClasspathUtils.getContent("live-score-full-content-with-no-results.txt");
+				ClasspathUtils.getContentUTF8("live-score-full-content-with-no-results.txt");
 
 		List<Match> actual = parser.parse(content);
 
@@ -61,7 +61,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithResults() {
 		String content =
-				ClasspathUtils.getContent("live-score-matches-with-results.txt");
+				ClasspathUtils.getContentUTF8("live-score-matches-with-results.txt");
 
 		List<Match> actual = parser.parse(content);
 
@@ -88,7 +88,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentWithMatchesWithResultsAndSomeWithout() {
 		String content =
-				ClasspathUtils.getContent("live-score-matches-with-results-and-without.txt");
+				ClasspathUtils.getContentUTF8("live-score-matches-with-results-and-without.txt");
 
 		List<Match> actual = parser.parse(content);
 
@@ -117,7 +117,7 @@ public class LiveScoreMatchParserIT {
 	@Test
 	public void testWithFullContentButOnlyOneValidMatchOutOf5() {
 		String content = ClasspathUtils
-				.getContent("live-score-full-content-with-only-one-valid-match.txt");
+				.getContentUTF8("live-score-full-content-with-only-one-valid-match.txt");
 
 		List<Match> actual = parser.parse(content);
 

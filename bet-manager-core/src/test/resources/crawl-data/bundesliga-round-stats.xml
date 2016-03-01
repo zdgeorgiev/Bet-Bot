@@ -1,0 +1,27 @@
+<sports-content xmlns:imp="http://web.impire.de/SportsML/v1.5/doc/index.html">
+  <sports-metadata doc-id="T-S_X_X" date-time="20150909T000000+0200" publisher="impire" language="en_EN"
+                   document-class="team-statistics-round">
+    <sports-title>Team-Statistics-Round</sports-title>
+  </sports-metadata>
+  <sports-event id="267">
+    <event-metadata id="E_160368" event-key="160368" event-status="post-event">...</event-metadata>
+    <team>
+      <team-metadata team-key="267">...</team-metadata>
+      <team-stats date-coverage-type="event">
+        <team-stats-soccer imp:tracking-distance="106954.45" imp:tracking-sprints="186" imp:passes-total="363"
+                           imp:passes-completed="282" imp:balls-touched="548" imp:duels-total="183" imp:duels-won="86"
+                           dfl-distance="106948.55" dfl-max-speed="0.00">...
+        </team-stats-soccer>
+      </team-stats>
+    </team>
+  </sports-event>
+  <statistic>
+    <group>
+      <group-metadata group-key="51"/>
+      <group-stats date-coverage-type="season-average" imp:tracking-distance="111923.72" imp:tracking-sprints="191.69"
+                   imp:passes-total="393.78" imp:passes-completed="301.48" imp:balls-touched="588.76"
+                   imp:duels-total="216.22" imp:duels-won="108.11" shots-total="12.54" offsides="2.65"
+                   corner-kicks="4.76" imp:crosses="8.20" fouls-committed="14.94"/>
+    </group>
+  </statistic>
+</sports-content>
