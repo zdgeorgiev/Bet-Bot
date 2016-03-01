@@ -33,8 +33,8 @@ public class DataCrawlerUtils {
 	private static final String RESULTDB_DOMAIN = "http://www.resultdb.com/";
 	private static final String RESULTDB_MATCHES_FOR_TEAM_URL = "germany/%s/%s/";
 
-	private static DocumentBuilder dBuilder;
-	private static DocumentBuilderFactory dbFactory;
+	private static final DocumentBuilder dBuilder;
+	private static final DocumentBuilderFactory dbFactory;
 
 	private static final WebCrawler crawler = new WebCrawler();
 
@@ -106,38 +106,17 @@ public class DataCrawlerUtils {
 			currentRowData.append(round + " ");
 			currentRowData
 					.append(getDataForTeam(homeTeam, prevRoundMatchesXML, year, round, roundStats, roundRanking) + " ");
-			//Thread.seep
+			//Thread.seep (3-5 seconds)
 			currentRowData
 					.append(getDataForTeam(awayTeam, prevRoundMatchesXML, year, round, roundStats, roundRanking) + " ");
-			//Thread.seep
+			//Thread.seep (3-5 seconds)
 			currentRowData.append(getLastTwoMatchesBetween(homeTeam, awayTeam, prevRoundMatchesXML));
-			//Thread.seep
+			//Thread.seep (3-5 seconds)
 
 			dataRows.add(currentRowData.toString());
 		}
 
 		return dataRows;
-	}
-
-	private static String getLastTwoMatchesBetween(String homeTeam, String awayTeam, Document xmlDocument) {
-		return "";
-	}
-
-	private static String getCurrentTeamOpponent(String homeTeam, int year, int round) throws MalformedURLException {
-
-		String resultDBTeamName = ResultDB.bundesLigaMappingToResultDB.get(homeTeam);
-		URL resultDBUrl =
-				new URL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
-
-		String content = crawler.crawl(resultDBUrl);
-
-		org.jsoup.nodes.Document doc = Jsoup.parse(content);
-		Element e = doc.body().select("table.results").get(0);
-
-		int matchesCount = e.children().get(0).children().size();
-		Element element = e.children().get(0).children().get(matchesCount - round);
-
-		return element.children().get(1).text();
 	}
 
 	private static Document parseDocFromXML(String xml) throws SAXException, IOException {
@@ -173,16 +152,42 @@ public class DataCrawlerUtils {
 		return ranking;
 	}
 
-	private static String getDataForTeam(String teamName, Document doc, int year, int round,
-			Map<String, Double> prevRoundStats, Map<String, Integer> roundRanking) {
+	private static Map<String, Double> parseRoundStats(int year, int round) throws MalformedURLException {
 
-		return "";
+		URL prevRoundStatsURL = new URL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round - 1));
+		String prevRoundStatsXML = crawler.crawl(prevRoundStatsURL);
+
+		//		<statistic>
+		//			<group>
+		//			<group-metadata group-key="51"/>
+		//			<group-stats date-coverage-type="season-average" imp:tracking-distance="111923.72" imp:tracking-sprints="191.69" imp:passes-total="393.78" imp:passes-completed="301.48" imp:balls-touched="588.76" imp:duels-total="216.22" imp:duels-won="108.11" shots-total="12.54" offsides="2.65" corner-kicks="4.76" imp:crosses="8.20" fouls-committed="14.94"/>
+		//			</group>
+		//		</statistic>
+
+		return null;
 	}
 
 	private static String getTeamName(Node currentTeam) {
 		Node teamMetaDataNode = currentTeam.getFirstChild().getNextSibling();
 		int teamId = Integer.parseInt(teamMetaDataNode.getAttributes().getNamedItem("team-key").getNodeValue());
 		return BundesLiga.teams.get(teamId);
+	}
+
+	private static String getCurrentTeamOpponent(String homeTeam, int year, int round) throws MalformedURLException {
+
+		String resultDBTeamName = ResultDB.bundesLigaMappingToResultDB.get(homeTeam);
+		URL resultDBUrl =
+				new URL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+
+		String content = crawler.crawl(resultDBUrl);
+
+		org.jsoup.nodes.Document doc = Jsoup.parse(content);
+		Element e = doc.body().select("table.results").get(0);
+
+		int matchesCount = e.children().get(0).children().size();
+		Element element = e.children().get(0).children().get(matchesCount - round);
+
+		return element.children().get(1).text();
 	}
 
 	private static boolean checkIfNameIsCorrespondingToTeam(int id, String team) {
@@ -197,18 +202,13 @@ public class DataCrawlerUtils {
 		throw new IllegalTeamMappingException("Invalid mapping found in hash map and the xml team node");
 	}
 
-	private static Map<String, Double> parseRoundStats(int year, int round) throws MalformedURLException {
+	private static String getDataForTeam(String teamName, Document doc, int year, int round,
+			Map<String, Double> prevRoundStats, Map<String, Integer> roundRanking) {
 
-		URL prevRoundStatsURL = new URL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round - 1));
-		String prevRoundStatsXML = crawler.crawl(prevRoundStatsURL);
+		return "";
+	}
 
-		//		<statistic>
-		//			<group>
-		//			<group-metadata group-key="51"/>
-		//			<group-stats date-coverage-type="season-average" imp:tracking-distance="111923.72" imp:tracking-sprints="191.69" imp:passes-total="393.78" imp:passes-completed="301.48" imp:balls-touched="588.76" imp:duels-total="216.22" imp:duels-won="108.11" shots-total="12.54" offsides="2.65" corner-kicks="4.76" imp:crosses="8.20" fouls-committed="14.94"/>
-		//			</group>
-		//		</statistic>
-
-		return null;
+	private static String getLastTwoMatchesBetween(String homeTeam, String awayTeam, Document xmlDocument) {
+		return "";
 	}
 }
