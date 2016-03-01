@@ -9,6 +9,9 @@ import java.nio.charset.Charset;
 
 public final class ClasspathUtils {
 
+	private ClasspathUtils() {
+	}
+
 	public static String getContent(String path) {
 
 		String content;
