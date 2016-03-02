@@ -1,11 +1,10 @@
 package com.bet.manager.core;
 
-import org.apache.commons.io.FileUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Program {
 
@@ -28,9 +27,10 @@ public class Program {
 		//
 		//		matches.stream().forEach((x) -> System.out.println(predictor.predict(x)));
 
-		File inputFile = new File("bet-manager-core/src/test/resources/post_standing_1.xml");
-		String content = FileUtils.readFileToString(inputFile);
+		String s = new WebCrawler().crawl(new URL(
+				"http://www.bundesliga.com/data/feed/51/2011/team_stats_round/team_stats_round_1.xml?cb=544329"));
 
-		//DataCrawler.createDataForRound(content, 2011, 1);
+
+		DocumentUtils.parse(s);
 	}
 }

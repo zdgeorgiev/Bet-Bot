@@ -1,0 +1,393 @@
+<sports-content xmlns:imp="http://web.impire.de/SportsML/v1.5/doc/index.html">
+    <sports-metadata doc-id="T-S_X_X" date-time="20150909T000000+0200" publisher="impire" language="en_EN"
+                     document-class="team-statistics-round">
+        <sports-title>Team-Statistics-Round</sports-title>
+    </sports-metadata>
+    <sports-event id="267">
+        <event-metadata id="E_160380" event-key="160380" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="267">
+                <name full="FC Augsburg" nickname="Augsburg"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="110762.05" imp:tracking-sprints="192" imp:passes-total="309"
+                                   imp:passes-completed="220" imp:balls-touched="509" imp:duels-total="263"
+                                   imp:duels-won="135" dfl-distance="110748.17" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="14" offsides="4" corner-kicks="4" imp:crosses="3"/>
+                    <stats-soccer-foul fouls-committed="20"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="43">
+        <event-metadata id="E_160383" event-key="160383" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="43">
+                <name full="Hertha BSC" nickname="Hertha BSC"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="116201.72" imp:tracking-sprints="182" imp:passes-total="398"
+                                   imp:passes-completed="310" imp:balls-touched="627" imp:duels-total="260"
+                                   imp:duels-won="126" dfl-distance="116192.68" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="10" offsides="1" corner-kicks="6" imp:crosses="13"/>
+                    <stats-soccer-foul fouls-committed="11"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="11">
+        <event-metadata id="E_160383" event-key="160383" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="11">
+                <name full="SV Werder Bremen" nickname="Bremen"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="113080.48" imp:tracking-sprints="174" imp:passes-total="397"
+                                   imp:passes-completed="296" imp:balls-touched="578" imp:duels-total="260"
+                                   imp:duels-won="134" dfl-distance="113072.78" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="9" offsides="4" corner-kicks="2" imp:crosses="9"/>
+                    <stats-soccer-foul fouls-committed="16"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="34">
+        <event-metadata id="E_160377" event-key="160377" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="34">
+                <name full="SV Darmstadt 98" nickname="Darmstadt"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="115292.48" imp:tracking-sprints="163" imp:passes-total="137"
+                                   imp:passes-completed="64" imp:balls-touched="335" imp:duels-total="204"
+                                   imp:duels-won="84" dfl-distance="115278.01" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="9" offsides="2" corner-kicks="6" imp:crosses="5"/>
+                    <stats-soccer-foul fouls-committed="18"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="18">
+        <event-metadata id="E_160385" event-key="160385" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="18">
+                <name full="Borussia Dortmund" nickname="Dortmund"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="109340.47" imp:tracking-sprints="164" imp:passes-total="530"
+                                   imp:passes-completed="406" imp:balls-touched="724" imp:duels-total="218"
+                                   imp:duels-won="112" dfl-distance="109332.20" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="18" offsides="3" corner-kicks="4" imp:crosses="7"/>
+                    <stats-soccer-foul fouls-committed="14"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="12">
+        <event-metadata id="E_160380" event-key="160380" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="12">
+                <name full="Eintracht Frankfurt" nickname="E. Frankfurt"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="112003.24" imp:tracking-sprints="207" imp:passes-total="365"
+                                   imp:passes-completed="269" imp:balls-touched="576" imp:duels-total="263"
+                                   imp:duels-won="128" dfl-distance="111995.67" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="11" offsides="5" corner-kicks="7" imp:crosses="11"/>
+                    <stats-soccer-foul fouls-committed="17"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="13">
+        <event-metadata id="E_160379" event-key="160379" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="13">
+                <name full="Hamburger SV" nickname="Hamburg"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="112735.95" imp:tracking-sprints="211" imp:passes-total="397"
+                                   imp:passes-completed="272" imp:balls-touched="620" imp:duels-total="278"
+                                   imp:duels-won="149" dfl-distance="112730.34" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="14" offsides="1" corner-kicks="0" imp:crosses="11"/>
+                    <stats-soccer-foul fouls-committed="17"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="44">
+        <event-metadata id="E_160382" event-key="160382" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="44">
+                <name full="Hannover 96" nickname="Hannover"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="108719.41" imp:tracking-sprints="146" imp:passes-total="311"
+                                   imp:passes-completed="194" imp:balls-touched="532" imp:duels-total="250"
+                                   imp:duels-won="131" dfl-distance="108711.99" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="5" offsides="2" corner-kicks="3" imp:crosses="2"/>
+                    <stats-soccer-foul fouls-committed="15"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="3084">
+        <event-metadata id="E_160384" event-key="160384" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="3084">
+                <name full="1899 Hoffenheim" nickname="Hoffenheim"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="116546.19" imp:tracking-sprints="211" imp:passes-total="187"
+                                   imp:passes-completed="107" imp:balls-touched="354" imp:duels-total="182"
+                                   imp:duels-won="75" dfl-distance="116528.17" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="8" offsides="1" corner-kicks="5" imp:crosses="4"/>
+                    <stats-soccer-foul fouls-committed="17"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="4158">
+        <event-metadata id="E_160385" event-key="160385" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="4158">
+                <name full="FC Ingolstadt 04" nickname="Ingolstadt"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="110075.22" imp:tracking-sprints="187" imp:passes-total="263"
+                                   imp:passes-completed="151" imp:balls-touched="455" imp:duels-total="218"
+                                   imp:duels-won="106" dfl-distance="110069.20" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="3" offsides="4" corner-kicks="1" imp:crosses="3"/>
+                    <stats-soccer-foul fouls-committed="17"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="15">
+        <event-metadata id="E_160381" event-key="160381" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="15">
+                <name full="1.FC Köln" nickname="Köln"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="118851.59" imp:tracking-sprints="214" imp:passes-total="239"
+                                   imp:passes-completed="164" imp:balls-touched="439" imp:duels-total="196"
+                                   imp:duels-won="93" dfl-distance="118836.21" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="9" offsides="2" corner-kicks="2" imp:crosses="6"/>
+                    <stats-soccer-foul fouls-committed="15"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="16">
+        <event-metadata id="E_160382" event-key="160382" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="16">
+                <name full="Bayer 04 Leverkusen" nickname="Leverkusen"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="114169.44" imp:tracking-sprints="168" imp:passes-total="470"
+                                   imp:passes-completed="378" imp:balls-touched="694" imp:duels-total="250"
+                                   imp:duels-won="119" dfl-distance="114158.71" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="11" offsides="1" corner-kicks="8" imp:crosses="12"/>
+                    <stats-soccer-foul fouls-committed="20"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="17">
+        <event-metadata id="E_160378" event-key="160378" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="17">
+                <name full="Borussia M'gladbach" nickname="M'gladbach"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="118411.13" imp:tracking-sprints="159" imp:passes-total="756"
+                                   imp:passes-completed="659" imp:balls-touched="939" imp:duels-total="228"
+                                   imp:duels-won="127" dfl-distance="118396.86" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="15" offsides="2" corner-kicks="3" imp:crosses="6"/>
+                    <stats-soccer-foul fouls-committed="11"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="36">
+        <event-metadata id="E_160378" event-key="160378" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="36">
+                <name full="1.FSV Mainz 05" nickname="Mainz"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="125042.44" imp:tracking-sprints="184" imp:passes-total="320"
+                                   imp:passes-completed="250" imp:balls-touched="504" imp:duels-total="228"
+                                   imp:duels-won="101" dfl-distance="125030.73" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="13" offsides="5" corner-kicks="0" imp:crosses="5"/>
+                    <stats-soccer-foul fouls-committed="11"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="10">
+        <event-metadata id="E_160384" event-key="160384" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="10">
+                <name full="FC Bayern München" nickname="FC Bayern"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="" imp:tracking-sprints="189" imp:passes-total="579"
+                                   imp:passes-completed="489" imp:balls-touched="751" imp:duels-total="182"
+                                   imp:duels-won="107" dfl-distance="110099.22" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="21" offsides="6" corner-kicks="6" imp:crosses="13"/>
+                    <stats-soccer-foul fouls-committed="15"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="24">
+        <event-metadata id="E_160377" event-key="160377" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="24">
+                <name full="FC Schalke 04" nickname="Schalke 04"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="111774.58" imp:tracking-sprints="155" imp:passes-total="575"
+                                   imp:passes-completed="485" imp:balls-touched="788" imp:duels-total="204"
+                                   imp:duels-won="120" dfl-distance="111758.70" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="21" offsides="4" corner-kicks="6" imp:crosses="13"/>
+                    <stats-soccer-foul fouls-committed="16"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="14">
+        <event-metadata id="E_160379" event-key="160379" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="14">
+                <name full="VfB Stuttgart" nickname="Stuttgart"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="110610.68" imp:tracking-sprints="234" imp:passes-total="305"
+                                   imp:passes-completed="182" imp:balls-touched="513" imp:duels-total="278"
+                                   imp:duels-won="129" dfl-distance="110602.09" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="12" offsides="2" corner-kicks="5" imp:crosses="3"/>
+                    <stats-soccer-foul fouls-committed="21"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <sports-event id="56">
+        <event-metadata id="E_160381" event-key="160381" event-status="post-event">
+            <sports-property formal-name="tracking-live-home" value="1"/>
+            <sports-property formal-name="tracking-live-away" value="1"/>
+            <sports-property formal-name="tracking-live-ball" value="1"/>
+            <sports-property formal-name="tracking-live-referee" value="1"/>
+        </event-metadata>
+        <team>
+            <team-metadata team-key="56">
+                <name full="VfL Wolfsburg" nickname="Wolfsburg"/>
+            </team-metadata>
+            <team-stats date-coverage-type="event">
+                <team-stats-soccer imp:tracking-distance="113140.34" imp:tracking-sprints="188" imp:passes-total="598"
+                                   imp:passes-completed="502" imp:balls-touched="783" imp:duels-total="196"
+                                   imp:duels-won="103" dfl-distance="113129.97" dfl-max-speed="0.00">
+                    <stats-soccer-offensive shots-total="15" offsides="0" corner-kicks="4" imp:crosses="18"/>
+                    <stats-soccer-foul fouls-committed="11"/>
+                </team-stats-soccer>
+            </team-stats>
+        </team>
+    </sports-event>
+    <statistic>
+        <group>
+            <group-metadata group-key="51"/>
+            <group-stats date-coverage-type="season-average" imp:tracking-distance="111923.72"
+                         imp:tracking-sprints="191.69" imp:passes-total="393.78" imp:passes-completed="301.48"
+                         imp:balls-touched="588.76" imp:duels-total="216.22" imp:duels-won="108.11" shots-total="12.54"
+                         offsides="2.65" corner-kicks="4.76" imp:crosses="8.20" fouls-committed="14.94"/>
+        </group>
+    </statistic>
+</sports-content>

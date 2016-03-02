@@ -12,26 +12,19 @@ public final class ClasspathUtils {
 	}
 
 	public static String getContentUTF8(String path) {
-
-		String content;
-
-		try (InputStream is = new BufferedInputStream(
-				ClasspathUtils.class.getClassLoader().getResourceAsStream(path))) {
-			content = IOUtils.toString(is, "UTF-8");
-		} catch (IOException e) {
-			throw new IllegalStateException("Cannot read the resource " + path);
-		}
-
-		return content;
+		return getContentWithEncoding(path, "UTF-8");
 	}
 
 	public static String getContentISO(String path) {
+		return getContentWithEncoding(path, "ISO8859_9");
+	}
 
+	private static String getContentWithEncoding(String path, String encoding) {
 		String content;
 
 		try (InputStream is = new BufferedInputStream(
 				ClasspathUtils.class.getClassLoader().getResourceAsStream(path))) {
-			content = IOUtils.toString(is, "ISO8859_9");
+			content = IOUtils.toString(is, encoding);
 		} catch (IOException e) {
 			throw new IllegalStateException("Cannot read the resource " + path);
 		}

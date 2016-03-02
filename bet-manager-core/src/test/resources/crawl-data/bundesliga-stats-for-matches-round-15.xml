@@ -1,0 +1,353 @@
+<sports-content xmlns:imp="http://web.impire.de/SportsML/v1.5/doc/index.html">
+  <sports-metadata date-time="20111213T000000+0100" doc-id="standing_2011-01-01_51_1_15" language="de-DE"
+                   date-coverage-type="imp:non-live" date-coverage-value="20111213T000000+0100">
+    <sports-title>Standing Bundesliga</sports-title>
+    <sports-content-codes>
+      <sports-content-code code-type="sport" code-key="15054000" code-source="iptc.org" code-name="soccer"/>
+      <sports-content-code code-type="league" code-key="soccer.l_51" code-source="impire.tv" code-name="Bundesliga"/>
+      <sports-content-code code-type="team" code-key="soccer.t_10" code-source="impire.tv"
+                           code-name="FC Bayern München"/>
+      <sports-content-code code-type="team" code-key="soccer.t_18" code-source="impire.tv"
+                           code-name="Borussia Dortmund"/>
+      <sports-content-code code-type="team" code-key="soccer.t_17" code-source="impire.tv"
+                           code-name="Borussia M'gladbach"/>
+      <sports-content-code code-type="team" code-key="soccer.t_24" code-source="impire.tv" code-name="FC Schalke 04"/>
+      <sports-content-code code-type="team" code-key="soccer.t_11" code-source="impire.tv"
+                           code-name="SV Werder Bremen"/>
+      <sports-content-code code-type="team" code-key="soccer.t_16" code-source="impire.tv"
+                           code-name="Bayer 04 Leverkusen"/>
+      <sports-content-code code-type="team" code-key="soccer.t_14" code-source="impire.tv" code-name="VfB Stuttgart"/>
+      <sports-content-code code-type="team" code-key="soccer.t_44" code-source="impire.tv" code-name="Hannover 96"/>
+      <sports-content-code code-type="team" code-key="soccer.t_43" code-source="impire.tv" code-name="Hertha BSC"/>
+      <sports-content-code code-type="team" code-key="soccer.t_3084" code-source="impire.tv"
+                           code-name="1899 Hoffenheim"/>
+      <sports-content-code code-type="team" code-key="soccer.t_15" code-source="impire.tv" code-name="1.FC Köln"/>
+      <sports-content-code code-type="team" code-key="soccer.t_36" code-source="impire.tv" code-name="1.FSV Mainz 05"/>
+      <sports-content-code code-type="team" code-key="soccer.t_13" code-source="impire.tv" code-name="Hamburger SV"/>
+      <sports-content-code code-type="team" code-key="soccer.t_56" code-source="impire.tv" code-name="VfL Wolfsburg"/>
+      <sports-content-code code-type="team" code-key="soccer.t_22" code-source="impire.tv" code-name="1.FC Nürnberg"/>
+      <sports-content-code code-type="team" code-key="soccer.t_9" code-source="impire.tv"
+                           code-name="1.FC Kaiserslautern"/>
+      <sports-content-code code-type="team" code-key="soccer.t_33" code-source="impire.tv" code-name="SC Freiburg"/>
+      <sports-content-code code-type="team" code-key="soccer.t_267" code-source="impire.tv" code-name="FC Augsburg"/>
+    </sports-content-codes>
+  </sports-metadata>
+  <standing>
+    <standing-metadata imp:tournament-name="Fussball Bundesliga" imp:tournament-key="51"
+                       imp:tournament-source="impire.tv" imp:division-name="Hinrunde" imp:division-key="1"
+                       imp:division-source="impire.tv" imp:round-number="15" imp:round-name="round_15"
+                       imp:round-key="15" imp:round-source="impire.tv" alignment-scope="events-all"
+                       date-coverage-type="season-full" date-coverage-value="2011" duration-scope="events-all"
+                       stats-coverage="standard"/>
+    <team>
+      <team-metadata id="O_10" team-key="10">
+        <name full="FC Bayern München" nickname="FC Bayern" imp:dfl-full="FC Bayern München"
+              imp:dfl-nickname="FC Bayern" imp:dfl-3-letter-code="FCB" imp:dfl-name-international="FC Bayern Munich"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="10" ties="1" losses="4" points-scored-for="38"
+                        points-scored-against="9" standing-points="31"/>
+        <outcome-totals alignment-scope="events-home" wins="6" ties="0" losses="2" points-scored-for="27"
+                        points-scored-against="3" standing-points="18"/>
+        <outcome-totals alignment-scope="events-away" wins="4" ties="1" losses="2" points-scored-for="11"
+                        points-scored-against="6" standing-points="13"/>
+        <rank value="1" alignment-scope="events-all" imp:trend="2"/>
+        <rank value="1" alignment-scope="events-home" imp:trend="4"/>
+        <rank value="2" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_18" team-key="18">
+        <name full="Borussia Dortmund" nickname="Dortmund" imp:dfl-full="Borussia Dortmund"
+              imp:dfl-nickname="Borussia Dortmund" imp:dfl-3-letter-code="BVB"
+              imp:dfl-name-international="Borussia Dortmund"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="9" ties="3" losses="3" points-scored-for="30"
+                        points-scored-against="10" standing-points="30"/>
+        <outcome-totals alignment-scope="events-home" wins="6" ties="0" losses="1" points-scored-for="22"
+                        points-scored-against="4" standing-points="18"/>
+        <outcome-totals alignment-scope="events-away" wins="3" ties="3" losses="2" points-scored-for="8"
+                        points-scored-against="6" standing-points="12"/>
+        <rank value="2" alignment-scope="events-all" imp:trend="-1"/>
+        <rank value="2" alignment-scope="events-home" imp:trend="-1"/>
+        <rank value="4" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_17" team-key="17">
+        <name full="Borussia M'gladbach" nickname="M'gladbach" imp:dfl-full="Borussia Mönchengladbach"
+              imp:dfl-nickname="Borussia M'gladbach" imp:dfl-3-letter-code="BMG"
+              imp:dfl-name-international="Borussia Mönchengladbach"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="9" ties="3" losses="3" points-scored-for="24"
+                        points-scored-against="10" standing-points="30"/>
+        <outcome-totals alignment-scope="events-home" wins="5" ties="3" losses="0" points-scored-for="17"
+                        points-scored-against="6" standing-points="18"/>
+        <outcome-totals alignment-scope="events-away" wins="4" ties="0" losses="3" points-scored-for="7"
+                        points-scored-against="4" standing-points="12"/>
+        <rank value="3" alignment-scope="events-all" imp:trend="-1"/>
+        <rank value="4" alignment-scope="events-home" imp:trend="-1"/>
+        <rank value="3" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_24" team-key="24">
+        <name full="FC Schalke 04" nickname="Schalke 04" imp:dfl-full="FC Schalke 04" imp:dfl-nickname="Schalke 04"
+              imp:dfl-3-letter-code="S04" imp:dfl-name-international="FC Schalke 04"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="9" ties="1" losses="5" points-scored-for="31"
+                        points-scored-against="21" standing-points="28"/>
+        <outcome-totals alignment-scope="events-home" wins="6" ties="0" losses="2" points-scored-for="21"
+                        points-scored-against="9" standing-points="18"/>
+        <outcome-totals alignment-scope="events-away" wins="3" ties="1" losses="3" points-scored-for="10"
+                        points-scored-against="12" standing-points="10"/>
+        <rank value="4" alignment-scope="events-all" imp:trend="1"/>
+        <rank value="3" alignment-scope="events-home" imp:trend="3"/>
+        <rank value="5" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_11" team-key="11">
+        <name full="SV Werder Bremen" nickname="Bremen" imp:dfl-full="SV Werder Bremen" imp:dfl-nickname="SV Werder"
+              imp:dfl-3-letter-code="BRE" imp:dfl-name-international="SV Werder Bremen"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="8" ties="2" losses="5" points-scored-for="26"
+                        points-scored-against="25" standing-points="26"/>
+        <outcome-totals alignment-scope="events-home" wins="6" ties="0" losses="1" points-scored-for="16"
+                        points-scored-against="8" standing-points="18"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="2" losses="4" points-scored-for="10"
+                        points-scored-against="17" standing-points="8"/>
+        <rank value="5" alignment-scope="events-all" imp:trend="-1"/>
+        <rank value="5" alignment-scope="events-home" imp:trend="-3"/>
+        <rank value="9" alignment-scope="events-away" imp:trend="-1"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_16" team-key="16">
+        <name full="Bayer 04 Leverkusen" nickname="Leverkusen" imp:dfl-full="Bayer 04 Leverkusen"
+              imp:dfl-nickname="Bayer 04" imp:dfl-3-letter-code="B04" imp:dfl-name-international="Bayer 04 Leverkusen"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="7" ties="4" losses="4" points-scored-for="22"
+                        points-scored-against="19" standing-points="25"/>
+        <outcome-totals alignment-scope="events-home" wins="3" ties="2" losses="2" points-scored-for="9"
+                        points-scored-against="8" standing-points="11"/>
+        <outcome-totals alignment-scope="events-away" wins="4" ties="2" losses="2" points-scored-for="13"
+                        points-scored-against="11" standing-points="14"/>
+        <rank value="6" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="10" alignment-scope="events-home" imp:trend="4"/>
+        <rank value="1" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_14" team-key="14">
+        <name full="VfB Stuttgart" nickname="Stuttgart" imp:dfl-full="VfB Stuttgart" imp:dfl-nickname="VfB Stuttgart"
+              imp:dfl-3-letter-code="VFB" imp:dfl-name-international="VfB Stuttgart"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="6" ties="4" losses="5" points-scored-for="22"
+                        points-scored-against="17" standing-points="22"/>
+        <outcome-totals alignment-scope="events-home" wins="4" ties="2" losses="2" points-scored-for="14"
+                        points-scored-against="7" standing-points="14"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="2" losses="3" points-scored-for="8"
+                        points-scored-against="10" standing-points="8"/>
+        <rank value="7" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="7" alignment-scope="events-home" imp:trend="0"/>
+        <rank value="8" alignment-scope="events-away" imp:trend="-1"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_44" team-key="44">
+        <name full="Hannover 96" nickname="Hannover" imp:dfl-full="Hannover 96" imp:dfl-nickname="Hannover 96"
+              imp:dfl-3-letter-code="H96" imp:dfl-name-international="Hannover 96"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="5" ties="6" losses="4" points-scored-for="19"
+                        points-scored-against="23" standing-points="21"/>
+        <outcome-totals alignment-scope="events-home" wins="4" ties="4" losses="0" points-scored-for="14"
+                        points-scored-against="10" standing-points="16"/>
+        <outcome-totals alignment-scope="events-away" wins="1" ties="2" losses="4" points-scored-for="5"
+                        points-scored-against="13" standing-points="5"/>
+        <rank value="8" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="6" alignment-scope="events-home" imp:trend="-2"/>
+        <rank value="15" alignment-scope="events-away" imp:trend="2"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_43" team-key="43">
+        <name full="Hertha BSC" nickname="Hertha BSC" imp:dfl-full="Hertha BSC" imp:dfl-nickname="Hertha BSC"
+              imp:dfl-3-letter-code="BSC" imp:dfl-name-international="Hertha BSC Berlin"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="4" ties="7" losses="4" points-scored-for="22"
+                        points-scored-against="23" standing-points="19"/>
+        <outcome-totals alignment-scope="events-home" wins="2" ties="3" losses="2" points-scored-for="10"
+                        points-scored-against="8" standing-points="9"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="4" losses="2" points-scored-for="12"
+                        points-scored-against="15" standing-points="10"/>
+        <rank value="9" alignment-scope="events-all" imp:trend="1"/>
+        <rank value="12" alignment-scope="events-home" imp:trend="-1"/>
+        <rank value="6" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_3084" team-key="3084">
+        <name full="1899 Hoffenheim" nickname="Hoffenheim" imp:dfl-full="1899 Hoffenheim"
+              imp:dfl-nickname="1899 Hoffenheim" imp:dfl-3-letter-code="HOF"
+              imp:dfl-name-international="1899 Hoffenheim"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="5" ties="3" losses="7" points-scored-for="16"
+                        points-scored-against="18" standing-points="18"/>
+        <outcome-totals alignment-scope="events-home" wins="3" ties="3" losses="1" points-scored-for="8"
+                        points-scored-against="5" standing-points="12"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="0" losses="6" points-scored-for="8"
+                        points-scored-against="13" standing-points="6"/>
+        <rank value="10" alignment-scope="events-all" imp:trend="-1"/>
+        <rank value="9" alignment-scope="events-home" imp:trend="0"/>
+        <rank value="13" alignment-scope="events-away" imp:trend="-2"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_15" team-key="15">
+        <name full="1.FC Köln" nickname="Köln" imp:dfl-full="1. FC Köln" imp:dfl-nickname="1. FC Köln"
+              imp:dfl-3-letter-code="KOE" imp:dfl-name-international="1. FC Köln"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="5" ties="3" losses="7" points-scored-for="23"
+                        points-scored-against="32" standing-points="18"/>
+        <outcome-totals alignment-scope="events-home" wins="3" ties="2" losses="3" points-scored-for="10"
+                        points-scored-against="10" standing-points="11"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="1" losses="4" points-scored-for="13"
+                        points-scored-against="22" standing-points="7"/>
+        <rank value="11" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="11" alignment-scope="events-home" imp:trend="-1"/>
+        <rank value="11" alignment-scope="events-away" imp:trend="2"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_36" team-key="36">
+        <name full="1.FSV Mainz 05" nickname="Mainz" imp:dfl-full="1. FSV Mainz 05" imp:dfl-nickname="Mainz 05"
+              imp:dfl-3-letter-code="M05" imp:dfl-name-international="1. FSV Mainz 05"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="4" ties="5" losses="6" points-scored-for="22"
+                        points-scored-against="28" standing-points="17"/>
+        <outcome-totals alignment-scope="events-home" wins="3" ties="0" losses="5" points-scored-for="12"
+                        points-scored-against="17" standing-points="9"/>
+        <outcome-totals alignment-scope="events-away" wins="1" ties="5" losses="1" points-scored-for="10"
+                        points-scored-against="11" standing-points="8"/>
+        <rank value="12" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="15" alignment-scope="events-home" imp:trend="-2"/>
+        <rank value="7" alignment-scope="events-away" imp:trend="3"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_13" team-key="13">
+        <name full="Hamburger SV" nickname="Hamburg" imp:dfl-full="Hamburger SV" imp:dfl-nickname="Hamburger SV"
+              imp:dfl-3-letter-code="HSV" imp:dfl-name-international="Hamburger SV"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="4" ties="5" losses="6" points-scored-for="20"
+                        points-scored-against="26" standing-points="17"/>
+        <outcome-totals alignment-scope="events-home" wins="2" ties="3" losses="3" points-scored-for="12"
+                        points-scored-against="11" standing-points="9"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="2" losses="3" points-scored-for="8"
+                        points-scored-against="15" standing-points="8"/>
+        <rank value="13" alignment-scope="events-all" imp:trend="2"/>
+        <rank value="13" alignment-scope="events-home" imp:trend="4"/>
+        <rank value="10" alignment-scope="events-away" imp:trend="-1"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_56" team-key="56">
+        <name full="VfL Wolfsburg" nickname="Wolfsburg" imp:dfl-full="VfL Wolfsburg" imp:dfl-nickname="VfL Wolfsburg"
+              imp:dfl-3-letter-code="WOB" imp:dfl-name-international="VfL Wolfsburg"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="5" ties="2" losses="8" points-scored-for="21"
+                        points-scored-against="30" standing-points="17"/>
+        <outcome-totals alignment-scope="events-home" wins="4" ties="1" losses="2" points-scored-for="13"
+                        points-scored-against="9" standing-points="13"/>
+        <outcome-totals alignment-scope="events-away" wins="1" ties="1" losses="6" points-scored-for="8"
+                        points-scored-against="21" standing-points="4"/>
+        <rank value="14" alignment-scope="events-all" imp:trend="-1"/>
+        <rank value="8" alignment-scope="events-home" imp:trend="0"/>
+        <rank value="18" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_22" team-key="22">
+        <name full="1.FC Nürnberg" nickname="Nürnberg" imp:dfl-full="1. FC Nürnberg" imp:dfl-nickname="1. FC Nürnberg"
+              imp:dfl-3-letter-code="FCN" imp:dfl-name-international="1. FC Nuremberg"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="4" ties="3" losses="8" points-scored-for="14"
+                        points-scored-against="26" standing-points="15"/>
+        <outcome-totals alignment-scope="events-home" wins="2" ties="3" losses="2" points-scored-for="10"
+                        points-scored-against="10" standing-points="9"/>
+        <outcome-totals alignment-scope="events-away" wins="2" ties="0" losses="6" points-scored-for="4"
+                        points-scored-against="16" standing-points="6"/>
+        <rank value="15" alignment-scope="events-all" imp:trend="-1"/>
+        <rank value="14" alignment-scope="events-home" imp:trend="-2"/>
+        <rank value="14" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_9" team-key="9">
+        <name full="1.FC Kaiserslautern" nickname="K'lautern" imp:dfl-full="1. FC Kaiserslautern"
+              imp:dfl-nickname="1. FC K'lautern" imp:dfl-3-letter-code="FCK"
+              imp:dfl-name-international="1. FC Kaiserslautern"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="3" ties="5" losses="7" points-scored-for="11"
+                        points-scored-against="19" standing-points="14"/>
+        <outcome-totals alignment-scope="events-home" wins="2" ties="2" losses="3" points-scored-for="6"
+                        points-scored-against="10" standing-points="8"/>
+        <outcome-totals alignment-scope="events-away" wins="1" ties="3" losses="4" points-scored-for="5"
+                        points-scored-against="9" standing-points="6"/>
+        <rank value="16" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="17" alignment-scope="events-home" imp:trend="-1"/>
+        <rank value="12" alignment-scope="events-away" imp:trend="0"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_33" team-key="33">
+        <name full="SC Freiburg" nickname="Freiburg" imp:dfl-full="Sport-Club Freiburg" imp:dfl-nickname="SC Freiburg"
+              imp:dfl-3-letter-code="SCF" imp:dfl-name-international="SC Freiburg"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="3" ties="4" losses="8" points-scored-for="20"
+                        points-scored-against="31" standing-points="13"/>
+        <outcome-totals alignment-scope="events-home" wins="2" ties="2" losses="4" points-scored-for="10"
+                        points-scored-against="10" standing-points="8"/>
+        <outcome-totals alignment-scope="events-away" wins="1" ties="2" losses="4" points-scored-for="10"
+                        points-scored-against="21" standing-points="5"/>
+        <rank value="17" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="16" alignment-scope="events-home" imp:trend="-1"/>
+        <rank value="17" alignment-scope="events-away" imp:trend="-1"/>
+      </team-stats>
+    </team>
+    <team>
+      <team-metadata id="O_267" team-key="267">
+        <name full="FC Augsburg" nickname="Augsburg" imp:dfl-full="FC Augsburg" imp:dfl-nickname="FC Augsburg"
+              imp:dfl-3-letter-code="FCA" imp:dfl-name-international="FC Augsburg"/>
+      </team-metadata>
+      <team-stats events-played="15">
+        <outcome-totals alignment-scope="events-all" wins="2" ties="5" losses="8" points-scored-for="13"
+                        points-scored-against="27" standing-points="11"/>
+        <outcome-totals alignment-scope="events-home" wins="1" ties="3" losses="3" points-scored-for="7"
+                        points-scored-against="11" standing-points="6"/>
+        <outcome-totals alignment-scope="events-away" wins="1" ties="2" losses="5" points-scored-for="6"
+                        points-scored-against="16" standing-points="5"/>
+        <rank value="18" alignment-scope="events-all" imp:trend="0"/>
+        <rank value="18" alignment-scope="events-home" imp:trend="0"/>
+        <rank value="16" alignment-scope="events-away" imp:trend="-1"/>
+      </team-stats>
+    </team>
+  </standing>
+</sports-content>

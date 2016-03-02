@@ -30,6 +30,11 @@ public class DocumentUtils {
 	}
 
 	public static Document parse(String xml) {
+
+		if (xml.contains("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >")) {
+			xml = xml.replace("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >", "");
+		}
+
 		InputSource is = new InputSource();
 		is.setCharacterStream(new StringReader(xml));
 		Document doc;
