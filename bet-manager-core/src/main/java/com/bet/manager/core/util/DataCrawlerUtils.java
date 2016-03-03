@@ -16,6 +16,7 @@ import org.w3c.dom.NodeList;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class DataCrawlerUtils {
 
@@ -52,7 +53,7 @@ public class DataCrawlerUtils {
 	private static final String DRAW_GAME_LITERAL = "D";
 	private static final String WIN_GAME_LITERAL = "W";
 	private static final String LOSE_GAME_LITERAL = "L";
-	private static final String RESUL_SPLITERATOR = "-";
+	private static final String RESULT_SPLITERATOR = "-";
 
 	private static final WebCrawler crawler = new WebCrawler();
 
@@ -69,28 +70,25 @@ public class DataCrawlerUtils {
 	public static List<String> getDataForAllMatches(int year) {
 
 		log.info("Start collecting data for year {}", year);
+		long startTime = System.currentTimeMillis();
 
 		List<String> allData = new ArrayList<>();
-		int totalCrawledCount = 0;
 
 		// We skip the first round because for the current match we only looking for the previous one data
-		for (int round = 2; round <= ROUNDS; round++) {
+		for (int round = 2; round <= 3; round++) {
 
 			try {
-				crawledPages.clear();
 				List<String> currentRoundEntries = createDataForRound(year, round);
 				allData.addAll(currentRoundEntries);
-				totalCrawledCount += crawledPages.size();
-
-				log.info("Successfully created data for {} matches for year {} round {} with total crawled pages {}.",
-						currentRoundEntries.size(), year, round, crawledPages.size());
 			} catch (Exception e) {
 				log.error("Failed to create data for year {} round {}.", year, round, e);
 			}
 		}
 
-		log.info("Successfully created {} data entries for year {} with total of {} crawled pages.",
-				allData.size(), year, totalCrawledCount);
+		long finishTime = System.currentTimeMillis();
+		String diff = millisToShortDHMS(finishTime - startTime);
+
+		log.info("Successfully created {} data entries for year {}. Finished in {}", allData.size(), year, diff);
 		return allData;
 	}
 
@@ -98,6 +96,7 @@ public class DataCrawlerUtils {
 			throws MalformedURLException, InterruptedException {
 
 		log.info("Creating data for year {} round {}", year, round);
+		crawledPages.clear();
 
 		String prevRoundMatchesContent = getBundesligaMatches(year, round - 1);
 		String currentRoundMatchesContent = getBundesligaMatches(year, round);
@@ -116,7 +115,6 @@ public class DataCrawlerUtils {
 
 		for (int i = 0; i < teams.getLength(); i++) {
 
-			log.info("Creating data for match {} starting..", i + 1);
 			StringBuilder currentRowData = new StringBuilder();
 			Node currentTeam = teams.item(i);
 
@@ -127,13 +125,22 @@ public class DataCrawlerUtils {
 			String currentTeamVenue = opponentTeamAndVenue[1];
 			String opponentVenue = currentTeamVenue.equals("1") ? "-1" : "1";
 
-			if (teamBlackList.contains(homeTeam) || teamBlackList.contains(opponentTeam)) {
+			if (teamBlackList.contains(homeTeam)) {
+				log.info("Match for team '{}' in round {} was already parsed", homeTeam, round);
+				log.info("Skipping...");
+				continue;
+			}
+
+			if (teamBlackList.contains(opponentTeam)) {
+				log.info("Match for team '{}' in round {} was already parsed", opponentTeam, round);
+				log.info("Skipping...");
 				continue;
 			}
 
 			teamBlackList.add(homeTeam);
 			teamBlackList.add(opponentTeam);
 
+			log.info("Creating data for match {} starting..", i + 1);
 			currentRowData.append(round + " ");
 
 			currentRowData
@@ -144,12 +151,14 @@ public class DataCrawlerUtils {
 							prevRoundAverageStats, currentRoundRanking) + " ");
 
 			//currentRowData.append(getLastTwoMatchesBetween(homeTeam, opponentTeam, previousRoundMatchesXML));
+			//currentRowData.append(matchResult);
 
 			log.info("Data for match {} is successfully created", i + 1);
 			dataRows.add(currentRowData.toString());
 		}
 
-		log.info("Data for year {} round {} is successfully created.", year, round);
+		log.info("Successfully created data for {} matches for year {} round {} with total crawled pages {}.",
+				dataRows.size(), year, round, crawledPages.size());
 		return dataRows;
 	}
 
@@ -537,7 +546,7 @@ public class DataCrawlerUtils {
 	 */
 	public static void addMatchToNormalizationArray(String result, String score, int[] matchesNormalization) {
 
-		String[] rawNumbers = score.split(RESUL_SPLITERATOR);
+		String[] rawNumbers = score.split(RESULT_SPLITERATOR);
 		int differenceInScore =
 				Math.abs(Integer.parseInt(rawNumbers[0].trim()) - Integer.parseInt(rawNumbers[1].trim()));
 
@@ -566,5 +575,22 @@ public class DataCrawlerUtils {
 
 	private static String getLastTwoMatchesBetween(String homeTeam, String awayTeam, Document xmlDocument) {
 		return "";
+	}
+
+	public static String millisToShortDHMS(long duration) {
+		String res = "";
+		long days = TimeUnit.MILLISECONDS.toDays(duration);
+		long hours = TimeUnit.MILLISECONDS.toHours(duration)
+				- TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(duration));
+		long minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
+				- TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(duration));
+		long seconds = TimeUnit.MILLISECONDS.toSeconds(duration)
+				- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(duration));
+		if (days == 0) {
+			res = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+		} else {
+			res = String.format("%dd%02d:%02d:%02d", days, hours, minutes, seconds);
+		}
+		return res;
 	}
 }
