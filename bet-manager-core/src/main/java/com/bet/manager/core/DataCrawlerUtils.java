@@ -1,6 +1,7 @@
 package com.bet.manager.core;
 
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
@@ -14,11 +15,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
-public class DataCrawler {
+public class DataCrawlerUtils {
 
-	private static final Logger log = LoggerFactory.getLogger(DataCrawler.class);
+	private static final Logger log = LoggerFactory.getLogger(DataCrawlerUtils.class);
 
 	private static final int ROUNDS = 34;
+
+	private static final Map<URL, String> crawledPages = new HashMap<>();
 
 	private static final String BUNDESLIGA_DOMAIN = "http://www.bundesliga.com/";
 	private static final String STATS_URL = "data/feed/51/%s/team_stats_round/team_stats_round_%s.xml?cb=544329";
@@ -51,7 +54,7 @@ public class DataCrawler {
 
 	private static final WebCrawler crawler = new WebCrawler();
 
-	private DataCrawler() {
+	private DataCrawlerUtils() {
 	}
 
 	/**
@@ -61,28 +64,31 @@ public class DataCrawler {
 	 * @param year for which want to get the data
 	 * @return {@link List<String>} containing list of data for every match
 	 */
-	public static List<String> getDataForAllMacthes(int year) {
+	public static List<String> getDataForAllMatches(int year) {
 
 		log.info("Start collecting data for year {}", year);
 
 		List<String> allData = new ArrayList<>();
+		int totalCrawledCount = 0;
 
 		// We skip the first round because for the current match we only looking for the previous one data
 		for (int round = 2; round <= ROUNDS; round++) {
 
 			try {
+				crawledPages.clear();
 				List<String> currentRoundEntries = createDataForRound(year, round);
 				allData.addAll(currentRoundEntries);
-				log.info("Successfully created data for {} matches for round {}.", currentRoundEntries.size(), round);
+				totalCrawledCount += crawledPages.size();
+
+				log.info("Successfully created data for {} matches for year {} round {} with total crawled pages {}.",
+						currentRoundEntries.size(), year, round, crawledPages.size());
 			} catch (Exception e) {
-				log.error("Failed to create data for {} round {}." + System.lineSeparator() + "{}",
-						year,
-						round,
-						e.getMessage());
+				log.error("Failed to create data for year {} round {}.", year, round, e);
 			}
 		}
 
-		log.info("Successfully created {} data entries for year {}", allData.size(), year);
+		log.info("Successfully created {} data entries for year {} with total of {} crawled pages.",
+				allData.size(), year, totalCrawledCount);
 		return allData;
 	}
 
@@ -99,12 +105,15 @@ public class DataCrawler {
 	private static List<String> createDataForRound(int year, int round)
 			throws MalformedURLException, InterruptedException {
 
-		String prevRoundMatchesContent = getMatchesContent(year, round - 1);
-		String currentRoundMatchesContent = getMatchesContent(year, round);
+		log.info("Creating data for year {} round {}", year, round);
+
+		String prevRoundMatchesContent = getBundesligaMatches(year, round - 1);
+		String currentRoundMatchesContent = getBundesligaMatches(year, round);
 
 		Document previousRoundMatchesXML = DocumentUtils.parse(prevRoundMatchesContent);
 		Document currentRoundMatchesXML = DocumentUtils.parse(currentRoundMatchesContent);
 
+		log.info("Creating ranking table for year {} round {}", year, round);
 		Map<String, Integer> currentRoundRanking = getRoundRanking(currentRoundMatchesXML);
 		Map<String, Double> prevRoundAverageStats = parseAverageRoundStats(year, round - 1);
 
@@ -115,15 +124,16 @@ public class DataCrawler {
 
 		for (int i = 0; i < teams.getLength(); i++) {
 
+			log.info("Creating data for match {} starting..", i + 1);
 			StringBuilder currentRowData = new StringBuilder();
 			Node currentTeam = teams.item(i);
 
-			String homeTeam = getTeamName(currentTeam);
+			String homeTeam = getTeamNameFromId(currentTeam);
 			String[] opponentTeamAndVenue = parseCurrentTeamOpponentAndVenue(homeTeam, year, round);
 			String opponentTeam = opponentTeamAndVenue[0];
 
 			String currentTeamVenue = opponentTeamAndVenue[1];
-			String opponentVenue = currentTeamVenue == "1" ? "-1" : "1";
+			String opponentVenue = currentTeamVenue.equals("1") ? "-1" : "1";
 
 			if (teamBlackList.contains(homeTeam) || teamBlackList.contains(opponentTeam)) {
 				continue;
@@ -141,21 +151,37 @@ public class DataCrawler {
 					.append(getDataForTeam(opponentTeam, currentRoundMatchesXML, year, round, opponentVenue,
 							prevRoundAverageStats, currentRoundRanking) + " ");
 
-			currentRowData.append(getLastTwoMatchesBetween(homeTeam, opponentTeam, previousRoundMatchesXML));
+			//currentRowData.append(getLastTwoMatchesBetween(homeTeam, opponentTeam, previousRoundMatchesXML));
 
+			log.info("Data for match {} is successfully created", i + 1);
 			dataRows.add(currentRowData.toString());
 		}
 
+		log.info("Data for year {} round {} is successfully created.", year, round);
 		return dataRows;
 	}
 
-	private static String getMatchesContent(int year, int round) throws MalformedURLException {
+	private static String getBundesligaMatches(int year, int round) throws MalformedURLException, InterruptedException {
 		URL prevRoundMatchesURL = new URL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
-		return crawler.crawl(prevRoundMatchesURL);
+		return getContentOfPage(prevRoundMatchesURL);
+	}
+
+	private static String getContentOfPage(URL url) throws InterruptedException {
+		if (crawledPages.containsKey(url)) {
+			log.info("'{}' has been already crawled before and will be used its cached copy.", url);
+			return crawledPages.get(url);
+		}
+
+		// Put asleep the thread for 3-5 seconds
+		Thread.sleep(new Random().nextInt(2000) + 3000);
+
+		String contentOfPage = crawler.crawl(url);
+		crawledPages.put(url, contentOfPage);
+		return contentOfPage;
 	}
 
 	/**
-	 * Create ranking map for the teams
+	 * Create ranking map for the bundesligaIdToName
 	 *
 	 * @param doc parsed as xml
 	 * @return {@link Map<String, Integer>} containing pairs {team} => {rank}
@@ -187,7 +213,7 @@ public class DataCrawler {
 	}
 
 	/**
-	 * Method which check if the mapping from {@link BundesLiga} is correct with the
+	 * Method which check if the mapping from {@link MatchesMapping} is correct with the
 	 * bundesliga crawled id. This is pretty necessary because otherwise the data should be non-corresponding
 	 *
 	 * @param id   team id
@@ -195,22 +221,21 @@ public class DataCrawler {
 	 * @return true if the mapping is correct, false otherwise
 	 */
 	private static boolean checkIfNameIsCorrespondingToTeam(int id, String team) {
-		if (BundesLiga.teams.get(id).equals(team)) {
+		if (MatchesMapping.bundesligaIdToName.get(id).equals(team)) {
 			return true;
 		}
 
-		log.error("Team with id {} is mapped to {}, but in the xml team node id {} is mapped to {}",
-				id, team,
-				id, BundesLiga.teams.get(id));
-
-		throw new IllegalTeamMappingException("Invalid mapping found in hash map and the xml team node");
+		throw new IllegalTeamMappingException("Team with id " + id + " is mapped to " + team +
+				", but in the xml team node id " + id + " is mapped to " + MatchesMapping.bundesligaIdToName.get(id));
 	}
 
 	private static Map<String, Double> parseAverageRoundStats(int year, int round)
-			throws MalformedURLException {
+			throws MalformedURLException, InterruptedException {
 
-		URL prevRoundStatsURL = new URL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round - 1));
-		String prevRoundStatsXML = crawler.crawl(prevRoundStatsURL);
+		URL prevRoundStatsURL = new URL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round));
+		String prevRoundStatsXML = getContentOfPage(prevRoundStatsURL);
+
+		log.info("Creating average stats map for year {} round {}", year, round);
 		return getAverageRoundStats(prevRoundStatsXML);
 	}
 
@@ -220,7 +245,6 @@ public class DataCrawler {
 	 *
 	 * @param prevRoundStatsXML xml containing the previous round statistics
 	 * @return @link Map<String, Double>} with average statistics for given round and year
-	 * @throws MalformedURLException if the url cannot be crawled
 	 */
 	public static Map<String, Double> getAverageRoundStats(String prevRoundStatsXML) {
 
@@ -242,29 +266,35 @@ public class DataCrawler {
 	private static void addAttribute(String attrName, NamedNodeMap statsAttributes, Map<String, Double> averageStats) {
 		Node attributeNode = statsAttributes.getNamedItem(attrName);
 		averageStats.put(attributeNode.getNodeName(), Double.parseDouble(attributeNode.getNodeValue()));
+		log.info("Successfully added attribute '{}' with value '{}'", attrName, attributeNode.getNodeValue());
 	}
 
-	private static String getTeamName(Node currentTeam) {
+	private static String getTeamNameFromId(Node currentTeam) {
 		Node teamMetaDataNode = currentTeam.getFirstChild().getNextSibling();
 		int teamId = Integer.parseInt(teamMetaDataNode.getAttributes().getNamedItem(TEAM_KEY_ATTR).getNodeValue());
-		return BundesLiga.teams.get(teamId);
+
+		String teamName = MatchesMapping.bundesligaIdToName.get(teamId);
+		log.info("ID '{}' is mapped to '{}' from bundesliga map", teamId, teamName);
+
+		return teamName;
 	}
 
 	private static String[] parseCurrentTeamOpponentAndVenue(String homeTeam, int year, int round)
-			throws MalformedURLException {
+			throws MalformedURLException, InterruptedException {
 
-		String resultDBTeamName = ResultDB.bundesLigaMappingToResultDB.get(homeTeam);
-		URL resultDBUrl =
+		String resultDBTeamName = MatchesMapping.bundesligaToResultDB.get(homeTeam);
+		URL allMatchesForTeamURL =
 				new URL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = crawler.crawl(resultDBUrl);
+		String content = getContentOfPage(allMatchesForTeamURL);
 
 		return getCurrentTeamOpponentAndVenue(content, round);
 	}
 
 	/**
 	 * Method parses the given html as string and return the target round match opponent and venue
-	 * Venue is Away or Home. The Venue is -1 if the current team is Away and 1 if the current team is Home
+	 * Venue is Away or Home. The Venue is -1 if the current team is Away and 1 if the current team is Home.
+	 * The opponent is mapped to match the bundesliga name since was raw parsed from resultdb
 	 *
 	 * @param allMatchesHTML contains the arbitrary team all matches for arbitrary year
 	 * @param round          to know which opponent should be returned
@@ -279,16 +309,19 @@ public class DataCrawler {
 		Element currentMatch = e.children().get(0).children().get(matchesCount - round);
 
 		String opponent = currentMatch.children().get(1).text();
-		String venue = currentMatch.children().get(2).text().equals(AWAY_TEAM_LITERAL) ? "-1" : "1";
+		String mappedOpponent = MatchesMapping.resultDBToBundesliga.get(currentMatch.children().get(1).text());
+		String venue = currentMatch.children().get(2).text();
+		String venueNormalization = venue.equals(AWAY_TEAM_LITERAL) ? "-1" : "1";
 
-		return new String[] { opponent, venue };
+		log.debug("Opponent '{}' is mapped to '{}' and match venue is '{}'", opponent, mappedOpponent, venue);
+		return new String[] { mappedOpponent, venueNormalization };
 	}
 
 	/**
 	 * Method which will be used to collect data for given team for current year and specific found.
 	 * This method containing multiple inner crawling, so its requiring internet connection.
 	 *
-	 * @param teamName              which we want to get data
+	 * @param team                  which we want to get data
 	 * @param currentRoundStats     previous round matches information as {@link Document}
 	 * @param year                  for which we want to get information
 	 * @param round                 for which we want to get information
@@ -299,42 +332,80 @@ public class DataCrawler {
 	 * @param currentRoundRanking   Position in the ranking for the current and round
 	 * @return all of the data information as {@link String}
 	 */
-	public static String getDataForTeam(String teamName, Document currentRoundStats, int year, int round,
+	public static String getDataForTeam(String team, Document currentRoundStats, int year, int round,
 			String venue, Map<String, Double> prevRoundAverageStats, Map<String, Integer> currentRoundRanking)
-			throws MalformedURLException {
+			throws MalformedURLException, InterruptedException {
 
+		log.info("Creating data for team '{}' for year {} and round {}", team, year, round);
 		StringBuilder currentTeamData = new StringBuilder();
 
-		currentTeamData.append(getTeamRankingPlace(teamName, currentRoundRanking) + " ");
-		currentTeamData.append(getCurrentRankingStats(teamName, currentRoundStats) + " ");
+		currentTeamData.append(getTeamRankingPlace(team, currentRoundRanking) + " ");
+		currentTeamData.append(getCurrentRankingStats(team, currentRoundStats) + " ");
 		currentTeamData.append(venue + " ");
-		currentTeamData.append(parsePrevRoundTeamPerformance(teamName, year, round, prevRoundAverageStats) + " ");
-		currentTeamData.append(parseResultsForPastFiveGames(teamName, year, round));
+		currentTeamData.append(parsePrevRoundTeamPerformance(team, year, round, prevRoundAverageStats) + " ");
+		currentTeamData.append(parseResultsForPastFiveGames(team, year, round));
 
+		log.info("Done...");
 		return currentTeamData.toString();
 	}
 
-	private static Integer getTeamRankingPlace(String teamName, Map<String, Integer> currentRoundRanking) {
-		return currentRoundRanking.get(teamName);
+	private static Integer getTeamRankingPlace(String team, Map<String, Integer> currentRoundRanking) {
+		Integer rank = currentRoundRanking.get(team);
+		log.info("Rank for '{}' is '{}'", team, rank);
+		return rank;
 	}
 
 	/**
-	 * Get the current round goals difference and points for given team
+	 * Get the current points and round goals difference for team
 	 *
-	 * @param teamName
+	 * @param team
 	 * @param currentRoundMatches
 	 * @return
 	 */
-	public static String getCurrentRankingStats(String teamName, Document currentRoundMatches) {
-		return null;
+	public static String getCurrentRankingStats(String team, Document currentRoundMatches) {
+
+		log.info("Getting current round statistics for '{}'", team);
+		StringBuilder prevRoundStats = new StringBuilder();
+
+		NodeList teamNodes = currentRoundMatches.getElementsByTagName(TEAM_ATTR);
+
+		for (int i = 0; i < teamNodes.getLength(); i++) {
+
+			Node currentTeam = teamNodes.item(i);
+			String currentTeamName = getNameFromTeamNode(currentTeam);
+
+			if (currentTeamName.equals(team)) {
+				prevRoundStats.append(getGoalDifferenceAndPoints(currentTeam));
+				break;
+			}
+		}
+
+		return prevRoundStats.toString();
 	}
 
-	private static String parsePrevRoundTeamPerformance(String teamName, int year, int round,
-			Map<String, Double> prevRoundAverageStats) throws MalformedURLException {
+	private static String getGoalDifferenceAndPoints(Node currentTeam) {
 
+		NamedNodeMap attributes =
+				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
+						.getNextSibling().getAttributes();
+
+		Integer goalDifference =
+				Integer.parseInt(attributes.getNamedItem("points-scored-for").getNodeValue()) -
+						Integer.parseInt(attributes.getNamedItem("points-scored-against").getNodeValue());
+
+		String output = attributes.getNamedItem("standing-points").getNodeValue() + " " + goalDifference;
+
+		log.info("Successfully added information about goal difference and points");
+		return output;
+	}
+
+	private static String parsePrevRoundTeamPerformance(String team, int year, int round,
+			Map<String, Double> prevRoundAverageStats) throws MalformedURLException, InterruptedException {
+
+		log.info("Getting year {} round {} statistics for '{}'", year, round, team);
 		URL prevRoundStatsURL = new URL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
-		String prevRoundTeamStatsXML = crawler.crawl(prevRoundStatsURL);
-		return getPrevRoundTeamPerformance(prevRoundTeamStatsXML, teamName, prevRoundAverageStats);
+		String prevRoundTeamStatsXML = getContentOfPage(prevRoundStatsURL);
+		return getPrevRoundTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats);
 	}
 
 	/**
@@ -361,7 +432,7 @@ public class DataCrawler {
 			String currentTeamName = getNameFromTeamNode(currentTeam);
 
 			if (currentTeamName.equals(team)) {
-				prevRoundStats.append(getPRevRoundStats(currentTeam, prevRoundAverageStats));
+				prevRoundStats.append(getPrevRoundStats(currentTeam, prevRoundAverageStats));
 				break;
 			}
 		}
@@ -369,7 +440,7 @@ public class DataCrawler {
 		return prevRoundStats.toString();
 	}
 
-	private static String getPRevRoundStats(Node currentTeam, Map<String, Double> prevRoundAverageStats) {
+	private static String getPrevRoundStats(Node currentTeam, Map<String, Double> prevRoundAverageStats) {
 
 		StringBuilder output = new StringBuilder();
 
@@ -402,12 +473,13 @@ public class DataCrawler {
 
 		String attrValue;
 
-		if (defensiveAttributes.getNamedItem(attrName).getNodeValue() == "") {
+		if (StringUtils.isBlank(defensiveAttributes.getNamedItem(attrName).getNodeValue())) {
 			attrValue = prevRoundAverageStats.get(attrName).toString();
 		} else {
 			attrValue = defensiveAttributes.getNamedItem(attrName).getNodeValue();
 		}
 
+		log.info("Successfully filed attribute '{}' => '{}'", attrName, attrValue);
 		return attrValue;
 	}
 
@@ -416,14 +488,21 @@ public class DataCrawler {
 				.getNamedItem("full").getNodeValue();
 	}
 
-	private static String parseResultsForPastFiveGames(String teamName, int year, int round)
-			throws MalformedURLException {
+	private static String parseResultsForPastFiveGames(String team, int year, int round)
+			throws MalformedURLException, InterruptedException {
 
-		String resultDBTeamName = ResultDB.bundesLigaMappingToResultDB.get(teamName);
-		URL resultDBUrl =
+		log.info("Getting information about last five games just before round {} for '{}'", round, team);
+		String resultDBTeamName = MatchesMapping.bundesligaToResultDB.get(team);
+
+		if (StringUtils.isBlank(resultDBTeamName)) {
+			throw new IllegalStateException(
+					"Cannot find any mapping to team '" + team + "' in MatchesMapping HashMap.");
+		}
+
+		URL allMatchesForTeamURL =
 				new URL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = crawler.crawl(resultDBUrl);
+		String content = getContentOfPage(allMatchesForTeamURL);
 
 		return getResultsForPastFiveGames(content, round);
 	}
