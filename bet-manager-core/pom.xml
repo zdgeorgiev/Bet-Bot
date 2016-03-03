@@ -54,26 +54,26 @@
     </profile>
   </profiles>
 
-  <!--<build>-->
-  <!--<plugins>-->
-  <!--<plugin>-->
-  <!--<groupId>org.apache.maven.plugins</groupId>-->
-  <!--<artifactId>maven-jar-plugin</artifactId>-->
-  <!--<version>${maven-jar-plugin.version}</version>-->
-  <!--<configuration>-->
-  <!--&lt;!&ndash; Define the final built jar name &ndash;&gt;-->
-  <!--<finalName>bet-manager</finalName>-->
-  <!--<archive>-->
-  <!--<manifest>-->
-  <!--<addClasspath>true</addClasspath>-->
-  <!--<classpathPrefix>lib/</classpathPrefix>-->
-  <!--<mainClass>com.bet.manager.commons.models.Program</mainClass>-->
-  <!--</manifest>-->
-  <!--</archive>-->
-  <!--</configuration>-->
-  <!--</plugin>-->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven-jar-plugin.version}</version>
+        <configuration>
+          <!-- Define the final built jar name -->
+          <finalName>bet-manager</finalName>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>com.bet.manager.commons.models.Program</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
 
-  <!--</plugins>-->
-  <!--</build>-->
+    </plugins>
+  </build>
 
 </project>

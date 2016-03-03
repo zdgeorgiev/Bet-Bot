@@ -1,4 +1,4 @@
-package com.bet.manager.core;
+package com.bet.manager.core.util;
 
 import com.bet.manager.core.exceptions.DocumentParseException;
 import org.slf4j.Logger;

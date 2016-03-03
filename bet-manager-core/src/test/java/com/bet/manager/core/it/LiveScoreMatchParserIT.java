@@ -7,9 +7,9 @@ import com.bet.manager.models.FootballMatch;
 import com.bet.manager.models.dao.Match;
 import com.bet.manager.models.util.FootballMatchBuilder;
 import com.bet.manager.models.util.FootballMatchUtils;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.util.ArrayList;

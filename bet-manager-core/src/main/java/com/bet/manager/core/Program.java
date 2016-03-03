@@ -1,5 +1,6 @@
 package com.bet.manager.core;
 
+import com.bet.manager.core.util.DataCrawlerUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;

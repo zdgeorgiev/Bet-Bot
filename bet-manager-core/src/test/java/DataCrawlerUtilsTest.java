@@ -1,8 +1,8 @@
 import com.bet.manager.commons.util.ClasspathUtils;
-import com.bet.manager.core.DataCrawlerUtils;
-import com.bet.manager.core.DocumentUtils;
+import com.bet.manager.core.util.DataCrawlerUtils;
+import com.bet.manager.core.util.DocumentUtils;
+import org.junit.Assert;
 import org.junit.Test;
-import org.testng.Assert;
 import org.w3c.dom.Document;
 
 import java.util.HashMap;
@@ -175,7 +175,8 @@ public class DataCrawlerUtilsTest {
 		prevRoundStats.put("fouls-committed", 14.94);
 
 		String actual =
-				DataCrawlerUtils.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
+				DataCrawlerUtils
+						.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
 		String expected = "111923.72 189 579 21 15";
 
 		Assert.assertEquals(actual, expected);

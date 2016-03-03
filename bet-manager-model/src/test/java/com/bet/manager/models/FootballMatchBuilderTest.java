@@ -7,17 +7,17 @@ import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.models.exceptions.InvalidMatchDateException;
 import com.bet.manager.models.util.FootballMatchBuilder;
 import junit.framework.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.text.ParseException;
 import java.util.Date;
 
 public class FootballMatchBuilderTest {
 
-	private FootballMatchBuilder builder;
+	private static FootballMatchBuilder builder;
 
-	@BeforeMethod
+	@Before
 	public void init() {
 		builder = new FootballMatchBuilder()
 				.setHomeTeamName("Levski")
@@ -69,17 +69,17 @@ public class FootballMatchBuilderTest {
 		Assert.assertEquals(ResultMessages.NO_WINNER, match.getWinner());
 	}
 
-	@Test(expectedExceptions = EqualHomeAndAwayTeamException.class)
+	@Test(expected = EqualHomeAndAwayTeamException.class)
 	public void testMatchWithSameHomeAndAwayTeam() throws ParseException {
 		builder.setAwayTeamName("Levski").build();
 	}
 
-	@Test(expectedExceptions = ParseException.class)
+	@Test(expected = ParseException.class)
 	public void testMatchWithInvalidStartDate() throws ParseException {
 		builder.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20165101220000"));
 	}
 
-	@Test(expectedExceptions = InvalidMatchDateException.class)
+	@Test(expected = InvalidMatchDateException.class)
 	public void testMatchWithNotGivenStartDate() {
 		builder.build();
 	}

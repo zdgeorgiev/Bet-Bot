@@ -1,5 +1,7 @@
-package com.bet.manager.core;
+package com.bet.manager.core.util;
 
+import com.bet.manager.core.MatchesMapping;
+import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -92,16 +94,6 @@ public class DataCrawlerUtils {
 		return allData;
 	}
 
-	/**
-	 * Creating data for given round and year. This method containing multiple inner
-	 * crawlings which requiring internet connection
-	 *
-	 * @param year
-	 * @param round
-	 * @return {@link List<String>} matches for current {@param year} and {@param round}
-	 * @throws MalformedURLException if the string xml cannot be parsed as document
-	 * @throws InterruptedException  if the current thread cannot sleep
-	 */
 	private static List<String> createDataForRound(int year, int round)
 			throws MalformedURLException, InterruptedException {
 
@@ -203,7 +195,7 @@ public class DataCrawlerUtils {
 								attributes.getNamedItem(CODE_KEY_ATTR).getNodeValue().split(TEAM_ID_SPLITERATOR)[1]);
 				String teamName = attributes.getNamedItem(CODE_NAME_ATTR).getNodeValue();
 
-				checkIfNameIsCorrespondingToTeam(teamId, teamName);
+				checkForValidMappingBundesligaIdToTeam(teamId, teamName);
 
 				ranking.put(teamName, ranking.size() + 1);
 			}
@@ -212,15 +204,7 @@ public class DataCrawlerUtils {
 		return ranking;
 	}
 
-	/**
-	 * Method which check if the mapping from {@link MatchesMapping} is correct with the
-	 * bundesliga crawled id. This is pretty necessary because otherwise the data should be non-corresponding
-	 *
-	 * @param id   team id
-	 * @param team team name
-	 * @return true if the mapping is correct, false otherwise
-	 */
-	private static boolean checkIfNameIsCorrespondingToTeam(int id, String team) {
+	private static boolean checkForValidMappingBundesligaIdToTeam(int id, String team) {
 		if (MatchesMapping.bundesligaIdToName.get(id).equals(team)) {
 			return true;
 		}
@@ -235,7 +219,7 @@ public class DataCrawlerUtils {
 		URL prevRoundStatsURL = new URL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round));
 		String prevRoundStatsXML = getContentOfPage(prevRoundStatsURL);
 
-		log.info("Creating average stats map for year {} round {}", year, round);
+		log.info("Getting average statistics for year {} round {}", year, round);
 		return getAverageRoundStats(prevRoundStatsXML);
 	}
 
