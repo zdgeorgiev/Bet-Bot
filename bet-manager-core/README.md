@@ -1,2 +1,4 @@
-For integration tests should use the profile "integration-tests". Usage :
-    mvn clean install -Pintegration-tests
+For integration tests should use the profile "integration-tests".
+
+ Usage :
+   * mvn clean install -P integration-tests

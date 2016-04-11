@@ -27,7 +27,6 @@ public class Program {
 		//
 		//		matches.stream().forEach((x) -> System.out.println(predictor.predict(x)));
 
-
-		DataCrawlerUtils.getDataForAllMatches(2011);
+		System.out.println(DataCrawlerUtils.getDataForAllMatches(2011));
 	}
 }

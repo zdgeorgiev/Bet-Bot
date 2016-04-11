@@ -42,17 +42,17 @@ public class DataCrawlerUtilsTest {
 	@Test
 	public void testCorrectParsingPreviousRoundStatsForTeams() {
 
-		Map<String, Double> actual =
+		Map<String, Integer> actual =
 				DataCrawlerUtils
 						.getAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
 
-		Map<String, Double> expected = new HashMap<>();
+		Map<String, Integer> expected = new HashMap<>();
 
-		expected.put("imp:tracking-distance", 111923.72);
-		expected.put("imp:tracking-sprints", 191.69);
-		expected.put("imp:passes-total", 393.78);
-		expected.put("shots-total", 12.54);
-		expected.put("fouls-committed", 14.94);
+		expected.put("imp:tracking-distance", 111923);
+		expected.put("imp:tracking-sprints", 191);
+		expected.put("imp:passes-total", 393);
+		expected.put("shots-total", 12);
+		expected.put("fouls-committed", 14);
 
 		Assert.assertEquals(actual, expected);
 	}
@@ -148,12 +148,12 @@ public class DataCrawlerUtilsTest {
 
 		String prevRoundTeamStatsXML = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
 
-		Map<String, Double> prevRoundStats = new HashMap<>();
-		prevRoundStats.put("imp:tracking-distance", 111923.72);
-		prevRoundStats.put("imp:tracking-sprints", 191.69);
-		prevRoundStats.put("imp:passes-total", 393.78);
-		prevRoundStats.put("shots-total", 12.54);
-		prevRoundStats.put("fouls-committed", 14.94);
+		Map<String, Integer> prevRoundStats = new HashMap<>();
+		prevRoundStats.put("imp:tracking-distance", 111923);
+		prevRoundStats.put("imp:tracking-sprints", 191);
+		prevRoundStats.put("imp:passes-total", 393);
+		prevRoundStats.put("shots-total", 12);
+		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
 				DataCrawlerUtils.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
@@ -167,17 +167,17 @@ public class DataCrawlerUtilsTest {
 
 		String prevRoundTeamStatsXML = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
 
-		Map<String, Double> prevRoundStats = new HashMap<>();
-		prevRoundStats.put("imp:tracking-distance", 111923.72);
-		prevRoundStats.put("imp:tracking-sprints", 191.69);
-		prevRoundStats.put("imp:passes-total", 393.78);
-		prevRoundStats.put("shots-total", 12.54);
-		prevRoundStats.put("fouls-committed", 14.94);
+		Map<String, Integer> prevRoundStats = new HashMap<>();
+		prevRoundStats.put("imp:tracking-distance", 111923);
+		prevRoundStats.put("imp:tracking-sprints", 191);
+		prevRoundStats.put("imp:passes-total", 393);
+		prevRoundStats.put("shots-total", 12);
+		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
 				DataCrawlerUtils
 						.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
-		String expected = "111923.72 189 579 21 15";
+		String expected = "111923 189 579 21 15";
 
 		Assert.assertEquals(actual, expected);
 	}
