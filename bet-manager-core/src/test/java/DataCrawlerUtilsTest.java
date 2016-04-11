@@ -63,7 +63,7 @@ public class DataCrawlerUtilsTest {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
 		String[] actual = DataCrawlerUtils.getCurrentTeamOpponentAndVenue(content, 2);
 		String[] expected = new String[] { "Borussia M'gladbach", "-1" };
-		Assert.assertEquals(actual, expected);
+		Assert.assertArrayEquals(actual, expected);
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class DataCrawlerUtilsTest {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
 		String[] actual = DataCrawlerUtils.getCurrentTeamOpponentAndVenue(content, 3);
 		String[] expected = new String[] { "Bayer 04 Leverkusen", "1" };
-		Assert.assertEquals(actual, expected);
+		Assert.assertArrayEquals(actual, expected);
 	}
 
 	@Test
@@ -157,7 +157,7 @@ public class DataCrawlerUtilsTest {
 
 		String actual =
 				DataCrawlerUtils.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
-		String expected = "125042.44 184 320 13 11";
+		String expected = "125042 184 320 13 11";
 
 		Assert.assertEquals(actual, expected);
 	}

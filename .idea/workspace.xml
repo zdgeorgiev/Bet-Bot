@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/resources/TEAMS-FOR-SEASON-2009-2014.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/README.md" afterPath="$PROJECT_DIR$/bet-manager-core/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/MatchesMapping.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/MatchesMapping.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java" />
     </list>
     <ignored path="bet-manager.iws" />
@@ -47,20 +41,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataCrawlerUtils.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DataCrawlerUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.475">
+            <state vertical-scroll-proportion="0.0">
               <caret line="559" column="83" selection-start-line="559" selection-start-column="83" selection-end-line="559" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataCrawlerUtilsTest.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataCrawlerUtilsTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.475">
               <caret line="75" column="5" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
               <folding />
             </state>
@@ -71,7 +65,17 @@
         <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="52" column="11" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
+              <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FootballMatchBuilderTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -163,12 +167,12 @@
         <option value="$PROJECT_DIR$/bet-manager-core/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/README.md" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/resources/TEAMS-FOR-SEASON-2009-2014.txt" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/MatchesMapping.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java" />
       </list>
     </option>
   </component>
@@ -1486,7 +1490,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456974227773</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Refactoring and validate the all teams played in the bundesliga in period 2009-2014.">
+      <created>1460392121773</created>
+      <option name="number" value="00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1460392121773</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1526,6 +1536,7 @@
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1539,7 +1550,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38663968" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1580,7 +1590,8 @@
     <MESSAGE value="Added memorisation for crawling which will boost the performance of the class and continuing to implement it. Also added few new tests and changed the encoding to ISO for web crawler, because of the german letters. Made union of the ResultDB class and BundesLiga to more general one." />
     <MESSAGE value="Removed the testng dependency and using the junit instead and also refactored." />
     <MESSAGE value="Refactored and added benchmark for the collection data method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored and added benchmark for the collection data method" />
+    <MESSAGE value="Refactoring and validate the all teams played in the bundesliga in period 2009-2014." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring and validate the all teams played in the bundesliga in period 2009-2014." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1915,14 +1926,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/TEAMS-FOR-SEASON-2009-2014.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46875">
@@ -1947,26 +1950,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="559" column="83" selection-start-line="559" selection-start-column="83" selection-end-line="559" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="11" selection-start-line="52" selection-start-column="11" selection-end-line="52" selection-end-column="11" />
+          <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="75" column="5" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.475">
-          <caret line="559" column="83" selection-start-line="559" selection-start-column="83" selection-end-line="559" selection-end-column="83" />
+          <caret line="75" column="5" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
           <folding />
         </state>
       </provider>
