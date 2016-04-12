@@ -48,6 +48,8 @@ public class WebCrawler {
 				content = response.toString();
 			}
 
+			con.disconnect();
+
 			if (StringUtils.isBlank(content)) {
 				throw new IllegalStateException("Content of the page '" + page.toString() + "' cannot be empty.");
 			}
