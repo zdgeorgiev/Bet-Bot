@@ -1,6 +1,6 @@
 package com.bet.manager.core;
 
-import com.bet.manager.core.util.DataCrawlerUtils;
+import com.bet.manager.core.data.DataManger;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,6 +27,6 @@ public class Program {
 		//
 		//		matches.stream().forEach((x) -> System.out.println(predictor.predict(x)));
 
-		System.out.println(DataCrawlerUtils.getDataForAllMatches(2011));
+		System.out.println(DataManger.getDataForAllMatches(2011));
 	}
 }

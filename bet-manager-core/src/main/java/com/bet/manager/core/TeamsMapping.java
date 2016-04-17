@@ -3,13 +3,13 @@ package com.bet.manager.core;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MatchesMapping {
+public class TeamsMapping {
 
 	public static Map<Integer, String> bundesligaIdToName;
 	public static Map<String, String> resultDBToBundesliga;
 	public static Map<String, String> bundesligaToResultDB;
 
-	private MatchesMapping() {
+	private TeamsMapping() {
 	}
 
 	static {

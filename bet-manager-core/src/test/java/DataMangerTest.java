@@ -1,5 +1,6 @@
 import com.bet.manager.commons.util.ClasspathUtils;
-import com.bet.manager.core.util.DataCrawlerUtils;
+import com.bet.manager.core.data.sources.Bundesliga;
+import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.util.DocumentUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -8,13 +9,13 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataCrawlerUtilsTest {
+public class DataMangerTest {
 
 	@Test
 	public void testCorrectRankingParsing() {
 
 		Document doc = DocumentUtils.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml"));
-		Map<String, Integer> actual = DataCrawlerUtils.getRoundRanking(doc);
+		Map<String, Integer> actual = Bundesliga.getRoundRanking(doc);
 
 		Map<String, Integer> expected = new HashMap<>();
 		expected.put("VfB Stuttgart", 1);
@@ -43,7 +44,7 @@ public class DataCrawlerUtilsTest {
 	public void testCorrectParsingPreviousRoundStatsForTeams() {
 
 		Map<String, Integer> actual =
-				DataCrawlerUtils
+				Bundesliga
 						.getAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
 
 		Map<String, Integer> expected = new HashMap<>();
@@ -61,7 +62,7 @@ public class DataCrawlerUtilsTest {
 	public void testCorrectGettingTheFirstRoundOpponent() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String[] actual = DataCrawlerUtils.getCurrentTeamOpponentAndVenue(content, 2);
+		String[] actual = ResultDB.getCurrentTeamOpponentAndVenue(content, 2);
 		String[] expected = new String[] { "Borussia M'gladbach", "-1" };
 		Assert.assertArrayEquals(actual, expected);
 	}
@@ -70,7 +71,7 @@ public class DataCrawlerUtilsTest {
 	public void testCorrectGettingThirdRoundOpponent() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String[] actual = DataCrawlerUtils.getCurrentTeamOpponentAndVenue(content, 3);
+		String[] actual = ResultDB.getCurrentTeamOpponentAndVenue(content, 3);
 		String[] expected = new String[] { "Bayer 04 Leverkusen", "1" };
 		Assert.assertArrayEquals(actual, expected);
 	}
@@ -79,7 +80,7 @@ public class DataCrawlerUtilsTest {
 	public void testCorrectGettingLastFiveMatches() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = DataCrawlerUtils.getResultsForPastFiveGames(content, 6);
+		String actual = ResultDB.getResultsForPastFiveGames(content, 6);
 		String expected = "2 0 0 2 1";
 		Assert.assertEquals(actual, expected);
 	}
@@ -88,7 +89,7 @@ public class DataCrawlerUtilsTest {
 	public void testCorrectGettingFiveLastMatchesButContainsOnlyThree() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = DataCrawlerUtils.getResultsForPastFiveGames(content, 4);
+		String actual = ResultDB.getResultsForPastFiveGames(content, 4);
 		String expected = "1 0 0 1 1";
 		Assert.assertEquals(actual, expected);
 	}
@@ -97,7 +98,7 @@ public class DataCrawlerUtilsTest {
 	public void testCorrectGettingFiveLastMatchesForRound34() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = DataCrawlerUtils.getResultsForPastFiveGames(content, 34);
+		String actual = ResultDB.getResultsForPastFiveGames(content, 34);
 		String expected = "3 1 0 0 1";
 		Assert.assertEquals(actual, expected);
 	}
@@ -108,7 +109,7 @@ public class DataCrawlerUtilsTest {
 		int[] normalizationArray = new int[5];
 		String result = "W";
 		String score = "1-0";
-		DataCrawlerUtils.addMatchToNormalizationArray(result, score, normalizationArray);
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
 		Assert.assertEquals(normalizationArray[2], 1);
 	}
 
@@ -118,7 +119,7 @@ public class DataCrawlerUtilsTest {
 		int[] normalizationArray = new int[5];
 		String result = "D";
 		String score = "1-1";
-		DataCrawlerUtils.addMatchToNormalizationArray(result, score, normalizationArray);
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
 		Assert.assertEquals(normalizationArray[4], 1);
 	}
 
@@ -128,7 +129,7 @@ public class DataCrawlerUtilsTest {
 		int[] normalizationArray = new int[5];
 		String result = "W";
 		String score = "3-0";
-		DataCrawlerUtils.addMatchToNormalizationArray(result, score, normalizationArray);
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
 		Assert.assertEquals(normalizationArray[0], 1);
 	}
 
@@ -138,8 +139,8 @@ public class DataCrawlerUtilsTest {
 		int[] normalizationArray = new int[5];
 		String result = "W";
 		String score = "3-0";
-		DataCrawlerUtils.addMatchToNormalizationArray(result, score, normalizationArray);
-		DataCrawlerUtils.addMatchToNormalizationArray(result, score, normalizationArray);
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
 		Assert.assertEquals(normalizationArray[0], 2);
 	}
 
@@ -156,7 +157,7 @@ public class DataCrawlerUtilsTest {
 		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
-				DataCrawlerUtils.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
+				Bundesliga.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
 		String expected = "125042 184 320 13 11";
 
 		Assert.assertEquals(actual, expected);
@@ -175,7 +176,7 @@ public class DataCrawlerUtilsTest {
 		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
-				DataCrawlerUtils
+				Bundesliga
 						.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
 		String expected = "111923 189 579 21 15";
 
@@ -188,7 +189,7 @@ public class DataCrawlerUtilsTest {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml");
 		Document doc = DocumentUtils.parse(content);
 
-		String actual = DataCrawlerUtils.getCurrentRankingStats("FC Bayern München", doc);
+		String actual = Bundesliga.parseCurrentRankingStats("FC Bayern München", doc);
 		String expected = "0 -1";
 
 		Assert.assertEquals(actual, expected);
@@ -200,7 +201,7 @@ public class DataCrawlerUtilsTest {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches-round-15.xml");
 		Document doc = DocumentUtils.parse(content);
 
-		String actual = DataCrawlerUtils.getCurrentRankingStats("Borussia M'gladbach", doc);
+		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
 		String expected = "30 14";
 
 		Assert.assertEquals(actual, expected);
