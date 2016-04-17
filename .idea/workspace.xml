@@ -1,23 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="Huge refactoring.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/ResultDBTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/java/DataMangerTest.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager.iml" afterPath="$PROJECT_DIR$/bet-manager.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="Huge refactoring again. Added new module which will be used for collecting data.">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <ignored path="bet-manager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -1446,7 +1431,13 @@
       <option name="project" value="LOCAL" />
       <updated>1460901297855</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Huge refactoring again. Added new module which will be used for collecting data.">
+      <created>1460919906670</created>
+      <option name="number" value="00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1460919906670</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1494,7 +1485,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44129553" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21770833" sideWeight="0.6791498" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21770833" sideWeight="0.6791498" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37449393" sideWeight="0.49166667" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21770833" sideWeight="0.3208502" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1544,7 +1535,8 @@
     <MESSAGE value="Refactoring and removed the depricated array assertion" />
     <MESSAGE value="Small improvements" />
     <MESSAGE value="Huge refactoring." />
-    <option name="LAST_COMMIT_MESSAGE" value="Huge refactoring." />
+    <MESSAGE value="Huge refactoring again. Added new module which will be used for collecting data." />
+    <option name="LAST_COMMIT_MESSAGE" value="Huge refactoring again. Added new module which will be used for collecting data." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
