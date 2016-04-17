@@ -22,7 +22,7 @@ public class Main {
 
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-	private static final int ROUNDS = 2;
+	private static final int ROUNDS = 34;
 
 	private static final Map<URL, String> crawledPages = new HashMap<>();
 	private static final Map<String, Document> parsedDocs = new HashMap<>();
@@ -34,7 +34,7 @@ public class Main {
 
 		validateInput(args, startYear, endYear);
 
-		File destinationFolder = initializeTargetFolder(args);
+		File destinationFolder = initializeDestinationFolder(args);
 
 		for (int year = startYear.intValue(); year <= endYear.intValue(); year++) {
 
@@ -64,7 +64,7 @@ public class Main {
 			throw new IllegalArgumentException("Start year cannot be less than 2011");
 	}
 
-	private static File initializeTargetFolder(String[] args) {
+	private static File initializeDestinationFolder(String[] args) {
 
 		File destinationFolder;
 
