@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="Small improvements">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/PerformanceUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/MatchesMapping.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/DataMangerTest.java" />
+    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="Huge refactoring.">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/ResultDBTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/pom.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/java/DataMangerTest.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager.iml" afterPath="$PROJECT_DIR$/bet-manager.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
     </list>
     <ignored path="bet-manager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -19,6 +26,7 @@
     <ignored path="$PROJECT_DIR$/bet-manager-model/target/" />
     <ignored path="$PROJECT_DIR$/bet-manager-core/target/" />
     <ignored path="$PROJECT_DIR$/bet-manager-commons/target/" />
+    <ignored path="$PROJECT_DIR$/data-crawler-tool/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,11 +56,45 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataManger.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.01875">
-              <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="60" column="59" selection-start-line="60" selection-start-column="59" selection-end-line="60" selection-end-column="59" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bundesliga.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="170" column="57" selection-start-line="170" selection-start-column="57" selection-end-line="170" selection-end-column="57" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ResultDB.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="62" column="45" selection-start-line="62" selection-start-column="45" selection-end-line="62" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data-crawler-tool/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.07717042">
+              <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -79,15 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/ai/SimplePredictor.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/repositories/MatchRepository.java" />
-        <option value="$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/repositories/MatchAndPredictRepository.java" />
-        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/DateFormats.java" />
-        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/ResultMessages.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/post_standing_1.xml" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/exceptions/IllegalTeamMappingException.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/exceptions/ResultDB.java" />
-        <option value="$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/Jsoup.class" />
         <option value="$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.8.3/jsoup-1.8.3.jar!/org/jsoup/nodes/Element.class" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/exceptions/DocumentParseException.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/XMLUtils.java" />
@@ -96,7 +129,6 @@
         <option value="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/org/junit/internal/runners/model/ReflectiveCallable.class" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/crawl-data/resultdb-last-matches-for-team" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/DataCrawlerUtils.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
         <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ClasspathUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/crawl-data/resultdb-stats-for-matches.html" />
         <option value="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/org/junit/runners/ParentRunner.class" />
@@ -109,13 +141,10 @@
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/DocumentUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/DataCrawler.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-model/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-model/src/test/java/com/bet/manager/models/FootballMatchBuilderTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/README.md" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/resources/TEAMS-FOR-SEASON-2009-2014.txt" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/MatchesMapping.java" />
@@ -123,13 +152,26 @@
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/IMatchParser.java" />
         <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/PerformanceUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/ResultDB.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/DataCrawlerUtilsTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DataCrawlerUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataCrawlerUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataMangerUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/ResultDBTest.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/DataMangerTest.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/BundesligaTest.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" />
+        <option value="$PROJECT_DIR$/data-crawler-tool/src/main/java/Main.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
+        <option value="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/Main.java" />
+        <option value="$PROJECT_DIR$/data-crawler-tool/pom.xml" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
+        <option value="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" />
+        <option value="$PROJECT_DIR$/data-crawler-tool/README.md" />
       </list>
     </option>
   </component>
@@ -223,6 +265,76 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="data-crawler-tool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data-crawler-tool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data-crawler-tool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bet-manager" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="bet-manager-model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -252,10 +364,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -280,146 +388,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="repositories" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="exceptions" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -516,36 +484,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-core" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="it" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -840,44 +778,6 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="commons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bet-manager-commons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="commons" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -910,13 +810,6 @@
     <property name="ToolWindowStructure.ShowToolbar" value="false" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util" />
-      <recent name="$PROJECT_DIR$/bet-manager-core/src/test/resources" />
-      <recent name="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core" />
-      <recent name="$PROJECT_DIR$/bet-manager-core/src/test/java" />
-      <recent name="$PROJECT_DIR$/bet-manager-model/src/main/resources" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.bet.manager.model" />
       <recent name="com.bet.manager.core" />
@@ -924,35 +817,21 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data-crawler-tool/src/main/resources" />
+      <recent name="$PROJECT_DIR$/data-crawler-tool/src/main/java" />
       <recent name="$PROJECT_DIR$/bet-manager-core/src/main/resources" />
       <recent name="$PROJECT_DIR$/bet-manager-core/src/test/resources" />
       <recent name="$PROJECT_DIR$/bet-manager-core/src/main/java/resources" />
-      <recent name="$PROJECT_DIR$/bet-manager-model/src/main/java" />
-      <recent name="$PROJECT_DIR$/bet-manager-core/src/main/java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util" />
+      <recent name="$PROJECT_DIR$/bet-manager-core/src/test/resources" />
+      <recent name="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core" />
+      <recent name="$PROJECT_DIR$/bet-manager-core/src/test/java" />
+      <recent name="$PROJECT_DIR$/bet-manager-model/src/main/resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.mvn integration-test debug">
-    <configuration default="false" name="DataMangerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="bet-manager-core" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DataMangerTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Application.Main">
     <configuration default="false" name="Program" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -973,15 +852,35 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="DataMangerTest.testCorrectParsingResultToNormalizationArrayForWin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration default="false" name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.bet.manager.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.bet.manager.tools.Main" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="2014 2014 ~/Downloads/test" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="data-crawler-tool" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="BundesligaTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="bet-manager-core" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DataMangerTest" />
-      <option name="METHOD_NAME" value="testCorrectParsingResultToNormalizationArrayForWin" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="data.sources" />
+      <option name="MAIN_CLASS_NAME" value="data.sources.BundesligaTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -1330,20 +1229,20 @@
       <method />
     </configuration>
     <list size="6">
-      <item index="0" class="java.lang.String" itemvalue="Maven.mvn integration-test debug" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.DataMangerTest" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Program" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.DataMangerTest.testCorrectParsingResultToNormalizationArrayForWin" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest.testMatchWinnerWithNoGivenResult" />
+      <item index="0" class="java.lang.String" itemvalue="Application.Program" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Main" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.BundesligaTest" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest.testMatchWinnerWithNoGivenResult" />
+      <item index="5" class="java.lang.String" itemvalue="Maven.mvn integration-test debug" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.Program" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.DataMangerTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest.testMatchWinnerWithNoGivenResult" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.DataMangerTest.testCorrectParsingResultToNormalizationArrayForWin" />
+        <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Program" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.BundesligaTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.FootballMatchBuilderTest.testMatchWinnerWithNoGivenResult" />
       </list>
     </recent_temporary>
   </component>
@@ -1541,7 +1440,13 @@
       <option name="project" value="LOCAL" />
       <updated>1460467558600</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Huge refactoring.">
+      <created>1460901297855</created>
+      <option name="number" value="00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1460901297855</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1580,27 +1485,27 @@
     <frame x="0" y="-4" width="1920" height="1084" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21770833" sideWeight="0.8360324" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37449393" sideWeight="0.49166667" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21770833" sideWeight="0.16396761" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44129553" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21770833" sideWeight="0.6791498" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37449393" sideWeight="0.49166667" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21770833" sideWeight="0.3208502" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21770833" sideWeight="0.5080972" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38663968" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44129553" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38663968" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1638,12 +1543,21 @@
     <MESSAGE value="Refactoring and validate the all teams played in the bundesliga in period 2009-2014." />
     <MESSAGE value="Refactoring and removed the depricated array assertion" />
     <MESSAGE value="Small improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Small improvements" />
+    <MESSAGE value="Huge refactoring." />
+    <option name="LAST_COMMIT_MESSAGE" value="Huge refactoring." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="237" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java</url>
+          <line>56</line>
+          <properties />
+          <option name="timeStamp" value="247" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="250" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
@@ -1660,55 +1574,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.666667">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/dao/Match.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="39" selection-start-line="94" selection-start-column="39" selection-end-line="94" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Random.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.353125">
-          <caret line="380" column="33" selection-start-line="380" selection-start-column="33" selection-end-line="380" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/FootballMatch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.075">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6375">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/EqualHomeAndAwayTeamException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0375">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/exceptions/InvalidMatchDateException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0375">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/repositories/MatchRepository.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1779,13 +1644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/org/junit/runners/ParentRunner.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34895834">
@@ -1821,13 +1679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1849,25 +1700,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-33.22222">
-          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/crawl-data/bundesliga-round-stats.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4437299">
           <caret line="23" column="83" selection-start-line="23" selection-start-column="83" selection-end-line="23" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.825">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1899,6 +1735,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="24" selection-start-line="20" selection-start-column="24" selection-end-line="20" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1914,29 +1751,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="72" selection-start-line="29" selection-start-column="72" selection-end-line="29" selection-end-column="72" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/TEAMS-FOR-SEASON-2009-2014.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46875">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1996,47 +1810,163 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java">
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/util/DocumentUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.76875">
+          <caret line="56" column="13" selection-start-line="56" selection-start-column="13" selection-end-line="56" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/util/Collections.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="4518" column="39" selection-start-line="4518" selection-start-column="39" selection-end-line="4518" selection-end-column="39" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getResultsForPastFiveGames#0;class#ResultDB#0" expanded="false" />
+            <element signature="e#178258#178259#0" expanded="false" />
+            <element signature="e#178301#178302#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java">
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/TEAMS-FOR-SEASON-2009-2014.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="251" column="39" selection-start-line="251" selection-start-column="39" selection-end-line="251" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.46875">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8125">
-          <caret line="143" column="42" selection-start-line="143" selection-start-column="42" selection-end-line="143" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.6">
+          <caret line="48" column="97" selection-start-line="48" selection-start-column="97" selection-end-line="48" selection-end-column="97" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/DataMangerTest.java">
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/ResultDBTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15">
-          <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.1125">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28938907">
+          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.666667">
+          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-model/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3279743">
+          <caret line="17" column="50" selection-start-line="17" selection-start-column="50" selection-end-line="17" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="54" selection-start-line="94" selection-start-column="25" selection-end-line="94" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22712934">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-crawler-tool/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49839228">
+          <caret line="36" column="46" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36655948">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.01875">
-          <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.6625">
+          <caret line="84" column="43" selection-start-line="84" selection-start-column="43" selection-end-line="84" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/TeamsMapping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83125">
+          <caret line="98" column="54" selection-start-line="98" selection-start-column="54" selection-end-line="98" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/java/net/URL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50208336">
+          <caret line="944" column="15" selection-start-line="944" selection-start-column="15" selection-end-line="944" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="59" selection-start-line="60" selection-start-column="59" selection-end-line="60" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="170" column="57" selection-start-line="170" selection-start-column="57" selection-end-line="170" selection-end-column="57" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="62" column="45" selection-start-line="62" selection-start-column="45" selection-end-line="62" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-crawler-tool/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07717042">
+          <caret line="4" column="38" selection-start-line="4" selection-start-column="38" selection-end-line="4" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -2047,6 +1977,18 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2081,7 +2023,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>bet-manager</last-edited>
+          <last-edited>data-crawler-tool</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -2094,7 +2036,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: com.beust:jcommander:1.48</last-edited>
+          <last-edited>Maven: ch.qos.logback:logback-access:1.1.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

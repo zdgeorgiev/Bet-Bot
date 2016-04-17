@@ -12,6 +12,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Collections;
+import java.util.Map;
 
 public class DocumentUtils {
 
@@ -34,6 +36,15 @@ public class DocumentUtils {
 	}
 
 	public static Document parse(String xml) {
+		return parse(xml, Collections.emptyMap());
+	}
+
+	public static Document parse(String xml, Map<String, Document> parsedDocuments) {
+		if (parsedDocuments.containsKey(xml)) {
+			Document d = parsedDocuments.get(xml);
+			log.info("Returning document cache version of {}", parsedDocuments.get(xml).getDocumentURI());
+			return d;
+		}
 
 		if (xml.contains("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >")) {
 			xml = xml.replace("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >", "");

@@ -42,7 +42,7 @@ public class TeamsMapping {
 		bundesligaIdToName.put(223, "Arminia Bielefeld");
 		bundesligaIdToName.put(27, "Fortuna Düsseldorf");
 		bundesligaIdToName.put(2321, "SC Paderborn 07");
-		bundesligaIdToName.put(1649, "Greuther Fürth");
+		bundesligaIdToName.put(1649, "SpVgg Greuther Fürth");
 
 		resultDBToBundesliga.put("Borussia Dortmund", "Borussia Dortmund");
 		resultDBToBundesliga.put("Bayern Munich", "FC Bayern München");

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
@@ -31,12 +30,7 @@ public class ResultDB {
 
 	private static final WebCrawler crawler = new WebCrawler();
 
-	public static String parseResultsForPastFiveGames(String teamNameFromBundesliga, int year, int round)
-			throws MalformedURLException, InterruptedException {
-		return parseResultsForPastFiveGames(teamNameFromBundesliga, year, round, Collections.emptyMap());
-	}
-
-	public static String parseResultsForPastFiveGames(String teamNameFromBundesliga, int year, int round,
+	public static String getLastFiveGamesForTeam(String teamNameFromBundesliga, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
@@ -44,20 +38,21 @@ public class ResultDB {
 
 		if (StringUtils.isBlank(resultDBTeamName)) {
 			throw new IllegalStateException(
-					"Cannot find any mapping to team '" + teamNameFromBundesliga + "' in TeamsMapping HashMap.");
+					"Cannot find any mapping to team '" + teamNameFromBundesliga
+							+ "' in bundesliga to resultdb HashMap.");
 		}
 
 		URL allMatchesForTeamURL =
-				new URL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				createSaveURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
 		String content = getContentOfPage(allMatchesForTeamURL, crawledPages);
 
-		return getResultsForPastFiveGames(content, round);
+		return parseLastFiveGamesForTeam(content, round);
 	}
 
 	private static String getContentOfPage(URL url, Map<URL, String> crawledPages) throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
-			log.info("Returning cached copy of '{}'", url);
+			log.debug("Returning cached copy of '{}'", url);
 			return crawledPages.get(url);
 		}
 
@@ -78,7 +73,7 @@ public class ResultDB {
 	 * @return data format ({HugeWin} {HugeLoss} {Win} {Loss} {Tie}). WHen the huge outcome
 	 * is made if the absolute value between the goals is greater than 1
 	 */
-	public static String getResultsForPastFiveGames(String allMatchesHTML, int round) {
+	public static String parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
 
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
@@ -142,22 +137,21 @@ public class ResultDB {
 		}
 	}
 
-	public static String[] parseCurrentTeamOpponentAndVenue(String homeTeam, int year, int round)
-			throws MalformedURLException, InterruptedException {
-		return parseCurrentTeamOpponentAndVenue(homeTeam, year, round, Collections.emptyMap());
-	}
-
-	public static String[] parseCurrentTeamOpponentAndVenue(String homeTeam, int year, int round,
+	public static String[] getTeamOpponentAndVenue(String homeTeam, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(homeTeam);
 		URL allMatchesForTeamURL =
-				new URL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				createSaveURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
 		String content = getContentOfPage(allMatchesForTeamURL, crawledPages);
 
-		return getCurrentTeamOpponentAndVenue(content, round);
+		return parseTeamOpponentAndVenue(content, round);
+	}
+
+	private static URL createSaveURL(String url) throws MalformedURLException {
+		return new URL(String.format(url).replace(" ", "%20"));
 	}
 
 	/**
@@ -169,7 +163,7 @@ public class ResultDB {
 	 * @param round          to know which opponent should be returned
 	 * @return the opponent and venue stored in array (0 => opponent, 1 => venue)
 	 */
-	public static String[] getCurrentTeamOpponentAndVenue(String allMatchesHTML, int round) {
+	public static String[] parseTeamOpponentAndVenue(String allMatchesHTML, int round) {
 
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);

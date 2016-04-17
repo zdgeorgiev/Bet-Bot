@@ -1,6 +1,6 @@
+package com.bet.manager.core.data.sources;
+
 import com.bet.manager.commons.util.ClasspathUtils;
-import com.bet.manager.core.data.sources.Bundesliga;
-import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.util.DocumentUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,13 +9,13 @@ import org.w3c.dom.Document;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataMangerTest {
+public class BundesligaTest {
 
 	@Test
 	public void testCorrectRankingParsing() {
 
 		Document doc = DocumentUtils.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml"));
-		Map<String, Integer> actual = Bundesliga.getRoundRanking(doc);
+		Map<String, Integer> actual = Bundesliga.createRankingTable(doc);
 
 		Map<String, Integer> expected = new HashMap<>();
 		expected.put("VfB Stuttgart", 1);
@@ -45,7 +45,7 @@ public class DataMangerTest {
 
 		Map<String, Integer> actual =
 				Bundesliga
-						.getAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
+						.parseAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
 
 		Map<String, Integer> expected = new HashMap<>();
 
@@ -56,92 +56,6 @@ public class DataMangerTest {
 		expected.put("fouls-committed", 14);
 
 		Assert.assertEquals(actual, expected);
-	}
-
-	@Test
-	public void testCorrectGettingTheFirstRoundOpponent() {
-
-		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String[] actual = ResultDB.getCurrentTeamOpponentAndVenue(content, 2);
-		String[] expected = new String[] { "Borussia M'gladbach", "-1" };
-		Assert.assertArrayEquals(actual, expected);
-	}
-
-	@Test
-	public void testCorrectGettingThirdRoundOpponent() {
-
-		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String[] actual = ResultDB.getCurrentTeamOpponentAndVenue(content, 3);
-		String[] expected = new String[] { "Bayer 04 Leverkusen", "1" };
-		Assert.assertArrayEquals(actual, expected);
-	}
-
-	@Test
-	public void testCorrectGettingLastFiveMatches() {
-
-		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = ResultDB.getResultsForPastFiveGames(content, 6);
-		String expected = "2 0 0 2 1";
-		Assert.assertEquals(actual, expected);
-	}
-
-	@Test
-	public void testCorrectGettingFiveLastMatchesButContainsOnlyThree() {
-
-		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = ResultDB.getResultsForPastFiveGames(content, 4);
-		String expected = "1 0 0 1 1";
-		Assert.assertEquals(actual, expected);
-	}
-
-	@Test
-	public void testCorrectGettingFiveLastMatchesForRound34() {
-
-		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = ResultDB.getResultsForPastFiveGames(content, 34);
-		String expected = "3 1 0 0 1";
-		Assert.assertEquals(actual, expected);
-	}
-
-	@Test
-	public void testCorrectParsingResultToNormalizationArrayForWin() {
-
-		int[] normalizationArray = new int[5];
-		String result = "W";
-		String score = "1-0";
-		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-		Assert.assertEquals(normalizationArray[2], 1);
-	}
-
-	@Test
-	public void testCorrectParsingResultToNormalizationArrayForTie() {
-
-		int[] normalizationArray = new int[5];
-		String result = "D";
-		String score = "1-1";
-		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-		Assert.assertEquals(normalizationArray[4], 1);
-	}
-
-	@Test
-	public void testCorrectParsingResultToNormalizationArrayForHugeWin() {
-
-		int[] normalizationArray = new int[5];
-		String result = "W";
-		String score = "3-0";
-		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-		Assert.assertEquals(normalizationArray[0], 1);
-	}
-
-	@Test
-	public void testCorrectParsingTwoResultToNormalizationArrayForHugeWin() {
-
-		int[] normalizationArray = new int[5];
-		String result = "W";
-		String score = "3-0";
-		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-		Assert.assertEquals(normalizationArray[0], 2);
 	}
 
 	@Test
@@ -157,7 +71,7 @@ public class DataMangerTest {
 		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
-				Bundesliga.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
+				Bundesliga.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
 		String expected = "125042 184 320 13 11";
 
 		Assert.assertEquals(actual, expected);
@@ -177,7 +91,7 @@ public class DataMangerTest {
 
 		String actual =
 				Bundesliga
-						.getPrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
+						.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
 		String expected = "111923 189 579 21 15";
 
 		Assert.assertEquals(actual, expected);

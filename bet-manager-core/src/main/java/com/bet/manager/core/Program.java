@@ -1,32 +1,8 @@
 package com.bet.manager.core;
 
-import com.bet.manager.core.data.DataManger;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
-
 public class Program {
 
-	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
+	public static void main(String[] args) {
 
-		//		BasicConfigurator.configure();
-		//
-		//		WebCrawler crawler = new WebCrawler();
-		//		IMatchParser parser = new LiveScoreMatchParser();
-		//		IPredictor predictor = new SimplePredictor();
-		//
-		//		List<Match> matches =
-		//				parser.parse(
-		//						crawler.crawl(
-		//								new URL("http://www.livescore.com/soccer/germany/2-bundesliga/results/30-days/")));
-		//
-		//		matches.stream().forEach((x) -> System.out.println(x));
-		//
-		//		System.out.println("WINNERS");
-		//
-		//		matches.stream().forEach((x) -> System.out.println(predictor.predict(x)));
-
-		System.out.println(DataManger.getDataForAllMatches(2011));
 	}
 }
