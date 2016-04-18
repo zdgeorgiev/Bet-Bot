@@ -1,7 +1,9 @@
 package com.bet.manager.core.data.sources;
 
+import com.bet.manager.commons.util.URLUtils;
 import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
+import com.bet.manager.core.data.sources.exceptions.InvalidMappingException;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -11,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
-import java.util.Random;
 
 public class ResultDB {
 
@@ -28,53 +29,38 @@ public class ResultDB {
 	private static final String LOSE_GAME_LITERAL = "L";
 	private static final String RESULT_SPLITERATOR = "-";
 
-	private static final WebCrawler crawler = new WebCrawler();
-
-	public static String getLastFiveGamesForTeam(String teamNameFromBundesliga, int year, int round,
+	/**
+	 * Collects data for last five matches for given team depends on the given round.
+	 * If the matches before the given round is less than five will take the available ones.
+	 *
+	 * @param team  team name
+	 * @param year  year of the match
+	 * @param round round of the match
+	 */
+	public static String getLastFiveGamesForTeam(String team, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(teamNameFromBundesliga);
+		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
 
 		if (StringUtils.isBlank(resultDBTeamName)) {
-			throw new IllegalStateException(
-					"Cannot find any mapping to team '" + teamNameFromBundesliga
-							+ "' in bundesliga to resultdb HashMap.");
+			throw new InvalidMappingException(
+					"Cannot find any mapping to team '" + team + "' in bundesliga to resultdb HashMap.");
 		}
 
 		URL allMatchesForTeamURL =
-				createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				URLUtils.createSafeURL(
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = getContentOfPage(allMatchesForTeamURL, crawledPages);
+		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 
+		log.debug("Trying to parse the last five games for team '{}' year {} round {}..", team, year, round);
 		return parseLastFiveGamesForTeam(content, round);
 	}
 
-	private static String getContentOfPage(URL url, Map<URL, String> crawledPages)
-			throws InterruptedException {
-		if (crawledPages.containsKey(url)) {
-			log.debug("Returning cached copy of '{}'", url);
-			return crawledPages.get(url);
-		}
-
-		// Put asleep the thread for 3-5 seconds
-		Thread.sleep(new Random().nextInt(2000) + 3000);
-
-		String contentOfPage = crawler.crawl(url);
-
-		try {
-			crawledPages.put(url, contentOfPage);
-		} catch (Exception e) {
-			// This catch block is leaved empty not incidentally.
-			// If the collection is Collections.emptyMap() items cannot be added and will throw exception
-		}
-
-		return contentOfPage;
-	}
-
 	/**
-	 * Collects data for last five matches for given team. If the matches before the
-	 * given round is less than five will take the available ones.
+	 * Collects data for last five matches for given team depends on the given round.
+	 * If the matches before the given round is less than five will take the available ones.
 	 *
 	 * @param allMatchesHTML containing all the matches for given team
 	 * @param round          to get the last matches before the round
@@ -86,13 +72,15 @@ public class ResultDB {
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
 
-		int matchesCount = e.children().get(0).children().size();
+		int matchesCount = e.children().get(0).children().size() - 1;
+		log.debug("Found {} matches total.");
 
 		int[] matchesNormalization = new int[5];
 		int matchesToLook = Math.min(round - 1, 5);
+		log.debug("Getting last {} matches.", matchesToLook);
 
 		for (int i = 0; i < matchesToLook; i++) {
-			Element currentMatch = e.children().get(0).children().get(matchesCount - round + i + 1);
+			Element currentMatch = e.children().get(0).children().get(matchesCount - round + 2 + i);
 
 			String result = currentMatch.children().get(3).text();
 			String score = currentMatch.children().get(4).text();
@@ -104,6 +92,7 @@ public class ResultDB {
 			output.append(match).append(" ");
 		}
 
+		log.debug("Successfully get information about last {} matches", matchesToLook);
 		return output.toString().trim();
 	}
 
@@ -145,26 +134,34 @@ public class ResultDB {
 		}
 	}
 
-	public static String[] getTeamOpponentAndVenue(String homeTeam, int year, int round, Map<URL, String> crawledPages)
+	/**
+	 * Method which find a opponent for given team and also find the venue for the match.
+	 * This method is using internally crawling to the required pages.
+	 *
+	 * @param team         team name
+	 * @param year         year of the match
+	 * @param round        round of the match
+	 * @param crawledPages memorization map for already crawled pages
+	 * @return the opponent and venue stored in array (0 => opponent, 1 => venue)
+	 */
+	public static String[] getTeamOpponentAndVenue(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(homeTeam);
+		log.debug("Getting opponent for team '{}' and end result for match in year {} round {}", team, year, round);
+		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
 		URL allMatchesForTeamURL =
-				createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				URLUtils.createSafeURL(
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = getContentOfPage(allMatchesForTeamURL, crawledPages);
+		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 
 		return parseTeamOpponentAndVenue(content, round);
-	}
-
-	private static URL createSafeURL(String url) throws MalformedURLException {
-		return new URL(url.replace(" ", "%20"));
 	}
 
 	/**
 	 * Method parses the given html as string and return the target round match opponent and venue
 	 * Venue is Away or Home. The Venue is -1 if the current team is Away and 1 if the current team is Home.
-	 * The opponent is mapped to match the bundesliga name since was raw parsed from resultdb
+	 * The opponent is mapped to match the bundesliga name since was raw parsed from resultdb.
 	 *
 	 * @param allMatchesHTML contains the arbitrary team all matches for arbitrary year
 	 * @param round          to know which opponent should be returned
@@ -179,9 +176,16 @@ public class ResultDB {
 		Element currentMatch = e.children().get(0).children().get(matchesCount - round);
 
 		String mappedOpponent = TeamsMapping.resultDBToBundesliga.get(currentMatch.children().get(1).text());
+		log.debug("Opponent : '{}'", mappedOpponent);
 		String venue = currentMatch.children().get(2).text();
+		log.debug("Venue : {}", venue);
 		String venueNormalization = venue.equals(AWAY_TEAM_LITERAL) ? "-1" : "1";
 
 		return new String[] { mappedOpponent, venueNormalization };
+	}
+
+	public static String getMatchResult(String homeTeam, String awayTeam) {
+		//TODO: Implement the function which extract the end result for given teams
+		return null;
 	}
 }

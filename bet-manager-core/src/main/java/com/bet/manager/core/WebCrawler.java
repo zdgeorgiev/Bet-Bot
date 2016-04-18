@@ -8,24 +8,63 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
+import java.util.Random;
 
 public class WebCrawler {
 
 	private static final Logger log = LoggerFactory.getLogger(WebCrawler.class);
+
 	private static final String USER_AGENT = "Mozilla/5.0";
 
-	public String crawl(URL page) {
-		checkValidPage(page);
-		return getContent(page);
+	private WebCrawler() {
 	}
 
-	private void checkValidPage(URL page) {
-		if (page == null) {
-			throw new IllegalArgumentException("URL page cannot be null");
+	/**
+	 * Crawling method which uses a external hashmap for memorization, not to crawl already crawled pages.
+	 *
+	 * @param url          url of the page
+	 * @param crawledPages memorization map
+	 * @return the content of a page
+	 */
+	public static String crawl(URL url, Map<URL, String> crawledPages) throws InterruptedException {
+		return crawl(url, crawledPages, 3, 5);
+	}
+
+	/**
+	 * Crawling method which uses a external hashmap for memorization, not to crawl already crawled pages.
+	 * Also this method is using Thread.sleep() between the requests.
+	 *
+	 * @param url             url of the page
+	 * @param crawledPages    memorization map
+	 * @param minSecondsSleep minimum sleep time between each request
+	 * @param maxSecondsSleep maximum sleep time between each request
+	 * @return the content of a page
+	 */
+	public static String crawl(URL url, Map<URL, String> crawledPages,
+			int minSecondsSleep, int maxSecondsSleep)
+			throws InterruptedException {
+		if (crawledPages.containsKey(url)) {
+			log.debug("Returning cached copy of '{}'", url);
+			return crawledPages.get(url);
 		}
+
+		// Put asleep the thread for 3-5 seconds
+		Thread.sleep(new Random().nextInt((maxSecondsSleep - minSecondsSleep) * 1000) + maxSecondsSleep * 1000);
+
+		String contentOfPage = getContent(url);
+
+		try {
+			crawledPages.put(url, contentOfPage);
+		} catch (Exception e) {
+			// This catch block is leaved empty not incidentally.
+			// If the collection is Collections.emptyMap() items cannot be added and will throw exception
+		}
+
+		return contentOfPage;
 	}
 
-	private String getContent(URL page) {
+	private static String getContent(URL page) {
 
 		String content;
 

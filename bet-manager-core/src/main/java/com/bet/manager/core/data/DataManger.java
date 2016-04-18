@@ -2,11 +2,11 @@ package com.bet.manager.core.data;
 
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ResultDB;
+import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
 import org.w3c.dom.Document;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Map;
 
 public class DataManger {
@@ -16,45 +16,21 @@ public class DataManger {
 	 * while want to get information about future match, just passes the current year and expected round.
 	 * The data is in the format :
 	 * [round] (for both teams - [ladderPosition] [currentRoundStats] [venue] [prevRoundStats] [lastFiveGames])
-	 * <p>
+	 * <p/>
 	 * [ladderPosition] - Current position in the ranking table for the round.
 	 * [currentRoundStats] - Current points and round goals difference.
 	 * [venue] - Home/Away
 	 * [prevRoundStats] - [track distance] [sprints] [passes] [shots] [fouls].
 	 * [lastFiveGames] - Consist of 5 type of game end. Huge win [HW], Huge Lose [HL], Win [W], Lose [W], Tie [T],
 	 * home team goals -  away team goals >= 2 - HW, <= 2 - HL, else W,L,T.
-	 * <p>
+	 * <p/>
 	 *
-	 * @param homeTeam homeTeam in Bundesliga name format
-	 * @param awayTeam awayTeam in Bundesliga name format
-	 * @param year     match year
-	 * @param round    match round
-	 * @return Data for the match
-	 */
-	public static String getDataForMatch(String homeTeam, String awayTeam, int year, int round)
-			throws MalformedURLException, InterruptedException {
-		return getDataForMatch(homeTeam, awayTeam, year, round, Collections.emptyMap(), Collections.emptyMap());
-	}
-
-	/**
-	 * Method which creates data for given home, away team, year and round. These method should be used
-	 * while want to get information about future match, just passes the current year and expected round.
-	 * The data is in the format :
-	 * [round] (for both teams - [ladderPosition] [currentRoundStats] [venue] [prevRoundStats] [lastFiveGames])
-	 * <p>
-	 * [ladderPosition] - Current position in the ranking table for the round.
-	 * [currentRoundStats] - Current points and round goals difference.
-	 * [venue] - Home/Away
-	 * [prevRoundStats] - [track distance] [sprints] [passes] [shots] [fouls].
-	 * [lastFiveGames] - Consist of 5 type of game end. Huge win [HW], Huge Lose [HL], Win [W], Lose [W], Tie [T],
-	 * home team goals -  away team goals >= 2 - HW, <= 2 - HL, else W,L,T.
-	 * <p>
-	 * * This method uses a memorization maps for performance boost, but its highly recommended to use its overload.
-	 *
-	 * @param homeTeam homeTeam as Bundesliga name
-	 * @param awayTeam awayTeam as Bundesliga name
-	 * @param year     match year
-	 * @param round    match round
+	 * @param homeTeam        homeTeam as Bundesliga name
+	 * @param awayTeam        awayTeam as Bundesliga name
+	 * @param year            match year
+	 * @param round           match round should be at least 2nd one, because information for round 0 is invalid
+	 * @param crawledPages    hashMap which is responsible for the memorization, not to crawl already crawled pages
+	 * @param parsedDocuments hashMap which is responsible for the memorization, not to parse already parsed docs
 	 * @return Data for the match
 	 */
 	public static String getDataForMatch(String homeTeam, String awayTeam, int year, int round,
@@ -78,6 +54,9 @@ public class DataManger {
 	private static String getDataForTeam(String team, int year, int round, Map<URL, String> crawledPages,
 			Map<String, Document> parsedDocuments)
 			throws MalformedURLException, InterruptedException {
+
+		if (round <= 1)
+			throw new InvalidMatchRoundIndex("Match index " + round + " cannot be less than 2nd one.");
 
 		StringBuilder currentTeamData = new StringBuilder();
 

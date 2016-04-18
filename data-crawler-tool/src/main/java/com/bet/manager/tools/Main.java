@@ -139,7 +139,7 @@ public class Main {
 							.append(DataManger
 									.getDataForMatch(homeTeam, awayTeam, year, round, crawledPages, parsedDocs))
 							.append(" ")
-							.append(Bundesliga.getMatchResult(homeTeam, awayTeam));
+							.append(ResultDB.getMatchResult(homeTeam, awayTeam));
 
 					log.info("({}/{}) Data for match '{}'-'{}' was successfully created",
 							dataRows.size() + 1, currentRoundTeams.getLength() / 2, homeTeam, awayTeam);
