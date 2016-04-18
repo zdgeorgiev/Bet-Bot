@@ -1,9 +1,9 @@
 package com.bet.manager.core.data.sources;
 
+import com.bet.manager.commons.util.DocumentUtils;
 import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
-import com.bet.manager.core.util.DocumentUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,16 +120,17 @@ public class Bundesliga {
 		Map<String, Integer> prevRoundAverageStats =
 				Bundesliga.getAverageRoundStats(year, round - 1, crawledPages, parsedDocuments);
 
-		URL prevRoundStatsURL = createSaveURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
+		URL prevRoundStatsURL = createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
 		String prevRoundTeamStatsXML = getContentOfPage(prevRoundStatsURL, crawledPages);
 		return parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats, parsedDocuments);
 	}
 
-	private static URL createSaveURL(String url) throws MalformedURLException {
-		return new URL(String.format(url).replace(" ", "%20"));
+	private static URL createSafeURL(String url) throws MalformedURLException {
+		return new URL(url.replace(" ", "%20"));
 	}
 
-	private static String getContentOfPage(URL url, Map<URL, String> crawledPages) throws InterruptedException {
+	private static String getContentOfPage(URL url, Map<URL, String> crawledPages)
+			throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
 			log.debug("Returning cached copy of '{}'", url);
 			return crawledPages.get(url);
@@ -139,7 +140,14 @@ public class Bundesliga {
 		Thread.sleep(new Random().nextInt(2000) + 3000);
 
 		String contentOfPage = crawler.crawl(url);
-		crawledPages.put(url, contentOfPage);
+
+		try {
+			crawledPages.put(url, contentOfPage);
+		} catch (Exception e) {
+			// This catch block is leaved empty not incidentally.
+			// If the collection is Collections.emptyMap() items cannot be added and will throw exception
+		}
+
 		return contentOfPage;
 	}
 
@@ -231,7 +239,7 @@ public class Bundesliga {
 
 	public static String getMatches(int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
-		URL prevRoundMatchesURL = createSaveURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
+		URL prevRoundMatchesURL = createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
 
 		return getContentOfPage(prevRoundMatchesURL, crawledPages);
 	}
@@ -240,7 +248,7 @@ public class Bundesliga {
 			Map<String, Document> parsedDocuments)
 			throws MalformedURLException, InterruptedException {
 
-		URL prevRoundStatsURL = createSaveURL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round));
+		URL prevRoundStatsURL = createSafeURL(String.format(BUNDESLIGA_DOMAIN + STATS_URL, year, round));
 		String prevRoundStatsXML = getContentOfPage(prevRoundStatsURL, crawledPages);
 
 		return parseAverageRoundStats(prevRoundStatsXML, parsedDocuments);

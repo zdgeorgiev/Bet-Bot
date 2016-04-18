@@ -43,14 +43,15 @@ public class ResultDB {
 		}
 
 		URL allMatchesForTeamURL =
-				createSaveURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
 		String content = getContentOfPage(allMatchesForTeamURL, crawledPages);
 
 		return parseLastFiveGamesForTeam(content, round);
 	}
 
-	private static String getContentOfPage(URL url, Map<URL, String> crawledPages) throws InterruptedException {
+	private static String getContentOfPage(URL url, Map<URL, String> crawledPages)
+			throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
 			log.debug("Returning cached copy of '{}'", url);
 			return crawledPages.get(url);
@@ -60,7 +61,14 @@ public class ResultDB {
 		Thread.sleep(new Random().nextInt(2000) + 3000);
 
 		String contentOfPage = crawler.crawl(url);
-		crawledPages.put(url, contentOfPage);
+
+		try {
+			crawledPages.put(url, contentOfPage);
+		} catch (Exception e) {
+			// This catch block is leaved empty not incidentally.
+			// If the collection is Collections.emptyMap() items cannot be added and will throw exception
+		}
+
 		return contentOfPage;
 	}
 
@@ -137,21 +145,20 @@ public class ResultDB {
 		}
 	}
 
-	public static String[] getTeamOpponentAndVenue(String homeTeam, int year, int round,
-			Map<URL, String> crawledPages)
+	public static String[] getTeamOpponentAndVenue(String homeTeam, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(homeTeam);
 		URL allMatchesForTeamURL =
-				createSaveURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
 		String content = getContentOfPage(allMatchesForTeamURL, crawledPages);
 
 		return parseTeamOpponentAndVenue(content, round);
 	}
 
-	private static URL createSaveURL(String url) throws MalformedURLException {
-		return new URL(String.format(url).replace(" ", "%20"));
+	private static URL createSafeURL(String url) throws MalformedURLException {
+		return new URL(url.replace(" ", "%20"));
 	}
 
 	/**

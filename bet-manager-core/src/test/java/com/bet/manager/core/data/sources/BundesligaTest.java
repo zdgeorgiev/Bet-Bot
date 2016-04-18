@@ -1,7 +1,7 @@
 package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
-import com.bet.manager.core.util.DocumentUtils;
+import com.bet.manager.commons.util.DocumentUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;

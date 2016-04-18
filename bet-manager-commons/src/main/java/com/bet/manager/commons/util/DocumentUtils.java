@@ -1,6 +1,5 @@
-package com.bet.manager.core.util;
+package com.bet.manager.commons.util;
 
-import com.bet.manager.core.exceptions.DocumentParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -61,6 +60,21 @@ public class DocumentUtils {
 		}
 
 		doc.getDocumentElement().normalize();
+
+		try {
+			parsedDocuments.put(doc.getTextContent(), doc);
+		} catch (Exception e) {
+			// This catch block is leaved empty not incidentally.
+			// If the collection is Collections.emptyMap() items cannot be added and will throw exception
+		}
+
 		return doc;
 	}
+
+	private static class DocumentParseException extends RuntimeException {
+		public DocumentParseException(String message) {
+			super(message);
+		}
+	}
 }
+
