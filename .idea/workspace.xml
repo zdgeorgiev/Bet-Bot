@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="Refactoring">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/URLUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/exceptions/InvalidMappingException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/exceptions/InvalidMatchRoundIndex.java" />
+    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment=" Huge refactoring and also added documentation for the data responsible classes. Made the Crawler static (singleton). Added some exception classes, and also debugging logger.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/DocumentUtils.java" afterPath="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/DocumentUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/WebCrawler.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/WebCrawler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml" />
     </list>
     <ignored path="bet-manager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,43 +44,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Program.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41221374">
-              <caret line="12" column="116" selection-start-line="12" selection-start-column="116" selection-end-line="12" selection-end-column="116" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BundesligaTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="42" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResultDBTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/ResultDBTest.java">
+      <file leaf-file-name="logback.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="58" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LiveScoreMatchParserIT.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/it/LiveScoreMatchParserIT.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="46" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.17363344">
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -115,8 +85,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/DataCrawlerUtils.java" />
-        <option value="$PROJECT_DIR$/bet-manager-commons/src/main/java/com/bet/manager/commons/util/ClasspathUtils.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/crawl-data/resultdb-stats-for-matches.html" />
         <option value="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/org/junit/runners/ParentRunner.class" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/crawl-data/resultdb-stats-for-matches.xml" />
@@ -144,7 +112,6 @@
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/ResultDBTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/DataMangerTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/BundesligaTest.java" />
-        <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/data-crawler-tool/src/main/java/Main.java" />
         <option value="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/Main.java" />
@@ -166,6 +133,9 @@
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/Bundesliga.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/java/com/bet/manager/core/data/sources/BundesligaTest.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
+        <option value="$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml" />
+        <option value="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml" />
       </list>
     </option>
   </component>
@@ -1434,7 +1404,13 @@
       <option name="project" value="LOCAL" />
       <updated>1460985585672</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary=" Huge refactoring and also added documentation for the data responsible classes. Made the Crawler static (singleton). Added some exception classes, and also debugging logger.">
+      <created>1460995541527</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1460995541527</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1479,7 +1455,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299595" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44129553" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44129553" sideWeight="0.49583334" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21770833" sideWeight="0.6740891" order="0" side_tool="false" content_ui="combo" />
@@ -1508,7 +1484,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Remove the IParser interface and de-couple it from the crawler class for better design" />
     <MESSAGE value="Big re-design to almost all of the classes. Added integration-test profile" />
     <MESSAGE value="Refactor" />
     <MESSAGE value="Implement result abstract class to hold the result for the match, and added tests for it + refactoring." />
@@ -1533,7 +1508,8 @@
     <MESSAGE value="Huge refactoring." />
     <MESSAGE value="Huge refactoring again. Added new module which will be used for collecting data." />
     <MESSAGE value="Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
+    <MESSAGE value=" Huge refactoring and also added documentation for the data responsible classes. Made the Crawler static (singleton). Added some exception classes, and also debugging logger." />
+    <option name="LAST_COMMIT_MESSAGE" value=" Huge refactoring and also added documentation for the data responsible classes. Made the Crawler static (singleton). Added some exception classes, and also debugging logger." />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1555,13 +1531,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/com/sun/org/apache/xerces/internal/impl/XMLDocumentFragmentScannerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33228347">
-          <caret line="509" column="0" selection-start-line="509" selection-start-column="0" selection-end-line="509" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-8-oracle/src.zip!/org/w3c/dom/Document.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33228347">
@@ -1730,13 +1699,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28938907">
-          <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.666667">
@@ -1756,13 +1718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49839228">
           <caret line="36" column="46" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36655948">
-          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -1830,14 +1785,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="17" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6782007">
-          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1929,11 +1876,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/Program.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41221374">
-          <caret line="12" column="116" selection-start-line="12" selection-start-column="116" selection-end-line="12" selection-end-column="116" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13504823">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23151125">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17363344">
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
