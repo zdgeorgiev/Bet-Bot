@@ -37,8 +37,7 @@ public class ResultDB {
 	 * @param year  year of the match
 	 * @param round round of the match
 	 */
-	public static String getLastFiveGamesForTeam(String team, int year, int round,
-			Map<URL, String> crawledPages)
+	public static String getLastFiveGamesForTeam(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);

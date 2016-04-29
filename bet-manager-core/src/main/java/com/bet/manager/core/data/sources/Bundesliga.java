@@ -47,23 +47,21 @@ public class Bundesliga {
 	/**
 	 * Method which returns the position in the ranking table for team in given
 	 * round and year. This method uses external memorization maps for already crawled
-	 * pages and already parsed documents.
+	 * pages.
 	 *
-	 * @param team            team name
-	 * @param year            match year
-	 * @param round           match round
-	 * @param crawledPages    memorization map for already crawled pages
-	 * @param parsedDocuments memorization map for already parsed documents
+	 * @param team         team name
+	 * @param year         match year
+	 * @param round        match round
+	 * @param crawledPages memorization map for already crawled pages
 	 * @return current round place
 	 */
-	public static Integer getTeamRankingPlace(String team, int year, int round,
-			Map<URL, String> crawledPages, Map<String, Document> parsedDocuments)
+	public static Integer getTeamRankingPlace(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		log.debug("Getting information about '{}' rank in round {} year {}", team, round, year);
 		String currentRoundMatchesContent = Bundesliga.getMatches(year, round, crawledPages);
 
-		Document currentRoundMatchesXML = DocumentUtils.parse(currentRoundMatchesContent, parsedDocuments);
+		Document currentRoundMatchesXML = DocumentUtils.parse(currentRoundMatchesContent);
 
 		log.debug("Creating ranking table for round {} year {}", round, year);
 		Map<String, Integer> currentRoundRanking = Bundesliga.createRankingTable(currentRoundMatchesXML);
@@ -135,19 +133,17 @@ public class Bundesliga {
 	/**
 	 * Get the current points and round goals difference for team
 	 *
-	 * @param team            Team for which you want to get the stats
-	 * @param year            year for the match
-	 * @param round           round fot the match
-	 * @param crawledPages    memorization map for already crawled pages
-	 * @param parsedDocuments memorization map for already parsed documents
+	 * @param team         Team for which you want to get the stats
+	 * @param year         year for the match
+	 * @param round        round fot the match
+	 * @param crawledPages memorization map for already crawled pages
 	 * @return the ranking stats for team for given year and round
 	 */
-	public static String getCurrentRankingStats(String team, int year, int round, Map<URL, String> crawledPages,
-			Map<String, Document> parsedDocuments)
+	public static String getCurrentRankingStats(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String currentRoundMatchesContent = Bundesliga.getMatches(year, round, crawledPages);
-		Document currentRoundMatches = DocumentUtils.parse(currentRoundMatchesContent, parsedDocuments);
+		Document currentRoundMatches = DocumentUtils.parse(currentRoundMatchesContent);
 
 		log.debug("Getting information for team '{}' in round {} year {} statistics", team, round, year);
 		return parseCurrentRankingStats(team, currentRoundMatches);
@@ -199,22 +195,20 @@ public class Bundesliga {
 	 * Method which is getting information about previous round by given round team performance
 	 * (collects the data about total distance, sprints, passes, shots, fouls and if any of them
 	 * is leaved empty the value from the average round stats will come in place)
-	 * This method using external memorization maps for already crawled pages and already parsed docs.
+	 * This method using external memorization maps for already crawled pages.
 	 *
-	 * @param team            which wanna get performance
-	 * @param year            year for match
-	 * @param round           round for match ( the method will call with round - 1, to get the previous )
-	 * @param crawledPages    memorization map for already crawled pages
-	 * @param parsedDocuments memorization map for already parsed documents
+	 * @param team         which wanna get performance
+	 * @param year         year for match
+	 * @param round        round for match ( the method will call with round - 1, to get the previous )
+	 * @param crawledPages memorization map for already crawled pages
 	 * @return statistics for team
 	 */
-	public static String getPrevRoundTeamPerformance(String team, int year, int round, Map<URL, String> crawledPages,
-			Map<String, Document> parsedDocuments)
+	public static String getPrevRoundTeamPerformance(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		log.debug("Getting information for team '{}' in round {} year {}", team, round, year);
 		Map<String, Integer> prevRoundAverageStats =
-				Bundesliga.getAverageRoundStats(year, round - 1, crawledPages, parsedDocuments);
+				Bundesliga.getAverageRoundStats(year, round - 1, crawledPages);
 
 		URL prevRoundStatsURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
@@ -222,7 +216,7 @@ public class Bundesliga {
 		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing the information collect in the previous round", team, round, year);
-		return parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats, parsedDocuments);
+		return parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats);
 	}
 
 	/**
@@ -233,15 +227,14 @@ public class Bundesliga {
 	 * @param prevRoundTeamStatsXML represent the prev round statistics as xml
 	 * @param team                  which wanna get performance
 	 * @param prevRoundAverageStats map containing the average statistics for all teams
-	 * @param parsedDocuments       memorization map for already parsed documents
 	 * @return statistics for team
 	 */
 	public static String parsePrevRoundTeamPerformance(String prevRoundTeamStatsXML, String team,
-			Map<String, Integer> prevRoundAverageStats, Map<String, Document> parsedDocuments) {
+			Map<String, Integer> prevRoundAverageStats) {
 
 		StringBuilder prevRoundStats = new StringBuilder();
 
-		Document doc = DocumentUtils.parse(prevRoundTeamStatsXML, parsedDocuments);
+		Document doc = DocumentUtils.parse(prevRoundTeamStatsXML);
 		NodeList teamNodes = doc.getElementsByTagName(TEAM_ATTR);
 
 		for (int i = 0; i < teamNodes.getLength(); i++) {
@@ -320,15 +313,14 @@ public class Bundesliga {
 	 * @param crawledPages memorization map for already crawled pages
 	 * @return Map with average statistics for given round and year
 	 */
-	public static Map<String, Integer> getAverageRoundStats(int year, int round, Map<URL, String> crawledPages,
-			Map<String, Document> parsedDocuments)
+	public static Map<String, Integer> getAverageRoundStats(int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		URL prevRoundStatsURL = URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round));
 		String prevRoundStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing average statistics for round {} year {}", round, year);
-		return parseAverageRoundStats(prevRoundStatsXML, parsedDocuments);
+		return parseAverageRoundStats(prevRoundStatsXML);
 	}
 
 	/**
@@ -336,13 +328,11 @@ public class Bundesliga {
 	 * for different statistics (track distance, sprints, goals, fouls, passes)
 	 *
 	 * @param prevRoundStatsXML xml containing the previous round statistics
-	 * @param parsedDocuments   memorization map for already parsed documents
 	 * @return @link Map<String, Double>} with average statistics for given round and year
 	 */
-	public static Map<String, Integer> parseAverageRoundStats(String prevRoundStatsXML,
-			Map<String, Document> parsedDocuments) {
+	public static Map<String, Integer> parseAverageRoundStats(String prevRoundStatsXML) {
 
-		Document doc = DocumentUtils.parse(prevRoundStatsXML, parsedDocuments);
+		Document doc = DocumentUtils.parse(prevRoundStatsXML);
 		NodeList teamNodes = doc.getElementsByTagName(GROUP_STATS_ATTR);
 
 		NamedNodeMap statsAttributes = teamNodes.item(0).getAttributes();
@@ -381,18 +371,17 @@ public class Bundesliga {
 	 * Return only the match table from XML file. This method using external memorization maps
 	 * for already crawled pages and already parsed documents.
 	 *
-	 * @param year            year for match table
-	 * @param round           round for match table
-	 * @param crawledPages    memorization map for already crawled pages
-	 * @param parsedDocuments memorization map for already parsed documents
+	 * @param year         year for match table
+	 * @param round        round for match table
+	 * @param crawledPages memorization map for already crawled pages
 	 * @return return match table as NodeList class
 	 */
-	public static NodeList getMatchTable(int year, int round, Map<URL, String> crawledPages,
-			Map<String, Document> parsedDocuments) throws MalformedURLException, InterruptedException {
+	public static NodeList getMatchTable(int year, int round, Map<URL, String> crawledPages)
+			throws MalformedURLException, InterruptedException {
 
 		String currentRoundMatchesContent = Bundesliga.getMatches(year, round, crawledPages);
 
-		Document currentRoundMatchesXML = DocumentUtils.parse(currentRoundMatchesContent, parsedDocuments);
+		Document currentRoundMatchesXML = DocumentUtils.parse(currentRoundMatchesContent);
 
 		return currentRoundMatchesXML.getElementsByTagName(TEAM_ATTR);
 	}

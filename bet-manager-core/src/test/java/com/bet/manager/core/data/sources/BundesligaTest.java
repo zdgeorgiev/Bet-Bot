@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ public class BundesligaTest {
 	public void testCorrectRankingParsing() {
 
 		Document doc =
-				DocumentUtils.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml"), new HashMap<>());
+				DocumentUtils.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml"));
 		Map<String, Integer> actual = Bundesliga.createRankingTable(doc);
 
 		Map<String, Integer> expected = new HashMap<>();
@@ -47,8 +46,7 @@ public class BundesligaTest {
 
 		Map<String, Integer> actual =
 				Bundesliga
-						.parseAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"),
-								Collections.emptyMap());
+						.parseAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
 
 		Map<String, Integer> expected = new HashMap<>();
 
@@ -74,8 +72,7 @@ public class BundesligaTest {
 		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
-				Bundesliga.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats,
-						Collections.emptyMap());
+				Bundesliga.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
 		String expected = "125042 184 320 13 11";
 
 		Assert.assertEquals(actual, expected);
@@ -95,8 +92,7 @@ public class BundesligaTest {
 
 		String actual =
 				Bundesliga
-						.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats,
-								Collections.emptyMap());
+						.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
 		String expected = "111923 189 579 21 15";
 
 		Assert.assertEquals(actual, expected);
@@ -106,7 +102,7 @@ public class BundesligaTest {
 	public void testRankingStatsForTeamForRound1() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml");
-		Document doc = DocumentUtils.parse(content, new HashMap<>());
+		Document doc = DocumentUtils.parse(content);
 
 		String actual = Bundesliga.parseCurrentRankingStats("FC Bayern München", doc);
 		String expected = "0 -1";
@@ -118,7 +114,7 @@ public class BundesligaTest {
 	public void testRankingStatsForTeamForRound15() {
 
 		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches-round-15.xml");
-		Document doc = DocumentUtils.parse(content, new HashMap<>());
+		Document doc = DocumentUtils.parse(content);
 
 		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
 		String expected = "30 14";

@@ -3,7 +3,6 @@ package com.bet.manager.core.data;
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
-import org.w3c.dom.Document;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,21 +24,20 @@ public class DataManger {
 	 * home team goals -  away team goals >= 2 - HW, <= 2 - HL, else W,L,T.
 	 * <p/>
 	 *
-	 * @param homeTeam        homeTeam as Bundesliga name
-	 * @param awayTeam        awayTeam as Bundesliga name
-	 * @param year            match year
-	 * @param round           match round should be at least 2nd one, because information for round 0 is invalid
-	 * @param crawledPages    hashMap which is responsible for the memorization, not to crawl already crawled pages
-	 * @param parsedDocuments hashMap which is responsible for the memorization, not to parse already parsed docs
+	 * @param homeTeam     homeTeam as Bundesliga name
+	 * @param awayTeam     awayTeam as Bundesliga name
+	 * @param year         match year
+	 * @param round        match round should be at least 2nd one, because information for round 0 is invalid
+	 * @param crawledPages hashMap which is responsible for the memorization, not to crawl already crawled pages
 	 * @return Data for the match
 	 */
 	public static String getDataForMatch(String homeTeam, String awayTeam, int year, int round,
-			Map<URL, String> crawledPages, Map<String, Document> parsedDocuments)
+			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		StringBuilder currentMatchData = new StringBuilder();
-		String homeTeamData = getDataForTeam(homeTeam, year, round, crawledPages, parsedDocuments);
-		String awayTeamData = getDataForTeam(awayTeam, year, round, crawledPages, parsedDocuments);
+		String homeTeamData = getDataForTeam(homeTeam, year, round, crawledPages);
+		String awayTeamData = getDataForTeam(awayTeam, year, round, crawledPages);
 
 		currentMatchData
 				.append(round)
@@ -51,8 +49,7 @@ public class DataManger {
 		return currentMatchData.toString();
 	}
 
-	private static String getDataForTeam(String team, int year, int round, Map<URL, String> crawledPages,
-			Map<String, Document> parsedDocuments)
+	private static String getDataForTeam(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		if (round <= 1)
@@ -61,13 +58,13 @@ public class DataManger {
 		StringBuilder currentTeamData = new StringBuilder();
 
 		currentTeamData
-				.append(Bundesliga.getTeamRankingPlace(team, year, round, crawledPages, parsedDocuments))
+				.append(Bundesliga.getTeamRankingPlace(team, year, round, crawledPages))
 				.append(" ")
-				.append(Bundesliga.getCurrentRankingStats(team, year, round, crawledPages, parsedDocuments))
+				.append(Bundesliga.getCurrentRankingStats(team, year, round, crawledPages))
 				.append(" ")
 				.append(ResultDB.getTeamOpponentAndVenue(team, year, round, crawledPages)[1])
 				.append(" ")
-				.append(Bundesliga.getPrevRoundTeamPerformance(team, year, round, crawledPages, parsedDocuments))
+				.append(Bundesliga.getPrevRoundTeamPerformance(team, year, round, crawledPages))
 				.append(" ")
 				.append(ResultDB.getLastFiveGamesForTeam(team, year, round, crawledPages));
 

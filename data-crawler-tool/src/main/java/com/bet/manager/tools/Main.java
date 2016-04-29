@@ -5,10 +5,8 @@ import com.bet.manager.core.data.DataManger;
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ResultDB;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.mutable.MutableInt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -25,43 +23,37 @@ public class Main {
 	private static final int ROUNDS = 34;
 
 	private static final Map<URL, String> crawledPages = new HashMap<>();
-	private static final Map<String, Document> parsedDocs = new HashMap<>();
 
 	public static void main(String[] args) throws IOException {
 
-		MutableInt startYear = new MutableInt();
-		MutableInt endYear = new MutableInt();
+		int startYear;
+		int endYear;
 
-		validateInput(args, startYear, endYear);
+		if (args.length == 2) {
+			startYear = Integer.parseInt(args[0]);
+			endYear = startYear;
+		} else if (args.length == 3) {
+			startYear = Integer.parseInt(args[0]);
+			endYear = Integer.parseInt(args[1]);
+		} else
+			throw new IllegalStateException("Less arguments than required.");
+
+		if (startYear < 2011)
+			throw new IllegalArgumentException("Start year cannot be less than 2011");
 
 		File destinationFolder = initializeDestinationFolder(args);
 
-		for (int year = startYear.intValue(); year <= endYear.intValue(); year++) {
+		for (int year = startYear; year <= endYear; year++) {
 
 			List<String> currentYearData = getDataForAllMatches(year);
 
 			if (currentYearData.size() != 0) {
 				File file = new File(destinationFolder + File.separator + year + "_bundesliga_stats.txt");
-				FileUtils.writeLines(file, currentYearData);
+				FileUtils.writeLines(file, currentYearData, true);
 			} else {
 				throw new IllegalStateException("There is no information for year later than " + (year - 1));
 			}
 		}
-	}
-
-	private static void validateInput(String[] args, MutableInt startYear, MutableInt endYear) {
-
-		if (args.length == 2) {
-			startYear.setValue(Integer.parseInt(args[0]));
-			endYear.setValue(startYear);
-		} else if (args.length == 3) {
-			startYear.setValue(Integer.parseInt(args[0]));
-			endYear.setValue(Integer.parseInt(args[1]));
-		} else
-			throw new IllegalStateException("Less arguments than required.");
-
-		if (startYear.intValue() < 2011)
-			throw new IllegalArgumentException("Start year cannot be less than 2011");
 	}
 
 	private static File initializeDestinationFolder(String[] args) {
@@ -102,7 +94,7 @@ public class Main {
 
 			List<String> currentRoundEntries = createDataForRound(year, round);
 			allData.addAll(currentRoundEntries);
-			clearAllCaches();
+			clearCaches();
 		}
 
 		long finishTime = System.currentTimeMillis();
@@ -119,7 +111,7 @@ public class Main {
 		Set<String> teamBlackList = new HashSet<>();
 
 		try {
-			NodeList currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages, parsedDocs);
+			NodeList currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
 
 			for (int i = 0; i < currentRoundTeams.getLength(); i++) {
 
@@ -137,7 +129,7 @@ public class Main {
 
 					currentRowData
 							.append(DataManger
-									.getDataForMatch(homeTeam, awayTeam, year, round, crawledPages, parsedDocs))
+									.getDataForMatch(homeTeam, awayTeam, year, round, crawledPages))
 							.append(" ")
 							.append(ResultDB.getMatchResult(homeTeam, awayTeam));
 
@@ -155,8 +147,7 @@ public class Main {
 		return dataRows;
 	}
 
-	private static void clearAllCaches() {
-		parsedDocs.clear();
+	private static void clearCaches() {
 		crawledPages.clear();
 	}
 }

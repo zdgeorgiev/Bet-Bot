@@ -1,7 +1,5 @@
 package com.bet.manager.commons.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -11,11 +9,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.Map;
 
 public class DocumentUtils {
-
-	private static final Logger log = LoggerFactory.getLogger(DocumentUtils.class);
 
 	private static final DocumentBuilder dBuilder;
 	private static final DocumentBuilderFactory dbFactory;
@@ -33,12 +28,7 @@ public class DocumentUtils {
 	private DocumentUtils() {
 	}
 
-	public static Document parse(String xml, Map<String, Document> parsedDocuments) {
-		if (parsedDocuments.containsKey(xml)) {
-			Document d = parsedDocuments.get(xml);
-			log.info("Returning document cache version of {}", parsedDocuments.get(xml).getDocumentURI());
-			return d;
-		}
+	public static Document parse(String xml) {
 
 		if (xml.contains("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >")) {
 			xml = xml.replace("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >", "");
@@ -55,13 +45,6 @@ public class DocumentUtils {
 		}
 
 		doc.getDocumentElement().normalize();
-
-		try {
-			parsedDocuments.put(doc.getTextContent(), doc);
-		} catch (Exception e) {
-			// This catch block is leaved empty not incidentally.
-			// If the collection is Collections.emptyMap() items cannot be added and will throw exception
-		}
 
 		return doc;
 	}

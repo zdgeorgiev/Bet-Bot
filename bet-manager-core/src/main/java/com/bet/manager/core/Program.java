@@ -10,6 +10,6 @@ public class Program {
 	public static void main(String[] args) throws MalformedURLException, InterruptedException {
 
 		System.out.println(DataManger
-				.getDataForMatch("1.FC Kaiserslautern", "FC Augsburg", 2011, 34, new HashMap<>(), new HashMap<>()));
+				.getDataForMatch("1.FC Kaiserslautern", "FC Augsburg", 2011, 34, new HashMap<>()));
 	}
 }
