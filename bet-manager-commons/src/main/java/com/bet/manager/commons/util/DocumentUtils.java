@@ -12,47 +12,47 @@ import java.io.StringReader;
 
 public class DocumentUtils {
 
-	private static final DocumentBuilder dBuilder;
-	private static final DocumentBuilderFactory dbFactory;
+    private static final DocumentBuilder dBuilder;
+    private static final DocumentBuilderFactory dbFactory;
 
-	static {
-		dbFactory = DocumentBuilderFactory.newInstance();
+    static {
+        dbFactory = DocumentBuilderFactory.newInstance();
 
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new IllegalStateException("Failed to create document builder.");
-		}
-	}
+        try {
+            dBuilder = dbFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new IllegalStateException("Failed to create document builder.");
+        }
+    }
 
-	private DocumentUtils() {
-	}
+    private DocumentUtils() {
+    }
 
-	public static Document parse(String xml) {
+    public static Document parse(String xml) {
 
-		if (xml.contains("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >")) {
-			xml = xml.replace("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >", "");
-		}
+        if (xml.contains("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >")) {
+            xml = xml.replace("<!DOCTYPE sports-content SYSTEM \"../specification/dtd/sportsml-core.dtd\" >", "");
+        }
 
-		InputSource is = new InputSource();
-		is.setCharacterStream(new StringReader(xml));
-		Document doc;
+        InputSource is = new InputSource();
+        is.setCharacterStream(new StringReader(xml));
+        Document doc;
 
-		try {
-			doc = dBuilder.parse(is);
-		} catch (SAXException | IOException e) {
-			throw new DocumentParseException("Failed to parse document from xml.");
-		}
+        try {
+            doc = dBuilder.parse(is);
+        } catch (SAXException | IOException e) {
+            throw new DocumentParseException("Failed to parse document from xml.");
+        }
 
-		doc.getDocumentElement().normalize();
+        doc.getDocumentElement().normalize();
 
-		return doc;
-	}
+        return doc;
+    }
 
-	private static class DocumentParseException extends RuntimeException {
-		public DocumentParseException(String message) {
-			super(message);
-		}
-	}
+    private static class DocumentParseException extends RuntimeException {
+        public DocumentParseException(String message) {
+            super(message);
+        }
+    }
 }
 

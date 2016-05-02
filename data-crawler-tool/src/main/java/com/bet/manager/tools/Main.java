@@ -18,136 +18,135 @@ import java.util.*;
 
 public class Main {
 
-	private static final Logger log = LoggerFactory.getLogger(Main.class);
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-	private static final int ROUNDS = 34;
+    private static final int ROUNDS = 34;
 
-	private static final Map<URL, String> crawledPages = new HashMap<>();
+    private static DataManger dm;
 
-	public static void main(String[] args) throws IOException {
+    private static final Map<URL, String> crawledPages = new HashMap<>();
 
-		int startYear;
-		int endYear;
+    public static void main(String[] args) throws IOException {
 
-		if (args.length == 2) {
-			startYear = Integer.parseInt(args[0]);
-			endYear = startYear;
-		} else if (args.length == 3) {
-			startYear = Integer.parseInt(args[0]);
-			endYear = Integer.parseInt(args[1]);
-		} else
-			throw new IllegalStateException("Less arguments than required.");
+        dm = new DataManger(crawledPages);
 
-		if (startYear < 2011)
-			throw new IllegalArgumentException("Start year cannot be less than 2011");
+        int startYear;
+        int endYear;
 
-		File destinationFolder = initializeDestinationFolder(args);
+        if (args.length == 2) {
+            startYear = Integer.parseInt(args[0]);
+            endYear = startYear;
+        } else if (args.length == 3) {
+            startYear = Integer.parseInt(args[0]);
+            endYear = Integer.parseInt(args[1]);
+        } else
+            throw new IllegalStateException("Less arguments than required.");
 
-		for (int year = startYear; year <= endYear; year++) {
+        if (startYear < 2011)
+            throw new IllegalArgumentException("Start year cannot be less than 2011");
 
-			List<String> currentYearData = getDataForAllMatches(year);
+        File destinationFolder = initializeDestinationFolder(args);
 
-			if (currentYearData.size() != 0) {
-				File file = new File(destinationFolder + File.separator + year + "_bundesliga_stats.txt");
-				FileUtils.writeLines(file, currentYearData, true);
-			} else {
-				throw new IllegalStateException("There is no information for year later than " + (year - 1));
-			}
-		}
-	}
+        for (int year = startYear; year <= endYear; year++) {
 
-	private static File initializeDestinationFolder(String[] args) {
+            List<String> currentYearData = getDataForAllMatches(year);
 
-		File destinationFolder;
+            if (currentYearData.size() != 0) {
+                File file = new File(destinationFolder + File.separator + year + "_bundesliga_stats.txt");
+                FileUtils.writeLines(file, currentYearData, true);
+            } else {
+                throw new IllegalStateException("There is no information for year later than " + (year - 1));
+            }
+        }
+    }
 
-		if (args.length == 2) {
-			destinationFolder = new File(args[1]);
-		} else if (args.length == 3) {
-			destinationFolder = new File(args[2]);
-		} else {
-			throw new IllegalArgumentException("Arguments cannot be less than 2 or more than 3.");
-		}
+    private static File initializeDestinationFolder(String[] args) {
 
-		if (!destinationFolder.exists() && !destinationFolder.mkdirs())
-			throw new IllegalStateException(
-					"Cannot create the destination folder " + destinationFolder.getAbsolutePath());
+        File destinationFolder;
 
-		return destinationFolder;
-	}
+        if (args.length == 2) {
+            destinationFolder = new File(args[1]);
+        } else if (args.length == 3) {
+            destinationFolder = new File(args[2]);
+        } else {
+            throw new IllegalArgumentException("Arguments cannot be less than 2 or more than 3.");
+        }
 
-	/**
-	 * This method creating data for every round matches during given year in the bundesliga
-	 * german football league. This method doing multiple inner crawlings which requiring internet connection.
-	 *
-	 * @param year for which want to get the data. The year should be at least 2011
-	 * @return {@link List <String>} containing list of data for every match
-	 */
-	private static List<String> getDataForAllMatches(int year) throws MalformedURLException {
+        if (!destinationFolder.exists() && !destinationFolder.mkdirs())
+            throw new IllegalStateException(
+                    "Cannot create the destination folder " + destinationFolder.getAbsolutePath());
 
-		log.info("Start collecting data for year {}", year);
-		long startTime = System.currentTimeMillis();
+        return destinationFolder;
+    }
 
-		List<String> allData = new ArrayList<>();
+    /**
+     * This method creating data for every round matches during given year in the bundesliga
+     * german football league. This method doing multiple inner crawlings which requiring internet connection.
+     *
+     * @param year for which want to get the data. The year should be at least 2011
+     * @return {@link List <String>} containing list of data for every match
+     */
+    private static List<String> getDataForAllMatches(int year) throws MalformedURLException {
 
-		// We skip the first round because for the current match we only looking for the previous one data
-		for (int round = 2; round <= ROUNDS; round++) {
+        log.info("Start collecting data for year {}", year);
+        long startTime = System.currentTimeMillis();
 
-			List<String> currentRoundEntries = createDataForRound(year, round);
-			allData.addAll(currentRoundEntries);
-			clearCaches();
-		}
+        List<String> allData = new ArrayList<>();
 
-		long finishTime = System.currentTimeMillis();
-		String elapsedTime = PerformanceUtils.convertToHumanReadable(finishTime - startTime);
+        // We skip the first round because for the current match we only looking for the previous one data
+        for (int round = 2; round <= ROUNDS; round++) {
 
-		log.info("Successfully created {} data entries for year {}. Finished in {}", allData.size(), year,
-				elapsedTime);
-		return allData;
-	}
+            List<String> currentRoundEntries = createDataForRound(year, round);
+            allData.addAll(currentRoundEntries);
+            crawledPages.clear();
+        }
 
-	private static List<String> createDataForRound(int year, int round) {
+        long finishTime = System.currentTimeMillis();
+        String elapsedTime = PerformanceUtils.convertToHumanReadable(finishTime - startTime);
 
-		List<String> dataRows = new ArrayList<>();
-		Set<String> teamBlackList = new HashSet<>();
+        log.info("Successfully created {} data entries for year {}. Finished in {}", allData.size(), year,
+                elapsedTime);
+        return allData;
+    }
 
-		try {
-			NodeList currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
+    private static List<String> createDataForRound(int year, int round) {
 
-			for (int i = 0; i < currentRoundTeams.getLength(); i++) {
+        List<String> dataRows = new ArrayList<>();
+        Set<String> teamBlackList = new HashSet<>();
 
-				Node currentTeam = currentRoundTeams.item(i);
+        try {
+            NodeList currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
 
-				String homeTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
-				String awayTeam = ResultDB.getTeamOpponentAndVenue(homeTeam, year, round, crawledPages)[0];
+            for (int i = 0; i < currentRoundTeams.getLength(); i++) {
 
-				if (!teamBlackList.contains(homeTeam) && !teamBlackList.contains(awayTeam)) {
+                Node currentTeam = currentRoundTeams.item(i);
 
-					teamBlackList.add(homeTeam);
-					teamBlackList.add(awayTeam);
+                String homeTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
+                String awayTeam = ResultDB.getTeamOpponentAndVenue(homeTeam, year, round, crawledPages)[0];
 
-					StringBuilder currentRowData = new StringBuilder();
+                if (!teamBlackList.contains(homeTeam) && !teamBlackList.contains(awayTeam)) {
 
-					currentRowData
-							.append(DataManger
-									.getDataForMatch(homeTeam, awayTeam, year, round, crawledPages))
-							.append(" ")
-							.append(ResultDB.getMatchResult(homeTeam, awayTeam));
+                    teamBlackList.add(homeTeam);
+                    teamBlackList.add(awayTeam);
 
-					log.info("({}/{}) Data for match '{}'-'{}' was successfully created",
-							dataRows.size() + 1, currentRoundTeams.getLength() / 2, homeTeam, awayTeam);
-					dataRows.add(currentRowData.toString());
-				}
-			}
-		} catch (Exception e) {
-			log.error("Failed to create data for year {} round {}.", year, round, e);
-		}
+                    StringBuilder currentRowData = new StringBuilder();
 
-		log.info("Successfully created data for {} matches for year {} round {} with total crawled pages {}.",
-				dataRows.size(), year, round, crawledPages.size());
-		return dataRows;
-	}
+                    currentRowData
+                            .append(dm.getDataForMatch(homeTeam, awayTeam, year, round))
+                            .append(" ")
+                            .append(ResultDB.getMatchResult(homeTeam, awayTeam));
 
-	private static void clearCaches() {
-		crawledPages.clear();
-	}
+                    log.info("({}/{}) Data for match '{}'-'{}' was successfully created",
+                            dataRows.size() + 1, currentRoundTeams.getLength() / 2, homeTeam, awayTeam);
+                    dataRows.add(currentRowData.toString());
+                }
+            }
+        } catch (Exception e) {
+            log.error("Failed to create data for year {} round {}.", year, round, e);
+        }
+
+        log.info("Successfully created data for {} matches for year {} round {}.",
+                dataRows.size(), year, round);
+        return dataRows;
+    }
 }
