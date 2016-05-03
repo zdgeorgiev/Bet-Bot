@@ -80,8 +80,7 @@ public class Bundesliga {
 	public static String getMatches(int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		URL prevRoundMatchesURL =
-				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
+		URL prevRoundMatchesURL = URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
 
 		return WebCrawler.crawl(prevRoundMatchesURL, crawledPages);
 	}
@@ -105,9 +104,8 @@ public class Bundesliga {
 
 			if (attributes.getNamedItem(CODE_TYPE_ATTR).getNodeValue().equals(TEAM_ATTR)) {
 
-				int teamId =
-						Integer.parseInt(
-								attributes.getNamedItem(CODE_KEY_ATTR).getNodeValue().split(TEAM_ID_SPLITERATOR)[1]);
+				int teamId = Integer.parseInt(
+						attributes.getNamedItem(CODE_KEY_ATTR).getNodeValue().split(TEAM_ID_SPLITERATOR)[1]);
 				String teamName = attributes.getNamedItem(CODE_NAME_ATTR).getNodeValue();
 
 				log.debug("Team {}. -> '{}'", ranking.size() + 1, teamName);
@@ -180,9 +178,10 @@ public class Bundesliga {
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
 						.getNextSibling().getAttributes();
 
-		Integer goalDifference =
-				Integer.parseInt(attributes.getNamedItem("points-scored-for").getNodeValue()) -
-						Integer.parseInt(attributes.getNamedItem("points-scored-against").getNodeValue());
+		Integer homeGoals = Integer.parseInt(attributes.getNamedItem("points-scored-for").getNodeValue());
+		Integer awayGoals = Integer.parseInt(attributes.getNamedItem("points-scored-against").getNodeValue());
+
+		Integer goalDifference = homeGoals - awayGoals;
 		log.debug("Goal difference : {}", goalDifference);
 
 		String points = attributes.getNamedItem("standing-points").getNodeValue();
@@ -207,11 +206,9 @@ public class Bundesliga {
 			throws MalformedURLException, InterruptedException {
 
 		log.debug("Getting information for team '{}' in round {} year {}", team, round, year);
-		Map<String, Integer> prevRoundAverageStats =
-				Bundesliga.getAverageRoundStats(year, round - 1, crawledPages);
+		Map<String, Integer> prevRoundAverageStats = Bundesliga.getAverageRoundStats(year, round - 1, crawledPages);
 
-		URL prevRoundStatsURL =
-				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
+		URL prevRoundStatsURL = URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
 
 		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
 

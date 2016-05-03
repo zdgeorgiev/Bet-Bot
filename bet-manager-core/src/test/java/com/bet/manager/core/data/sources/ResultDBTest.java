@@ -1,99 +1,121 @@
 package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
+import com.bet.manager.core.data.sources.exceptions.MatchResultNotFound;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ResultDBTest {
 
-    @Test
-    public void testCorrectGettingTheFirstRoundOpponent() {
+	@Test
+	public void testCorrectGettingTheFirstRoundOpponent() {
 
-        String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-        String[] actual = ResultDB.parseTeamOpponentAndVenue(content, 2);
-        String[] expected = new String[]{"Borussia M'gladbach", "-1"};
-        Assert.assertArrayEquals(actual, expected);
-    }
+		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
+		String[] actual = ResultDB.parseTeamOpponentAndVenue(content, 2);
+		String[] expected = new String[] { "Borussia M'gladbach", "-1" };
+		Assert.assertArrayEquals(actual, expected);
+	}
 
-    @Test
-    public void testCorrectGettingThirdRoundOpponent() {
+	@Test
+	public void testCorrectGettingThirdRoundOpponent() {
 
-        String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-        String[] actual = ResultDB.parseTeamOpponentAndVenue(content, 3);
-        String[] expected = new String[]{"Bayer 04 Leverkusen", "1"};
-        Assert.assertArrayEquals(actual, expected);
-    }
+		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
+		String[] actual = ResultDB.parseTeamOpponentAndVenue(content, 3);
+		String[] expected = new String[] { "Bayer 04 Leverkusen", "1" };
+		Assert.assertArrayEquals(actual, expected);
+	}
 
-    @Test
-    public void testCorrectGettingLastFiveMatches() {
+	@Test
+	public void testCorrectGettingLastFiveMatches() {
 
-        String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-        String actual = ResultDB.parseLastFiveGamesForTeam(content, 6);
-        String expected = "2 0 0 2 1";
-        Assert.assertEquals(actual, expected);
-    }
+		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
+		String actual = ResultDB.parseLastFiveGamesForTeam(content, 6);
+		String expected = "2 0 0 2 1";
+		Assert.assertEquals(actual, expected);
+	}
 
-    @Test
-    public void testCorrectGettingFiveLastMatchesButContainsOnlyThree() {
+	@Test
+	public void testCorrectGettingFiveLastMatchesButContainsOnlyThree() {
 
-        String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-        String actual = ResultDB.parseLastFiveGamesForTeam(content, 4);
-        String expected = "1 0 0 1 1";
-        Assert.assertEquals(actual, expected);
-    }
+		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
+		String actual = ResultDB.parseLastFiveGamesForTeam(content, 4);
+		String expected = "1 0 0 1 1";
+		Assert.assertEquals(actual, expected);
+	}
 
-    @Test
-    public void testCorrectGettingFiveLastMatchesForRound34() {
+	@Test
+	public void testCorrectGettingFiveLastMatchesForRound34() {
 
-        String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-        String actual = ResultDB.parseLastFiveGamesForTeam(content, 34);
-        String expected = "3 1 0 0 1";
-        Assert.assertEquals(actual, expected);
-    }
+		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
+		String actual = ResultDB.parseLastFiveGamesForTeam(content, 34);
+		String expected = "3 1 0 0 1";
+		Assert.assertEquals(actual, expected);
+	}
 
-    @Test
-    public void testCorrectParsingResultToNormalizationArrayForWin() {
+	@Test
+	public void testCorrectParsingResultToNormalizationArrayForWin() {
 
-        int[] normalizationArray = new int[5];
-        String result = "W";
-        String score = "1-0";
-        ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-        Assert.assertEquals(normalizationArray[2], 1);
-    }
+		int[] normalizationArray = new int[5];
+		String result = "W";
+		String score = "1-0";
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
+		Assert.assertEquals(normalizationArray[2], 1);
+	}
 
-    @Test
-    public void testCorrectParsingResultToNormalizationArrayForTie() {
+	@Test
+	public void testCorrectParsingResultToNormalizationArrayForTie() {
 
-        int[] normalizationArray = new int[5];
-        String result = "D";
-        String score = "1-1";
-        ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-        Assert.assertEquals(normalizationArray[4], 1);
-    }
+		int[] normalizationArray = new int[5];
+		String result = "D";
+		String score = "1-1";
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
+		Assert.assertEquals(normalizationArray[4], 1);
+	}
 
-    @Test
-    public void testCorrectParsingResultToNormalizationArrayForHugeWin() {
+	@Test
+	public void testCorrectParsingResultToNormalizationArrayForHugeWin() {
 
-        int[] normalizationArray = new int[5];
-        String result = "W";
-        String score = "3-0";
-        ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-        Assert.assertEquals(normalizationArray[0], 1);
-    }
+		int[] normalizationArray = new int[5];
+		String result = "W";
+		String score = "3-0";
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
+		Assert.assertEquals(normalizationArray[0], 1);
+	}
 
-    @Test
-    public void testCorrectParsingTwoResultToNormalizationArrayForHugeWin() {
+	@Test
+	public void testCorrectParsingTwoResultToNormalizationArrayForHugeWin() {
 
-        int[] normalizationArray = new int[5];
-        String result = "W";
-        String score = "3-0";
-        ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-        ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
-        Assert.assertEquals(normalizationArray[0], 2);
-    }
+		int[] normalizationArray = new int[5];
+		String result = "W";
+		String score = "3-0";
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
+		ResultDB.addMatchToNormalizationArray(result, score, normalizationArray);
+		Assert.assertEquals(normalizationArray[0], 2);
+	}
 
-    @Test
-    public void testCorrectParsingTheResultForGivenMatch() {
-        Assert.assertTrue(false);
-    }
+	@Test
+	public void testCorrectParsingTheResultForFirstMatch() {
+		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
+		String result = ResultDB.parseMatchResult(1, content);
+		Assert.assertEquals("3-0", result);
+	}
+
+	@Test
+	public void testCorrectParsingTheResultForLastRound() {
+		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
+		String result = ResultDB.parseMatchResult(34, content);
+		Assert.assertEquals("3-2", result);
+	}
+
+	@Test(expected = MatchResultNotFound.class)
+	public void testCorrectParsingTheResultFor35RoundShouldThrowException() {
+		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
+		ResultDB.parseMatchResult(35, content);
+	}
+
+	@Test(expected = MatchResultNotFound.class)
+	public void testCorrectParsingTheResultFor0RoundShouldThrowException() {
+		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
+		ResultDB.parseMatchResult(0, content);
+	}
 }

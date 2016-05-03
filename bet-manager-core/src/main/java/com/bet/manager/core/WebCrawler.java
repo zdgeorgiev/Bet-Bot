@@ -41,8 +41,7 @@ public class WebCrawler {
 	 * @param maxSecondsSleep maximum sleep time between each request
 	 * @return the content of a page
 	 */
-	public static String crawl(URL url, Map<URL, String> crawledPages,
-			int minSecondsSleep, int maxSecondsSleep)
+	public static String crawl(URL url, Map<URL, String> crawledPages, int minSecondsSleep, int maxSecondsSleep)
 			throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
 			log.debug("Returning cached copy of '{}'", url);

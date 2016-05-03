@@ -134,7 +134,7 @@ public class Main {
                     currentRowData
                             .append(dm.getDataForMatch(homeTeam, awayTeam, year, round))
                             .append(" ")
-                            .append(ResultDB.getMatchResult(homeTeam, awayTeam));
+                            .append(ResultDB.getMatchResult(homeTeam, year, round, crawledPages));
 
                     log.info("({}/{}) Data for match '{}'-'{}' was successfully created",
                             dataRows.size() + 1, currentRoundTeams.getLength() / 2, homeTeam, awayTeam);
