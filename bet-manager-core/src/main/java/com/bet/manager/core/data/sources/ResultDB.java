@@ -194,7 +194,9 @@ public class ResultDB {
 	public static String getMatchResult(String team, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		URL teamMatchesURL = URLUtils.createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, year, team));
+		String resultDBTeam = TeamsMapping.bundesligaToResultDB.get(team);
+		URL teamMatchesURL =
+				URLUtils.createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeam, year));
 
 		String allMatchesHTML = WebCrawler.crawl(teamMatchesURL, crawledPages);
 
