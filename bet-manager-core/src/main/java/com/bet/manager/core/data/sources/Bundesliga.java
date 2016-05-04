@@ -80,7 +80,8 @@ public class Bundesliga {
 	public static String getMatches(int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		URL prevRoundMatchesURL = URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
+		URL prevRoundMatchesURL =
+				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
 
 		return WebCrawler.crawl(prevRoundMatchesURL, crawledPages);
 	}
@@ -208,7 +209,8 @@ public class Bundesliga {
 		log.debug("Getting information for team '{}' in round {} year {}", team, round, year);
 		Map<String, Integer> prevRoundAverageStats = Bundesliga.getAverageRoundStats(year, round - 1, crawledPages);
 
-		URL prevRoundStatsURL = URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
+		URL prevRoundStatsURL =
+				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
 
 		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
 

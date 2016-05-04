@@ -44,11 +44,13 @@ public class ResultDB {
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
 
 		if (StringUtils.isBlank(resultDBTeamName)) {
-			throw new InvalidMappingException("Cannot find any mapping to team '" + team + "' in bundesliga to resultdb HashMap.");
+			throw new InvalidMappingException(
+					"Cannot find any mapping to team '" + team + "' in bundesliga to resultdb HashMap.");
 		}
 
 		URL allMatchesForTeamURL =
-				URLUtils.createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				URLUtils.createSafeURL(
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
 		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 
@@ -106,7 +108,8 @@ public class ResultDB {
 	public static void addMatchToNormalizationArray(String result, String score, int[] matchesNormalization) {
 
 		String[] rawNumbers = score.split(RESULT_SPLITERATOR);
-		int differenceInScore = Math.abs(Integer.parseInt(rawNumbers[0].trim()) - Integer.parseInt(rawNumbers[1].trim()));
+		int differenceInScore =
+				Math.abs(Integer.parseInt(rawNumbers[0].trim()) - Integer.parseInt(rawNumbers[1].trim()));
 
 		switch (result) {
 		case DRAW_GAME_LITERAL:
@@ -147,7 +150,8 @@ public class ResultDB {
 		log.debug("Getting opponent for team '{}' and end result for match in year {} round {}", team, year, round);
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
 		URL allMatchesForTeamURL =
-				URLUtils.createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+				URLUtils.createSafeURL(
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
 		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 
@@ -196,7 +200,8 @@ public class ResultDB {
 
 		String resultDBTeam = TeamsMapping.bundesligaToResultDB.get(team);
 		URL teamMatchesURL =
-				URLUtils.createSafeURL(String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeam, year));
+				URLUtils.createSafeURL(
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeam, year));
 
 		String allMatchesHTML = WebCrawler.crawl(teamMatchesURL, crawledPages);
 
@@ -205,7 +210,8 @@ public class ResultDB {
 		try {
 			result = parseMatchResult(round, allMatchesHTML);
 		} catch (MatchResultNotFound e) {
-			log.error("Result for team {} in round {} year {} is not found. Maybe the match is not started or over yet.",
+			log.error(
+					"Result for team {} in round {} year {} is not found. Maybe the match is not started or over yet.",
 					team, round, year);
 		}
 

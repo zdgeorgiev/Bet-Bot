@@ -1,14 +1,10 @@
 package com.bet.manager.core;
 
-import com.bet.manager.core.data.DataManger;
-
-import java.net.MalformedURLException;
+import java.io.IOException;
 
 public class Program {
 
-	public static void main(String[] args) throws MalformedURLException, InterruptedException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 
-		System.out.println(new DataManger()
-				.getDataForMatch("1.FC Kaiserslautern", "FC Augsburg", 2011, 34));
 	}
 }
