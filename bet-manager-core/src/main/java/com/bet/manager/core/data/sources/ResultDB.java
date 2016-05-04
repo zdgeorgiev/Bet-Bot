@@ -38,7 +38,8 @@ public class ResultDB {
 	 * @param year  year of the match
 	 * @param round round of the match
 	 */
-	public static String getLastFiveGamesForTeam(String team, int year, int round, Map<URL, String> crawledPages)
+	public static String getLastFiveGamesForTeam(String team, int year, int round,
+			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
@@ -50,7 +51,8 @@ public class ResultDB {
 
 		URL allMatchesForTeamURL =
 				URLUtils.createSafeURL(
-						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName,
+								year));
 
 		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 
@@ -144,14 +146,17 @@ public class ResultDB {
 	 * @param crawledPages memorization map for already crawled pages
 	 * @return the opponent and venue stored in array (0 => opponent, 1 => venue)
 	 */
-	public static String[] getTeamOpponentAndVenue(String team, int year, int round, Map<URL, String> crawledPages)
+	public static String[] getTeamOpponentAndVenue(String team, int year, int round,
+			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		log.debug("Getting opponent for team '{}' and end result for match in year {} round {}", team, year, round);
+		log.debug("Getting opponent for team '{}' and end result for match in year {} round {}", team, year,
+				round);
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
 		URL allMatchesForTeamURL =
 				URLUtils.createSafeURL(
-						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
+						String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName,
+								year));
 
 		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 

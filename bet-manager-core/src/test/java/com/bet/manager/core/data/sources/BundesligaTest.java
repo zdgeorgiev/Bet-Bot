@@ -46,7 +46,8 @@ public class BundesligaTest {
 
 		Map<String, Integer> actual =
 				Bundesliga
-						.parseAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
+						.parseAverageRoundStats(
+								ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
 
 		Map<String, Integer> expected = new HashMap<>();
 
@@ -62,7 +63,8 @@ public class BundesligaTest {
 	@Test
 	public void testCorrectStatsForMatch() {
 
-		String prevRoundTeamStatsXML = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
+		String prevRoundTeamStatsXML =
+				ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
 
 		Map<String, Integer> prevRoundStats = new HashMap<>();
 		prevRoundStats.put("imp:tracking-distance", 111923);
@@ -72,7 +74,8 @@ public class BundesligaTest {
 		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
-				Bundesliga.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
+				Bundesliga.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05",
+						prevRoundStats);
 		String expected = "125042 184 320 13 11";
 
 		Assert.assertEquals(actual, expected);
@@ -81,7 +84,8 @@ public class BundesligaTest {
 	@Test
 	public void testCorrectStatsForMatchWhichHaveEmptyDistanceAttributeAndShouldGetFromThePrevRound() {
 
-		String prevRoundTeamStatsXML = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
+		String prevRoundTeamStatsXML =
+				ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
 
 		Map<String, Integer> prevRoundStats = new HashMap<>();
 		prevRoundStats.put("imp:tracking-distance", 111923);
@@ -92,7 +96,8 @@ public class BundesligaTest {
 
 		String actual =
 				Bundesliga
-						.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
+						.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München",
+								prevRoundStats);
 		String expected = "111923 189 579 21 15";
 
 		Assert.assertEquals(actual, expected);
@@ -113,7 +118,8 @@ public class BundesligaTest {
 	@Test
 	public void testRankingStatsForTeamForRound15() {
 
-		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches-round-15.xml");
+		String content =
+				ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches-round-15.xml");
 		Document doc = DocumentUtils.parse(content);
 
 		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
