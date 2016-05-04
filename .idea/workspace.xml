@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="remove the external memorization maps and put them inside for better skeleton">
+    <list default="true" id="051aeeb7-766e-4762-9e14-77a29772c989" name="Default" comment="refactoring">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" afterPath="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/sources/ResultDB.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" afterPath="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback-test.xml" afterPath="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback-test.xml" />
     </list>
     <ignored path="bet-manager.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,11 +42,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataManger.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DataManger.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/data/DataManger.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="936">
               <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="522">
+              <caret line="29" column="10" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -77,7 +83,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/org/junit/runners/model/FrameworkMethod.class" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/crawl-data/bundesliga-stats-for-matches-round-15.xml" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/ResultDB.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/main/java/com/bet/manager/core/BundesLiga.java" />
@@ -128,6 +133,7 @@
         <option value="$PROJECT_DIR$/data-crawler-tool/src/main/java/com/bet/manager/tools/Main.java" />
         <option value="$PROJECT_DIR$/bet-manager-core/src/test/resources/logback-test.xml" />
         <option value="$PROJECT_DIR$/data-crawler-tool/src/main/resources/logback-test.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1317,7 +1323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1462201424241</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="refactoring">
+      <created>1462320319744</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1462320319744</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1391,7 +1404,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implement result abstract class to hold the result for the match, and added tests for it + refactoring." />
     <MESSAGE value="Added delimiter as property and also to the constructor for each Result classes" />
     <MESSAGE value="huge refactoring and re-design for the skeleton of the app. Added new test cases and de-couple the result class from useless props. Added exceptions for match class&#10;" />
     <MESSAGE value="Refactored and added tests." />
@@ -1416,7 +1428,8 @@
     <MESSAGE value=" Huge refactoring and also added documentation for the data responsible classes. Made the Crawler static (singleton). Added some exception classes, and also debugging logger." />
     <MESSAGE value="refactor" />
     <MESSAGE value="remove the external memorization maps and put them inside for better skeleton" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove the external memorization maps and put them inside for better skeleton" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1438,13 +1451,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bet-manager-model/src/main/java/com/bet/manager/models/util/FootballMatchBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="64" column="0" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.10/junit-4.10.jar!/org/junit/runners/model/FrameworkMethod.class" />
     <entry file="file://$PROJECT_DIR$/bet-manager-core/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -1799,6 +1805,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="936">
           <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" column="10" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
           <folding />
         </state>
       </provider>
