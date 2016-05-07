@@ -38,7 +38,7 @@ public class BundesligaTest {
 		expected.put("1.FC Köln", 17);
 		expected.put("FC Schalke 04", 18);
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -57,7 +57,7 @@ public class BundesligaTest {
 		expected.put("shots-total", 12);
 		expected.put("fouls-committed", 14);
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -78,7 +78,7 @@ public class BundesligaTest {
 						prevRoundStats);
 		String expected = "125042 184 320 13 11";
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class BundesligaTest {
 								prevRoundStats);
 		String expected = "111923 189 579 21 15";
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class BundesligaTest {
 		String actual = Bundesliga.parseCurrentRankingStats("FC Bayern München", doc);
 		String expected = "0 -1";
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
@@ -125,6 +125,6 @@ public class BundesligaTest {
 		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
 		String expected = "30 14";
 
-		Assert.assertEquals(actual, expected);
+		Assert.assertEquals(expected, actual);
 	}
 }
