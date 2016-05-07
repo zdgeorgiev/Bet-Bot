@@ -25,16 +25,16 @@ public class DataCreationIT {
 		Document currentRoundDoc = DocumentUtils
 				.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga_post_standing_2.xml"));
 
-		String prevRoundStats = ClasspathUtils.getContentISO("crawl-data/bundesliga_team_stats_round_1.xml");
+		String prevRoundStats = ClasspathUtils.getContentUTF8("crawl-data/bundesliga_team_stats_round_1.xml");
 		Map<String, Integer> rankingTable = Bundesliga.createRankingTable(currentRoundDoc);
 
 		String allMatchesFirstTeamContent =
-				ClasspathUtils.getContentISO("crawl-data/bayern-munich_2012.html");
+				ClasspathUtils.getContentUTF8("crawl-data/bayern-munich_2012.html");
 		String allMatchesSecondTeamContent =
-				ClasspathUtils.getContentISO("crawl-data/vfb-stuttgart_2012.html");
+				ClasspathUtils.getContentUTF8("crawl-data/vfb-stuttgart_2012.html");
 
 		Map<String, Integer> avgStatsPrev = Bundesliga.parseAverageRoundStats(
-				ClasspathUtils.getContentISO("crawl-data/bundesliga_team_stats_round_1.xml"));
+				ClasspathUtils.getContentUTF8("crawl-data/bundesliga_team_stats_round_1.xml"));
 
 		StringBuilder actual = new StringBuilder();
 		actual
