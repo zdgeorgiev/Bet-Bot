@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataManger {
+public class DataManager {
 
 	private Map<URL, String> crawledPages;
 	private ISecondarySource secondarySource;
@@ -24,7 +24,7 @@ public class DataManger {
 	 *                       match information, because this source publish all the data after the football
 	 *                       season. This should be used only for getting information about past season matches.
 	 */
-	public DataManger(boolean dynamicMatches) {
+	public DataManager(boolean dynamicMatches) {
 		this(dynamicMatches, new HashMap<>());
 	}
 
@@ -38,7 +38,7 @@ public class DataManger {
 	 *                       season. This should be used only for getting information about past season matches.
 	 * @param crawledPages   memorization map for crawled pages
 	 */
-	public DataManger(boolean dynamicMatches, Map<URL, String> crawledPages) {
+	public DataManager(boolean dynamicMatches, Map<URL, String> crawledPages) {
 
 		if (dynamicMatches)
 			secondarySource = new Espnfc();
@@ -98,7 +98,7 @@ public class DataManger {
 				.append(" ")
 				.append(secondarySource.getMatchVenue(team, year, round, crawledPages))
 				.append(" ")
-				.append(Bundesliga.getPrevRoundTeamPerformance(team, year, round, crawledPages))
+				.append(Bundesliga.getTeamPerformance(team, year, round - 1, crawledPages))
 				.append(" ")
 				.append(secondarySource.getLastFiveGamesForTeam(team, year, round, crawledPages));
 

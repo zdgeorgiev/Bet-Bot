@@ -1,7 +1,7 @@
 package com.bet.manager.tools;
 
 import com.bet.manager.commons.util.PerformanceUtils;
-import com.bet.manager.core.data.DataManger;
+import com.bet.manager.core.data.DataManager;
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
@@ -21,16 +21,16 @@ public class Main {
 
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-	private static final int ROUNDS = 2;
+	private static final int ROUNDS = 34;
 
-	private static DataManger dm;
+	private static DataManager dm;
 	private static ISecondarySource secondarySource = new ResultDB();
 
 	private static final Map<URL, String> crawledPages = new HashMap<>();
 
 	public static void main(String[] args) throws IOException {
 
-		dm = new DataManger(false, crawledPages);
+		dm = new DataManager(false, crawledPages);
 
 		int startYear;
 		int endYear;

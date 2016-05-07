@@ -207,21 +207,21 @@ public class Bundesliga {
 	 * @param crawledPages memorization map for already crawled pages
 	 * @return statistics for team
 	 */
-	public static String getPrevRoundTeamPerformance(String team, int year, int round,
+	public static String getTeamPerformance(String team, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		log.debug("Getting information for team '{}' in round {} year {}", team, round, year);
 		Map<String, Integer> prevRoundAverageStats =
-				Bundesliga.getAverageRoundStats(year, round - 1, crawledPages);
+				Bundesliga.getAverageRoundStats(year, round, crawledPages);
 
 		URL prevRoundStatsURL =
-				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round - 1));
+				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round));
 
 		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing the information collect in the previous round", team, round, year);
-		return parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats);
+		return parseTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats);
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class Bundesliga {
 	 * @param prevRoundAverageStats map containing the average statistics for all teams
 	 * @return statistics for team
 	 */
-	public static String parsePrevRoundTeamPerformance(String prevRoundTeamStatsXML, String team,
+	public static String parseTeamPerformance(String prevRoundTeamStatsXML, String team,
 			Map<String, Integer> prevRoundAverageStats) {
 
 		StringBuilder prevRoundStats = new StringBuilder();

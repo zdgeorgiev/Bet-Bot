@@ -74,7 +74,7 @@ public class BundesligaTest {
 		prevRoundStats.put("fouls-committed", 14);
 
 		String actual =
-				Bundesliga.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05",
+				Bundesliga.parseTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05",
 						prevRoundStats);
 		String expected = "125042 184 320 13 11";
 
@@ -96,7 +96,7 @@ public class BundesligaTest {
 
 		String actual =
 				Bundesliga
-						.parsePrevRoundTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München",
+						.parseTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München",
 								prevRoundStats);
 		String expected = "111923 189 579 21 15";
 

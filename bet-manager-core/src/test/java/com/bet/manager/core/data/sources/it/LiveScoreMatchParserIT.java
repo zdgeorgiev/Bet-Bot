@@ -1,4 +1,4 @@
-package com.bet.manager.core.it;
+package com.bet.manager.core.data.sources.it;
 
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.util.ClasspathUtils;
