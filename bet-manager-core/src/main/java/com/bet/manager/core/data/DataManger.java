@@ -1,10 +1,11 @@
 package com.bet.manager.core.data;
 
 import com.bet.manager.core.data.sources.Bundesliga;
+import com.bet.manager.core.data.sources.Espnfc;
+import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,18 +13,38 @@ import java.util.Map;
 public class DataManger {
 
 	private Map<URL, String> crawledPages;
+	private ISecondarySource secondarySource;
 
-	public DataManger() {
-		this.crawledPages = new HashMap<>();
+	/**
+	 * Const which gets a memorization map for crawled pages.
+	 * This constructor is useful when the data manager is using external memorization map
+	 *
+	 * @param dynamicMatches If this is set to false DataManager will try to get information from
+	 *                       ResultDB source. This is not appropriate if you are looking for dynamic
+	 *                       match information, because this source publish all the data after the football
+	 *                       season. This should be used only for getting information about past season matches.
+	 */
+	public DataManger(boolean dynamicMatches) {
+		this(dynamicMatches, new HashMap<>());
 	}
 
 	/**
 	 * Const which gets a memorization map for crawled pages.
 	 * This constructor is useful when the data manager is using external memorization map
 	 *
-	 * @param crawledPages memorization map for crawled pages
+	 * @param dynamicMatches If this is set to false DataManager will try to get information from
+	 *                       ResultDB source. This is not appropriate if you are looking for dynamic
+	 *                       match information, because this source publish all the data after the football
+	 *                       season. This should be used only for getting information about past season matches.
+	 * @param crawledPages   memorization map for crawled pages
 	 */
-	public DataManger(Map<URL, String> crawledPages) {
+	public DataManger(boolean dynamicMatches, Map<URL, String> crawledPages) {
+
+		if (dynamicMatches)
+			secondarySource = new Espnfc();
+		else
+			secondarySource = new ResultDB();
+
 		this.crawledPages = crawledPages;
 	}
 
@@ -47,8 +68,7 @@ public class DataManger {
 	 * @param round    match round should be at least 2nd one, because information for round 0 is invalid
 	 * @return Data for the match
 	 */
-	public String getDataForMatch(String homeTeam, String awayTeam, int year, int round)
-			throws MalformedURLException, InterruptedException {
+	public String getDataForMatch(String homeTeam, String awayTeam, int year, int round) throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
 		String homeTeamData = getDataForTeam(homeTeam, year, round);
@@ -64,8 +84,7 @@ public class DataManger {
 		return currentMatchData.toString();
 	}
 
-	private String getDataForTeam(String team, int year, int round)
-			throws MalformedURLException, InterruptedException {
+	private String getDataForTeam(String team, int year, int round) throws Exception {
 
 		if (round <= 1)
 			throw new InvalidMatchRoundIndex("Match index " + round + " cannot be less than 2nd one.");
@@ -77,11 +96,11 @@ public class DataManger {
 				.append(" ")
 				.append(Bundesliga.getCurrentRankingStats(team, year, round, crawledPages))
 				.append(" ")
-				.append(ResultDB.getTeamOpponentAndVenue(team, year, round, crawledPages)[1])
+				.append(secondarySource.getMatchVenue(team, year, round, crawledPages))
 				.append(" ")
 				.append(Bundesliga.getPrevRoundTeamPerformance(team, year, round, crawledPages))
 				.append(" ")
-				.append(ResultDB.getLastFiveGamesForTeam(team, year, round, crawledPages));
+				.append(secondarySource.getLastFiveGamesForTeam(team, year, round, crawledPages));
 
 		if (crawledPages.size() > 100)
 			clearCache();

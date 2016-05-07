@@ -3,6 +3,7 @@ package com.bet.manager.tools;
 import com.bet.manager.commons.util.PerformanceUtils;
 import com.bet.manager.core.data.DataManger;
 import com.bet.manager.core.data.sources.Bundesliga;
+import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -20,15 +21,16 @@ public class Main {
 
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-	private static final int ROUNDS = 34;
+	private static final int ROUNDS = 2;
 
 	private static DataManger dm;
+	private static ISecondarySource secondarySource = new ResultDB();
 
 	private static final Map<URL, String> crawledPages = new HashMap<>();
 
 	public static void main(String[] args) throws IOException {
 
-		dm = new DataManger(crawledPages);
+		dm = new DataManger(false, crawledPages);
 
 		int startYear;
 		int endYear;
@@ -122,7 +124,7 @@ public class Main {
 				Node currentTeam = currentRoundTeams.item(i);
 
 				String homeTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
-				String awayTeam = ResultDB.getTeamOpponentAndVenue(homeTeam, year, round, crawledPages)[0];
+				String awayTeam = secondarySource.getTeamOpponent(homeTeam, year, round, crawledPages);
 
 				if (!teamBlackList.contains(homeTeam) && !teamBlackList.contains(awayTeam)) {
 
@@ -134,7 +136,7 @@ public class Main {
 					currentRowData
 							.append(dm.getDataForMatch(homeTeam, awayTeam, year, round))
 							.append(" ")
-							.append(ResultDB.getMatchResult(homeTeam, year, round, crawledPages));
+							.append(secondarySource.getMatchResult(homeTeam, year, round, crawledPages));
 
 					log.info("({}/{}) Data for match '{}'-'{}' was successfully created",
 							dataRows.size() + 1, currentRoundTeams.getLength() / 2, homeTeam, awayTeam);
