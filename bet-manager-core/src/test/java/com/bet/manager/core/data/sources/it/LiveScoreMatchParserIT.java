@@ -3,8 +3,8 @@ package com.bet.manager.core.data.sources.it;
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.LiveScoreMatchParser;
-import com.bet.manager.models.FootballMatch;
-import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.dao.FootballMatch;
+import com.bet.manager.models.dao.FootballMatchWithPrediction;
 import com.bet.manager.models.util.FootballMatchBuilder;
 import com.bet.manager.models.util.FootballMatchUtils;
 import org.junit.Assert;
@@ -30,9 +30,9 @@ public class LiveScoreMatchParserIT {
 		String content =
 				ClasspathUtils.getContentUTF8("live-score-full-content-with-no-results.txt");
 
-		List<Match> actual = parser.parse(content);
+		List<FootballMatch> actual = parser.parse(content);
 
-		List<Match> expected = new ArrayList<Match>() {
+		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
 				//12 January
 				add(createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45"));
@@ -53,8 +53,8 @@ public class LiveScoreMatchParserIT {
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
 			Assert.assertTrue(FootballMatchUtils.equals(
-					(FootballMatch) actual.get(i),
-					(FootballMatch) expected.get(i)));
+					(FootballMatchWithPrediction) actual.get(i),
+					(FootballMatchWithPrediction) expected.get(i)));
 		}
 	}
 
@@ -63,15 +63,15 @@ public class LiveScoreMatchParserIT {
 		String content =
 				ClasspathUtils.getContentUTF8("live-score-matches-with-results.txt");
 
-		List<Match> actual = parser.parse(content);
+		List<FootballMatch> actual = parser.parse(content);
 
-		List<Match> expected = new ArrayList<Match>() {
+		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
-				Match m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
+				FootballMatch m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
 				FootballMatchUtils.setResultAndWinner(m, "3-3");
 				add(m);
 
-				Match m2 = createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45");
+				FootballMatch m2 = createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45");
 				FootballMatchUtils.setResultAndWinner(m2, "2-1");
 				add(m2);
 			}
@@ -80,8 +80,8 @@ public class LiveScoreMatchParserIT {
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
 			Assert.assertTrue(FootballMatchUtils.equals(
-					(FootballMatch) actual.get(i),
-					(FootballMatch) expected.get(i)));
+					(FootballMatchWithPrediction) actual.get(i),
+					(FootballMatchWithPrediction) expected.get(i)));
 		}
 	}
 
@@ -90,17 +90,17 @@ public class LiveScoreMatchParserIT {
 		String content =
 				ClasspathUtils.getContentUTF8("live-score-matches-with-results-and-without.txt");
 
-		List<Match> actual = parser.parse(content);
+		List<FootballMatch> actual = parser.parse(content);
 
-		List<Match> expected = new ArrayList<Match>() {
+		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
-				Match m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
+				FootballMatch m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
 				FootballMatchUtils.setResultAndWinner(m, "3-3");
 				add(m);
 
 				add(createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45"));
 
-				Match m2 = createMatch("Levski", "CSKA", "January 12 2016 21:45");
+				FootballMatch m2 = createMatch("Levski", "CSKA", "January 12 2016 21:45");
 				FootballMatchUtils.setResultAndWinner(m2, "2-3");
 				add(m2);
 			}
@@ -109,8 +109,8 @@ public class LiveScoreMatchParserIT {
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
 			Assert.assertTrue(FootballMatchUtils.equals(
-					(FootballMatch) actual.get(i),
-					(FootballMatch) expected.get(i)));
+					(FootballMatchWithPrediction) actual.get(i),
+					(FootballMatchWithPrediction) expected.get(i)));
 		}
 	}
 
@@ -119,17 +119,17 @@ public class LiveScoreMatchParserIT {
 		String content = ClasspathUtils
 				.getContentUTF8("live-score-full-content-with-only-one-valid-match.txt");
 
-		List<Match> actual = parser.parse(content);
+		List<FootballMatch> actual = parser.parse(content);
 
-		Match expected = createMatch("Manchester City", "Everton", "January 13 2016 21:45");
+		FootballMatch expected = createMatch("Manchester City", "Everton", "January 13 2016 21:45");
 
 		Assert.assertEquals(actual.size(), 1);
 		Assert.assertTrue(FootballMatchUtils.equals(
-				(FootballMatch) actual.get(0),
-				(FootballMatch) expected));
+				(FootballMatchWithPrediction) actual.get(0),
+				(FootballMatchWithPrediction) expected));
 	}
 
-	private FootballMatch createMatch(String homeTeam, String awayTeam, String date) {
+	private FootballMatchWithPrediction createMatch(String homeTeam, String awayTeam, String date) {
 
 		Date startDate;
 
@@ -139,10 +139,11 @@ public class LiveScoreMatchParserIT {
 			throw new IllegalArgumentException("Start date cannot be parsed.");
 		}
 
-		return new FootballMatchBuilder()
-				.setHomeTeamName(homeTeam)
-				.setAwayTeamName(awayTeam)
-				.setStartDate(startDate)
-				.build();
+		return (FootballMatchWithPrediction)
+				new FootballMatchBuilder()
+						.setHomeTeamName(homeTeam)
+						.setAwayTeamName(awayTeam)
+						.setStartDate(startDate)
+						.build();
 	}
 }

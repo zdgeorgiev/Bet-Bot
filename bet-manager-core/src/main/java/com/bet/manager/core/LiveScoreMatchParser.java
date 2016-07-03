@@ -1,7 +1,7 @@
 package com.bet.manager.core;
 
 import com.bet.manager.commons.DateFormats;
-import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.dao.FootballMatch;
 import com.bet.manager.models.util.FootballMatchBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
@@ -28,14 +28,14 @@ public class LiveScoreMatchParser implements IMatchParser {
 	}
 
 	@Override
-	public List<Match> parse(String content) {
+	public List<FootballMatch> parse(String content) {
 
 		if (StringUtil.isBlank(content)) {
 			throw new IllegalArgumentException("HTML containing the matches is invalid");
 		}
 
 		Element contentDiv = getContentDiv(content);
-		List<Match> matches = new ArrayList<>();
+		List<FootballMatch> matches = new ArrayList<>();
 
 		int totalMatches = 0;
 
@@ -45,7 +45,7 @@ public class LiveScoreMatchParser implements IMatchParser {
 				totalMatches++;
 
 				try {
-					Match m = parseMatch(div);
+					FootballMatch m = parseMatch(div);
 					matches.add(m);
 				} catch (Exception e) {
 					log.error("Failed to create match with div - {}",
@@ -66,14 +66,14 @@ public class LiveScoreMatchParser implements IMatchParser {
 		return div.className().contains(MATCH_ENTRY_CLASS_NAME);
 	}
 
-	public Match parseMatch(Element div) throws ParseException {
+	public FootballMatch parseMatch(Element div) throws ParseException {
 
 		String homeTeam = getHomeTeam(div);
 		String awayTeam = getAwayTeam(div);
 		Date startDate = getStartDateAndTime(div);
 		String score = getScore(div);
 
-		Match m = new FootballMatchBuilder()
+		FootballMatch m = new FootballMatchBuilder()
 				.setHomeTeamName(homeTeam)
 				.setAwayTeamName(awayTeam)
 				.setStartDate(startDate)

@@ -1,13 +1,13 @@
 package com.bet.manager.models.util;
 
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.models.FootballMatch;
-import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.dao.FootballMatch;
+import com.bet.manager.models.dao.FootballMatchWithPrediction;
 import org.apache.commons.lang.StringUtils;
 
 public class FootballMatchUtils {
 
-	public static boolean equals(FootballMatch firstMatch, FootballMatch secondMatch) {
+	public static boolean equals(FootballMatchWithPrediction firstMatch, FootballMatchWithPrediction secondMatch) {
 
 		return firstMatch.getHomeTeam().equals(secondMatch.getHomeTeam()) &&
 				firstMatch.getAwayTeam().equals(secondMatch.getAwayTeam()) &&
@@ -20,7 +20,7 @@ public class FootballMatchUtils {
 		return firstProp == null ? secondProp == null : firstProp.equals(secondProp);
 	}
 
-	public static void setResultAndWinner(Match match, String result) {
+	public static void setResultAndWinner(FootballMatch match, String result) {
 
 		if (StringUtils.isBlank(result)) {
 			match.setResult(ResultMessages.UNKNOWN_SCORE);

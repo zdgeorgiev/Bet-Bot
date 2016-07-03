@@ -1,6 +1,7 @@
 package com.bet.manager.models.util;
 
-import com.bet.manager.models.FootballMatch;
+import com.bet.manager.models.dao.FootballMatch;
+import com.bet.manager.models.dao.FootballMatchWithPrediction;
 import com.bet.manager.models.exceptions.EmptyTeamNameException;
 import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.models.exceptions.InvalidMatchDateException;
@@ -13,7 +14,11 @@ public class FootballMatchBuilder {
 	private FootballMatch match;
 
 	public FootballMatchBuilder() {
-		match = new FootballMatch();
+		match = new FootballMatchWithPrediction();
+	}
+
+	public FootballMatchBuilder(FootballMatch match) {
+		this.match = match;
 	}
 
 	public FootballMatchBuilder setHomeTeamName(String homeTeamName) {
@@ -39,7 +44,7 @@ public class FootballMatchBuilder {
 	public FootballMatchBuilder setStartDate(Date startDate) {
 
 		if (startDate == null) {
-			throw new InvalidMatchDateException("Match start date cannot be null.");
+			throw new InvalidMatchDateException("FootballMatch start date cannot be null.");
 		}
 
 		match.setStartDate(startDate);
@@ -47,7 +52,10 @@ public class FootballMatchBuilder {
 	}
 
 	public FootballMatchBuilder setResult(String result) {
+
 		match.setResult(result);
+		FootballMatchUtils.setResultAndWinner(match, match.getResult());
+
 		return this;
 	}
 
@@ -57,11 +65,12 @@ public class FootballMatchBuilder {
 
 		if (match.getHomeTeam().equals(match.getAwayTeam())) {
 			throw new EqualHomeAndAwayTeamException(
-					"Match home team " + match.getHomeTeam() + " cannot be the same as the away team.");
+					"FootballMatch home team " + match.getHomeTeam()
+							+ " cannot be the same as the away team.");
 		}
 
 		setStartDate(match.getStartDate());
-		FootballMatchUtils.setResultAndWinner(match, match.getResult());
+		setResult(match.getResult());
 		return match;
 	}
 }

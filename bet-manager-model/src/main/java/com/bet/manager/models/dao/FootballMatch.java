@@ -3,40 +3,39 @@ package com.bet.manager.models.dao;
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public abstract class Match {
+@Entity
+@Table(name = "matches")
+public abstract class FootballMatch {
 
-	/**
-	 * name of the home team
-	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	protected int id;
+
+	@Column(name = "home_team")
 	protected String homeTeam;
 
-	/**
-	 * name of the away team
-	 */
+	@Column(name = "away_team")
 	protected String awayTeam;
 
-	/**
-	 * Date when the match will start
-	 */
+	@Column(name = "start_date")
 	protected Date startDate;
 
-	/**
-	 * Result for the current match
-	 */
+	@Column(name = "result")
 	protected String result;
+
+	@Column(name = "winner")
+	protected String winner;
 
 	/**
 	 * score delimiter for the result example : 4-2
 	 * delimiter is "-"
 	 */
+	@Transient
 	protected String resultDelimiter;
-
-	/**
-	 * winner in the current match
-	 */
-	protected String winner;
 
 	public String getHomeTeam() {
 		return homeTeam;
@@ -88,7 +87,7 @@ public abstract class Match {
 
 	@Override public String toString() {
 		return String
-				.format("Match { [%s] %s %s - %s }",
+				.format("FootballMatch { [%s] %s %s - %s }",
 						DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.format(getStartDate()),
 						getResult() == null ? ResultMessages.UNKNOWN_SCORE : getResult(),
 						getHomeTeam(),

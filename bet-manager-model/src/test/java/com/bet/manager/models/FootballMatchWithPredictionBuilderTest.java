@@ -2,7 +2,7 @@ package com.bet.manager.models;
 
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.models.dao.Match;
+import com.bet.manager.models.dao.FootballMatch;
 import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.models.exceptions.InvalidMatchDateException;
 import com.bet.manager.models.util.FootballMatchBuilder;
@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.util.Date;
 
-public class FootballMatchBuilderTest {
+public class FootballMatchWithPredictionBuilderTest {
 
 	private static FootballMatchBuilder builder;
 
@@ -27,7 +27,7 @@ public class FootballMatchBuilderTest {
 	@Test
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithHomeTeamWinner() throws ParseException {
 
-		Match match = builder
+		FootballMatch match = builder
 				.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("2-1")
 				.build();
@@ -42,7 +42,7 @@ public class FootballMatchBuilderTest {
 	@Test
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithTieResult() throws ParseException {
 
-		Match match = builder
+		FootballMatch match = builder
 				.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("2-2")
 				.build();
@@ -57,7 +57,7 @@ public class FootballMatchBuilderTest {
 	@Test
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult() throws ParseException {
 
-		Match match = builder
+		FootballMatch match = builder
 				.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("? - ?")
 				.build();

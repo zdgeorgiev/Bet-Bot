@@ -87,7 +87,7 @@ public class DataManager {
 	private String getDataForTeam(String team, int year, int round) throws Exception {
 
 		if (round <= 1)
-			throw new InvalidMatchRoundIndex("Match index " + round + " cannot be less than 2nd one.");
+			throw new InvalidMatchRoundIndex("FootballMatch index " + round + " cannot be less than 2nd one.");
 
 		StringBuilder currentTeamData = new StringBuilder();
 
