@@ -16,7 +16,7 @@
     <module>bet-manager-api</module>
     <module>bet-manager-core</module>
     <module>bet-manager-commons</module>
-    <module>data-crawler-tool</module>
+    <module>bet-manager-tools</module>
   </modules>
 
   <properties>
