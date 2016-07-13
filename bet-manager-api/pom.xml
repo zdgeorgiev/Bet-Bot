@@ -1,15 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <artifactId>bet.manager</artifactId>
-    <groupId>com.bet.manager</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>bet-manager-api</artifactId>
+  <parent>
+	<artifactId>bet.manager</artifactId>
+	<groupId>com.bet.manager</groupId>
+	<version>1.0-SNAPSHOT</version>
+  </parent>
 
+  <artifactId>bet-manager-api</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>Bet Manager API</name>
+
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<logback.version>1.1.2</logback.version>
+	<swagger.version>1.0.2</swagger.version>
+	<swagger-ui.version>2.0.12</swagger-ui.version>
+	<spring-boot.version>1.1.4.RELEASE</spring-boot.version>
+	<spring.version>4.2.3.RELEASE</spring.version>
+  </properties>
+
+  <dependencies>
+
+	<dependency>
+	  <groupId>com.bet.manager</groupId>
+	  <artifactId>bet-manager-core</artifactId>
+	  <version>1.0-SNAPSHOT</version>
+	</dependency>
+
+	<!--Spring dependencies-->
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-context</artifactId>
+	  <version>${spring.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-web</artifactId>
+	  <version>${spring.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-webmvc</artifactId>
+	  <version>${spring.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-context-support</artifactId>
+	  <version>${spring.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-test</artifactId>
+	  <version>${spring.version}</version>
+	  <scope>test</scope>
+	</dependency>
+
+	<dependency>
+	  <groupId>org.springframework.boot</groupId>
+	  <artifactId>spring-boot-starter-tomcat</artifactId>
+	  <version>${spring-boot.version}</version>
+	  <scope>provided</scope>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework.boot</groupId>
+	  <artifactId>spring-boot-starter-web</artifactId>
+	  <version>${spring-boot.version}</version>
+	</dependency>
+
+	<!--Swagger-->
+	<dependency>
+	  <groupId>com.mangofactory</groupId>
+	  <artifactId>swagger-springmvc</artifactId>
+	  <version>${swagger.version}</version>
+	</dependency>
+
+	<dependency>
+	  <groupId>org.webjars</groupId>
+	  <artifactId>swagger-ui</artifactId>
+	  <version>${swagger-ui.version}</version>
+	</dependency>
+
+	<!-- Logback dependencies -->
+	<dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-classic</artifactId>
+	  <version>${logback.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-core</artifactId>
+	  <version>${logback.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>ch.qos.logback</groupId>
+	  <artifactId>logback-access</artifactId>
+	  <version>${logback.version}</version>
+	</dependency>
+
+  </dependencies>
+
+  <build>
+	<finalName>${project.artifactId}</finalName>
+
+	<plugins>
+
+	  <plugin>
+		<artifactId>maven-war-plugin</artifactId>
+		<version>2.6</version>
+		<configuration>
+		  <attachClasses>true</attachClasses>
+		  <warName>${project.artifactId}</warName>
+		  <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+		</configuration>
+	  </plugin>
+
+	</plugins>
+  </build>
 
 </project>

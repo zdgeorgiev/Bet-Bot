@@ -42,11 +42,11 @@ public class LiveScoreMatchParser implements IMatchParser {
 		for (Element div : contentDiv.getAllElements()) {
 
 			if (isMatchEntry(div)) {
-				totalMatches++;
 
 				try {
 					FootballMatch m = parseMatch(div);
 					matches.add(m);
+					totalMatches++;
 				} catch (Exception e) {
 					log.error("Failed to create match with div - {}",
 							div.toString().replace(System.lineSeparator(), ""), e);
@@ -66,7 +66,7 @@ public class LiveScoreMatchParser implements IMatchParser {
 		return div.className().contains(MATCH_ENTRY_CLASS_NAME);
 	}
 
-	public FootballMatch parseMatch(Element div) throws ParseException {
+	private FootballMatch parseMatch(Element div) throws ParseException {
 
 		String homeTeam = getHomeTeam(div);
 		String awayTeam = getAwayTeam(div);

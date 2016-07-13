@@ -41,17 +41,16 @@ public class WebCrawler {
 	 * @param maxSecondsSleep maximum sleep time between each request
 	 * @return the content of a page
 	 */
-	public static String crawl(URL url, Map<URL, String> crawledPages, int minSecondsSleep,
-			int maxSecondsSleep)
+	public static String crawl(URL url, Map<URL, String> crawledPages, int minSecondsSleep, int maxSecondsSleep)
 			throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
 			log.debug("Returning cached copy of '{}'", url);
 			return crawledPages.get(url);
 		}
 
-		// Put asleep the thread for 3-5 seconds
+		// Put asleep the thread for [minSecondsSleep,maxSecondsSleep] seconds
 		Thread.sleep(
-				new Random().nextInt((maxSecondsSleep - minSecondsSleep) * 1000) + maxSecondsSleep * 1000);
+				new Random().nextInt((maxSecondsSleep - minSecondsSleep) * 1000) + minSecondsSleep * 1000);
 
 		String contentOfPage = getContent(url);
 

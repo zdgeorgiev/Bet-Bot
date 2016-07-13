@@ -18,6 +18,15 @@ public class DataManager {
 	/**
 	 * Const which gets a memorization map for crawled pages.
 	 * This constructor is useful when the data manager is using external memorization map
+	 * This will dynamic create entry for incoming matches. Check other constructors.
+	 */
+	public DataManager() {
+		this(true, new HashMap<>());
+	}
+
+	/**
+	 * Const which gets a memorization map for crawled pages.
+	 * This constructor is useful when the data manager is using external memorization map
 	 *
 	 * @param dynamicMatches If this is set to false DataManager will try to get information from
 	 *                       ResultDB source. This is not appropriate if you are looking for dynamic
@@ -87,7 +96,7 @@ public class DataManager {
 	private String getDataForTeam(String team, int year, int round) throws Exception {
 
 		if (round <= 1)
-			throw new InvalidMatchRoundIndex("FootballMatch index " + round + " cannot be less than 2nd one.");
+			throw new InvalidMatchRoundIndex("FootballMatch round " + round + " cannot be less than 2nd one.");
 
 		StringBuilder currentTeamData = new StringBuilder();
 
