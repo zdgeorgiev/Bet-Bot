@@ -9,10 +9,13 @@ public class DataManagerService {
 	private DataManager dataManager;
 
 	public DataManagerService() {
+		// TODO: This should be set to true
 		this.dataManager = new DataManager(false);
 	}
 
 	public String getDataForMatch(String team1, String team2, int year, int round) {
+
+		// TODO: VALIDATION!!
 
 		String result = "";
 
