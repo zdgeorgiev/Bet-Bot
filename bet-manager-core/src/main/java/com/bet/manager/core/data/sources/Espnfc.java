@@ -9,7 +9,7 @@ public class Espnfc implements ISecondarySource {
 		return null;
 	}
 
-	@Override public String getTeamOpponent(String team, int year, int round, Map<URL, String> crawledPages)
+	@Override public String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
@@ -18,7 +18,7 @@ public class Espnfc implements ISecondarySource {
 		return null;
 	}
 
-	@Override public String getMatchResult(String team, int year, int round, Map<URL, String> crawledPages)
+	@Override public String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
@@ -28,12 +28,12 @@ public class Espnfc implements ISecondarySource {
 	}
 
 	@Override
-	public String getLastFiveGamesForTeam(String team, int year, int round, Map<URL, String> crawledPages)
+	public String getLastFiveGamesForTeam(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
 
-	@Override public String getMatchVenue(String team, int year, int round, Map<URL, String> crawledPages)
+	@Override public String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}

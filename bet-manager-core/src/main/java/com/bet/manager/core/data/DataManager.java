@@ -5,12 +5,20 @@ import com.bet.manager.core.data.sources.Espnfc;
 import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
+import com.bet.manager.core.data.sources.exceptions.InvalidMatchYearIndex;
+import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DataManager {
+
+	private static final int MIN_ROUND = 2;
+	private static final int MAX_ROUND = 34;
+	private static final int MIN_YEAR = 2011;
+	private static final int MAX_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 
 	private Map<URL, String> crawledPages;
 	private ISecondarySource secondarySource;
@@ -93,23 +101,29 @@ public class DataManager {
 		return currentMatchData.toString();
 	}
 
-	private String getDataForTeam(String team, int year, int round) throws Exception {
+	private String getDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
 
-		if (round <= 1)
-			throw new InvalidMatchRoundIndex("FootballMatch round " + round + " cannot be less than 2nd one.");
+		if (StringUtils.isEmpty(bundesLigaTeam))
+			throw new IllegalArgumentException("Team argument cannot be empty");
+
+		if (round < MIN_ROUND || round > MAX_ROUND)
+			throw new InvalidMatchRoundIndex("FootballMatch round " + round + " cannot be less than 2nd one and greater than 34");
+
+		if (year < MIN_YEAR || year > MAX_YEAR)
+			throw new InvalidMatchYearIndex("Year '" + year + "' .. should be in range [" + MIN_YEAR + ".." + MAX_YEAR + "]");
 
 		StringBuilder currentTeamData = new StringBuilder();
 
 		currentTeamData
-				.append(Bundesliga.getTeamRankingPlace(team, year, round, crawledPages))
+				.append(Bundesliga.getTeamRankingPlace(bundesLigaTeam, year, round, crawledPages))
 				.append(" ")
-				.append(Bundesliga.getCurrentRankingStats(team, year, round, crawledPages))
+				.append(Bundesliga.getCurrentRankingStats(bundesLigaTeam, year, round, crawledPages))
 				.append(" ")
-				.append(secondarySource.getMatchVenue(team, year, round, crawledPages))
+				.append(secondarySource.getMatchVenue(bundesLigaTeam, year, round, crawledPages))
 				.append(" ")
-				.append(Bundesliga.getTeamPerformance(team, year, round - 1, crawledPages))
+				.append(Bundesliga.getTeamPerformance(bundesLigaTeam, year, round - 1, crawledPages))
 				.append(" ")
-				.append(secondarySource.getLastFiveGamesForTeam(team, year, round, crawledPages));
+				.append(secondarySource.getLastFiveGamesForTeam(bundesLigaTeam, year, round, crawledPages));
 
 		if (crawledPages.size() > 100)
 			clearCache();

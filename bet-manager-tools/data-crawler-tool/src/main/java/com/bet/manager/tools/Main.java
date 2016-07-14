@@ -44,9 +44,6 @@ public class Main {
 		} else
 			throw new IllegalStateException("Less arguments than required.");
 
-		if (startYear < 2011)
-			throw new IllegalArgumentException("Start year cannot be less than 2011");
-
 		File destinationFolder = initializeDestinationFolder(args);
 
 		for (int year = startYear; year <= endYear; year++) {

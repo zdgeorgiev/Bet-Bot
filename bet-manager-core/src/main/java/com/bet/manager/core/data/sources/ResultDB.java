@@ -33,14 +33,14 @@ public class ResultDB implements ISecondarySource {
 	}
 
 	@Override
-	public String getLastFiveGamesForTeam(String team, int year, int round, Map<URL, String> crawledPages)
+	public String getLastFiveGamesForTeam(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
-		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
+		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
 
 		if (StringUtils.isBlank(resultDBTeamName)) {
 			throw new InvalidMappingException(
-					"Cannot find any mapping to team '" + team + "' in bundesliga to resultdb HashMap.");
+					"Cannot find any mapping to team '" + bundesLigaTeam + "' in bundesliga to resultdb HashMap.");
 		}
 
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
@@ -48,7 +48,7 @@ public class ResultDB implements ISecondarySource {
 
 		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
 
-		log.debug("Trying to parse the last five games for team '{}' year {} round {}..", team, year, round);
+		log.debug("Trying to parse the last five games for team '{}' year {} round {}..", bundesLigaTeam, year, round);
 		return parseLastFiveGamesForTeam(content, round);
 	}
 
@@ -83,11 +83,11 @@ public class ResultDB implements ISecondarySource {
 	}
 
 	@Override
-	public String getTeamOpponent(String team, int year, int round, Map<URL, String> crawledPages)
+	public String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
-		log.debug("Getting opponent for team '{}' for match in year {} round {}", team, year, round);
-		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
+		log.debug("Getting opponent for team '{}' for match in year {} round {}", bundesLigaTeam, year, round);
+		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
 
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
@@ -111,11 +111,11 @@ public class ResultDB implements ISecondarySource {
 	}
 
 	@Override
-	public String getMatchVenue(String team, int year, int round, Map<URL, String> crawledPages)
+	public String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
-		log.debug("Getting opponent for team '{}' for match in year {} round {}", team, year, round);
-		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(team);
+		log.debug("Getting opponent for team '{}' for match in year {} round {}", bundesLigaTeam, year, round);
+		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
 
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
@@ -169,10 +169,10 @@ public class ResultDB implements ISecondarySource {
 	}
 
 	@Override
-	public String getMatchResult(String team, int year, int round, Map<URL, String> crawledPages)
+	public String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
-		String resultDBTeam = TeamsMapping.bundesligaToResultDB.get(team);
+		String resultDBTeam = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
 		URL teamMatchesURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeam, year));
 
@@ -184,7 +184,7 @@ public class ResultDB implements ISecondarySource {
 			result = parseMatchResult(round, allMatchesHTML);
 		} catch (MatchResultNotFound e) {
 			log.error("Result for team {} in round {} year {} is not found."
-					+ " Maybe the match is not started or over yet.", team, round, year);
+					+ " Maybe the match is not started or over yet.", bundesLigaTeam, round, year);
 		}
 
 		return result;

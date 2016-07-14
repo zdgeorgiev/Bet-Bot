@@ -4,6 +4,7 @@ import com.bet.manager.commons.util.DocumentUtils;
 import com.bet.manager.commons.util.URLUtils;
 import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
+import com.bet.manager.core.data.sources.exceptions.InvalidMappingException;
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -51,16 +52,16 @@ public class Bundesliga {
 	 * round and year. This method uses external memorization maps for already crawled
 	 * pages.
 	 *
-	 * @param team         team name
-	 * @param year         match year
-	 * @param round        match round
-	 * @param crawledPages memorization map for already crawled pages
+	 * @param bundesLigaTeam team name
+	 * @param year           match year
+	 * @param round          match round
+	 * @param crawledPages   memorization map for already crawled pages
 	 * @return current round place
 	 */
-	public static Integer getTeamRankingPlace(String team, int year, int round, Map<URL, String> crawledPages)
+	public static Integer getTeamRankingPlace(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		log.debug("Getting information about '{}' rank in round {} year {}", team, round, year);
+		log.debug("Getting information about '{}' rank in round {} year {}", bundesLigaTeam, round, year);
 		String currentRoundMatchesContent = Bundesliga.getMatches(year, round, crawledPages);
 
 		Document currentRoundMatchesXML = DocumentUtils.parse(currentRoundMatchesContent);
@@ -68,7 +69,13 @@ public class Bundesliga {
 		log.debug("Creating ranking table for round {} year {}", round, year);
 		Map<String, Integer> currentRoundRanking = Bundesliga.createRankingTable(currentRoundMatchesXML);
 
-		return currentRoundRanking.get(team);
+		Integer teamId = currentRoundRanking.get(bundesLigaTeam);
+
+		if (teamId == null)
+			throw new InvalidMappingException(
+					"There is not entry for team with name '" + bundesLigaTeam + "' in ranking table for year " + year);
+
+		return teamId;
 	}
 
 	/**
@@ -121,13 +128,13 @@ public class Bundesliga {
 		return ranking;
 	}
 
-	private static boolean checkForValidMappingBundesligaIdToTeam(int id, String team) {
+	private static boolean checkForValidMappingBundesligaIdToTeam(int id, String bundesLigaTeam) {
 		log.debug("Searching for valid mapping from BundesligaID => BundesligaName");
-		if (TeamsMapping.bundesligaIdToName.get(id).equals(team)) {
+		if (TeamsMapping.bundesligaIdToName.get(id).equals(bundesLigaTeam)) {
 			return true;
 		}
 
-		throw new IllegalTeamMappingException("Team with id " + id + " is mapped to " + team +
+		throw new IllegalTeamMappingException("Team with id " + id + " is mapped to " + bundesLigaTeam +
 				", but in the xml team node id " + id + " is mapped to " + TeamsMapping.bundesligaIdToName
 				.get(id));
 	}
@@ -135,29 +142,29 @@ public class Bundesliga {
 	/**
 	 * Get the current points and round goals difference for team
 	 *
-	 * @param team         Team for which you want to get the stats
-	 * @param year         year for the match
-	 * @param round        round fot the match
-	 * @param crawledPages memorization map for already crawled pages
+	 * @param bundesLigaTeam Team for which you want to get the stats
+	 * @param year           year for the match
+	 * @param round          round fot the match
+	 * @param crawledPages   memorization map for already crawled pages
 	 * @return the ranking stats for team for given year and round
 	 */
-	public static String getCurrentRankingStats(String team, int year, int round,
+	public static String getCurrentRankingStats(String bundesLigaTeam, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String currentRoundMatchesContent = Bundesliga.getMatches(year, round, crawledPages);
 		Document currentRoundMatches = DocumentUtils.parse(currentRoundMatchesContent);
 
-		log.debug("Getting information for team '{}' in round {} year {} statistics", team, round, year);
-		return parseCurrentRankingStats(team, currentRoundMatches);
+		log.debug("Getting information for team '{}' in round {} year {} statistics", bundesLigaTeam, round, year);
+		return parseCurrentRankingStats(bundesLigaTeam, currentRoundMatches);
 	}
 
 	/**
-	 * @param team                team name
+	 * @param bundesLigaTeam      team name
 	 * @param currentRoundMatches Document containing statistics for specific round
 	 * @return statistics for round
 	 */
-	public static String parseCurrentRankingStats(String team, Document currentRoundMatches) {
+	public static String parseCurrentRankingStats(String bundesLigaTeam, Document currentRoundMatches) {
 
 		StringBuilder prevRoundStats = new StringBuilder();
 
@@ -168,7 +175,7 @@ public class Bundesliga {
 			Node currentTeam = teamNodes.item(i);
 			String currentTeamName = getNameFromTeamNode(currentTeam);
 
-			if (currentTeamName.equals(team)) {
+			if (currentTeamName.equals(bundesLigaTeam)) {
 				prevRoundStats.append(getGoalDifferenceAndPoints(currentTeam));
 				break;
 			}
@@ -201,17 +208,17 @@ public class Bundesliga {
 	 * is leaved empty the value from the average round stats will come in place)
 	 * This method using external memorization maps for already crawled pages.
 	 *
-	 * @param team         which wanna get performance
-	 * @param year         year for match
-	 * @param round        round for match ( the method will call with round - 1, to get the previous )
-	 * @param crawledPages memorization map for already crawled pages
+	 * @param bundesLigaTeam which wanna get performance
+	 * @param year           year for match
+	 * @param round          round for match ( the method will call with round - 1, to get the previous )
+	 * @param crawledPages   memorization map for already crawled pages
 	 * @return statistics for team
 	 */
-	public static String getTeamPerformance(String team, int year, int round,
+	public static String getTeamPerformance(String bundesLigaTeam, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
-		log.debug("Getting information for team '{}' in round {} year {}", team, round, year);
+		log.debug("Getting information for team '{}' in round {} year {}", bundesLigaTeam, round, year);
 		Map<String, Integer> prevRoundAverageStats =
 				Bundesliga.getAverageRoundStats(year, round, crawledPages);
 
@@ -220,8 +227,8 @@ public class Bundesliga {
 
 		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
 
-		log.debug("Parsing the information collect in the previous round", team, round, year);
-		return parseTeamPerformance(prevRoundTeamStatsXML, team, prevRoundAverageStats);
+		log.debug("Parsing the information collect in the previous round", bundesLigaTeam, round, year);
+		return parseTeamPerformance(prevRoundTeamStatsXML, bundesLigaTeam, prevRoundAverageStats);
 	}
 
 	/**
@@ -230,11 +237,11 @@ public class Bundesliga {
 	 * is leaved empty the value from the average round stats will come in place)
 	 *
 	 * @param prevRoundTeamStatsXML represent the prev round statistics as xml
-	 * @param team                  which wanna get performance
+	 * @param bundesLigaTeam        which wanna get performance
 	 * @param prevRoundAverageStats map containing the average statistics for all teams
 	 * @return statistics for team
 	 */
-	public static String parseTeamPerformance(String prevRoundTeamStatsXML, String team,
+	public static String parseTeamPerformance(String prevRoundTeamStatsXML, String bundesLigaTeam,
 			Map<String, Integer> prevRoundAverageStats) {
 
 		StringBuilder prevRoundStats = new StringBuilder();
@@ -247,7 +254,7 @@ public class Bundesliga {
 			Node currentTeam = teamNodes.item(i);
 			String currentTeamName = getNameFromTeamNode(currentTeam);
 
-			if (currentTeamName.equals(team)) {
+			if (currentTeamName.equals(bundesLigaTeam)) {
 				prevRoundStats.append(getPrevRoundStats(currentTeam, prevRoundAverageStats));
 				break;
 			}

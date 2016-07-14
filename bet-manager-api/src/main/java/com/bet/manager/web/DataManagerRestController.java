@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class DataManagerRestController {
 
 	@Autowired
-	private DataManagerService dataManager;
+	private DataManagerService dataManagerService;
 
 	@RequestMapping(value = "/process", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
@@ -16,8 +16,8 @@ public class DataManagerRestController {
 			@RequestParam(name = "firstTeam", required = true) String firstTeam,
 			@RequestParam(name = "secondTeam", required = true) String secondTeam,
 			@RequestParam(name = "year", required = true) int year,
-			@RequestParam(name = "round", required = true) int round) {
+			@RequestParam(name = "round", required = true) int round) throws Exception {
 
-		return dataManager.getDataForMatch(firstTeam, secondTeam, year, round);
+		return dataManagerService.getDataForMatch(firstTeam, secondTeam, year, round);
 	}
 }
