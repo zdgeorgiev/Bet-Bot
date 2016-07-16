@@ -1,41 +1,44 @@
 package com.bet.manager.models.dao;
 
-import com.bet.manager.commons.DateFormats;
-import com.bet.manager.commons.ResultMessages;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "matches")
-public abstract class FootballMatch {
+public class FootballMatch {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	protected int id;
+	private int id;
 
 	@Column(name = "home_team")
-	protected String homeTeam;
+	private String homeTeam;
 
 	@Column(name = "away_team")
-	protected String awayTeam;
+	private String awayTeam;
 
 	@Column(name = "start_date")
-	protected Date startDate;
+	private Date startDate;
+
+	@Column(name = "prediction")
+	private String prediction;
 
 	@Column(name = "result")
-	protected String result;
+	private String result;
 
 	@Column(name = "winner")
-	protected String winner;
+	private String winner;
 
 	/**
 	 * score delimiter for the result example : 4-2
 	 * delimiter is "-"
 	 */
 	@Transient
-	protected String resultDelimiter;
+	@JsonIgnore
+	private String resultDelimiter = "-";
 
 	public String getHomeTeam() {
 		return homeTeam;
@@ -85,12 +88,11 @@ public abstract class FootballMatch {
 		this.winner = winner;
 	}
 
-	@Override public String toString() {
-		return String
-				.format("FootballMatch { [%s] %s %s - %s }",
-						DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.format(getStartDate()),
-						getResult() == null ? ResultMessages.UNKNOWN_SCORE : getResult(),
-						getHomeTeam(),
-						getAwayTeam());
+	public String getPrediction() {
+		return prediction;
+	}
+
+	public void setPrediction(String prediction) {
+		this.prediction = prediction;
 	}
 }

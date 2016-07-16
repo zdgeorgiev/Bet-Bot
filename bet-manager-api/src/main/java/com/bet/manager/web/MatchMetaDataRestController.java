@@ -1,7 +1,8 @@
 package com.bet.manager.web;
 
+import com.bet.manager.models.dao.FootballMatch;
+import com.bet.manager.models.dao.MatchMetaData;
 import com.bet.manager.services.MatchMetaDataService;
-import com.bet.manager.web.model.MatchMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +18,6 @@ public class MatchMetaDataRestController {
 	@Autowired
 	private MatchMetaDataService matchMetaDataService;
 
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createEntries(@RequestBody List<MatchMetaData> entries) {
@@ -48,12 +48,18 @@ public class MatchMetaDataRestController {
 		return matchMetaDataService.metaDataCount();
 	}
 
-	@ResponseBody
 	@RequestMapping(method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	public String deleteAll() {
 
 		matchMetaDataService.deleteAll();
 		return "All meta data successfully deleted";
+	}
+
+	@RequestMapping(value = "/test")
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public FootballMatch test() {
+		return matchMetaDataService.test();
 	}
 }

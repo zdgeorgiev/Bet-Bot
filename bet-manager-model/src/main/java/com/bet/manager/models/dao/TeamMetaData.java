@@ -1,31 +1,41 @@
-package com.bet.manager.web.model;
+package com.bet.manager.models.dao;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "team-meta-data")
 public class TeamMetaData {
 
-	private int currentPosition;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "position")
+	private int position;
 	private int goalDifference;
 	private int venue;
 
+	@JoinTable
 	private PreviousRoundStats previousRoundStats;
 
 	public TeamMetaData() {
-
+		this.previousRoundStats = new PreviousRoundStats();
 	}
 
-	public TeamMetaData(int currentPosition, int goalDifference, int venue,
-			PreviousRoundStats previousRoundStats) {
-		this.currentPosition = currentPosition;
+	public TeamMetaData(int currentPosition, int goalDifference, int venue, PreviousRoundStats previousRoundStats) {
+		this.position = currentPosition;
 		this.goalDifference = goalDifference;
 		this.venue = venue;
 		this.previousRoundStats = previousRoundStats;
 	}
 
-	public int getCurrentPosition() {
-		return currentPosition;
+	public int getPosition() {
+		return position;
 	}
 
-	public void setCurrentPosition(int currentPosition) {
-		this.currentPosition = currentPosition;
+	public void setPosition(int position) {
+		this.position = position;
 	}
 
 	public int getGoalDifference() {

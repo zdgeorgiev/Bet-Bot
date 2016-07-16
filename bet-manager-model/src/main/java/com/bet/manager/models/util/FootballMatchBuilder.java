@@ -1,7 +1,6 @@
 package com.bet.manager.models.util;
 
 import com.bet.manager.models.dao.FootballMatch;
-import com.bet.manager.models.dao.FootballMatchWithPrediction;
 import com.bet.manager.models.exceptions.EmptyTeamNameException;
 import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.models.exceptions.InvalidMatchDateException;
@@ -14,7 +13,7 @@ public class FootballMatchBuilder {
 	private FootballMatch match;
 
 	public FootballMatchBuilder() {
-		match = new FootballMatchWithPrediction();
+		match = new FootballMatch();
 	}
 
 	public FootballMatchBuilder(FootballMatch match) {

@@ -4,7 +4,6 @@ import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.LiveScoreMatchParser;
 import com.bet.manager.models.dao.FootballMatch;
-import com.bet.manager.models.dao.FootballMatchWithPrediction;
 import com.bet.manager.models.util.FootballMatchBuilder;
 import com.bet.manager.models.util.FootballMatchUtils;
 import org.junit.Assert;
@@ -52,9 +51,7 @@ public class LiveScoreMatchParserIT {
 
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertTrue(FootballMatchUtils.equals(
-					(FootballMatchWithPrediction) actual.get(i),
-					(FootballMatchWithPrediction) expected.get(i)));
+			Assert.assertTrue(FootballMatchUtils.equals(actual.get(i), expected.get(i)));
 		}
 	}
 
@@ -79,9 +76,7 @@ public class LiveScoreMatchParserIT {
 
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertTrue(FootballMatchUtils.equals(
-					(FootballMatchWithPrediction) actual.get(i),
-					(FootballMatchWithPrediction) expected.get(i)));
+			Assert.assertTrue(FootballMatchUtils.equals(actual.get(i), expected.get(i)));
 		}
 	}
 
@@ -108,9 +103,7 @@ public class LiveScoreMatchParserIT {
 
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertTrue(FootballMatchUtils.equals(
-					(FootballMatchWithPrediction) actual.get(i),
-					(FootballMatchWithPrediction) expected.get(i)));
+			Assert.assertTrue(FootballMatchUtils.equals(actual.get(i), expected.get(i)));
 		}
 	}
 
@@ -124,12 +117,10 @@ public class LiveScoreMatchParserIT {
 		FootballMatch expected = createMatch("Manchester City", "Everton", "January 13 2016 21:45");
 
 		Assert.assertEquals(actual.size(), 1);
-		Assert.assertTrue(FootballMatchUtils.equals(
-				(FootballMatchWithPrediction) actual.get(0),
-				(FootballMatchWithPrediction) expected));
+		Assert.assertTrue(FootballMatchUtils.equals(actual.get(0), expected));
 	}
 
-	private FootballMatchWithPrediction createMatch(String homeTeam, String awayTeam, String date) {
+	private FootballMatch createMatch(String homeTeam, String awayTeam, String date) {
 
 		Date startDate;
 
@@ -139,11 +130,10 @@ public class LiveScoreMatchParserIT {
 			throw new IllegalArgumentException("Start date cannot be parsed.");
 		}
 
-		return (FootballMatchWithPrediction)
-				new FootballMatchBuilder()
-						.setHomeTeamName(homeTeam)
-						.setAwayTeamName(awayTeam)
-						.setStartDate(startDate)
-						.build();
+		return new FootballMatchBuilder()
+				.setHomeTeamName(homeTeam)
+				.setAwayTeamName(awayTeam)
+				.setStartDate(startDate)
+				.build();
 	}
 }

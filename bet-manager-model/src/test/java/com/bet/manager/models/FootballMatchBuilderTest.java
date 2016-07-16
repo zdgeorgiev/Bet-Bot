@@ -13,7 +13,7 @@ import org.junit.Test;
 import java.text.ParseException;
 import java.util.Date;
 
-public class FootballMatchWithPredictionBuilderTest {
+public class FootballMatchBuilderTest {
 
 	private static FootballMatchBuilder builder;
 

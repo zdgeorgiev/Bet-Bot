@@ -1,13 +1,13 @@
 package com.bet.manager.core.ai;
 
-import com.bet.manager.models.dao.FootballMatchWithPrediction;
+import com.bet.manager.models.dao.FootballMatch;
 
 import java.util.Random;
 
-public class SimplePredictor implements IPredictor<FootballMatchWithPrediction> {
+public class SimplePredictor implements IPredictor<FootballMatch> {
 
 	@Override
-	public String predict(FootballMatchWithPrediction m) {
+	public String predict(FootballMatch m) {
 
 		return new Random().nextInt(2) == 0 ? m.getHomeTeam() : m.getAwayTeam();
 	}

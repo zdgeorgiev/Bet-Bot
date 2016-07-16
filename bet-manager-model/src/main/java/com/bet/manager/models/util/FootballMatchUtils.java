@@ -2,12 +2,11 @@ package com.bet.manager.models.util;
 
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.models.dao.FootballMatch;
-import com.bet.manager.models.dao.FootballMatchWithPrediction;
 import org.apache.commons.lang.StringUtils;
 
 public class FootballMatchUtils {
 
-	public static boolean equals(FootballMatchWithPrediction firstMatch, FootballMatchWithPrediction secondMatch) {
+	public static boolean equals(FootballMatch firstMatch, FootballMatch secondMatch) {
 
 		return firstMatch.getHomeTeam().equals(secondMatch.getHomeTeam()) &&
 				firstMatch.getAwayTeam().equals(secondMatch.getAwayTeam()) &&
