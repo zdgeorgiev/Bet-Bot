@@ -2,7 +2,6 @@ package com.bet.manager.web;
 
 import com.bet.manager.services.MatchMetaDataService;
 import com.bet.manager.web.model.MatchMetaData;
-import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 
-@Api(description = "MetaData Services", value = "metadata")
 @RestController
 @RequestMapping(value = "/metadata")
 public class MatchMetaDataRestController {

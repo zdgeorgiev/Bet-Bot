@@ -8,7 +8,7 @@
 
   <context:annotation-config/>
 
-  <context:property-placeholder location="classpath*:META-INF/web.properties"/>
+  <context:property-placeholder location="classpath*:META-INF/*.properties"/>
 
   <bean id="dataManager" class="com.bet.manager.core.data.DataManager">
 	<constructor-arg type="boolean">
