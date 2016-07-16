@@ -19,10 +19,11 @@
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<logback.version>1.1.2</logback.version>
-	<swagger.version>1.0.2</swagger.version>
-	<swagger-ui.version>2.0.12</swagger-ui.version>
+	<swagger.version>2.5.0</swagger.version>
+	<swagger-ui.version>2.1.4</swagger-ui.version>
 	<spring-boot.version>1.1.4.RELEASE</spring-boot.version>
 	<spring.version>4.2.3.RELEASE</spring.version>
+	<jackson.version>2.5.0</jackson.version>
   </properties>
 
   <dependencies>
@@ -33,7 +34,7 @@
 	  <version>1.0-SNAPSHOT</version>
 	</dependency>
 
-	<!--Spring dependencies-->
+	<!-- Spring dependencies -->
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-context</artifactId>
@@ -73,17 +74,25 @@
 	  <version>${spring-boot.version}</version>
 	</dependency>
 
-	<!--Swagger-->
+	<!-- Jackson -->
 	<dependency>
-	  <groupId>com.mangofactory</groupId>
-	  <artifactId>swagger-springmvc</artifactId>
+	  <groupId>com.fasterxml.jackson.core</groupId>
+	  <artifactId>jackson-databind</artifactId>
+	  <version>${jackson.version}</version>
+	</dependency>
+
+
+	<!-- Swagger -->
+	<dependency>
+	  <groupId>io.springfox</groupId>
+	  <artifactId>springfox-swagger2</artifactId>
 	  <version>${swagger.version}</version>
 	</dependency>
 
 	<dependency>
-	  <groupId>org.webjars</groupId>
-	  <artifactId>swagger-ui</artifactId>
-	  <version>${swagger-ui.version}</version>
+	  <groupId>io.springfox</groupId>
+	  <artifactId>springfox-swagger-ui</artifactId>
+	  <version>${swagger.version}</version>
 	</dependency>
 
 	<!-- Logback dependencies -->
@@ -110,13 +119,41 @@
 
 	<plugins>
 
+	  <!--<plugin>-->
+	  <!--<groupId>com.googlecode.maven-download-plugin</groupId>-->
+	  <!--<artifactId>download-maven-plugin</artifactId>-->
+	  <!--<version>1.2.1</version>-->
+	  <!--<executions>-->
+	  <!--<execution>-->
+	  <!--<id>swagger-ui</id>-->
+	  <!--<phase>prepare-package</phase>-->
+	  <!--<goals>-->
+	  <!--<goal>wget</goal>-->
+	  <!--</goals>-->
+	  <!--<configuration>-->
+	  <!--<url>https://github.com/swagger-api/swagger-ui/archive/v${swagger-ui.version}.tar.gz</url>-->
+	  <!--<unpack>true</unpack>-->
+	  <!--<outputDirectory>${project.build.directory}</outputDirectory>-->
+	  <!--</configuration>-->
+	  <!--</execution>-->
+	  <!--</executions>-->
+	  <!--</plugin>-->
+
 	  <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-war-plugin</artifactId>
 		<version>2.6</version>
 		<configuration>
 		  <attachClasses>true</attachClasses>
 		  <warName>${project.artifactId}</warName>
 		  <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+		  <!--<webResources>-->
+		  <!--<webResource>-->
+		  <!--<directory>${project.build.directory}/swagger-ui-${swagger-ui.version}/dist</directory>-->
+		  <!--<targetPath>apidocs/</targetPath>-->
+		  <!--</webResource>-->
+		  <!--</webResources>-->
+		  <!--<webappDirectory>${basedir}/target/${project.build.finalName}</webappDirectory>-->
 		</configuration>
 	  </plugin>
 

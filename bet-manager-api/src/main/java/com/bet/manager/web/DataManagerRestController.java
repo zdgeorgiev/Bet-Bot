@@ -13,10 +13,10 @@ public class DataManagerRestController {
 	@RequestMapping(value = "/process", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public String getDataForMatch(
-			@RequestParam(name = "firstTeam", required = true) String firstTeam,
-			@RequestParam(name = "secondTeam", required = true) String secondTeam,
-			@RequestParam(name = "year", required = true) int year,
-			@RequestParam(name = "round", required = true) int round) throws Exception {
+			@RequestParam(name = "firstTeam") String firstTeam,
+			@RequestParam(name = "secondTeam") String secondTeam,
+			@RequestParam(name = "year") int year,
+			@RequestParam(name = "round") int round) throws Exception {
 
 		return dataManagerService.getDataForMatch(firstTeam, secondTeam, year, round);
 	}
