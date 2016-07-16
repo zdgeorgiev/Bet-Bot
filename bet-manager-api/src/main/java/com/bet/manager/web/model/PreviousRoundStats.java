@@ -8,6 +8,9 @@ public class PreviousRoundStats {
 	private int shotsCount;
 	private int foulsCount;
 
+	public PreviousRoundStats() {
+	}
+
 	public PreviousRoundStats(int trackDistance, int sprintsCount, int passesCount, int shotsCount, int foulsCount) {
 		this.trackDistance = trackDistance;
 		this.sprintsCount = sprintsCount;

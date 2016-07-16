@@ -11,20 +11,13 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/metadata")
+@RequestMapping(value = "/metadata", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class MatchMetaDataRestController {
 
 	@Autowired
 	private MatchMetaDataService matchMetaDataService;
 
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	@ResponseStatus(HttpStatus.CREATED)
-	public String createEnty(@RequestBody MatchMetaData entry) {
-
-		matchMetaDataService.createEntry(entry);
-		return "Successfully created 1 meta data";
-	}
-
+	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createEntries(@RequestBody List<MatchMetaData> entries) {
@@ -37,16 +30,17 @@ public class MatchMetaDataRestController {
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public Collection<MatchMetaData> retrieveMetaData(
-			@RequestParam(value = "team") String team,
-			@RequestParam(value = "opponent", required = false) String opponent,
-			@RequestParam(value = "year", required = false) int year,
-			@RequestParam(value = "round", required = false) int round,
-			@RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
-			@RequestParam(value = "offset", required = false, defaultValue = "0") int offset) {
+			@RequestParam(name = "team") String team,
+			@RequestParam(name = "opponent", required = false) String opponent,
+			@RequestParam(name = "year", required = false) Integer year,
+			@RequestParam(name = "round", required = false) Integer round,
+			@RequestParam(name = "limit", required = false, defaultValue = "10") int limit,
+			@RequestParam(name = "offset", required = false, defaultValue = "0") int offset) {
 
 		return matchMetaDataService.retrieveMetaData(team, opponent, year, round, limit, offset);
 	}
 
+	@ResponseBody
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public int metaDataCount() {
@@ -54,6 +48,7 @@ public class MatchMetaDataRestController {
 		return matchMetaDataService.metaDataCount();
 	}
 
+	@ResponseBody
 	@RequestMapping(method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	public String deleteAll() {

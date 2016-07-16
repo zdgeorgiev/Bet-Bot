@@ -8,6 +8,10 @@ public class MatchMetaData {
 	private TeamMetaData firstTeamMetaData;
 	private TeamMetaData secondTeamMetaData;
 
+	public MatchMetaData() {
+
+	}
+
 	public MatchMetaData(String label, int year, int round, TeamMetaData firstTeamMetaData, TeamMetaData secondTeamMetaData) {
 		this.label = label;
 		this.year = year;

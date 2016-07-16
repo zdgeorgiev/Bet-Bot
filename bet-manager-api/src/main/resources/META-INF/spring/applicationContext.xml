@@ -8,6 +8,8 @@
 
   <context:annotation-config/>
 
+  <context:component-scan base-package="com.bet.manager.services"/>
+
   <context:property-placeholder location="classpath*:META-INF/*.properties"/>
 
   <bean id="dataManager" class="com.bet.manager.core.data.DataManager">
@@ -15,7 +17,5 @@
 	  <value>${data.manager.dynamic.matches}</value>
 	</constructor-arg>
   </bean>
-
-  <context:component-scan base-package="com.bet.manager.services"/>
 
 </beans:beans>

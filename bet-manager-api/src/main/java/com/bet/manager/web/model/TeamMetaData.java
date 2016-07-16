@@ -8,6 +8,10 @@ public class TeamMetaData {
 
 	private PreviousRoundStats previousRoundStats;
 
+	public TeamMetaData() {
+
+	}
+
 	public TeamMetaData(int currentPosition, int goalDifference, int venue,
 			PreviousRoundStats previousRoundStats) {
 		this.currentPosition = currentPosition;
