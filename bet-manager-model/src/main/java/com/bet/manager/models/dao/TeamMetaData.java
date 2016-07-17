@@ -3,7 +3,6 @@ package com.bet.manager.models.dao;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "team-meta-data")
 public class TeamMetaData {
 
 	@Id
@@ -13,10 +12,14 @@ public class TeamMetaData {
 
 	@Column(name = "position")
 	private int position;
+
+	@Column(name = "goalDifference")
 	private int goalDifference;
+
+	@Column(name = "venue")
 	private int venue;
 
-	@JoinTable
+	@OneToOne(cascade = CascadeType.ALL)
 	private PreviousRoundStats previousRoundStats;
 
 	public TeamMetaData() {

@@ -23,17 +23,26 @@ public class MatchMetaData {
 	@Column(name = "round")
 	private int round;
 
-	@OneToOne
-	@JoinTable(name = "home_team_meta_data")
+	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData homeTeamMetaData;
 
-	@OneToOne
-	@JoinTable(name = "away_team_meta_data")
+	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData awayTeamMetaData;
 
 	public MatchMetaData() {
 		homeTeamMetaData = new TeamMetaData();
 		awayTeamMetaData = new TeamMetaData();
+	}
+
+	public MatchMetaData(int id, String homeTeam, String awayTeam, int year, int round,
+			TeamMetaData homeTeamMetaData, TeamMetaData awayTeamMetaData) {
+		this.id = id;
+		this.homeTeam = homeTeam;
+		this.awayTeam = awayTeam;
+		this.year = year;
+		this.round = round;
+		this.homeTeamMetaData = homeTeamMetaData;
+		this.awayTeamMetaData = awayTeamMetaData;
 	}
 
 	public MatchMetaData(String team1, String team2, int year, int round,

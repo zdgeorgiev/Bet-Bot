@@ -3,7 +3,6 @@ package com.bet.manager.models.dao;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "previous-round-stats")
 public class PreviousRoundStats {
 
 	@Id
@@ -13,9 +12,17 @@ public class PreviousRoundStats {
 
 	@Column(name = "distance")
 	private int distance;
+
+	@Column(name = "sprints")
 	private int sprints;
+
+	@Column(name = "passes")
 	private int passes;
+
+	@Column(name = "shots")
 	private int shots;
+
+	@Column(name = "fouls")
 	private int fouls;
 
 	public PreviousRoundStats() {
