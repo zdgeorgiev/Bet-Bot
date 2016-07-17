@@ -17,8 +17,9 @@
 
 	<mapping class="com.bet.manager.models.dao.FootballMatch"/>
 	<mapping class="com.bet.manager.models.dao.MatchMetaData"/>
-	<mapping class="com.bet.manager.models.dao.TeamMetaData"/>
-	<mapping class="com.bet.manager.models.dao.PreviousRoundStats"/>
+	<mapping class="com.bet.manager.models.dao.MatchMetaData$TeamMetaData"/>
+	<mapping class="com.bet.manager.models.dao.MatchMetaData$TeamMetaData$PreviousRoundStats"/>
+	<mapping class="com.bet.manager.models.dao.MatchMetaData$TeamMetaData$LastFiveMatchesPerformance"/>
 
   </session-factory>
 </hibernate-configuration>
