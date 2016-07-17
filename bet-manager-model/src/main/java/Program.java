@@ -21,8 +21,8 @@ public class Program {
 
 		session.beginTransaction();
 		MatchMetaData matchMetaData =
-				new MatchMetaData("Chealsea", "Arsenal", 1, 206, 1, 2, 3, 4, 755, 6, 7, 8, 4, 755, 6, 7, 8, 4, 755, 6, 7, 8, 9, 10,
-						11, 12, 13, 14, 15, 16);
+				new MatchMetaData("Chealsea", "Arsenal", 1, 206, 1, 2, 3, -1, 6, 4, 755, 6, 7, 8, 4, 755, 6, 7, 8, 4, 755, 6, 7, 8,
+						9, 10, 11, 12, 13, 14, 15, 16);
 
 		System.out.println(matchMetaData);
 

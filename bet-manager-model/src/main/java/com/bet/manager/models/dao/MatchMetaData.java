@@ -49,9 +49,11 @@ public class MatchMetaData implements Serializable {
 	}
 
 	public MatchMetaData(String team1, String team2, int year, int round,
-			int team1position, int team1goalDifference, int team1venue, int team1distance, int team1sprints, int team1passes,
+			int team1position, int team1points, int team1goalDifference, int team1venue, int team1distance, int team1sprints,
+			int team1passes,
 			int team1shouts, int team1fouls, int team1hugeWins, int team1hugeLoses, int team1wins, int team1loses, int team1draws,
-			int team2position, int team2goalDifference, int team2venue, int team2distance, int team2sprints, int team2passes,
+			int team2position, int team2points, int team2goalDifference, int team2venue, int team2distance, int team2sprints,
+			int team2passes,
 			int team2shouts, int team2fouls, int team2hugeWins, int team2hugeLoses, int team2wins, int team2loses, int team2draws) {
 
 		this.homeTeam = team1;
@@ -59,10 +61,10 @@ public class MatchMetaData implements Serializable {
 		this.year = year;
 		this.round = round;
 
-		this.homeTeamMetaData = new TeamMetaData(team1position, team1goalDifference, team1venue,
+		this.homeTeamMetaData = new TeamMetaData(team1position, team1points, team1goalDifference, team1venue,
 				new TeamMetaData.PreviousRoundStats(team1distance, team1sprints, team1passes, team1shouts, team1fouls),
 				new TeamMetaData.LastFiveMatchesPerformance(team1hugeWins, team1hugeLoses, team1wins, team1loses, team1draws));
-		this.awayTeamMetaData = new TeamMetaData(team2position, team2goalDifference, team2venue,
+		this.awayTeamMetaData = new TeamMetaData(team2position, team2points, team2goalDifference, team2venue,
 				new TeamMetaData.PreviousRoundStats(team2distance, team2sprints, team2passes, team2shouts, team2fouls),
 				new TeamMetaData.LastFiveMatchesPerformance(team2hugeWins, team2hugeLoses, team2wins, team2loses, team2draws));
 	}
@@ -134,6 +136,9 @@ public class MatchMetaData implements Serializable {
 		@Column(name = "position")
 		private int position;
 
+		@Column(name = "points")
+		private int points;
+
 		@Column(name = "goalDifference")
 		private int goalDifference;
 
@@ -148,11 +153,14 @@ public class MatchMetaData implements Serializable {
 
 		public TeamMetaData() {
 			this.previousRoundStats = new PreviousRoundStats();
+			lastFiveMatchesPerformance = new LastFiveMatchesPerformance();
 		}
 
-		public TeamMetaData(int position, int goalDifference, int venue,
-				PreviousRoundStats previousRoundStats, LastFiveMatchesPerformance lastFiveMatchesPerformance) {
+		public TeamMetaData(int position, int points, int goalDifference, int venue,
+				PreviousRoundStats previousRoundStats,
+				LastFiveMatchesPerformance lastFiveMatchesPerformance) {
 			this.position = position;
+			this.points = points;
 			this.goalDifference = goalDifference;
 			this.venue = venue;
 			this.previousRoundStats = previousRoundStats;
@@ -200,9 +208,18 @@ public class MatchMetaData implements Serializable {
 			this.lastFiveMatchesPerformance = lastFiveMatchesPerformance;
 		}
 
+		public int getPoints() {
+			return points;
+		}
+
+		public void setPoints(int points) {
+			this.points = points;
+		}
+
 		@Override
 		public String toString() {
-			return String.format("%s %s %s %s %s", position, goalDifference, venue, previousRoundStats, lastFiveMatchesPerformance);
+			return String.format("%s %s %s %s %s %s", position, points, goalDifference, venue, previousRoundStats,
+					lastFiveMatchesPerformance);
 		}
 
 		@Entity
