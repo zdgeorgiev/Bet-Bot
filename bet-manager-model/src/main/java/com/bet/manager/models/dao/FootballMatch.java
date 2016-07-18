@@ -3,12 +3,15 @@ package com.bet.manager.models.dao;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "matches")
-public class FootballMatch {
+public class FootballMatch implements Serializable {
 
+	private static final long serialVersionUID = -7470593573172210843L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -22,6 +25,9 @@ public class FootballMatch {
 
 	@Column(name = "start_date")
 	private Date startDate;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private MatchMetaData matchMetaData;
 
 	@Column(name = "prediction")
 	private String prediction;
@@ -94,5 +100,13 @@ public class FootballMatch {
 
 	public void setPrediction(String prediction) {
 		this.prediction = prediction;
+	}
+
+	public MatchMetaData getMatchMetaData() {
+		return matchMetaData;
+	}
+
+	public void setMatchMetaData(MatchMetaData matchMetaData) {
+		this.matchMetaData = matchMetaData;
 	}
 }

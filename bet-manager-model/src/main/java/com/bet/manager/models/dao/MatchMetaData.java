@@ -1,5 +1,7 @@
 package com.bet.manager.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -35,7 +37,8 @@ public class MatchMetaData implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData awayTeamMetaData;
 
-	@Column(name = "result")
+	@Transient
+	@JsonIgnore
 	private String result;
 
 	public MatchMetaData() {
