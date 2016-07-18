@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Table(name = "match_metadata")
 public class MatchMetaData implements Serializable {
 
-	public static final int CONSTRUCTOR_PARAMS_COUNT = 32;
+	public static final int CONSTRUCTOR_PARAMS_COUNT = 33;
 	public static final String CONSTRUCTOR_PARAMS_SPLITERATOR = ",";
 
 	private static final long serialVersionUID = -7243657887791111073L;
@@ -35,41 +35,23 @@ public class MatchMetaData implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData awayTeamMetaData;
 
+	@Column(name = "result")
+	private String result;
+
 	public MatchMetaData() {
 		homeTeamMetaData = new TeamMetaData();
 		awayTeamMetaData = new TeamMetaData();
 	}
 
-	public MatchMetaData(int id, String homeTeam, String awayTeam, int year, int round,
-			TeamMetaData homeTeamMetaData, TeamMetaData awayTeamMetaData) {
-		this.id = id;
+	public MatchMetaData(String homeTeam, String awayTeam, int year, int round,
+			TeamMetaData homeTeamMetaData, TeamMetaData awayTeamMetaData, String result) {
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 		this.year = year;
 		this.round = round;
 		this.homeTeamMetaData = homeTeamMetaData;
 		this.awayTeamMetaData = awayTeamMetaData;
-	}
-
-	public MatchMetaData(String team1, String team2, int year, int round,
-			int team1position, int team1points, int team1goalDifference, int team1venue, int team1distance, int team1sprints,
-			int team1passes,
-			int team1shouts, int team1fouls, int team1hugeWins, int team1hugeLoses, int team1wins, int team1loses, int team1draws,
-			int team2position, int team2points, int team2goalDifference, int team2venue, int team2distance, int team2sprints,
-			int team2passes,
-			int team2shouts, int team2fouls, int team2hugeWins, int team2hugeLoses, int team2wins, int team2loses, int team2draws) {
-
-		this.homeTeam = team1;
-		this.awayTeam = team2;
-		this.year = year;
-		this.round = round;
-
-		this.homeTeamMetaData = new TeamMetaData(team1position, team1points, team1goalDifference, team1venue,
-				new TeamMetaData.PreviousRoundStats(team1distance, team1sprints, team1passes, team1shouts, team1fouls),
-				new TeamMetaData.LastFiveMatchesPerformance(team1hugeWins, team1hugeLoses, team1wins, team1loses, team1draws));
-		this.awayTeamMetaData = new TeamMetaData(team2position, team2points, team2goalDifference, team2venue,
-				new TeamMetaData.PreviousRoundStats(team2distance, team2sprints, team2passes, team2shouts, team2fouls),
-				new TeamMetaData.LastFiveMatchesPerformance(team2hugeWins, team2hugeLoses, team2wins, team2loses, team2draws));
+		this.result = result;
 	}
 
 	public String getHomeTeam() {
@@ -120,9 +102,17 @@ public class MatchMetaData implements Serializable {
 		this.awayTeamMetaData = awayTeamMetaData;
 	}
 
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("%s %s %s", round, homeTeamMetaData, awayTeamMetaData);
+		return String.format("%s %s %s %s", round, homeTeamMetaData, awayTeamMetaData, result);
 	}
 
 	@Entity

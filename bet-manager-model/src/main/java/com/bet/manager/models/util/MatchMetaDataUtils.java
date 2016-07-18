@@ -84,6 +84,8 @@ public class MatchMetaDataUtils {
 
 		matchMetaData.setAwayTeamMetaData(awayTeamMetaData);
 
+		matchMetaData.setResult(params[32]);
+
 		return matchMetaData;
 	}
 }

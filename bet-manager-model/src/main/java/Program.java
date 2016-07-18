@@ -24,7 +24,7 @@ public class Program {
 
 		MatchMetaData matchMetaData =
 				MatchMetaDataUtils
-						.parse("Chelsea,Arsenal,1,206,1,2,3,-1,6,4,755,6,7,8,4,755,6,7,8,4,755,6,7,89,10,11,12,13,14,15,16,2");
+						.parse("Chelsea,Arsenal,1,206,1,2,3,-1,6,4,755,6,7,8,4,755,6,7,8,4,755,6,7,89,10,11,12,13,14,15,16,2,3-2");
 
 		System.out.println(matchMetaData);
 

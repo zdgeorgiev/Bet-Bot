@@ -70,9 +70,9 @@ public class DataManager {
 	}
 
 	/**
-	 * Method which creates data for given home, away team, year and round. These method should be used
+	 * Method which creates meta data for given home, away team, year and round. These method should be used
 	 * while want to get information about future match, just passes the current year and expected round.
-	 * The data is in the format :
+	 * The data is in the format : NOTE! Between all parameters is using MatchMetaData.DELIMITER
 	 * [round] (for both teams - [ladderPosition] [currentRoundStats] [venue] [prevRoundStats] [lastFiveGames])
 	 * <p/>
 	 * [ladderPosition] - Current position in the ranking table for the round.
@@ -87,7 +87,7 @@ public class DataManager {
 	 * @param awayTeam awayTeam as Bundesliga name
 	 * @param year     match year
 	 * @param round    match round should be at least 2nd one, because information for round 0 is invalid
-	 * @return Data for the match
+	 * @return Match Meta Data for the match
 	 */
 	public MatchMetaData getDataForMatch(String homeTeam, String awayTeam, int year, int round) throws Exception {
 
@@ -101,7 +101,8 @@ public class DataManager {
 				.append(year).append(DELIMITER)
 				.append(round).append(DELIMITER)
 				.append(homeTeamData).append(DELIMITER)
-				.append(awayTeamData);
+				.append(awayTeamData).append(DELIMITER)
+				.append(secondarySource.getMatchResult(homeTeam, year, round, crawledPages));
 
 		return MatchMetaDataUtils.parse(currentMatchData.toString());
 	}
