@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class ResultDBTest {
 
-	private static final String DELMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	ISecondarySource source = new ResultDB();
 
@@ -60,7 +60,7 @@ public class ResultDBTest {
 
 		List<String> performance = Arrays.asList("2", "0", "0", "2", "1");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -73,7 +73,7 @@ public class ResultDBTest {
 
 		List<String> performance = Arrays.asList("1", "0", "0", "1", "1");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -86,7 +86,7 @@ public class ResultDBTest {
 
 		List<String> performance = Arrays.asList("3", "1", "0", "0", "1");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}

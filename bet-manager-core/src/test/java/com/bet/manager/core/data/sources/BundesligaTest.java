@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BundesligaTest {
 
-	private static final String DELMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	@Test
 	public void testCorrectRankingParsing() {
@@ -85,7 +85,7 @@ public class BundesligaTest {
 
 		List<String> performance = Arrays.asList("125042", "184", "320", "13", "11");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -110,7 +110,7 @@ public class BundesligaTest {
 
 		List<String> performance = Arrays.asList("111923", "189", "579", "21", "15");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -125,7 +125,7 @@ public class BundesligaTest {
 
 		List<String> performance = Arrays.asList("0", "-1");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -141,7 +141,7 @@ public class BundesligaTest {
 
 		List<String> performance = Arrays.asList("30", "14");
 		String expected = performance.stream()
-				.collect(Collectors.joining(DELMITER));
+				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
