@@ -68,10 +68,10 @@ public class DataCreationIT {
 				.append(",")
 				.append(secondarySource.parseMatchResult(round, allMatchesFirstTeamContent));
 
-		List<String> performance =
+		List<String> matchMetaData =
 				Arrays.asList("2", "1", "6", "8", "1", "103267", "104", "571", "18", "12", "1", "0", "0", "0", "0", "18", "0", "-6",
 						"-1", "120981", "211", "432", "10", "15", "0", "0", "0", "1", "0", "6-1");
-		String expected = performance.stream()
+		String expected = matchMetaData.stream()
 				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual.toString());

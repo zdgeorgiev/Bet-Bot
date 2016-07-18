@@ -83,8 +83,8 @@ public class BundesligaTest {
 				Bundesliga.parseTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05",
 						prevRoundStats);
 
-		List<String> performance = Arrays.asList("125042", "184", "320", "13", "11");
-		String expected = performance.stream()
+		List<String> stats = Arrays.asList("125042", "184", "320", "13", "11");
+		String expected = stats.stream()
 				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
@@ -108,8 +108,8 @@ public class BundesligaTest {
 						.parseTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München",
 								prevRoundStats);
 
-		List<String> performance = Arrays.asList("111923", "189", "579", "21", "15");
-		String expected = performance.stream()
+		List<String> stats = Arrays.asList("111923", "189", "579", "21", "15");
+		String expected = stats.stream()
 				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
@@ -123,8 +123,8 @@ public class BundesligaTest {
 
 		String actual = Bundesliga.parseCurrentRankingStats("FC Bayern München", doc);
 
-		List<String> performance = Arrays.asList("0", "-1");
-		String expected = performance.stream()
+		List<String> rankingStats = Arrays.asList("0", "-1");
+		String expected = rankingStats.stream()
 				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
@@ -139,8 +139,8 @@ public class BundesligaTest {
 
 		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
 
-		List<String> performance = Arrays.asList("30", "14");
-		String expected = performance.stream()
+		List<String> rankingStats = Arrays.asList("30", "14");
+		String expected = rankingStats.stream()
 				.collect(Collectors.joining(DELIMITER));
 
 		Assert.assertEquals(expected, actual);
