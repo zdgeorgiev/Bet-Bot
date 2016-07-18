@@ -7,6 +7,7 @@ import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.models.dao.MatchMetaData;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,10 @@ public class Main {
 	private static final Logger log = LoggerFactory.getLogger(Main.class);
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
+
+	static {
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+	}
 
 	private static final int ROUNDS = 34;
 
