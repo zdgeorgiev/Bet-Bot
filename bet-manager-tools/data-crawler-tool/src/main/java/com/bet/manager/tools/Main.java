@@ -25,7 +25,7 @@ public class Main {
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 
-	private static final int ROUNDS = 2;
+	private static final int ROUNDS = 34;
 
 	private static DataManager dm;
 	private static ISecondarySource secondarySource = new ResultDB();
