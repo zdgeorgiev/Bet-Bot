@@ -6,6 +6,8 @@ import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchYearIndex;
+import com.bet.manager.models.dao.MatchMetaData;
+import com.bet.manager.models.util.MatchMetaDataUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;
@@ -19,6 +21,8 @@ public class DataManager {
 	private static final int MAX_ROUND = 34;
 	private static final int MIN_YEAR = 2011;
 	private static final int MAX_YEAR = Calendar.getInstance().get(Calendar.YEAR);
+
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	private Map<URL, String> crawledPages;
 	private ISecondarySource secondarySource;
@@ -85,20 +89,21 @@ public class DataManager {
 	 * @param round    match round should be at least 2nd one, because information for round 0 is invalid
 	 * @return Data for the match
 	 */
-	public String getDataForMatch(String homeTeam, String awayTeam, int year, int round) throws Exception {
+	public MatchMetaData getDataForMatch(String homeTeam, String awayTeam, int year, int round) throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
 		String homeTeamData = getDataForTeam(homeTeam, year, round);
 		String awayTeamData = getDataForTeam(awayTeam, year, round);
 
 		currentMatchData
-				.append(round)
-				.append(" ")
-				.append(homeTeamData)
-				.append(" ")
+				.append(homeTeam).append(DELIMITER)
+				.append(awayTeam).append(DELIMITER)
+				.append(year).append(DELIMITER)
+				.append(round).append(DELIMITER)
+				.append(homeTeamData).append(DELIMITER)
 				.append(awayTeamData);
 
-		return currentMatchData.toString();
+		return MatchMetaDataUtils.parse(currentMatchData.toString());
 	}
 
 	private String getDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
@@ -115,14 +120,10 @@ public class DataManager {
 		StringBuilder currentTeamData = new StringBuilder();
 
 		currentTeamData
-				.append(Bundesliga.getTeamRankingPlace(bundesLigaTeam, year, round, crawledPages))
-				.append(" ")
-				.append(Bundesliga.getCurrentRankingStats(bundesLigaTeam, year, round, crawledPages))
-				.append(" ")
-				.append(secondarySource.getMatchVenue(bundesLigaTeam, year, round, crawledPages))
-				.append(" ")
-				.append(Bundesliga.getTeamPerformance(bundesLigaTeam, year, round - 1, crawledPages))
-				.append(" ")
+				.append(Bundesliga.getTeamRankingPlace(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
+				.append(Bundesliga.getCurrentRankingStats(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
+				.append(secondarySource.getMatchVenue(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
+				.append(Bundesliga.getTeamPerformance(bundesLigaTeam, year, round - 1, crawledPages)).append(DELIMITER)
 				.append(secondarySource.getLastFiveGamesForTeam(bundesLigaTeam, year, round, crawledPages));
 
 		if (crawledPages.size() > 100)

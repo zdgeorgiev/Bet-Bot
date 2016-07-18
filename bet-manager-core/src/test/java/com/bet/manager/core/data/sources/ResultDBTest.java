@@ -2,10 +2,17 @@ package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.data.sources.exceptions.MatchResultNotFound;
+import com.bet.manager.models.dao.MatchMetaData;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ResultDBTest {
+
+	private static final String DELMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	ISecondarySource source = new ResultDB();
 
@@ -50,7 +57,11 @@ public class ResultDBTest {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
 		String actual = source.parseLastFiveGamesForTeam(content, 6);
-		String expected = "2 0 0 2 1";
+
+		List<String> performance = Arrays.asList("2", "0", "0", "2", "1");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
+
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -59,7 +70,11 @@ public class ResultDBTest {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
 		String actual = source.parseLastFiveGamesForTeam(content, 4);
-		String expected = "1 0 0 1 1";
+
+		List<String> performance = Arrays.asList("1", "0", "0", "1", "1");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
+
 		Assert.assertEquals(expected, actual);
 	}
 
@@ -68,7 +83,11 @@ public class ResultDBTest {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
 		String actual = source.parseLastFiveGamesForTeam(content, 34);
-		String expected = "3 1 0 0 1";
+
+		List<String> performance = Arrays.asList("3", "1", "0", "0", "1");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
+
 		Assert.assertEquals(expected, actual);
 	}
 

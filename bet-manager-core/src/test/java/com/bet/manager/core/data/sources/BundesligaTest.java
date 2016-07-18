@@ -2,14 +2,20 @@ package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.commons.util.DocumentUtils;
+import com.bet.manager.models.dao.MatchMetaData;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BundesligaTest {
+
+	private static final String DELMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	@Test
 	public void testCorrectRankingParsing() {
@@ -76,7 +82,10 @@ public class BundesligaTest {
 		String actual =
 				Bundesliga.parseTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05",
 						prevRoundStats);
-		String expected = "125042 184 320 13 11";
+
+		List<String> performance = Arrays.asList("125042", "184", "320", "13", "11");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -98,7 +107,10 @@ public class BundesligaTest {
 				Bundesliga
 						.parseTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München",
 								prevRoundStats);
-		String expected = "111923 189 579 21 15";
+
+		List<String> performance = Arrays.asList("111923", "189", "579", "21", "15");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -110,7 +122,10 @@ public class BundesligaTest {
 		Document doc = DocumentUtils.parse(content);
 
 		String actual = Bundesliga.parseCurrentRankingStats("FC Bayern München", doc);
-		String expected = "0 -1";
+
+		List<String> performance = Arrays.asList("0", "-1");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -123,7 +138,10 @@ public class BundesligaTest {
 		Document doc = DocumentUtils.parse(content);
 
 		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
-		String expected = "30 14";
+
+		List<String> performance = Arrays.asList("30", "14");
+		String expected = performance.stream()
+				.collect(Collectors.joining(DELMITER));
 
 		Assert.assertEquals(expected, actual);
 	}

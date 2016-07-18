@@ -5,6 +5,7 @@ import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.data.sources.exceptions.InvalidMappingException;
 import com.bet.manager.core.data.sources.exceptions.MatchResultNotFound;
+import com.bet.manager.models.dao.MatchMetaData;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -20,6 +21,8 @@ public class ResultDB implements ISecondarySource {
 
 	private static final String RESULTDB_DOMAIN = "http://www.resultdb.com/";
 	private static final String RESULTDB_MATCHES_FOR_TEAM_URL = "germany/%s/%s/";
+
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	private static final String TABLE_SELECTOR = "table.results";
 
@@ -75,11 +78,11 @@ public class ResultDB implements ISecondarySource {
 
 		StringBuilder output = new StringBuilder();
 		for (int match : matchesNormalization) {
-			output.append(match).append(" ");
+			output.append(match).append(DELIMITER);
 		}
 
 		log.debug("Successfully get information about last {} matches", matchesToLook);
-		return output.toString().trim();
+		return output.substring(0, output.length() - 1);
 	}
 
 	@Override

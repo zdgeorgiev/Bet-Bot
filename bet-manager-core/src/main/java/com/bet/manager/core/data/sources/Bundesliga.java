@@ -6,6 +6,7 @@ import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.data.sources.exceptions.InvalidMappingException;
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
+import com.bet.manager.models.dao.MatchMetaData;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,8 @@ public class Bundesliga {
 			"data/feed/51/%s/post_standing/post_standing_%s.xml?cb=517837";
 	private static final String TEAM_STATS_URL =
 			"data/feed/51/%s/team_stats_round/team_stats_round_%s.xml?cb=544329";
+
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
 
 	private static final String TRACK_DIST_ATTR = "imp:tracking-distance";
 	private static final String TRACK_SPRINTS_ATTR = "imp:tracking-sprints";
@@ -199,7 +202,7 @@ public class Bundesliga {
 		String points = attributes.getNamedItem("standing-points").getNodeValue();
 		log.debug("Points : {}", points);
 
-		return points + " " + goalDifference;
+		return String.format("%s%s%s", points, DELIMITER, goalDifference);
 	}
 
 	/**
@@ -276,17 +279,15 @@ public class Bundesliga {
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
 						.getNextSibling().getAttributes();
 
-		output.append(getAttribute(TRACK_DIST_ATTR, prevRoundAverageStats, defensiveAttributes)).append(" ");
-		output.append(getAttribute(TRACK_SPRINTS_ATTR, prevRoundAverageStats, defensiveAttributes))
-				.append(" ");
-		output.append(getAttribute(TRACK_PASSES_ATTR, prevRoundAverageStats, defensiveAttributes))
-				.append(" ");
+		output.append(getAttribute(TRACK_DIST_ATTR, prevRoundAverageStats, defensiveAttributes)).append(DELIMITER);
+		output.append(getAttribute(TRACK_SPRINTS_ATTR, prevRoundAverageStats, defensiveAttributes)).append(DELIMITER);
+		output.append(getAttribute(TRACK_PASSES_ATTR, prevRoundAverageStats, defensiveAttributes)).append(DELIMITER);
 
 		NamedNodeMap offensiveAttributes =
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
 						.getNextSibling().getFirstChild().getNextSibling().getAttributes();
 
-		output.append(getAttribute(TRACK_SHOTS_ATTR, prevRoundAverageStats, offensiveAttributes)).append(" ");
+		output.append(getAttribute(TRACK_SHOTS_ATTR, prevRoundAverageStats, offensiveAttributes)).append(DELIMITER);
 
 		NamedNodeMap foulsAttribute =
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()

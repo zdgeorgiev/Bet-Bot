@@ -7,6 +7,9 @@ import java.io.Serializable;
 @Table(name = "match_metadata")
 public class MatchMetaData implements Serializable {
 
+	public static final int CONSTRUCTOR_PARAMS_COUNT = 32;
+	public static final String CONSTRUCTOR_PARAMS_SPLITERATOR = ",";
+
 	private static final long serialVersionUID = -7243657887791111073L;
 
 	@Id
@@ -331,7 +334,7 @@ public class MatchMetaData implements Serializable {
 			@Column(name = "draws")
 			private int draws;
 
-			private LastFiveMatchesPerformance() {
+			public LastFiveMatchesPerformance() {
 
 			}
 
