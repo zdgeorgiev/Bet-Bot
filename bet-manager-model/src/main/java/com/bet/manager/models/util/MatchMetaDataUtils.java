@@ -11,7 +11,7 @@ public class MatchMetaDataUtils {
 
 	public static MatchMetaData parse(String matadataString) {
 
-		String[] params = matadataString.split(MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR);
+		String[] params = matadataString.split(MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER);
 
 		if (params.length != MatchMetaData.CONSTRUCTOR_PARAMS_COUNT)
 			throw new InvalidMetaDataConstructorCountException(

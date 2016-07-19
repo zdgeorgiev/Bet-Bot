@@ -22,7 +22,7 @@ public class ResultDB implements ISecondarySource {
 	private static final String RESULTDB_DOMAIN = "http://www.resultdb.com/";
 	private static final String RESULTDB_MATCHES_FOR_TEAM_URL = "germany/%s/%s/";
 
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	private static final String TABLE_SELECTOR = "table.results";
 

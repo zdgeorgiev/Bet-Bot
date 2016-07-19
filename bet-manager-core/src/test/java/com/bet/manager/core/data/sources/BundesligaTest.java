@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class BundesligaTest {
 
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	@Test
 	public void testCorrectRankingParsing() {

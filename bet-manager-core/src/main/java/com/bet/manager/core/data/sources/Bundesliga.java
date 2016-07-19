@@ -30,7 +30,7 @@ public class Bundesliga {
 	private static final String TEAM_STATS_URL =
 			"data/feed/51/%s/team_stats_round/team_stats_round_%s.xml?cb=544329";
 
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	private static final String TRACK_DIST_ATTR = "imp:tracking-distance";
 	private static final String TRACK_SPRINTS_ATTR = "imp:tracking-sprints";

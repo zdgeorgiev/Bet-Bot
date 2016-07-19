@@ -1,6 +1,8 @@
 package com.bet.manager.models.util;
 
+import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.models.dao.FootballMatch;
+import com.bet.manager.models.dao.MatchMetaData;
 import com.bet.manager.models.exceptions.EmptyTeamNameException;
 import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.models.exceptions.InvalidMatchDateException;
@@ -52,10 +54,73 @@ public class FootballMatchBuilder {
 
 	public FootballMatchBuilder setResult(String result) {
 
-		match.setResult(result);
-		FootballMatchUtils.setResultAndWinner(match, match.getResult());
+		if (StringUtils.isBlank(result)) {
+			match.setResult(ResultMessages.UNKNOWN_SCORE);
+		} else {
+			match.setResult(result.replace(" ", ""));
+		}
 
 		return this;
+	}
+
+	private FootballMatchBuilder setWinner() {
+
+		if (!match.getResult().contains(match.getResultDelimiter())) {
+			throw new IllegalArgumentException(
+					"Result " + match.getResult() + " not contains the delimiter " + match.getResultDelimiter());
+		}
+
+		String winner;
+
+		if (match.getResult().equals(ResultMessages.UNKNOWN_SCORE)) {
+			winner = ResultMessages.NO_WINNER;
+		} else {
+			winner = getWinnerFromResult(match, match.getResult());
+		}
+
+		match.setWinner(winner);
+		return this;
+	}
+
+	private String getWinnerFromResult(FootballMatch match, String result) {
+		String winner;
+		String[] tokens = result.split(match.getResultDelimiter());
+		Integer homeTeamGoals = Integer.parseInt(tokens[0].trim());
+		Integer awayTeamGoals = Integer.parseInt(tokens[1].trim());
+
+		if (homeTeamGoals < 0 || awayTeamGoals < 0) {
+			throw new IllegalArgumentException("Goals in the result cannot be less than zero.");
+		}
+
+		if (homeTeamGoals > awayTeamGoals) {
+			winner = match.getHomeTeam();
+		} else if (homeTeamGoals < awayTeamGoals) {
+			winner = match.getAwayTeam();
+		} else {
+			winner = ResultMessages.TIE_RESULT;
+		}
+		return winner;
+	}
+
+	public FootballMatchBuilder setMatchMetaData(MatchMetaData matchMetaData) {
+		match.setMatchMetaData(matchMetaData);
+		return this;
+	}
+
+	public FootballMatchBuilder setPrediction(String prediction) {
+		match.setPrediction(prediction);
+		return this;
+	}
+
+	private void setCorrectlyPredicted() {
+
+		if (match.getWinner() == null || match.getPrediction() == null)
+			return;
+
+		if (match.getPrediction().equals(match.getWinner())) {
+			match.setCorrectlyPredicted(true);
+		} else
+			match.setCorrectlyPredicted(false);
 	}
 
 	public FootballMatch build() {
@@ -70,6 +135,9 @@ public class FootballMatchBuilder {
 
 		setStartDate(match.getStartDate());
 		setResult(match.getResult());
+		setWinner();
+		setPrediction(match.getPrediction());
+		setCorrectlyPredicted();
 		return match;
 	}
 }

@@ -1,5 +1,6 @@
 package com.bet.manager.models.dao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.Date;
 public class FootballMatch implements Serializable {
 
 	private static final long serialVersionUID = -7470593573172210843L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
@@ -23,6 +24,7 @@ public class FootballMatch implements Serializable {
 	@Column(name = "away_team")
 	private String awayTeam;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd,HH:mm:ss", timezone = "EET")
 	@Column(name = "start_date")
 	private Date startDate;
 
@@ -37,6 +39,10 @@ public class FootballMatch implements Serializable {
 
 	@Column(name = "winner")
 	private String winner;
+
+	@JsonIgnore
+	@Column(name = "correctlyPredicted")
+	private boolean correctlyPredicted;
 
 	/**
 	 * score delimiter for the result example : 4-2
@@ -108,5 +114,13 @@ public class FootballMatch implements Serializable {
 
 	public void setMatchMetaData(MatchMetaData matchMetaData) {
 		this.matchMetaData = matchMetaData;
+	}
+
+	public boolean isCorrectlyPredicted() {
+		return correctlyPredicted;
+	}
+
+	public void setCorrectlyPredicted(boolean correctlyPredicted) {
+		this.correctlyPredicted = correctlyPredicted;
 	}
 }

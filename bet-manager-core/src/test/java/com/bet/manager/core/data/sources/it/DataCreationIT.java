@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class DataCreationIT {
 
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	private ISecondarySource secondarySource = new ResultDB();
 

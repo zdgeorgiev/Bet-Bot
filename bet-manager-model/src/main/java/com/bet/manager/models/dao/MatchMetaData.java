@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class MatchMetaData implements Serializable {
 
 	public static final int CONSTRUCTOR_PARAMS_COUNT = 33;
-	public static final String CONSTRUCTOR_PARAMS_SPLITERATOR = ",";
+	public static final String CONSTRUCTOR_PARAMS_DELIMITER = ",";
 
 	private static final long serialVersionUID = -7243657887791111073L;
 

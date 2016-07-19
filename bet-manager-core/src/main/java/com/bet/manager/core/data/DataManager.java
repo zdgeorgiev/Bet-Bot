@@ -22,7 +22,7 @@ public class DataManager {
 	private static final int MIN_YEAR = 2011;
 	private static final int MAX_YEAR = Calendar.getInstance().get(Calendar.YEAR);
 
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_SPLITERATOR;
+	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	private Map<URL, String> crawledPages;
 	private ISecondarySource secondarySource;

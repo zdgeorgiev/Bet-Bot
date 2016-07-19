@@ -5,7 +5,6 @@ import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.LiveScoreMatchParser;
 import com.bet.manager.models.dao.FootballMatch;
 import com.bet.manager.models.util.FootballMatchBuilder;
-import com.bet.manager.models.util.FootballMatchUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
