@@ -123,4 +123,31 @@ public class FootballMatch implements Serializable {
 	public void setCorrectlyPredicted(boolean correctlyPredicted) {
 		this.correctlyPredicted = correctlyPredicted;
 	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		FootballMatch that = (FootballMatch) o;
+
+		if (homeTeam != null ? !homeTeam.equals(that.homeTeam) : that.homeTeam != null)
+			return false;
+		if (awayTeam != null ? !awayTeam.equals(that.awayTeam) : that.awayTeam != null)
+			return false;
+		if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null)
+			return false;
+
+		return true;
+
+	}
+
+	@Override public int hashCode() {
+		int result1 = id;
+		result1 = 31 * result1 + (homeTeam != null ? homeTeam.hashCode() : 0);
+		result1 = 31 * result1 + (awayTeam != null ? awayTeam.hashCode() : 0);
+		result1 = 31 * result1 + (startDate != null ? startDate.hashCode() : 0);
+		return result1;
+	}
 }

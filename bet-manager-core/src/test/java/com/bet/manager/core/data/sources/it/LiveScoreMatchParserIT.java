@@ -50,7 +50,7 @@ public class LiveScoreMatchParserIT {
 
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertTrue(FootballMatchUtils.equals(actual.get(i), expected.get(i)));
+			Assert.assertEquals(actual.get(i), expected.get(i));
 		}
 	}
 
@@ -64,18 +64,18 @@ public class LiveScoreMatchParserIT {
 		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
 				FootballMatch m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
-				FootballMatchUtils.setResultAndWinner(m, "3-3");
+				new FootballMatchBuilder(m).setResult("3-3");
 				add(m);
 
 				FootballMatch m2 = createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45");
-				FootballMatchUtils.setResultAndWinner(m2, "2-1");
+				new FootballMatchBuilder(m2).setResult("2-1");
 				add(m2);
 			}
 		};
 
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertTrue(FootballMatchUtils.equals(actual.get(i), expected.get(i)));
+			Assert.assertEquals(actual.get(i), expected.get(i));
 		}
 	}
 
@@ -89,20 +89,20 @@ public class LiveScoreMatchParserIT {
 		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
 				FootballMatch m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
-				FootballMatchUtils.setResultAndWinner(m, "3-3");
+				new FootballMatchBuilder(m).setResult("3-3");
 				add(m);
 
 				add(createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45"));
 
 				FootballMatch m2 = createMatch("Levski", "CSKA", "January 12 2016 21:45");
-				FootballMatchUtils.setResultAndWinner(m2, "2-3");
+				new FootballMatchBuilder(m2).setResult("2-3");
 				add(m2);
 			}
 		};
 
 		Assert.assertEquals(actual.size(), expected.size());
 		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertTrue(FootballMatchUtils.equals(actual.get(i), expected.get(i)));
+			Assert.assertEquals(actual.get(i), expected.get(i));
 		}
 	}
 
@@ -116,7 +116,7 @@ public class LiveScoreMatchParserIT {
 		FootballMatch expected = createMatch("Manchester City", "Everton", "January 13 2016 21:45");
 
 		Assert.assertEquals(actual.size(), 1);
-		Assert.assertTrue(FootballMatchUtils.equals(actual.get(0), expected));
+		Assert.assertEquals(actual.get(0), expected);
 	}
 
 	private FootballMatch createMatch(String homeTeam, String awayTeam, String date) {
