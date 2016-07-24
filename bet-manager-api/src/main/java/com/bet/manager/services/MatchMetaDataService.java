@@ -1,14 +1,12 @@
 package com.bet.manager.services;
 
-import com.bet.manager.models.dao.FootballMatch;
 import com.bet.manager.models.dao.MatchMetaData;
-import com.bet.manager.models.util.FootballMatchBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MatchMetaDataService {
@@ -22,7 +20,8 @@ public class MatchMetaDataService {
 		return 0;
 	}
 
-	public Collection<MatchMetaData> retrieveMetaData(String team, String opponent, Integer year1, Integer i, int year, int round) {
+	public Collection<MatchMetaData> retrieveMetaData(String homeTeam, String awayTeam, Optional<Integer> year,
+			Optional<Integer> round, int limit, int offset) {
 		return Arrays.asList(new MatchMetaData());
 	}
 
@@ -32,10 +31,5 @@ public class MatchMetaDataService {
 
 	public int metaDataCount() {
 		return 0;
-	}
-
-	public FootballMatch test() {
-
-		return new FootballMatchBuilder().setHomeTeamName("Chelsea").setAwayTeamName("Arsenal").setStartDate(new Date()).build();
 	}
 }

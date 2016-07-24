@@ -1,6 +1,5 @@
 package com.bet.manager.web;
 
-import com.bet.manager.models.dao.FootballMatch;
 import com.bet.manager.models.dao.MatchMetaData;
 import com.bet.manager.services.MatchMetaDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/metadata", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -30,14 +30,14 @@ public class MatchMetaDataRestController {
 	@RequestMapping(value = "/details", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public Collection<MatchMetaData> retrieveMetaData(
-			@RequestParam(name = "team") String team,
-			@RequestParam(name = "opponent", required = false) String opponent,
-			@RequestParam(name = "year", required = false) Integer year,
-			@RequestParam(name = "round", required = false) Integer round,
+			@RequestParam(name = "homeTeam") String homeTeam,
+			@RequestParam(name = "awayTeam", required = false) String awayTeam,
+			@RequestParam(name = "year", required = false) Optional<Integer> year,
+			@RequestParam(name = "round", required = false) Optional<Integer> round,
 			@RequestParam(name = "limit", required = false, defaultValue = "10") int limit,
 			@RequestParam(name = "offset", required = false, defaultValue = "0") int offset) {
 
-		return matchMetaDataService.retrieveMetaData(team, opponent, year, round, limit, offset);
+		return matchMetaDataService.retrieveMetaData(homeTeam, awayTeam, year, round, limit, offset);
 	}
 
 	@ResponseBody
@@ -54,12 +54,5 @@ public class MatchMetaDataRestController {
 
 		matchMetaDataService.deleteAll();
 		return "All meta data successfully deleted";
-	}
-
-	@RequestMapping(value = "/test")
-	@ResponseBody
-	@ResponseStatus(HttpStatus.OK)
-	public FootballMatch test() {
-		return matchMetaDataService.test();
 	}
 }
