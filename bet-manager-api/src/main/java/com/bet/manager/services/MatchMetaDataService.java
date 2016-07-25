@@ -1,5 +1,7 @@
 package com.bet.manager.services;
 
+import com.bet.manager.exceptions.FailedToSaveMatchMetaDataException;
+import com.bet.manager.exceptions.MatchMetaDataAlreadyExistException;
 import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.repository.MatchMetaDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +17,23 @@ public class MatchMetaDataService {
 	@Autowired
 	private MatchMetaDataRepository matchMetaDataRepository;
 
-	public void createEntry(MatchMetaData entry) {
-		matchMetaDataRepository.save(entry);
-	}
-
 	public int createEntries(List<MatchMetaData> entries) {
 
 		int successfullyCreated = 0;
 
 		for (MatchMetaData matchMetaData : entries) {
 			try {
-				createEntry(matchMetaData);
+
+				if (matchMetaDataRepository.findByLabel(matchMetaData.toString()) != null)
+					throw new MatchMetaDataAlreadyExistException(
+							String.format("Match metadata '%s' already exist", matchMetaData.toString()));
+
+				matchMetaDataRepository.save(matchMetaData);
 				successfullyCreated++;
+
 			} catch (Exception e) {
-				throw new RuntimeException(); // TODO : FIX THIS
+				throw new FailedToSaveMatchMetaDataException(
+						String.format("Cannot create '%s' match metadata.", matchMetaData.toString()), e);
 			}
 		}
 
@@ -37,6 +42,7 @@ public class MatchMetaDataService {
 
 	public Collection<MatchMetaData> retrieveMetaData(String homeTeam, String awayTeam, Optional<Integer> year,
 			Optional<Integer> round, int limit, int offset) {
+		// TODO: Fix this
 		return matchMetaDataRepository.findByHomeTeam(homeTeam);
 	}
 

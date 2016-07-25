@@ -10,4 +10,6 @@ import java.util.List;
 public interface MatchMetaDataRepository extends JpaRepository<MatchMetaData, Integer> {
 
 	List<MatchMetaData> findByHomeTeam(String homeTeam);
+
+	MatchMetaData findByLabel(String label);
 }

@@ -1,7 +1,9 @@
 package com.bet.manager.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -35,6 +37,10 @@ public class MatchMetaData implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData awayTeamMetaData;
+
+	@JsonIgnore
+	@Column(name = "label")
+	private String label;
 
 	@Transient
 	@JsonIgnore
@@ -110,6 +116,10 @@ public class MatchMetaData implements Serializable {
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public String getLabel() {
+		return this.toString();
 	}
 
 	@Override

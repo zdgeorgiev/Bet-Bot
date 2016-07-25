@@ -3,6 +3,7 @@ package com.bet.manager.model.dao;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -50,6 +51,9 @@ public class FootballMatch implements Serializable {
 	@Transient
 	@JsonIgnore
 	private String resultDelimiter = "-";
+
+	public FootballMatch() {
+	}
 
 	public String getHomeTeam() {
 		return homeTeam;
