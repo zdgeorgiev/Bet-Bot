@@ -6,8 +6,8 @@ import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchYearIndex;
-import com.bet.manager.models.dao.MatchMetaData;
-import com.bet.manager.models.util.MatchMetaDataUtils;
+import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.util.MatchMetaDataUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.net.URL;

@@ -6,7 +6,7 @@ import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.data.sources.exceptions.InvalidMappingException;
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
-import com.bet.manager.models.dao.MatchMetaData;
+import com.bet.manager.model.dao.MatchMetaData;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -2,7 +2,7 @@ package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.commons.util.DocumentUtils;
-import com.bet.manager.models.dao.MatchMetaData;
+import com.bet.manager.model.dao.MatchMetaData;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;

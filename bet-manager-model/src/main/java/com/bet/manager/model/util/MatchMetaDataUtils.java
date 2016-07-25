@@ -1,7 +1,7 @@
-package com.bet.manager.models.util;
+package com.bet.manager.model.util;
 
-import com.bet.manager.models.dao.MatchMetaData;
-import com.bet.manager.models.exceptions.InvalidMetaDataConstructorCountException;
+import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.exceptions.InvalidMetaDataConstructorCountException;
 
 public class MatchMetaDataUtils {
 

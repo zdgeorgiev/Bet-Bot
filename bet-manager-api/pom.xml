@@ -80,6 +80,26 @@
 	  <version>${logback.version}</version>
 	</dependency>
 
+	<!-- Hibernate -->
+	<dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-core</artifactId>
+	  <version>${hibernate.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-entitymanager</artifactId>
+	  <version>4.3.6.Final</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+	<dependency>
+	  <groupId>com.h2database</groupId>
+	  <artifactId>h2</artifactId>
+	  <version>1.4.192</version>
+	</dependency>
+
+
   </dependencies>
 
   <build>

@@ -5,7 +5,7 @@ import com.bet.manager.core.data.DataManager;
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
-import com.bet.manager.models.dao.MatchMetaData;
+import com.bet.manager.model.dao.MatchMetaData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.io.FileUtils;

@@ -1,6 +1,6 @@
 package com.bet.manager.core;
 
-import com.bet.manager.models.dao.FootballMatch;
+import com.bet.manager.model.dao.FootballMatch;
 
 import java.util.List;
 

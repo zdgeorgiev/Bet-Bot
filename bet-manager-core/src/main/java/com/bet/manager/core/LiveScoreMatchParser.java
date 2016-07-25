@@ -1,8 +1,8 @@
 package com.bet.manager.core;
 
 import com.bet.manager.commons.DateFormats;
-import com.bet.manager.models.dao.FootballMatch;
-import com.bet.manager.models.util.FootballMatchBuilder;
+import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.util.FootballMatchBuilder;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Element;

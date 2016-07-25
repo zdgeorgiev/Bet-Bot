@@ -43,6 +43,7 @@
 	<swagger-ui.version>2.1.4</swagger-ui.version>
 	<spring-boot.version>1.1.4.RELEASE</spring-boot.version>
 	<spring.version>4.2.3.RELEASE</spring.version>
+	<spring-data-jpa.version>1.9.0.DATAJPA-775-SNAPSHOT</spring-data-jpa.version>
 	<jackson.version>2.6.0</jackson.version>
   </properties>
 

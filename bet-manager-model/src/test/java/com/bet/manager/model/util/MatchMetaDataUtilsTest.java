@@ -1,6 +1,6 @@
-package com.bet.manager.models.util;
+package com.bet.manager.model.util;
 
-import com.bet.manager.models.exceptions.InvalidMetaDataConstructorCountException;
+import com.bet.manager.model.exceptions.InvalidMetaDataConstructorCountException;
 import org.junit.Test;
 
 public class MatchMetaDataUtilsTest {

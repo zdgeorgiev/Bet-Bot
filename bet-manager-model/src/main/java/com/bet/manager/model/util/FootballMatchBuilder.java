@@ -1,11 +1,11 @@
-package com.bet.manager.models.util;
+package com.bet.manager.model.util;
 
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.models.dao.FootballMatch;
-import com.bet.manager.models.dao.MatchMetaData;
-import com.bet.manager.models.exceptions.EmptyTeamNameException;
-import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
-import com.bet.manager.models.exceptions.InvalidMatchDateException;
+import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.exceptions.EmptyTeamNameException;
+import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
+import com.bet.manager.model.exceptions.InvalidMatchDateException;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;

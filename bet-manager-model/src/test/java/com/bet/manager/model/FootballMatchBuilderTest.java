@@ -1,11 +1,11 @@
-package com.bet.manager.models;
+package com.bet.manager.model;
 
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.models.dao.FootballMatch;
-import com.bet.manager.models.exceptions.EqualHomeAndAwayTeamException;
-import com.bet.manager.models.exceptions.InvalidMatchDateException;
-import com.bet.manager.models.util.FootballMatchBuilder;
+import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
+import com.bet.manager.model.exceptions.InvalidMatchDateException;
+import com.bet.manager.model.util.FootballMatchBuilder;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;

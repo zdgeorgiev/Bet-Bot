@@ -1,6 +1,6 @@
 package com.bet.manager.web;
 
-import com.bet.manager.models.dao.MatchMetaData;
+import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.services.MatchMetaDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +38,13 @@ public class MatchMetaDataRestController {
 			@RequestParam(name = "offset", required = false, defaultValue = "0") int offset) {
 
 		return matchMetaDataService.retrieveMetaData(homeTeam, awayTeam, year, round, limit, offset);
+	}
+
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public Collection<MatchMetaData> retrieveAll() {
+
+		return matchMetaDataService.retrieveAll();
 	}
 
 	@ResponseBody
