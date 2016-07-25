@@ -1,10 +1,11 @@
 package com.bet.manager.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "match_metadata")
@@ -32,15 +33,15 @@ public class MatchMetaData implements Serializable {
 	@Column(name = "round")
 	private int round;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
+	@Column(name = "date_created")
+	private Date dateCreated;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData homeTeamMetaData;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData awayTeamMetaData;
-
-	@JsonIgnore
-	@Column(name = "label")
-	private String label;
 
 	@Transient
 	@JsonIgnore
@@ -49,6 +50,7 @@ public class MatchMetaData implements Serializable {
 	public MatchMetaData() {
 		homeTeamMetaData = new TeamMetaData();
 		awayTeamMetaData = new TeamMetaData();
+		this.dateCreated = new Date();
 	}
 
 	public MatchMetaData(String homeTeam, String awayTeam, int year, int round,
@@ -57,6 +59,7 @@ public class MatchMetaData implements Serializable {
 		this.awayTeam = awayTeam;
 		this.year = year;
 		this.round = round;
+		this.dateCreated = new Date();
 		this.homeTeamMetaData = homeTeamMetaData;
 		this.awayTeamMetaData = awayTeamMetaData;
 		this.result = result;
@@ -118,8 +121,12 @@ public class MatchMetaData implements Serializable {
 		this.result = result;
 	}
 
-	public String getLabel() {
-		return this.toString();
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@Override

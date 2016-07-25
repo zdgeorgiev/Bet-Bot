@@ -24,9 +24,13 @@ public class FootballMatch implements Serializable {
 	@Column(name = "away_team")
 	private String awayTeam;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd,HH:mm:ss", timezone = "EET")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
 	@Column(name = "start_date")
 	private Date startDate;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
+	@Column(name = "date_created")
+	private Date dateCreated;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private MatchMetaData matchMetaData;
@@ -53,6 +57,7 @@ public class FootballMatch implements Serializable {
 	private String resultDelimiter = "-";
 
 	public FootballMatch() {
+		this.dateCreated = new Date();
 	}
 
 	public String getHomeTeam() {
@@ -125,6 +130,14 @@ public class FootballMatch implements Serializable {
 
 	public void setCorrectlyPredicted(boolean correctlyPredicted) {
 		this.correctlyPredicted = correctlyPredicted;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	@Override public boolean equals(Object o) {

@@ -1,7 +1,6 @@
 package com.bet.manager.services;
 
 import com.bet.manager.exceptions.FailedToSaveMatchMetaDataException;
-import com.bet.manager.exceptions.MatchMetaDataAlreadyExistException;
 import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.repository.MatchMetaDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,10 @@ public class MatchMetaDataService {
 		for (MatchMetaData matchMetaData : entries) {
 			try {
 
-				if (matchMetaDataRepository.findByLabel(matchMetaData.toString()) != null)
-					throw new MatchMetaDataAlreadyExistException(
-							String.format("Match metadata '%s' already exist", matchMetaData.toString()));
+//				if (matchMetaDataRepository.findByLabel(matchMetaData.toString()) != null) {
+				//					throw new MatchMetaDataAlreadyExistException(
+				//							String.format("Match metadata '%s' already exist", matchMetaData.toString()));
+				//				}
 
 				matchMetaDataRepository.save(matchMetaData);
 				successfullyCreated++;
