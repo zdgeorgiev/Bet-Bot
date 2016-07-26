@@ -9,7 +9,6 @@ public class MatchMetaDataUtils {
 
 	}
 
-	// TODO : DELETE THIS
 	public static MatchMetaData parse(String matadataString) {
 
 		String[] params = matadataString.split(MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER);
