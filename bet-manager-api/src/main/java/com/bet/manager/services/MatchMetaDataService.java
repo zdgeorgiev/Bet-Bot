@@ -67,7 +67,7 @@ public class MatchMetaDataService {
 
 		errorResponse.append(String.format("Match metadata for [%s]", homeTeam));
 
-		if (!StringUtil.isBlank(homeTeam))
+		if (!StringUtil.isBlank(awayTeam))
 			errorResponse.append(String.format(" vs [%s]", awayTeam));
 		if (year.isPresent())
 			errorResponse.append(String.format(" for [%s]", year.get()));
