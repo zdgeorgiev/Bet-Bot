@@ -1,13 +1,18 @@
 package com.bet.manager.model.repository;
 
 import com.bet.manager.model.dao.MatchMetaData;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MatchMetaDataRepository extends JpaRepository<MatchMetaData, Integer> {
 
-	List<MatchMetaData> findByHomeTeam(String homeTeam);
+	MatchMetaData findByHomeTeamAndAwayTeamAndYearAndRound(String homeTeam, String awayTeam, int year, int round);
+
+	Page<MatchMetaData> retrieveMetaData(String homeTeam, String awayTeam, Optional<Integer> year, Optional<Integer> round,
+			Pageable pageable);
 }

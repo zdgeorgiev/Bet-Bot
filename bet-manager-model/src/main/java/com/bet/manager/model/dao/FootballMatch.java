@@ -32,6 +32,10 @@ public class FootballMatch implements Serializable {
 	@Column(name = "date_created")
 	private Date dateCreated;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
+	@Column(name = "last_modified")
+	private Date lastModified;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private MatchMetaData matchMetaData;
 
@@ -58,6 +62,7 @@ public class FootballMatch implements Serializable {
 
 	public FootballMatch() {
 		this.dateCreated = new Date();
+		this.lastModified = new Date();
 	}
 
 	public String getHomeTeam() {
@@ -138,6 +143,14 @@ public class FootballMatch implements Serializable {
 
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	public Date getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(Date lastModified) {
+		this.lastModified = lastModified;
 	}
 
 	@Override public boolean equals(Object o) {

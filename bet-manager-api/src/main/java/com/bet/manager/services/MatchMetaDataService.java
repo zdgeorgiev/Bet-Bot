@@ -1,9 +1,17 @@
 package com.bet.manager.services;
 
-import com.bet.manager.exceptions.FailedToSaveMatchMetaDataException;
+import com.bet.manager.exceptions.MatchMetaDataAlreadyExistException;
+import com.bet.manager.exceptions.MatchMetaDataNotFoundException;
 import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.repository.MatchMetaDataRepository;
+import org.jsoup.helper.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -12,6 +20,8 @@ import java.util.Optional;
 
 @Service
 public class MatchMetaDataService {
+
+	private static Logger log = LoggerFactory.getLogger(MatchMetaDataService.class);
 
 	@Autowired
 	private MatchMetaDataRepository matchMetaDataRepository;
@@ -23,27 +33,49 @@ public class MatchMetaDataService {
 		for (MatchMetaData matchMetaData : entries) {
 			try {
 
-//				if (matchMetaDataRepository.findByLabel(matchMetaData.toString()) != null) {
-				//					throw new MatchMetaDataAlreadyExistException(
-				//							String.format("Match metadata '%s' already exist", matchMetaData.toString()));
-				//				}
+				if (exist(matchMetaData))
+					throw new MatchMetaDataAlreadyExistException(
+							String.format("Match metadata '%s' already exist", matchMetaData.getSummary()));
 
 				matchMetaDataRepository.save(matchMetaData);
 				successfullyCreated++;
 
 			} catch (Exception e) {
-				throw new FailedToSaveMatchMetaDataException(
-						String.format("Cannot create '%s' match metadata.", matchMetaData.toString()), e);
+				log.warn("Failed to save match metadata in the database", e);
 			}
 		}
 
 		return successfullyCreated;
 	}
 
-	public Collection<MatchMetaData> retrieveMetaData(String homeTeam, String awayTeam, Optional<Integer> year,
+	public Page<MatchMetaData> retrieveMetaData(String homeTeam, String awayTeam, Optional<Integer> year,
 			Optional<Integer> round, int limit, int offset) {
-		// TODO: Fix this
-		return matchMetaDataRepository.findByHomeTeam(homeTeam);
+
+		Pageable pageable = new PageRequest(offset, limit, Sort.Direction.DESC, "year", "round");
+		Page<MatchMetaData> matchMetaData = matchMetaDataRepository.retrieveMetaData(homeTeam, awayTeam, year, round, pageable);
+
+		if (matchMetaData == null || matchMetaData.getNumberOfElements() == 0)
+			throw createNotFoundError(homeTeam, awayTeam, year, round);
+
+		return matchMetaData;
+	}
+
+	private MatchMetaDataNotFoundException createNotFoundError(String homeTeam, String awayTeam, Optional<Integer> year,
+			Optional<Integer> round) {
+		StringBuilder errorResponse = new StringBuilder();
+
+		errorResponse.append(String.format("Match metadata for [%s]", homeTeam));
+
+		if (!StringUtil.isBlank(homeTeam))
+			errorResponse.append(String.format(" vs [%s]", awayTeam));
+		if (year.isPresent())
+			errorResponse.append(String.format(" for [%s]", year.get()));
+		if (round.isPresent())
+			errorResponse.append(String.format(" round [%s]", round.get()));
+
+		errorResponse.append(" not found.");
+
+		throw new MatchMetaDataNotFoundException(errorResponse.toString());
 	}
 
 	public Collection<MatchMetaData> retrieveAll() {
@@ -56,5 +88,11 @@ public class MatchMetaDataService {
 
 	public int metaDataCount() {
 		return (int) matchMetaDataRepository.count();
+	}
+
+	private boolean exist(MatchMetaData matchMetaData) {
+		return matchMetaDataRepository
+				.findByHomeTeamAndAwayTeamAndYearAndRound(matchMetaData.getHomeTeam(), matchMetaData.getAwayTeam(),
+						matchMetaData.getYear(), matchMetaData.getRound()) != null;
 	}
 }

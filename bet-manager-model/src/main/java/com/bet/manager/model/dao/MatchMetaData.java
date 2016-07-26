@@ -1,11 +1,9 @@
 package com.bet.manager.model.dao;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "match_metadata")
@@ -33,10 +31,6 @@ public class MatchMetaData implements Serializable {
 	@Column(name = "round")
 	private int round;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
-	@Column(name = "date_created")
-	private Date dateCreated;
-
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData homeTeamMetaData;
 
@@ -50,7 +44,6 @@ public class MatchMetaData implements Serializable {
 	public MatchMetaData() {
 		homeTeamMetaData = new TeamMetaData();
 		awayTeamMetaData = new TeamMetaData();
-		this.dateCreated = new Date();
 	}
 
 	public MatchMetaData(String homeTeam, String awayTeam, int year, int round,
@@ -59,7 +52,6 @@ public class MatchMetaData implements Serializable {
 		this.awayTeam = awayTeam;
 		this.year = year;
 		this.round = round;
-		this.dateCreated = new Date();
 		this.homeTeamMetaData = homeTeamMetaData;
 		this.awayTeamMetaData = awayTeamMetaData;
 		this.result = result;
@@ -113,20 +105,14 @@ public class MatchMetaData implements Serializable {
 		this.awayTeamMetaData = awayTeamMetaData;
 	}
 
-	public String getResult() {
-		return result;
-	}
-
 	public void setResult(String result) {
 		this.result = result;
 	}
 
-	public Date getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(Date dateCreated) {
-		this.dateCreated = dateCreated;
+	@JsonIgnore
+	@Transient
+	public String getSummary() {
+		return String.format("'%s' - '%s' year %s round %s", homeTeam, awayTeam, year, round);
 	}
 
 	@Override

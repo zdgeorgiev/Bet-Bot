@@ -3,6 +3,7 @@ package com.bet.manager.web;
 import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.services.MatchMetaDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,9 @@ public class MatchMetaDataRestController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/details", method = RequestMethod.GET)
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public Collection<MatchMetaData> retrieveMetaData(
+	public Page<MatchMetaData> retrieveMetaData(
 			@RequestParam(name = "homeTeam") String homeTeam,
 			@RequestParam(name = "awayTeam", required = false) String awayTeam,
 			@RequestParam(name = "year", required = false) Optional<Integer> year,
