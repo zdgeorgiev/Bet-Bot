@@ -44,4 +44,8 @@ public class FootballMatchService {
 
 		return 0;
 	}
+
+	public int correctPredictedMatchesCount() {
+		return 0;
+	}
 }

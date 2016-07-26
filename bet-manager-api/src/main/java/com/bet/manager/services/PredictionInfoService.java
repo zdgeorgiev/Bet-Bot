@@ -1,7 +1,7 @@
 package com.bet.manager.services;
 
+import com.bet.manager.exceptions.NoMatchesInTheDataBaseExceptions;
 import com.bet.manager.model.PredictionsInfo;
-import com.bet.manager.model.repository.FootballMatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,15 @@ import org.springframework.stereotype.Service;
 public class PredictionInfoService {
 
 	@Autowired
-	private FootballMatchRepository footballMatchRepository;
+	private FootballMatchService footballMatchService;
 
 	public PredictionsInfo getPredictionsInfo() {
-		return null;
+		int totalMatches = footballMatchService.matchesCount();
+		int correctOnes = footballMatchService.correctPredictedMatchesCount();
+
+		if (totalMatches == 0)
+			throw new NoMatchesInTheDataBaseExceptions("There is no matches in the DB");
+
+		return new PredictionsInfo(correctOnes, totalMatches);
 	}
 }
