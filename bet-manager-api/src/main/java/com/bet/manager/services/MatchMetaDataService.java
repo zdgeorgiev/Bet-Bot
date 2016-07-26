@@ -52,7 +52,8 @@ public class MatchMetaDataService {
 			Optional<Integer> round, int limit, int offset) {
 
 		Pageable pageable = new PageRequest(offset, limit, Sort.Direction.DESC, "year", "round");
-		Page<MatchMetaData> matchMetaData = matchMetaDataRepository.retrieveMetaData(homeTeam, awayTeam, year, round, pageable);
+		//TODO : CHANGE THIS
+		Page<MatchMetaData> matchMetaData = matchMetaDataRepository.findByHomeTeam(homeTeam, awayTeam, year, round, pageable);
 
 		if (matchMetaData == null || matchMetaData.getNumberOfElements() == 0)
 			throw createNotFoundError(homeTeam, awayTeam, year, round);

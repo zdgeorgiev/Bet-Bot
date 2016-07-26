@@ -13,6 +13,6 @@ public interface MatchMetaDataRepository extends JpaRepository<MatchMetaData, In
 
 	MatchMetaData findByHomeTeamAndAwayTeamAndYearAndRound(String homeTeam, String awayTeam, int year, int round);
 
-	Page<MatchMetaData> retrieveMetaData(String homeTeam, String awayTeam, Optional<Integer> year, Optional<Integer> round,
+	Page<MatchMetaData> findByHomeTeam(String homeTeam, String awayTeam, Optional<Integer> year, Optional<Integer> round,
 			Pageable pageable);
 }
