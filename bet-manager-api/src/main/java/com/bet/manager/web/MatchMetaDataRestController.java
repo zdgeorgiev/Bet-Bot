@@ -31,14 +31,14 @@ public class MatchMetaDataRestController {
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public Page<MatchMetaData> retrieveMetaData(
-			@RequestParam(name = "homeTeam") String homeTeam,
-			@RequestParam(name = "awayTeam", required = false) String awayTeam,
+			@RequestParam(name = "team1") String team1,
+			@RequestParam(name = "team2", required = false) String team2,
 			@RequestParam(name = "year", required = false) Optional<Integer> year,
 			@RequestParam(name = "round", required = false) Optional<Integer> round,
 			@RequestParam(name = "limit", required = false, defaultValue = "10") int limit,
 			@RequestParam(name = "offset", required = false, defaultValue = "0") int offset) {
 
-		return matchMetaDataService.retrieveMetaData(homeTeam, awayTeam, year, round, limit, offset);
+		return matchMetaDataService.retrieveMetaData(team1, team2, year, round, limit, offset);
 	}
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET)

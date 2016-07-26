@@ -153,6 +153,12 @@ public class FootballMatch implements Serializable {
 		this.lastModified = lastModified;
 	}
 
+	@JsonIgnore
+	@Transient
+	public String getSummary() {
+		return String.format("'%s' - '%s' starting : %s", homeTeam, awayTeam, startDate);
+	}
+
 	@Override public boolean equals(Object o) {
 		if (this == o)
 			return true;
