@@ -3,14 +3,18 @@ package com.bet.manager.model.util;
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.exceptions.EmptyTeamNameException;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
-import com.bet.manager.model.exceptions.InvalidMatchDateException;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 public class FootballMatchBuilder {
+
+	private static Logger logger = LoggerFactory.getLogger(FootballMatchBuilder.class);
 
 	private FootballMatch match;
 
@@ -45,7 +49,7 @@ public class FootballMatchBuilder {
 	public FootballMatchBuilder setStartDate(Date startDate) {
 
 		if (startDate == null) {
-			throw new InvalidMatchDateException("FootballMatch start date cannot be null.");
+			logger.warn("Star date for the match " + match.getSummary() + " is not present. Check if everything is fine.");
 		}
 
 		match.setStartDate(startDate);
@@ -114,13 +118,25 @@ public class FootballMatchBuilder {
 
 	private void setCorrectlyPredicted() {
 
-		if (match.getWinner() == null || match.getPrediction() == null)
+		if (match.getWinner() == null || match.getPrediction() == null) {
+			match.setPredictionType(PredictionType.NOT_PREDICTED);
 			return;
+		}
 
 		if (match.getPrediction().equals(match.getWinner())) {
-			match.setCorrectlyPredicted(true);
+			match.setPredictionType(PredictionType.CORRECT);
 		} else
-			match.setCorrectlyPredicted(false);
+			match.setPredictionType(PredictionType.INCORRECT);
+	}
+
+	public FootballMatchBuilder setYear(int year) {
+		this.match.setYear(year);
+		return this;
+	}
+
+	public FootballMatchBuilder setRound(int round) {
+		this.match.setRound(round);
+		return this;
 	}
 
 	private void setLastModified() {
@@ -133,12 +149,13 @@ public class FootballMatchBuilder {
 
 		if (match.getHomeTeam().equals(match.getAwayTeam())) {
 			throw new EqualHomeAndAwayTeamException(
-					"FootballMatch home team " + match.getHomeTeam()
-							+ " cannot be the same as the away team.");
+					"FootballMatch home team " + match.getHomeTeam() + " cannot be the same as the away team.");
 		}
 
 		setStartDate(match.getStartDate());
 		setResult(match.getResult());
+		setRound(match.getRound());
+		setYear(match.getYear());
 		setWinner();
 		setPrediction(match.getPrediction());
 		setCorrectlyPredicted();

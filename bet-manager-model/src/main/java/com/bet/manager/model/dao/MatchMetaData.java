@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Table(name = "match_metadata")
 public class MatchMetaData implements Serializable {
 
-	public static final int CONSTRUCTOR_PARAMS_COUNT = 33;
+	public static final int CONSTRUCTOR_PARAMS_COUNT = 31;
 	public static final String CONSTRUCTOR_PARAMS_DELIMITER = ",";
 
 	private static final long serialVersionUID = -7243657887791111073L;
@@ -19,17 +19,15 @@ public class MatchMetaData implements Serializable {
 	@Column(name = "id")
 	private int id;
 
+	@JsonIgnore
+	@Transient
 	@Column(name = "home_team")
 	private String homeTeam;
 
+	@JsonIgnore
+	@Transient
 	@Column(name = "away_team")
 	private String awayTeam;
-
-	@Column(name = "year")
-	private int year;
-
-	@Column(name = "round")
-	private int round;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private TeamMetaData homeTeamMetaData;
@@ -46,12 +44,10 @@ public class MatchMetaData implements Serializable {
 		awayTeamMetaData = new TeamMetaData();
 	}
 
-	public MatchMetaData(String homeTeam, String awayTeam, int year, int round,
-			TeamMetaData homeTeamMetaData, TeamMetaData awayTeamMetaData, String result) {
+	public MatchMetaData(String homeTeam, String awayTeam, TeamMetaData homeTeamMetaData, TeamMetaData awayTeamMetaData,
+			String result) {
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
-		this.year = year;
-		this.round = round;
 		this.homeTeamMetaData = homeTeamMetaData;
 		this.awayTeamMetaData = awayTeamMetaData;
 		this.result = result;
@@ -71,22 +67,6 @@ public class MatchMetaData implements Serializable {
 
 	public void setAwayTeam(String awayTeam) {
 		this.awayTeam = awayTeam;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public int getRound() {
-		return round;
-	}
-
-	public void setRound(int round) {
-		this.round = round;
 	}
 
 	public TeamMetaData getHomeTeamMetaData() {
@@ -109,15 +89,42 @@ public class MatchMetaData implements Serializable {
 		this.result = result;
 	}
 
-	@JsonIgnore
-	@Transient
-	public String getSummary() {
-		return String.format("'%s' - '%s' year %s round %s", homeTeam, awayTeam, year, round);
+	public String getResult() {
+		return result;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %s %s", round, homeTeamMetaData, awayTeamMetaData, result);
+		return String.format("%s %s %s", homeTeamMetaData, awayTeamMetaData, result);
+	}
+
+	@Override public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		MatchMetaData that = (MatchMetaData) o;
+
+		if (!homeTeam.equals(that.homeTeam))
+			return false;
+		if (!awayTeam.equals(that.awayTeam))
+			return false;
+		if (homeTeamMetaData != null ? !homeTeamMetaData.equals(that.homeTeamMetaData) : that.homeTeamMetaData != null)
+			return false;
+		if (awayTeamMetaData != null ? !awayTeamMetaData.equals(that.awayTeamMetaData) : that.awayTeamMetaData != null)
+			return false;
+		return result != null ? result.equals(that.result) : that.result == null;
+
+	}
+
+	@Override public int hashCode() {
+		int result1 = homeTeam.hashCode();
+		result1 = 31 * result1 + awayTeam.hashCode();
+		result1 = 31 * result1 + (homeTeamMetaData != null ? homeTeamMetaData.hashCode() : 0);
+		result1 = 31 * result1 + (awayTeamMetaData != null ? awayTeamMetaData.hashCode() : 0);
+		result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
+		return result1;
 	}
 
 	@Entity
@@ -140,6 +147,8 @@ public class MatchMetaData implements Serializable {
 		@Column(name = "goalDifference")
 		private int goalDifference;
 
+		@JsonIgnore
+		@Transient
 		@Column(name = "venue")
 		private int venue;
 
@@ -152,17 +161,6 @@ public class MatchMetaData implements Serializable {
 		public TeamMetaData() {
 			this.previousRoundStats = new PreviousRoundStats();
 			lastFiveMatchesPerformance = new LastFiveMatchesPerformance();
-		}
-
-		public TeamMetaData(int position, int points, int goalDifference, int venue,
-				PreviousRoundStats previousRoundStats,
-				LastFiveMatchesPerformance lastFiveMatchesPerformance) {
-			this.position = position;
-			this.points = points;
-			this.goalDifference = goalDifference;
-			this.venue = venue;
-			this.previousRoundStats = previousRoundStats;
-			this.lastFiveMatchesPerformance = lastFiveMatchesPerformance;
 		}
 
 		public PreviousRoundStats getPreviousRoundStats() {
@@ -220,6 +218,40 @@ public class MatchMetaData implements Serializable {
 					lastFiveMatchesPerformance);
 		}
 
+		@Override public boolean equals(Object o) {
+			if (this == o)
+				return true;
+			if (o == null || getClass() != o.getClass())
+				return false;
+
+			TeamMetaData that = (TeamMetaData) o;
+
+			if (position != that.position)
+				return false;
+			if (points != that.points)
+				return false;
+			if (goalDifference != that.goalDifference)
+				return false;
+			if (venue != that.venue)
+				return false;
+			if (previousRoundStats != null ? !previousRoundStats.equals(that.previousRoundStats) : that.previousRoundStats != null)
+				return false;
+			return lastFiveMatchesPerformance != null ?
+					lastFiveMatchesPerformance.equals(that.lastFiveMatchesPerformance) :
+					that.lastFiveMatchesPerformance == null;
+
+		}
+
+		@Override public int hashCode() {
+			int result = position;
+			result = 31 * result + points;
+			result = 31 * result + goalDifference;
+			result = 31 * result + venue;
+			result = 31 * result + (previousRoundStats != null ? previousRoundStats.hashCode() : 0);
+			result = 31 * result + (lastFiveMatchesPerformance != null ? lastFiveMatchesPerformance.hashCode() : 0);
+			return result;
+		}
+
 		@Entity
 		@Table(name = "previous_round_stats")
 		public static class PreviousRoundStats implements Serializable {
@@ -247,14 +279,6 @@ public class MatchMetaData implements Serializable {
 			private int fouls;
 
 			public PreviousRoundStats() {
-			}
-
-			public PreviousRoundStats(int trackDistance, int sprintsCount, int passesCount, int shotsCount, int foulsCount) {
-				this.distance = trackDistance;
-				this.sprints = sprintsCount;
-				this.passes = passesCount;
-				this.shots = shotsCount;
-				this.fouls = foulsCount;
 			}
 
 			public int getDistance() {
@@ -384,6 +408,35 @@ public class MatchMetaData implements Serializable {
 			@Override
 			public String toString() {
 				return String.format("%s %s %s %s %s", hugeWins, hugeLoses, wins, loses, draws);
+			}
+
+			@Override public boolean equals(Object o) {
+				if (this == o)
+					return true;
+				if (o == null || getClass() != o.getClass())
+					return false;
+
+				LastFiveMatchesPerformance that = (LastFiveMatchesPerformance) o;
+
+				if (hugeWins != that.hugeWins)
+					return false;
+				if (hugeLoses != that.hugeLoses)
+					return false;
+				if (wins != that.wins)
+					return false;
+				if (loses != that.loses)
+					return false;
+				return draws == that.draws;
+
+			}
+
+			@Override public int hashCode() {
+				int result = hugeWins;
+				result = 31 * result + hugeLoses;
+				result = 31 * result + wins;
+				result = 31 * result + loses;
+				result = 31 * result + draws;
+				return result;
 			}
 		}
 	}

@@ -5,7 +5,7 @@ import com.bet.manager.core.data.DataManager;
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
-import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.dao.FootballMatch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.io.FileUtils;
@@ -30,7 +30,7 @@ public class Main {
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 	}
 
-	private static final int ROUNDS = 34;
+	private static final int ROUNDS = 2;
 
 	private static DataManager dm;
 	private static ISecondarySource secondarySource = new ResultDB();
@@ -57,14 +57,15 @@ public class Main {
 
 		for (int year = startYear; year <= endYear; year++) {
 
-			List<MatchMetaData> currentYearData = getDataForAllMatches(year);
+			List<FootballMatch> currentYearData = getDataForAllMatches(year);
 
 			if (currentYearData.size() != 0) {
 
-				File textFile = new File(destinationFolder + File.separator + year + "_bundesliga_meta_data.txt");
-				FileUtils.writeLines(textFile, currentYearData, true);
+				File textFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches_metadata.txt");
+				for (FootballMatch footballMatch : currentYearData)
+					FileUtils.write(textFile, footballMatch.getMetaDataNNOutput() + System.lineSeparator(), true);
 
-				File jsonFile = new File(destinationFolder + File.separator + year + "_bundesliga_meta_data.json");
+				File jsonFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches.json");
 				FileUtils.writeLines(jsonFile,
 						Collections.singleton(objectMapper.writeValueAsString(currentYearData)), true);
 			} else
@@ -96,11 +97,11 @@ public class Main {
 	 * @param year for which want to get the data. The year should be at least 2011
 	 * @return {@link List <MatchMetaData> } containing all match meta data
 	 */
-	private static List<MatchMetaData> getDataForAllMatches(int year) throws MalformedURLException {
+	private static List<FootballMatch> getDataForAllMatches(int year) throws MalformedURLException {
 
 		long startTime = System.currentTimeMillis();
 
-		List<MatchMetaData> allData = new ArrayList<>();
+		List<FootballMatch> allData = new ArrayList<>();
 
 		// We skip the first round because for the current match we only looking for the previous one data
 		for (int round = 2; round <= ROUNDS; round++) {
@@ -113,14 +114,14 @@ public class Main {
 		long finishTime = System.currentTimeMillis();
 		String elapsedTime = PerformanceUtils.convertToHumanReadable(finishTime - startTime);
 
-		log.info("Successfully created {} data entries for year {}. Finished in {}", allData.size(), year, elapsedTime);
+		log.info("Successfully created {} match entries for year {}. Finished in {}", allData.size(), year, elapsedTime);
 		return allData;
 	}
 
-	private static List<MatchMetaData> createDataForRound(int year, int round) {
+	private static List<FootballMatch> createDataForRound(int year, int round) {
 
 		Set<String> teamBlackList = new HashSet<>();
-		List<MatchMetaData> currentData = new ArrayList<>();
+		List<FootballMatch> currentData = new ArrayList<>();
 
 		try {
 			NodeList currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
@@ -137,19 +138,19 @@ public class Main {
 					teamBlackList.add(firstTeam);
 					teamBlackList.add(secondTeam);
 
-					MatchMetaData matchMetaData = dm.getDataForMatch(firstTeam, secondTeam, year, round);
+					FootballMatch currentMatch = dm.createFootballMatchEntity(firstTeam, secondTeam, year, round);
 
 					log.info("({}/{}) Data for match '{}'-'{}' was successfully created", currentData.size() + 1,
-							currentRoundTeams.getLength() / 2, matchMetaData.getHomeTeam(), matchMetaData.getAwayTeam());
+							currentRoundTeams.getLength() / 2, currentMatch.getHomeTeam(), currentMatch.getAwayTeam());
 
-					currentData.add(matchMetaData);
+					currentData.add(currentMatch);
 				}
 			}
 		} catch (Exception e) {
 			log.error("Failed to create data for year {} round {}.", year, round, e);
 		}
 
-		log.info("Successfully created data for {} matches for year {} round {}.", currentData.size(), year, round);
+		log.info("Successfully created {} matches for year {} round {}.", currentData.size(), year, round);
 		return currentData;
 	}
 }

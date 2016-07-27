@@ -24,6 +24,12 @@ public class FootballMatch implements Serializable {
 	@Column(name = "away_team")
 	private String awayTeam;
 
+	@Column(name = "year")
+	private int year;
+
+	@Column(name = "round")
+	private int round;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
 	@Column(name = "start_date")
 	private Date startDate;
@@ -48,8 +54,8 @@ public class FootballMatch implements Serializable {
 	@Column(name = "prediction")
 	private String prediction;
 
-	@Column(name = "correctlyPredicted")
-	private boolean correctlyPredicted;
+	@Column(name = "predictionType")
+	private PredictionType predictionType;
 
 	/**
 	 * score delimiter for the result example : 4-2
@@ -62,6 +68,7 @@ public class FootballMatch implements Serializable {
 	public FootballMatch() {
 		this.dateCreated = new Date();
 		this.lastModified = new Date();
+		predictionType = PredictionType.NOT_PREDICTED;
 	}
 
 	public String getHomeTeam() {
@@ -128,12 +135,12 @@ public class FootballMatch implements Serializable {
 		this.matchMetaData = matchMetaData;
 	}
 
-	public boolean isCorrectlyPredicted() {
-		return correctlyPredicted;
+	public PredictionType getPredictionType() {
+		return predictionType;
 	}
 
-	public void setCorrectlyPredicted(boolean correctlyPredicted) {
-		this.correctlyPredicted = correctlyPredicted;
+	public void setPredictionType(PredictionType predictionType) {
+		this.predictionType = predictionType;
 	}
 
 	public Date getDateCreated() {
@@ -152,10 +159,32 @@ public class FootballMatch implements Serializable {
 		this.lastModified = lastModified;
 	}
 
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	public int getRound() {
+		return round;
+	}
+
+	public void setRound(int round) {
+		this.round = round;
+	}
+
 	@JsonIgnore
 	@Transient
 	public String getSummary() {
-		return String.format("'%s' - '%s' starting : %s", homeTeam, awayTeam, startDate);
+		return String.format("['%s' - '%s' %s round %s]", homeTeam, awayTeam, year, round);
+	}
+
+	@JsonIgnore
+	@Transient
+	public String getMetaDataNNOutput() {
+		return String.format("%s %s", round, matchMetaData.toString());
 	}
 
 	@Override public boolean equals(Object o) {
@@ -166,22 +195,23 @@ public class FootballMatch implements Serializable {
 
 		FootballMatch that = (FootballMatch) o;
 
-		if (homeTeam != null ? !homeTeam.equals(that.homeTeam) : that.homeTeam != null)
+		if (year != that.year)
 			return false;
-		if (awayTeam != null ? !awayTeam.equals(that.awayTeam) : that.awayTeam != null)
+		if (round != that.round)
 			return false;
-		if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null)
+		if (!homeTeam.equals(that.homeTeam))
+			return false;
+		if (!awayTeam.equals(that.awayTeam))
 			return false;
 
 		return true;
-
 	}
 
 	@Override public int hashCode() {
-		int result1 = id;
-		result1 = 31 * result1 + (homeTeam != null ? homeTeam.hashCode() : 0);
-		result1 = 31 * result1 + (awayTeam != null ? awayTeam.hashCode() : 0);
-		result1 = 31 * result1 + (startDate != null ? startDate.hashCode() : 0);
-		return result1;
+		int result = homeTeam.hashCode();
+		result = 31 * result + awayTeam.hashCode();
+		result = 31 * result + year;
+		result = 31 * result + round;
+		return result;
 	}
 }

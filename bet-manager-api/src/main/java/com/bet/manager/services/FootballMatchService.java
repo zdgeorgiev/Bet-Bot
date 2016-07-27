@@ -1,8 +1,8 @@
 package com.bet.manager.services;
 
-import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,15 +46,17 @@ public class FootballMatchService {
 
 	private boolean exist(FootballMatch match) {
 		return footballMatchRepository
-				.findByHomeTeamAndAwayTeamAndStartDate(match.getHomeTeam(), match.getAwayTeam(), match.getStartDate()) != null;
+				.findByHomeTeamAndAwayTeamAndYearAndRound(match.getHomeTeam(), match.getAwayTeam(), match.getYear(),
+						match.getRound()) != null;
 	}
 
+	// TODO : ONLY FOR TEST ( ATLEAST ADD PAGINATION )
 	public Collection<FootballMatch> retrieveAll() {
 		return footballMatchRepository.findAll();
 	}
 
 	public Page<FootballMatch> retrieveMatches(String team1, String team2, Optional<Integer> year, Optional<Integer> round,
-			boolean correctPrediction, boolean finished, int limit, int offset) {
+			Optional<Boolean> correctPrediction, Optional<Boolean> finished, int limit, int offset) {
 
 		// TODO:
 		return null;
@@ -67,11 +69,11 @@ public class FootballMatchService {
 	}
 
 	public int correctPredictedMatchesCount() {
-		return footballMatchRepository.findByWinnerNotAndCorrectlyPredicted(ResultMessages.UNKNOWN_WINNER, true).size();
+		return footballMatchRepository.findByPredictionType(PredictionType.CORRECT).size();
 	}
 
 	public int incorrectPredictedMatchesCount() {
-		return footballMatchRepository.findByWinnerNotAndCorrectlyPredicted(ResultMessages.UNKNOWN_WINNER, false).size();
+		return footballMatchRepository.findByPredictionType(PredictionType.INCORRECT).size();
 	}
 
 	public int matchesCount() {

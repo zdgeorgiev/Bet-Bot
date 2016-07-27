@@ -4,7 +4,6 @@ import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
-import com.bet.manager.model.exceptions.InvalidMatchDateException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -77,11 +76,6 @@ public class FootballMatchBuilderTest {
 	@Test(expected = ParseException.class)
 	public void testMatchWithInvalidStartDate() throws ParseException {
 		builder.setStartDate(DateFormats.LIVE_SCORE_MATCH_START_DATE_AND_TIME.parse("20165101220000"));
-	}
-
-	@Test(expected = InvalidMatchDateException.class)
-	public void testMatchWithNotGivenStartDate() {
-		builder.build();
 	}
 
 	@Test

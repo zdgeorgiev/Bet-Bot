@@ -53,8 +53,8 @@ public class FootballMatchRestController {
 			@RequestParam(name = "team2", required = false) String team2,
 			@RequestParam(name = "year", required = false) Optional<Integer> year,
 			@RequestParam(name = "round", required = false) Optional<Integer> round,
-			@RequestParam(name = "correctPrediction", required = false) boolean correctPrediction,
-			@RequestParam(name = "finished", required = false) boolean finished,
+			@RequestParam(name = "correctPrediction", required = false) Optional<Boolean> correctPrediction,
+			@RequestParam(name = "finished", required = false) Optional<Boolean> finished,
 			@RequestParam(name = "limit", defaultValue = "10", required = false) int limit,
 			@RequestParam(name = "offset", defaultValue = "0", required = false) int offset) {
 

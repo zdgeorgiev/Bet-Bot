@@ -6,7 +6,9 @@ import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
 import com.bet.manager.core.data.sources.exceptions.InvalidMatchYearIndex;
+import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.util.FootballMatchBuilder;
 import com.bet.manager.model.util.MatchMetaDataUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -83,13 +85,13 @@ public class DataManager {
 	 * home team goals -  away team goals >= 2 - HW, <= 2 - HL, else W,L,T.
 	 * <p/>
 	 *
-	 * @param firstTeam  homeTeam as Bundesliga name ( NOTE : first team will be correctly parsed as home or away depends on the match)
-	 * @param secondTeam awayTeam as Bundesliga name ( NOTE : second team will be correctly parsed as home or away depends on the match)
+	 * @param firstTeam  firstTeam as Bundesliga name ( NOTE : first team will be correctly parsed as home or away depends on the match)
+	 * @param secondTeam secondTeam as Bundesliga name ( NOTE : second team will be correctly parsed as home or away depends on the match)
 	 * @param year       match year
 	 * @param round      match round should be at least 2nd one, because information for round 0 is invalid
 	 * @return Match Meta Data for the match
 	 */
-	public MatchMetaData getDataForMatch(String firstTeam, String secondTeam, int year, int round) throws Exception {
+	public FootballMatch createFootballMatchEntity(String firstTeam, String secondTeam, int year, int round) throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
 		String firstTeamData = getDataForTeam(firstTeam, year, round);
@@ -98,13 +100,20 @@ public class DataManager {
 		currentMatchData
 				.append(firstTeam).append(DELIMITER)
 				.append(secondTeam).append(DELIMITER)
-				.append(year).append(DELIMITER)
-				.append(round).append(DELIMITER)
 				.append(firstTeamData).append(DELIMITER)
 				.append(secondTeamData).append(DELIMITER)
 				.append(secondarySource.getMatchResult(firstTeam, year, round, crawledPages));
 
-		return MatchMetaDataUtils.parse(currentMatchData.toString());
+		MatchMetaData currentMatchMetaData = MatchMetaDataUtils.parse(currentMatchData.toString());
+
+		return new FootballMatchBuilder()
+				.setHomeTeamName(currentMatchMetaData.getHomeTeam())
+				.setAwayTeamName(currentMatchMetaData.getAwayTeam())
+				.setYear(year)
+				.setRound(round)
+				.setMatchMetaData(currentMatchMetaData)
+				.setResult(currentMatchMetaData.getResult())
+				.build();
 	}
 
 	private String getDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
