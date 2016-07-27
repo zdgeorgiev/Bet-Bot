@@ -20,71 +20,77 @@ public class MatchMetaDataUtils {
 
 		MatchMetaData matchMetaData = new MatchMetaData();
 
-		matchMetaData.setHomeTeam(params[0]);
-		matchMetaData.setAwayTeam(params[1]);
-
 		matchMetaData.setYear(Integer.parseInt(params[2]));
 		matchMetaData.setRound(Integer.parseInt(params[3]));
 
 		// First team metadata
-		MatchMetaData.TeamMetaData homeTeamMetaData = new MatchMetaData.TeamMetaData();
-		homeTeamMetaData.setPosition(Integer.parseInt(params[4]));
-		homeTeamMetaData.setPoints(Integer.parseInt(params[5]));
-		homeTeamMetaData.setGoalDifference(Integer.parseInt(params[6]));
-		homeTeamMetaData.setVenue(Integer.parseInt(params[7]));
+		MatchMetaData.TeamMetaData firstTeamMetaData = new MatchMetaData.TeamMetaData();
+		firstTeamMetaData.setPosition(Integer.parseInt(params[4]));
+		firstTeamMetaData.setPoints(Integer.parseInt(params[5]));
+		firstTeamMetaData.setGoalDifference(Integer.parseInt(params[6]));
+		firstTeamMetaData.setVenue(Integer.parseInt(params[7]));
 
-		MatchMetaData.TeamMetaData.PreviousRoundStats homeTeamPreviousRoundStats =
+		MatchMetaData.TeamMetaData.PreviousRoundStats firstTeamPreviousRoundStats =
 				new MatchMetaData.TeamMetaData.PreviousRoundStats();
-		homeTeamPreviousRoundStats.setDistance(Integer.parseInt(params[8]));
-		homeTeamPreviousRoundStats.setSprints(Integer.parseInt(params[9]));
-		homeTeamPreviousRoundStats.setPasses(Integer.parseInt(params[10]));
-		homeTeamPreviousRoundStats.setShots(Integer.parseInt(params[11]));
-		homeTeamPreviousRoundStats.setFouls(Integer.parseInt(params[12]));
+		firstTeamPreviousRoundStats.setDistance(Integer.parseInt(params[8]));
+		firstTeamPreviousRoundStats.setSprints(Integer.parseInt(params[9]));
+		firstTeamPreviousRoundStats.setPasses(Integer.parseInt(params[10]));
+		firstTeamPreviousRoundStats.setShots(Integer.parseInt(params[11]));
+		firstTeamPreviousRoundStats.setFouls(Integer.parseInt(params[12]));
 
-		homeTeamMetaData.setPreviousRoundStats(homeTeamPreviousRoundStats);
+		firstTeamMetaData.setPreviousRoundStats(firstTeamPreviousRoundStats);
 
-		MatchMetaData.TeamMetaData.LastFiveMatchesPerformance homeTeamLastFiveMatchesPerformance =
+		MatchMetaData.TeamMetaData.LastFiveMatchesPerformance firstTeamLastFiveMatchesPerformance =
 				new MatchMetaData.TeamMetaData.LastFiveMatchesPerformance();
-		homeTeamLastFiveMatchesPerformance.setHugeWins(Integer.parseInt(params[13]));
-		homeTeamLastFiveMatchesPerformance.setHugeLoses(Integer.parseInt(params[14]));
-		homeTeamLastFiveMatchesPerformance.setWins(Integer.parseInt(params[15]));
-		homeTeamLastFiveMatchesPerformance.setLoses(Integer.parseInt(params[16]));
-		homeTeamLastFiveMatchesPerformance.setDraws(Integer.parseInt(params[17]));
+		firstTeamLastFiveMatchesPerformance.setHugeWins(Integer.parseInt(params[13]));
+		firstTeamLastFiveMatchesPerformance.setHugeLoses(Integer.parseInt(params[14]));
+		firstTeamLastFiveMatchesPerformance.setWins(Integer.parseInt(params[15]));
+		firstTeamLastFiveMatchesPerformance.setLoses(Integer.parseInt(params[16]));
+		firstTeamLastFiveMatchesPerformance.setDraws(Integer.parseInt(params[17]));
 
-		homeTeamMetaData.setLastFiveMatchesPerformance(homeTeamLastFiveMatchesPerformance);
-
-		matchMetaData.setHomeTeamMetaData(homeTeamMetaData);
+		firstTeamMetaData.setLastFiveMatchesPerformance(firstTeamLastFiveMatchesPerformance);
 
 		// Second team metadata
-		MatchMetaData.TeamMetaData awayTeamMetaData = new MatchMetaData.TeamMetaData();
-		awayTeamMetaData.setPosition(Integer.parseInt(params[18]));
-		awayTeamMetaData.setPoints(Integer.parseInt(params[19]));
-		awayTeamMetaData.setGoalDifference(Integer.parseInt(params[20]));
-		awayTeamMetaData.setVenue(Integer.parseInt(params[21]));
+		MatchMetaData.TeamMetaData secondTeamMetaData = new MatchMetaData.TeamMetaData();
+		secondTeamMetaData.setPosition(Integer.parseInt(params[18]));
+		secondTeamMetaData.setPoints(Integer.parseInt(params[19]));
+		secondTeamMetaData.setGoalDifference(Integer.parseInt(params[20]));
+		secondTeamMetaData.setVenue(Integer.parseInt(params[21]));
 
-		MatchMetaData.TeamMetaData.PreviousRoundStats awayTeamPreviousRoundStats =
+		MatchMetaData.TeamMetaData.PreviousRoundStats secondTeamPreviousRoundStats =
 				new MatchMetaData.TeamMetaData.PreviousRoundStats();
-		awayTeamPreviousRoundStats.setDistance(Integer.parseInt(params[22]));
-		awayTeamPreviousRoundStats.setSprints(Integer.parseInt(params[23]));
-		awayTeamPreviousRoundStats.setPasses(Integer.parseInt(params[24]));
-		awayTeamPreviousRoundStats.setShots(Integer.parseInt(params[25]));
-		awayTeamPreviousRoundStats.setFouls(Integer.parseInt(params[26]));
+		secondTeamPreviousRoundStats.setDistance(Integer.parseInt(params[22]));
+		secondTeamPreviousRoundStats.setSprints(Integer.parseInt(params[23]));
+		secondTeamPreviousRoundStats.setPasses(Integer.parseInt(params[24]));
+		secondTeamPreviousRoundStats.setShots(Integer.parseInt(params[25]));
+		secondTeamPreviousRoundStats.setFouls(Integer.parseInt(params[26]));
 
-		awayTeamMetaData.setPreviousRoundStats(awayTeamPreviousRoundStats);
+		secondTeamMetaData.setPreviousRoundStats(secondTeamPreviousRoundStats);
 
-		MatchMetaData.TeamMetaData.LastFiveMatchesPerformance awayTeamLastFiveMatchesPerformance =
+		MatchMetaData.TeamMetaData.LastFiveMatchesPerformance secondTeamLastFiveMatchesPerformance =
 				new MatchMetaData.TeamMetaData.LastFiveMatchesPerformance();
-		awayTeamLastFiveMatchesPerformance.setHugeWins(Integer.parseInt(params[27]));
-		awayTeamLastFiveMatchesPerformance.setHugeLoses(Integer.parseInt(params[28]));
-		awayTeamLastFiveMatchesPerformance.setWins(Integer.parseInt(params[29]));
-		awayTeamLastFiveMatchesPerformance.setLoses(Integer.parseInt(params[30]));
-		awayTeamLastFiveMatchesPerformance.setDraws(Integer.parseInt(params[31]));
+		secondTeamLastFiveMatchesPerformance.setHugeWins(Integer.parseInt(params[27]));
+		secondTeamLastFiveMatchesPerformance.setHugeLoses(Integer.parseInt(params[28]));
+		secondTeamLastFiveMatchesPerformance.setWins(Integer.parseInt(params[29]));
+		secondTeamLastFiveMatchesPerformance.setLoses(Integer.parseInt(params[30]));
+		secondTeamLastFiveMatchesPerformance.setDraws(Integer.parseInt(params[31]));
 
-		awayTeamMetaData.setLastFiveMatchesPerformance(awayTeamLastFiveMatchesPerformance);
-
-		matchMetaData.setAwayTeamMetaData(awayTeamMetaData);
+		secondTeamMetaData.setLastFiveMatchesPerformance(secondTeamLastFiveMatchesPerformance);
 
 		matchMetaData.setResult(params[32]);
+
+		boolean teamsRightOrder = true;
+
+		// Should do swap if the first team is away
+		if (firstTeamMetaData.getVenue() == -1) {
+			teamsRightOrder = false;
+		}
+
+		matchMetaData.setHomeTeam(teamsRightOrder ? params[0] : params[1]);
+		matchMetaData.setAwayTeam(teamsRightOrder ? params[1] : params[0]);
+
+		matchMetaData.setHomeTeamMetaData(teamsRightOrder ? firstTeamMetaData : secondTeamMetaData);
+		matchMetaData.setAwayTeamMetaData(teamsRightOrder ? secondTeamMetaData : firstTeamMetaData);
 
 		return matchMetaData;
 	}
