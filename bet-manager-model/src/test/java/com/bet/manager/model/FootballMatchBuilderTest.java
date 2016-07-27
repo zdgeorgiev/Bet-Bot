@@ -66,7 +66,7 @@ public class FootballMatchBuilderTest {
 		Assert.assertEquals("CSKA", match.getAwayTeam());
 		Assert.assertEquals("January 1 2016 22:00",
 				DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.format(match.getStartDate()));
-		Assert.assertEquals(ResultMessages.NO_WINNER, match.getWinner());
+		Assert.assertEquals(ResultMessages.UNKNOWN_WINNER, match.getWinner());
 	}
 
 	@Test(expected = EqualHomeAndAwayTeamException.class)
@@ -86,6 +86,6 @@ public class FootballMatchBuilderTest {
 
 	@Test
 	public void testMatchWinnerWithNoGivenResult() {
-		Assert.assertEquals(ResultMessages.NO_WINNER, builder.setStartDate(new Date()).build().getWinner());
+		Assert.assertEquals(ResultMessages.UNKNOWN_WINNER, builder.setStartDate(new Date()).build().getWinner());
 	}
 }

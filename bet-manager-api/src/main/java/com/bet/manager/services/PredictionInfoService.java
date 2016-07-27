@@ -12,12 +12,12 @@ public class PredictionInfoService {
 	private FootballMatchService footballMatchService;
 
 	public PredictionsInfo getPredictionsInfo() {
-		int totalMatches = footballMatchService.matchesCount();
 		int correctOnes = footballMatchService.correctPredictedMatchesCount();
+		int incorrectOnes = footballMatchService.incorrectPredictedMatchesCount();
 
-		if (totalMatches == 0)
-			throw new NoMatchesInTheDataBaseExceptions("There is no matches in the DB");
+		if (correctOnes + incorrectOnes == 0)
+			throw new NoMatchesInTheDataBaseExceptions("There is no predicted matches in the db or no matches at all");
 
-		return new PredictionsInfo(correctOnes, totalMatches);
+		return new PredictionsInfo(correctOnes, correctOnes + incorrectOnes);
 	}
 }

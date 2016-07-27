@@ -73,7 +73,7 @@ public class FootballMatchBuilder {
 		String winner;
 
 		if (match.getResult().equals(ResultMessages.UNKNOWN_SCORE)) {
-			winner = ResultMessages.NO_WINNER;
+			winner = ResultMessages.UNKNOWN_WINNER;
 		} else {
 			winner = getWinnerFromResult(match, match.getResult());
 		}
@@ -123,6 +123,10 @@ public class FootballMatchBuilder {
 			match.setCorrectlyPredicted(false);
 	}
 
+	private void setLastModified() {
+		match.setLastModified(new Date());
+	}
+
 	public FootballMatch build() {
 		setHomeTeamName(match.getHomeTeam());
 		setAwayTeamName(match.getAwayTeam());
@@ -138,6 +142,7 @@ public class FootballMatchBuilder {
 		setWinner();
 		setPrediction(match.getPrediction());
 		setCorrectlyPredicted();
+		setLastModified();
 		return match;
 	}
 }

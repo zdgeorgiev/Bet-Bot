@@ -39,16 +39,15 @@ public class FootballMatch implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private MatchMetaData matchMetaData;
 
-	@Column(name = "prediction")
-	private String prediction;
-
 	@Column(name = "result")
 	private String result;
 
 	@Column(name = "winner")
 	private String winner;
 
-	@JsonIgnore
+	@Column(name = "prediction")
+	private String prediction;
+
 	@Column(name = "correctlyPredicted")
 	private boolean correctlyPredicted;
 

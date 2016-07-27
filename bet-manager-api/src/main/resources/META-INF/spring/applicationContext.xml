@@ -12,10 +12,6 @@
 
   <context:property-placeholder location="classpath*:META-INF/*.properties"/>
 
-  <bean id="dataManager" class="com.bet.manager.core.data.DataManager">
-	<constructor-arg type="boolean">
-	  <value>${data.manager.dynamic.matches}</value>
-	</constructor-arg>
-  </bean>
+  <bean id="dataManager" class="com.bet.manager.core.data.DataManager"/>
 
 </beans:beans>

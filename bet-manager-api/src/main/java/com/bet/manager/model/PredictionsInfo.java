@@ -9,14 +9,10 @@ public class PredictionsInfo implements Serializable {
 	private String correctness;
 	private String info;
 
-	public PredictionsInfo() {
-
-	}
-
 	public PredictionsInfo(int correctOnes, int total) {
 
-		this.correctness = String.format("%.2f%", correctOnes / (total * 1.0));
-		this.info = String.format("Predicted %s of %s total", correctOnes, total);
+		this.correctness = String.format("%.2f%s", (correctOnes / (total * 1.0) * 100), "%");
+		this.info = String.format("Correct predictions %s of %s", correctOnes, total);
 	}
 
 	public String getInfo() {

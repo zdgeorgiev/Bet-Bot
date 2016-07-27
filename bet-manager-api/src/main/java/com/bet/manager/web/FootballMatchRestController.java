@@ -22,7 +22,7 @@ public class FootballMatchRestController {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public String createMatches(List<FootballMatch> matches) {
+	public String createMatches(@RequestBody List<FootballMatch> matches) {
 
 		int createdCount = footballMatchService.createMatches(matches);
 		return String.format("Successfully created %s out of %s matches", createdCount, matches.size());
@@ -31,7 +31,7 @@ public class FootballMatchRestController {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	public String updateMatches(List<FootballMatch> matches) {
+	public String updateMatches(@RequestBody List<FootballMatch> matches) {
 
 		int updatedCount = footballMatchService.updateMatch(matches);
 		return String.format("Successfully updated %s out of %s matches", updatedCount, matches.size());
