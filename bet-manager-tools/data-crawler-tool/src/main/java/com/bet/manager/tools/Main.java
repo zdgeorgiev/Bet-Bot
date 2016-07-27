@@ -129,18 +129,18 @@ public class Main {
 
 				Node currentTeam = currentRoundTeams.item(i);
 
-				String homeTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
-				String awayTeam = secondarySource.getTeamOpponent(homeTeam, year, round, crawledPages);
+				String firstTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
+				String secondTeam = secondarySource.getTeamOpponent(firstTeam, year, round, crawledPages);
 
-				if (!teamBlackList.contains(homeTeam) && !teamBlackList.contains(awayTeam)) {
+				if (!teamBlackList.contains(firstTeam) && !teamBlackList.contains(secondTeam)) {
 
-					teamBlackList.add(homeTeam);
-					teamBlackList.add(awayTeam);
+					teamBlackList.add(firstTeam);
+					teamBlackList.add(secondTeam);
 
-					MatchMetaData matchMetaData = dm.getDataForMatch(homeTeam, awayTeam, year, round);
+					MatchMetaData matchMetaData = dm.getDataForMatch(firstTeam, secondTeam, year, round);
 
-					log.info("({}/{}) Data for match '{}'-'{}' was successfully created",
-							currentData.size() + 1, currentRoundTeams.getLength() / 2, homeTeam, awayTeam);
+					log.info("({}/{}) Data for match '{}'-'{}' was successfully created", currentData.size() + 1,
+							currentRoundTeams.getLength() / 2, matchMetaData.getHomeTeam(), matchMetaData.getAwayTeam());
 
 					currentData.add(matchMetaData);
 				}

@@ -83,26 +83,26 @@ public class DataManager {
 	 * home team goals -  away team goals >= 2 - HW, <= 2 - HL, else W,L,T.
 	 * <p/>
 	 *
-	 * @param homeTeam homeTeam as Bundesliga name
-	 * @param awayTeam awayTeam as Bundesliga name
-	 * @param year     match year
-	 * @param round    match round should be at least 2nd one, because information for round 0 is invalid
+	 * @param firstTeam  homeTeam as Bundesliga name ( NOTE : first team will be correctly parsed as home or away depends on the match)
+	 * @param secondTeam awayTeam as Bundesliga name ( NOTE : second team will be correctly parsed as home or away depends on the match)
+	 * @param year       match year
+	 * @param round      match round should be at least 2nd one, because information for round 0 is invalid
 	 * @return Match Meta Data for the match
 	 */
-	public MatchMetaData getDataForMatch(String homeTeam, String awayTeam, int year, int round) throws Exception {
+	public MatchMetaData getDataForMatch(String firstTeam, String secondTeam, int year, int round) throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
-		String homeTeamData = getDataForTeam(homeTeam, year, round);
-		String awayTeamData = getDataForTeam(awayTeam, year, round);
+		String firstTeamData = getDataForTeam(firstTeam, year, round);
+		String secondTeamData = getDataForTeam(secondTeam, year, round);
 
 		currentMatchData
-				.append(homeTeam).append(DELIMITER)
-				.append(awayTeam).append(DELIMITER)
+				.append(firstTeam).append(DELIMITER)
+				.append(secondTeam).append(DELIMITER)
 				.append(year).append(DELIMITER)
 				.append(round).append(DELIMITER)
-				.append(homeTeamData).append(DELIMITER)
-				.append(awayTeamData).append(DELIMITER)
-				.append(secondarySource.getMatchResult(homeTeam, year, round, crawledPages));
+				.append(firstTeamData).append(DELIMITER)
+				.append(secondTeamData).append(DELIMITER)
+				.append(secondarySource.getMatchResult(firstTeam, year, round, crawledPages));
 
 		return MatchMetaDataUtils.parse(currentMatchData.toString());
 	}
