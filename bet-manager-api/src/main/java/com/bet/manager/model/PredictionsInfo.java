@@ -23,7 +23,7 @@ public class PredictionsInfo implements Serializable {
 			logger.warn("There is no predicted matches in the db or no matches at all");
 		}
 
-		this.info = String.format("CORRECT predictions %s of %s", correctOnes, totalPredicted);
+		this.info = String.format("Correct predictions %s of %s", correctOnes, totalPredicted);
 	}
 
 	public String getInfo() {
