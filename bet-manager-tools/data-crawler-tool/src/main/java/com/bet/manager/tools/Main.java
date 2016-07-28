@@ -50,8 +50,10 @@ public class Main {
 		} else if (args.length == 3) {
 			startYear = Integer.parseInt(args[0]);
 			endYear = Integer.parseInt(args[1]);
-		} else
+		} else {
+			printUsage();
 			throw new IllegalStateException("Less arguments than required.");
+		}
 
 		File destinationFolder = initializeDestinationFolder(args);
 
@@ -71,6 +73,11 @@ public class Main {
 			} else
 				throw new IllegalStateException("There is no information for year later than " + (year - 1));
 		}
+	}
+
+	private static void printUsage() {
+		log.info("java -jar target/data-crawler-tool.jar [start.year] [end.year] [path.to.destination.folder]"
+				+ "End year is optional and if is not presented will get the value from the start year");
 	}
 
 	private static File initializeDestinationFolder(String[] args) {
@@ -107,7 +114,13 @@ public class Main {
 		for (int round = 2; round <= ROUNDS; round++) {
 
 			log.info("Start collecting data for year {} round {}", year, round);
-			allData.addAll(createDataForRound(year, round));
+
+			try {
+				allData.addAll(createDataForRound(year, round));
+			} catch (Exception e) {
+				log.error("Failed to create matches", e);
+			}
+
 			crawledPages.clear();
 		}
 
@@ -122,12 +135,17 @@ public class Main {
 
 		Set<String> teamBlackList = new HashSet<>();
 		List<FootballMatch> currentData = new ArrayList<>();
+		NodeList currentRoundTeams;
 
 		try {
-			NodeList currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
+			currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
+		} catch (Exception e) {
+			throw new IllegalStateException(String.format("Failed to create match table for %s year %s round", year, round));
+		}
 
-			for (int i = 0; i < currentRoundTeams.getLength(); i++) {
+		for (int i = 0; i < currentRoundTeams.getLength(); i++) {
 
+			try {
 				Node currentTeam = currentRoundTeams.item(i);
 
 				String firstTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
@@ -145,9 +163,9 @@ public class Main {
 
 					currentData.add(currentMatch);
 				}
+			} catch (Exception e) {
+				log.error("Failed to create data for year {} round {}.", year, round, e);
 			}
-		} catch (Exception e) {
-			log.error("Failed to create data for year {} round {}.", year, round, e);
 		}
 
 		log.info("Successfully created {} matches for year {} round {}.", currentData.size(), year, round);
