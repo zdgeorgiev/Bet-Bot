@@ -57,6 +57,10 @@ public class FootballMatch implements Serializable {
 	@Column(name = "predictionType")
 	private PredictionType predictionType;
 
+	@JsonIgnore
+	@Column(name = "finished")
+	private boolean finished;
+
 	/**
 	 * score delimiter for the result example : 4-2
 	 * delimiter is "-"
@@ -173,6 +177,14 @@ public class FootballMatch implements Serializable {
 
 	public void setRound(int round) {
 		this.round = round;
+	}
+
+	public boolean isFinished() {
+		return finished;
+	}
+
+	public void setFinished(boolean finished) {
+		this.finished = finished;
 	}
 
 	@JsonIgnore

@@ -2,6 +2,9 @@ package com.bet.manager.web;
 
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.services.FootballMatchService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/matches", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class FootballMatchRestController {
+
+	private static final ObjectMapper objectMapper = new ObjectMapper();
+
+	static {
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+	}
 
 	@Autowired
 	private FootballMatchService footballMatchService;
@@ -31,10 +40,13 @@ public class FootballMatchRestController {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	public String updateMatches(@RequestBody List<FootballMatch> matches) {
+	public String updateMatches(@RequestBody List<FootballMatch> matches) throws JsonProcessingException {
 
-		int updatedCount = footballMatchService.updateMatch(matches);
-		return String.format("Successfully updated %s out of %s matches", updatedCount, matches.size());
+		List<FootballMatch> updatedMatches = footballMatchService.updateMatches(matches);
+
+		return String.format("Successfully updated %s out of %s total.%s====%s%s",
+				updatedMatches.size(), matches.size(), System.lineSeparator(), System.lineSeparator(),
+				objectMapper.writeValueAsString(updatedMatches));
 	}
 
 	@ResponseBody

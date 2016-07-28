@@ -5,19 +5,34 @@ import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 public class Program {
 
-	private static Logger logger = LoggerFactory.getLogger(Program.class);
-
 	public static void main(String[] args) throws Exception {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+		System.out.println(objectMapper.writeValueAsString(new FootballMatchBuilder()
+				.setHomeTeamName("CSKA")
+				.setAwayTeamName("LESVKI")
+				.setPrediction("CSKA")
+				.setYear(2011)
+				.setRound(3)
+				.build()));
+
+		System.out.println(objectMapper.writeValueAsString(new FootballMatchBuilder()
+				.setHomeTeamName("CSKA")
+				.setAwayTeamName("LESVKI")
+				.setPrediction("CSKA")
+				.setResult("2-1")
+				.setYear(2011)
+				.setRound(3)
+				.build()));
+
+		System.out.println("===========================");
 
 		FootballMatch match = new DataManager(false).createFootballMatch("FC Schalke 04", "SpVgg Greuther Fürth", 2012, 3);
 

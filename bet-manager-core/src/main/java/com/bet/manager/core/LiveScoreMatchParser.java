@@ -80,7 +80,7 @@ public class LiveScoreMatchParser implements IMatchParser {
 				.setResult(score)
 				.build();
 
-		log.info("Successfully parsed - '{}'", m);
+		log.info("Successfully parsed - '{}'", m.getSummary());
 		return m;
 	}
 

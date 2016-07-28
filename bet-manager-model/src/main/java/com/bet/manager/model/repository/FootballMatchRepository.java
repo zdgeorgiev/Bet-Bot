@@ -10,7 +10,7 @@ import java.util.Collection;
 @Repository
 public interface FootballMatchRepository extends JpaRepository<FootballMatch, Integer> {
 
-	Collection<FootballMatch> findByPredictionType(PredictionType predictionType);
+	Collection<FootballMatch> findByPredictionTypeAndFinishedTrue(PredictionType predictionType);
 
 	FootballMatch findByHomeTeamAndAwayTeamAndYearAndRound(String homeTeam, String awayTeam, int year, int round);
 }

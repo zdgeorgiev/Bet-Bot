@@ -59,7 +59,7 @@ public class FootballMatchBuilder {
 	public FootballMatchBuilder setResult(String result) {
 
 		if (StringUtils.isBlank(result)) {
-			match.setResult(ResultMessages.UNKNOWN_SCORE);
+			match.setResult(ResultMessages.UNKNOWN_RESULT);
 		} else {
 			match.setResult(result.replace(" ", ""));
 		}
@@ -76,7 +76,7 @@ public class FootballMatchBuilder {
 
 		String winner;
 
-		if (match.getResult().equals(ResultMessages.UNKNOWN_SCORE)) {
+		if (match.getResult().equals(ResultMessages.UNKNOWN_RESULT)) {
 			winner = ResultMessages.UNKNOWN_WINNER;
 		} else {
 			winner = getWinnerFromResult(match, match.getResult());
@@ -84,6 +84,11 @@ public class FootballMatchBuilder {
 
 		match.setWinner(winner);
 		return this;
+	}
+
+	private void setFinished() {
+		if (!match.getWinner().equals(ResultMessages.UNKNOWN_WINNER))
+			match.setFinished(true);
 	}
 
 	private String getWinnerFromResult(FootballMatch match, String result) {
@@ -119,7 +124,6 @@ public class FootballMatchBuilder {
 	private void setCorrectlyPredicted() {
 
 		if (match.getWinner() == null || match.getPrediction() == null) {
-			match.setPredictionType(PredictionType.NOT_PREDICTED);
 			return;
 		}
 
@@ -157,6 +161,7 @@ public class FootballMatchBuilder {
 		setRound(match.getRound());
 		setYear(match.getYear());
 		setWinner();
+		setFinished();
 		setPrediction(match.getPrediction());
 		setCorrectlyPredicted();
 		setLastModified();

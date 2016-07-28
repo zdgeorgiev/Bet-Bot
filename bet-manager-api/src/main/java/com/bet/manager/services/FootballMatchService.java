@@ -1,15 +1,18 @@
 package com.bet.manager.services;
 
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
+import com.bet.manager.exceptions.FootballMatchNotFoundExceptions;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
+import com.bet.manager.model.util.FootballMatchBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -45,9 +48,13 @@ public class FootballMatchService {
 	}
 
 	private boolean exist(FootballMatch match) {
+		return retrieve(match) != null;
+	}
+
+	private FootballMatch retrieve(FootballMatch match) {
 		return footballMatchRepository
 				.findByHomeTeamAndAwayTeamAndYearAndRound(match.getHomeTeam(), match.getAwayTeam(), match.getYear(),
-						match.getRound()) != null;
+						match.getRound());
 	}
 
 	// TODO : ONLY FOR TEST ( ATLEAST ADD PAGINATION )
@@ -62,18 +69,44 @@ public class FootballMatchService {
 		return null;
 	}
 
-	public int updateMatch(List<FootballMatch> match) {
+	public List<FootballMatch> updateMatches(List<FootballMatch> matches) {
 
-		// TODO:
-		return 0;
+		List<FootballMatch> updatedMatches = new ArrayList<>(matches.size());
+
+		for (FootballMatch match : matches) {
+			if (!exist(match))
+				throw new FootballMatchNotFoundExceptions(
+						String.format("Football match %s doesnt exist in th e db", match.getSummary()));
+
+			// Retrieve the match from the data base
+			FootballMatch retrievedMatch = retrieve(match);
+
+			// Don't perform update if the retrieved match have result already
+			if (retrievedMatch.isFinished()) {
+				log.warn("The match {} in the data base is considered already finished. No changes will apply",
+						retrievedMatch.getSummary());
+				continue;
+			}
+
+			FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
+					.setResult(match.getResult())
+					.build();
+
+			// Not so good performance
+			footballMatchRepository.delete(match);
+			footballMatchRepository.save(updated);
+			updatedMatches.add(updated);
+		}
+
+		return updatedMatches;
 	}
 
 	public int correctPredictedMatchesCount() {
-		return footballMatchRepository.findByPredictionType(PredictionType.CORRECT).size();
+		return footballMatchRepository.findByPredictionTypeAndFinishedTrue(PredictionType.CORRECT).size();
 	}
 
 	public int incorrectPredictedMatchesCount() {
-		return footballMatchRepository.findByPredictionType(PredictionType.INCORRECT).size();
+		return footballMatchRepository.findByPredictionTypeAndFinishedTrue(PredictionType.INCORRECT).size();
 	}
 
 	public int matchesCount() {
@@ -83,4 +116,5 @@ public class FootballMatchService {
 	public void deleteAll() {
 		footballMatchRepository.deleteAll();
 	}
+
 }
