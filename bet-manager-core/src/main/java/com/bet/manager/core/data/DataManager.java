@@ -72,36 +72,29 @@ public class DataManager {
 	}
 
 	/**
-	 * Method which creates meta data for given home, away team, year and round. These method should be used
-	 * while want to get information about future match, just passes the current year and expected round.
-	 * The data is in the format : NOTE! Between all parameters is using MatchMetaData.DELIMITER
-	 * [round] (for both teams - [ladderPosition] [currentRoundStats] [venue] [prevRoundStats] [lastFiveGames])
-	 * <p/>
-	 * [ladderPosition] - Current position in the ranking table for the round.
-	 * [currentRoundStats] - Current points and round goals difference.
-	 * [venue] - Home/Away
-	 * [prevRoundStats] - [track distance] [sprints] [passes] [shots] [fouls].
-	 * [lastFiveGames] - Consist of 5 type of game end. Huge win [HW], Huge Lose [HL], Win [W], Lose [W], Tie [T],
-	 * home team goals -  away team goals >= 2 - HW, <= 2 - HL, else W,L,T.
-	 * <p/>
+	 * Method creates {@link FootballMatch} for given two teams, year and round. When will use this method
+	 * to get information about future match just give the current year and current round of the league.
+	 * FootballMatch which is created also hold its {@link MatchMetaData} information. NOTE that this method
+	 * is using internal crawling so its required network connection, also NOTE that its possible to pass teams
+	 * that are not playing in same match, but the returned information obviously will be incorrect
 	 *
 	 * @param firstTeam  firstTeam as Bundesliga name ( NOTE : first team will be correctly parsed as home or away depends on the match)
 	 * @param secondTeam secondTeam as Bundesliga name ( NOTE : second team will be correctly parsed as home or away depends on the match)
 	 * @param year       match year
 	 * @param round      match round should be at least 2nd one, because information for round 0 is invalid
-	 * @return Match Meta Data for the match
+	 * @return Football match for the given year, round
 	 */
-	public FootballMatch createFootballMatchEntity(String firstTeam, String secondTeam, int year, int round) throws Exception {
+	public FootballMatch createFootballMatch(String firstTeam, String secondTeam, int year, int round) throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
-		String firstTeamData = getDataForTeam(firstTeam, year, round);
-		String secondTeamData = getDataForTeam(secondTeam, year, round);
+		String firstTeamMetaData = getMetaDataForTeam(firstTeam, year, round);
+		String secondTeamMetaData = getMetaDataForTeam(secondTeam, year, round);
 
 		currentMatchData
 				.append(firstTeam).append(DELIMITER)
 				.append(secondTeam).append(DELIMITER)
-				.append(firstTeamData).append(DELIMITER)
-				.append(secondTeamData).append(DELIMITER)
+				.append(firstTeamMetaData).append(DELIMITER)
+				.append(secondTeamMetaData).append(DELIMITER)
 				.append(secondarySource.getMatchResult(firstTeam, year, round, crawledPages));
 
 		MatchMetaData currentMatchMetaData = MatchMetaDataUtils.parse(currentMatchData.toString());
@@ -116,7 +109,7 @@ public class DataManager {
 				.build();
 	}
 
-	private String getDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
+	private String getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
 
 		if (StringUtils.isEmpty(bundesLigaTeam))
 			throw new IllegalArgumentException("Team argument cannot be empty");

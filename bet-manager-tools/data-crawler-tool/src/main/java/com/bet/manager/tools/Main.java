@@ -51,7 +51,6 @@ public class Main {
 			startYear = Integer.parseInt(args[0]);
 			endYear = Integer.parseInt(args[1]);
 		} else {
-			printUsage();
 			throw new IllegalStateException("Less arguments than required.");
 		}
 
@@ -59,7 +58,7 @@ public class Main {
 
 		for (int year = startYear; year <= endYear; year++) {
 
-			List<FootballMatch> currentYearData = getDataForAllMatches(year);
+			List<FootballMatch> currentYearData = getAllMatches(year);
 
 			if (currentYearData.size() != 0) {
 
@@ -73,11 +72,6 @@ public class Main {
 			} else
 				throw new IllegalStateException("There is no information for year later than " + (year - 1));
 		}
-	}
-
-	private static void printUsage() {
-		log.info("java -jar target/data-crawler-tool.jar [start.year] [end.year] [path.to.destination.folder]"
-				+ "End year is optional and if is not presented will get the value from the start year");
 	}
 
 	private static File initializeDestinationFolder(String[] args) {
@@ -98,25 +92,25 @@ public class Main {
 	}
 
 	/**
-	 * This method creating data for every round matches during given year in the bundesliga
-	 * german football league. This method doing multiple inner crawlings which requiring internet connection.
+	 * This method creating matches for given year in the bundesliga german football league.
+	 * This method is using crawling which requiring network connection.
 	 *
 	 * @param year for which want to get the data. The year should be at least 2011
-	 * @return {@link List <MatchMetaData> } containing all match meta data
+	 * @return {@link List <{@link FootballMatch}> } containing all matches for the year
 	 */
-	private static List<FootballMatch> getDataForAllMatches(int year) throws MalformedURLException {
+	private static List<FootballMatch> getAllMatches(int year) throws MalformedURLException {
 
 		long startTime = System.currentTimeMillis();
 
 		List<FootballMatch> allData = new ArrayList<>();
 
 		// We skip the first round because for the current match we only looking for the previous one data
-		for (int round = 2; round <= ROUNDS; round++) {
+		for (int round = 0; round <= ROUNDS; round++) {
 
 			log.info("Start collecting data for year {} round {}", year, round);
 
 			try {
-				allData.addAll(createDataForRound(year, round));
+				allData.addAll(createMatchesForRound(year, round));
 			} catch (Exception e) {
 				log.error("Failed to create matches", e);
 			}
@@ -131,7 +125,7 @@ public class Main {
 		return allData;
 	}
 
-	private static List<FootballMatch> createDataForRound(int year, int round) {
+	private static List<FootballMatch> createMatchesForRound(int year, int round) {
 
 		Set<String> teamBlackList = new HashSet<>();
 		List<FootballMatch> currentData = new ArrayList<>();
@@ -156,15 +150,15 @@ public class Main {
 					teamBlackList.add(firstTeam);
 					teamBlackList.add(secondTeam);
 
-					FootballMatch currentMatch = dm.createFootballMatchEntity(firstTeam, secondTeam, year, round);
+					FootballMatch currentMatch = dm.createFootballMatch(firstTeam, secondTeam, year, round);
 
-					log.info("({}/{}) Data for match '{}'-'{}' was successfully created", currentData.size() + 1,
+					log.info("({}/{}) Match '{}'-'{}' was successfully created", currentData.size() + 1,
 							currentRoundTeams.getLength() / 2, currentMatch.getHomeTeam(), currentMatch.getAwayTeam());
 
 					currentData.add(currentMatch);
 				}
 			} catch (Exception e) {
-				log.error("Failed to create data for year {} round {}.", year, round, e);
+				log.error("Failed to create matches for year {} round {}.", year, round, e);
 			}
 		}
 

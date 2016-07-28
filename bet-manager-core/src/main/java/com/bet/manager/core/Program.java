@@ -19,7 +19,7 @@ public class Program {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-		FootballMatch match = new DataManager(false).createFootballMatchEntity("FC Schalke 04", "SpVgg Greuther Fürth", 2012, 3);
+		FootballMatch match = new DataManager(false).createFootballMatch("FC Schalke 04", "SpVgg Greuther Fürth", 2012, 3);
 
 		System.out.println(objectMapper.writeValueAsString(match));
 
