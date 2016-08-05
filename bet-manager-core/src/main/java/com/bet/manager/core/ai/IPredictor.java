@@ -1,6 +1,8 @@
 package com.bet.manager.core.ai;
 
-public interface IPredictor<FootballMatch> {
+import com.bet.manager.model.dao.FootballMatch;
+
+public interface IPredictor {
 
 	/**
 	 * Method to predict the output from two matches

@@ -4,7 +4,7 @@ import com.bet.manager.model.dao.FootballMatch;
 
 import java.util.Random;
 
-public class SimplePredictor implements IPredictor<FootballMatch> {
+public class SimplePredictor implements IPredictor {
 
 	@Override
 	public String predict(FootballMatch m) {
