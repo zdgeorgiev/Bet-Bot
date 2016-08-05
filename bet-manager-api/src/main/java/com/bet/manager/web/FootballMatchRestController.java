@@ -6,12 +6,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,33 +42,23 @@ public class FootballMatchRestController {
 
 		List<FootballMatch> updatedMatches = footballMatchService.updateMatches(matches);
 
-		return String.format("Successfully updated %s out of %s total.%s====%s%s",
-				updatedMatches.size(), matches.size(), System.lineSeparator(), System.lineSeparator(),
-				objectMapper.writeValueAsString(updatedMatches));
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
-	public Collection<FootballMatch> retrieveAll() {
-
-		return footballMatchService.retrieveAll();
+		return String.format("Successfully updated %s out of %s total.", updatedMatches.size(), matches.size());
 	}
 
 	@ResponseBody
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public Page<FootballMatch> retrieveMatches(
+	public List<FootballMatch> retrieveMatches(
 			@RequestParam(name = "team1", required = false) String team1,
 			@RequestParam(name = "team2", required = false) String team2,
 			@RequestParam(name = "year", required = false) Optional<Integer> year,
 			@RequestParam(name = "round", required = false) Optional<Integer> round,
-			@RequestParam(name = "correctPrediction", required = false) Optional<Boolean> correctPrediction,
+			@RequestParam(name = "predictionType", required = false) String predictionType,
 			@RequestParam(name = "finished", required = false) Optional<Boolean> finished,
 			@RequestParam(name = "limit", defaultValue = "10", required = false) int limit,
 			@RequestParam(name = "offset", defaultValue = "0", required = false) int offset) {
 
-		return footballMatchService.retrieveMatches(team1, team2, year, round, correctPrediction, finished, limit, offset);
+		return footballMatchService.retrieveMatches(team1, team2, year, round, predictionType, finished, limit, offset);
 	}
 
 	@ResponseBody

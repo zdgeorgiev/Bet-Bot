@@ -6,16 +6,19 @@ import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 @Repository
 public class FootballMatchService {
@@ -57,16 +60,89 @@ public class FootballMatchService {
 						match.getRound());
 	}
 
-	// TODO : ONLY FOR TEST ( ATLEAST ADD PAGINATION )
-	public Collection<FootballMatch> retrieveAll() {
-		return footballMatchRepository.findAll();
+	public List<FootballMatch> retrieveMatches(String team1, String team2, Optional<Integer> year, Optional<Integer> round,
+			String predictionType, Optional<Boolean> finished, int limit, int offset) {
+
+		List<FootballMatch> filtered = footballMatchRepository.findAll();
+
+		// This kind of filtering is so bad and slow, but JPA ?! no dynamic queries ?!
+		filtered = filterByTeams(filtered, team1, team2);
+		filtered = filterByYear(filtered, year);
+		filtered = filterByRound(filtered, round);
+		filtered = filterByPredictionType(filtered, predictionType);
+		filtered = filterByFinished(filtered, finished);
+
+		return filtered.stream()
+				.sorted(comparing(FootballMatch::getYear).thenComparing(FootballMatch::getRound).reversed())
+				.skip(offset)
+				.limit(limit)
+				.collect(Collectors.toList());
 	}
 
-	public Page<FootballMatch> retrieveMatches(String team1, String team2, Optional<Integer> year, Optional<Integer> round,
-			Optional<Boolean> correctPrediction, Optional<Boolean> finished, int limit, int offset) {
+	private List<FootballMatch> filterByTeams(List<FootballMatch> matches, String team1, String team2) {
 
-		// TODO:
-		return null;
+		List<FootballMatch> result;
+		result = filterByTeam(matches, team1);
+		result = filterByTeam(result, team2);
+		return result;
+	}
+
+	private List<FootballMatch> filterByTeam(List<FootballMatch> matches, String team) {
+
+		if (StringUtils.isBlank(team))
+			return matches;
+
+		List<FootballMatch> result = new ArrayList<>();
+
+		if (!StringUtils.isBlank(team)) {
+			result = matches.stream()
+					.filter(m -> m.getHomeTeam().equals(team) || m.getAwayTeam().equals(team))
+					.collect(Collectors.toList());
+		}
+
+		return result;
+	}
+
+	private List<FootballMatch> filterByYear(List<FootballMatch> filtered, Optional<Integer> year) {
+
+		if (!year.isPresent())
+			return filtered;
+
+		return filtered.stream()
+				.filter(m1 -> m1.getYear() == year.get())
+				.collect(Collectors.toList());
+	}
+
+	private List<FootballMatch> filterByRound(List<FootballMatch> filtered, Optional<Integer> round) {
+
+		if (!round.isPresent())
+			return filtered;
+
+		return filtered.stream()
+				.filter(m1 -> m1.getRound() == round.get())
+				.collect(Collectors.toList());
+	}
+
+	private List<FootballMatch> filterByPredictionType(List<FootballMatch> filtered, String predictionType) {
+
+		// If we get empty prediction type we will skip all the PredictionType.NOT_PREDICTED
+		List<PredictionType> predictionTypes = Arrays.asList(PredictionType.CORRECT, PredictionType.INCORRECT);
+
+		return filtered.stream()
+				.filter(m -> !StringUtils.isBlank(predictionType) ?
+						m.getPredictionType().equals(PredictionType.valueOf(predictionType)) :
+						predictionTypes.contains(m.getPredictionType()))
+				.collect(Collectors.toList());
+	}
+
+	private List<FootballMatch> filterByFinished(List<FootballMatch> filtered, Optional<Boolean> finished) {
+
+		if (!finished.isPresent())
+			return filtered;
+
+		return filtered.stream()
+				.filter(m1 -> m1.isFinished() == finished.get())
+				.collect(Collectors.toList());
 	}
 
 	public List<FootballMatch> updateMatches(List<FootballMatch> matches) {
@@ -92,8 +168,6 @@ public class FootballMatchService {
 					.setResult(match.getResult())
 					.build();
 
-			// Not so good performance
-			footballMatchRepository.delete(match);
 			footballMatchRepository.save(updated);
 			updatedMatches.add(updated);
 		}
