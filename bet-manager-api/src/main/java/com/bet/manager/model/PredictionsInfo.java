@@ -12,6 +12,8 @@ public class PredictionsInfo implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(PredictionsInfo.class);
 
 	private String correctness;
+	private int correct;
+	private int total;
 	private String info;
 
 	public PredictionsInfo(int correctOnes, int totalPredicted) {
@@ -23,11 +25,22 @@ public class PredictionsInfo implements Serializable {
 			logger.warn("There is no predicted matches in the db or no matches at all");
 		}
 
+		this.correct = correctOnes;
+		this.total = totalPredicted;
+
 		this.info = String.format("Correct predictions %s of %s", correctOnes, totalPredicted);
 	}
 
 	public String getInfo() {
 		return info;
+	}
+
+	public int getCorrect() {
+		return correct;
+	}
+
+	public int getTotal() {
+		return total;
 	}
 
 	public String getCorrectness() {

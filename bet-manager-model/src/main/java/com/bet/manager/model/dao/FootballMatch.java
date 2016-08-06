@@ -226,4 +226,14 @@ public class FootballMatch implements Serializable {
 		result = 31 * result + round;
 		return result;
 	}
+
+	@Override public String toString() {
+		return "FootballMatch [" +
+				"year=" + year +
+				", round=" + round +
+				", startDate=" + startDate +
+				", homeTeam='" + homeTeam + '\'' +
+				", awayTeam='" + awayTeam + '\'' +
+				" ]";
+	}
 }

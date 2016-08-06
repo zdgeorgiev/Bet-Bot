@@ -47,6 +47,7 @@ public class FootballMatchService {
 			}
 		}
 
+		log.info("Created {} of {} matches in the data base", successfullyCreated, matches.size());
 		return successfullyCreated;
 	}
 
@@ -73,7 +74,7 @@ public class FootballMatchService {
 		filtered = filterByFinished(filtered, finished);
 
 		return filtered.stream()
-				.sorted(comparing(FootballMatch::getYear).thenComparing(FootballMatch::getRound).reversed())
+				.sorted(comparing(FootballMatch::getYear).reversed().thenComparing(FootballMatch::getRound))
 				.skip(offset)
 				.limit(limit)
 				.collect(Collectors.toList());
@@ -157,14 +158,15 @@ public class FootballMatchService {
 			// Retrieve the match from the data base
 			FootballMatch retrievedMatch = retrieve(match);
 
-			// Don't perform update if the retrieved match have result already
-			if (retrievedMatch.isFinished()) {
+			// Don't perform update if the retrieved match is finished and have prediction
+			if (retrievedMatch.isFinished() && !retrievedMatch.getPredictionType().equals(PredictionType.NOT_PREDICTED)) {
 				log.warn("The match {} in the data base is considered already finished. No changes will apply",
 						retrievedMatch.getSummary());
 				continue;
 			}
 
 			FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
+					.setPrediction(match.getPrediction())
 					.setResult(match.getResult())
 					.build();
 
@@ -189,6 +191,7 @@ public class FootballMatchService {
 
 	public void deleteAll() {
 		footballMatchRepository.deleteAll();
+		log.info("All matches are successfully deleted");
 	}
 
 }

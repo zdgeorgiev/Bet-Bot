@@ -12,5 +12,5 @@ public interface IMatchParser {
 	 * @param content - html content containing the matches
 	 * @return the collection from all successfully parsed matches
 	 */
-	List<? extends FootballMatch> parse(String content);
+	List<FootballMatch> parse(String content);
 }

@@ -48,7 +48,7 @@ public class LiveScoreMatchParser implements IMatchParser {
 					matches.add(m);
 					totalMatches++;
 				} catch (Exception e) {
-					log.error("Failed to create match with div - {}",
+					log.error("Failed to create match from div - {}",
 							div.toString().replace(System.lineSeparator(), ""), e);
 				}
 			}
@@ -80,7 +80,7 @@ public class LiveScoreMatchParser implements IMatchParser {
 				.setResult(score)
 				.build();
 
-		log.info("Successfully parsed - '{}'", m.getSummary());
+		log.info("Successfully parsed - '{}'", m.toString());
 		return m;
 	}
 
@@ -94,7 +94,8 @@ public class LiveScoreMatchParser implements IMatchParser {
 
 	private String getTeam(Element div, boolean isHomeTeam) {
 		int index = isHomeTeam ? 0 : 1;
-		return div.select(TEAM_DIV_SELECTOR).get(index).text().trim();
+		String liveScoreTeam = div.select(TEAM_DIV_SELECTOR).get(index).text().trim();
+		return TeamsMapping.livescoreToBundesliga.get(liveScoreTeam);
 	}
 
 	private Date getStartDateAndTime(Element div) throws ParseException {

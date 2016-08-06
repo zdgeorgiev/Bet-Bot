@@ -11,6 +11,8 @@ import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import com.bet.manager.model.util.MatchMetaDataUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.Calendar;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataManager {
+
+	private static final Logger log = LoggerFactory.getLogger(DataManager.class);
 
 	private static final int MIN_ROUND = 2;
 	private static final int MAX_ROUND = 34;
@@ -99,7 +103,7 @@ public class DataManager {
 
 		MatchMetaData currentMatchMetaData = MatchMetaDataUtils.parse(currentMatchData.toString());
 
-		return new FootballMatchBuilder()
+		FootballMatch match = new FootballMatchBuilder()
 				.setHomeTeamName(currentMatchMetaData.getHomeTeam())
 				.setAwayTeamName(currentMatchMetaData.getAwayTeam())
 				.setYear(year)
@@ -107,6 +111,9 @@ public class DataManager {
 				.setMatchMetaData(currentMatchMetaData)
 				.setResult(currentMatchMetaData.getResult())
 				.build();
+
+		log.info("Successfully created metadata for match {}", match.getSummary());
+		return match;
 	}
 
 	private String getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {

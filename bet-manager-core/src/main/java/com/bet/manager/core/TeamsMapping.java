@@ -8,6 +8,7 @@ public class TeamsMapping {
 	public static Map<Integer, String> bundesligaIdToName;
 	public static Map<String, String> resultDBToBundesliga;
 	public static Map<String, String> bundesligaToResultDB;
+	public static Map<String, String> livescoreToBundesliga;
 
 	private TeamsMapping() {
 	}
@@ -16,6 +17,7 @@ public class TeamsMapping {
 		bundesligaIdToName = new HashMap<>();
 		resultDBToBundesliga = new HashMap<>();
 		bundesligaToResultDB = new HashMap<>();
+		livescoreToBundesliga = new HashMap<>();
 
 		bundesligaIdToName.put(18, "Borussia Dortmund");
 		bundesligaIdToName.put(10, "FC Bayern München");
@@ -43,6 +45,9 @@ public class TeamsMapping {
 		bundesligaIdToName.put(27, "Fortuna Düsseldorf");
 		bundesligaIdToName.put(2321, "SC Paderborn 07");
 		bundesligaIdToName.put(1649, "SpVgg Greuther Fürth");
+		bundesligaIdToName.put(34, "SV Darmstadt 98");
+		bundesligaIdToName.put(5100, "RB Leipzig");
+		bundesligaIdToName.put(4158, "Ingolstadt");
 
 		resultDBToBundesliga.put("Borussia Dortmund", "Borussia Dortmund");
 		resultDBToBundesliga.put("Bayern Munich", "FC Bayern München");
@@ -70,6 +75,9 @@ public class TeamsMapping {
 		resultDBToBundesliga.put("Fortuna Düsseldorf", "Fortuna Düsseldorf");
 		resultDBToBundesliga.put("Greuther Fürth", "SpVgg Greuther Fürth");
 		resultDBToBundesliga.put("Paderborn 07", "SC Paderborn 07");
+		resultDBToBundesliga.put("darmstadt-98", "SV Darmstadt 98");
+		bundesligaToResultDB.put("ingolstadt", "Ingolstadt");
+		//		bundesligaToResultDB.put("leipzig", "RB Leipzig");
 
 		bundesligaToResultDB.put("Borussia Dortmund", "borussia-dortmund");
 		bundesligaToResultDB.put("FC Bayern München", "bayern-munich");
@@ -97,5 +105,41 @@ public class TeamsMapping {
 		bundesligaToResultDB.put("Fortuna Düsseldorf", "fortuna-düsseldorf");
 		bundesligaToResultDB.put("SC Paderborn 07", "Paderborn 07");
 		bundesligaToResultDB.put("SpVgg Greuther Fürth", "Greuther Fürth");
+		bundesligaToResultDB.put("SV Darmstadt 98", "darmstadt-98");
+		bundesligaToResultDB.put("Ingolstadt", "ingolstadt");
+		//		bundesligaToResultDB.put("RB Leipzig", "leipzig");
+
+		livescoreToBundesliga.put("Borussia Dortmund", "Borussia Dortmund");
+		livescoreToBundesliga.put("Bayern Munich", "FC Bayern München");
+		livescoreToBundesliga.put("Borussia Moenchengladbach", "Borussia M'gladbach");
+		livescoreToBundesliga.put("Augsburg", "FC Augsburg");
+		livescoreToBundesliga.put("Darmstadt", "SV Darmstadt 98");
+		livescoreToBundesliga.put("Eintracht Frankfurt", "Eintracht Frankfurt");
+		livescoreToBundesliga.put("Freiburg", "SC Freiburg");
+		livescoreToBundesliga.put("Hamburger SV", "Hamburger SV");
+		livescoreToBundesliga.put("Hertha Berlin", "Hertha BSC");
+		livescoreToBundesliga.put("Hoffenheim", "1899 Hoffenheim");
+		livescoreToBundesliga.put("Mainz 05", "1.FSV Mainz 05");
+		livescoreToBundesliga.put("Schalke 04", "FC Schalke 04");
+		livescoreToBundesliga.put("Werder Bremen", "SV Werder Bremen");
+		livescoreToBundesliga.put("Wolfsburg", "VfL Wolfsburg");
+		livescoreToBundesliga.put("FC Cologne", "1.FC Köln");
+		livescoreToBundesliga.put("Ingolstadt", "Ingolstadt");
+
+		//		livescoreToBundesliga.put("RasenBallsport Leipzig", "RB Leipzig");
+
+		livescoreToBundesliga.put("FC Köln", "1.FC Köln");
+		livescoreToBundesliga.put("Bayer Leverkusen", "Bayer 04 Leverkusen");
+		livescoreToBundesliga.put("Hannover 96", "Hannover 96");
+		livescoreToBundesliga.put("VFB Stuttgart", "VfB Stuttgart");
+		livescoreToBundesliga.put("Nürnberg", "1.FC Nürnberg");
+		livescoreToBundesliga.put("St. Pauli", "FC St. Pauli");
+		livescoreToBundesliga.put("Eintracht Braunschweig", "Eintracht Braunschweig");
+		livescoreToBundesliga.put("VFL Bochum", "VfL Bochum");
+		livescoreToBundesliga.put("Kaiserslautern", "1.FC Kaiserslautern");
+		livescoreToBundesliga.put("Arminia Bielefeld", "Arminia Bielefeld");
+		livescoreToBundesliga.put("Fortuna Düsseldorf", "Fortuna Düsseldorf");
+		livescoreToBundesliga.put("Greuther Fürth", "SpVgg Greuther Fürth");
+		livescoreToBundesliga.put("Paderborn 07", "SC Paderborn 07");
 	}
 }

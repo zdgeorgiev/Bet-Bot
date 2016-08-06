@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Random;
 
@@ -18,6 +19,16 @@ public class WebCrawler {
 	private static final String USER_AGENT = "Mozilla/5.0";
 
 	private WebCrawler() {
+	}
+
+	/**
+	 * Crawl specifig page
+	 *
+	 * @param url url of the page
+	 * @return the content of a page
+	 */
+	public static String crawl(URL url) throws InterruptedException {
+		return crawl(url, Collections.emptyMap(), 3, 5);
 	}
 
 	/**
