@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.MalformedURLException;
+
 @RestController
 @RequestMapping(value = "/matches", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UpdateManagerController {
@@ -17,16 +19,23 @@ public class UpdateManagerController {
 	private UpdateManagerService updateManagerService;
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
-	@ResponseStatus(value = HttpStatus.ACCEPTED)
-	public void update() {
+	@ResponseStatus(value = HttpStatus.OK)
+	public void update() throws MalformedURLException, InterruptedException {
 
 		updateManagerService.fetch();
+	}
+
+	@RequestMapping(value = "/process", method = RequestMethod.POST)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void process() {
+
+		updateManagerService.process();
 	}
 
 	@RequestMapping(value = "/predict", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void predict() {
 
-		updateManagerService.predictAll();
+		updateManagerService.predict();
 	}
 }

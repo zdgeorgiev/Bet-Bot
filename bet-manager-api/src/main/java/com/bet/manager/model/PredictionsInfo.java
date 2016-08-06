@@ -22,7 +22,7 @@ public class PredictionsInfo implements Serializable {
 			this.correctness = String.format("%.2f%s", (correctOnes / (totalPredicted * 1.0) * 100), "%");
 		} else {
 			this.correctness = "0.00%";
-			logger.warn("There is no predicted matches in the db or no matches at all");
+			logger.warn("Predicted matches may not be finished yet or no predictions at all");
 		}
 
 		this.correct = correctOnes;

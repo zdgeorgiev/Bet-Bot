@@ -13,10 +13,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,91 +41,50 @@ public class UpdateManagerService {
 	@Autowired
 	private IMatchParser matchParser;
 
-	@Scheduled(initialDelay = 30 * 60000, fixedDelay = 30 * 60000)
-	public void fetch() {
+	@Scheduled(initialDelay = 5 * 1000, fixedDelay = 60 * 60 * 1000)
+	public void fetch() throws MalformedURLException, InterruptedException {
 
-		new Thread(() -> {
-			String content = null;
+		String content = WebCrawler.crawl(new URL(FETCH_BASE_URL));
 
-			try {
-				content = WebCrawler.crawl(new URL(FETCH_BASE_URL));
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+		List<FootballMatch> newMatches = fetchMatches(content).stream().filter(m -> !exist(m)).collect(Collectors.toList());
 
-			// Fetch all future matches
-			List<FootballMatch> matches = matchParser.parse(content);
-
-			// Create metadata for the fetched matches
-			createMetaDataForMatches(matches);
-
-			// Create predictions
-			createPredictions(matches.stream()
-					.filter(m -> m.getPredictionType().equals(PredictionType.NOT_PREDICTED))
-					.collect(Collectors.toList()));
-
-			updateDB(matches);
-		}).run();
+		footballMatchService.createMatches(newMatches);
 	}
 
-	private void createMetaDataForMatches(List<FootballMatch> matches) {
-
-		for (FootballMatch match : matches) {
-
-			if (exist(match) && retrieve(match).getMatchMetaData() != null)
-				continue;
-
-			try {
-
-				match = new FootballMatchBuilder(match)
-						.setMatchMetaData(dataManager.createFootballMatch(
-								match.getHomeTeam(), match.getAwayTeam(), 2011, 3).getMatchMetaData())
-						.build();
-
-			} catch (Exception e) {
-				log.error("Exception occur during creation of metadata for match {}", match.getSummary(), e);
-			}
-		}
+	private List<FootballMatch> fetchMatches(String content) {
+		return matchParser.parse(content);
 	}
 
-	public void predictAll() {
+	@Scheduled(initialDelay = 10 * 1000, fixedDelay = 60 * 60 * 1000)
+	public void process() {
+
+		footballMatchRepository.findAll().stream()
+				.filter(m -> exist(m) && retrieve(m).getMatchMetaData() == null)
+				.forEach(m -> {
+					try {
+						m = new FootballMatchBuilder(m).setMatchMetaData(
+								dataManager.createFootballMatch(
+										m.getHomeTeam(), m.getAwayTeam(), m.getYear(), m.getRound()).getMatchMetaData())
+								.build();
+					} catch (Exception e) {
+						log.error("Error occur during creation metadata for match {}", m.getSummary(), e);
+					}
+				});
+	}
+
+	@Scheduled(initialDelay = 15 * 1000, fixedDelay = 60 * 60 * 1000)
+	public void predict() {
 
 		List<FootballMatch> matchesWithoutPrediction = footballMatchRepository.findAll().stream()
 				.filter(m -> m.getPredictionType().equals(PredictionType.NOT_PREDICTED))
 				.collect(Collectors.toList());
 
-		if (CollectionUtils.isEmpty(matchesWithoutPrediction)) {
-			log.info("Not found matches without prediction.. breaking..");
-			return;
-		}
-
-		createPredictions(matchesWithoutPrediction);
-		footballMatchService.updateMatches(matchesWithoutPrediction);
-	}
-
-	private void createPredictions(List<FootballMatch> matchesWithoutPrediction) {
 		log.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
-		matchesWithoutPrediction.stream().forEach(m -> m = new FootballMatchBuilder(m).setPrediction(predictor.predict(m)).build());
+		matchesWithoutPrediction.stream()
+				.forEach(m -> m = new FootballMatchBuilder(m).setPrediction(predictor.predict(m)).build());
 		log.info("Prediction finished");
-	}
 
-	private void updateDB(List<FootballMatch> matches) {
-
-		List<FootballMatch> matchesToCreate = new ArrayList<>(matches.size());
-		List<FootballMatch> matchesToUpdate = new ArrayList<>(matches.size());
-
-		matches.stream().filter(m -> !exist(m)).collect(Collectors.toCollection(() -> matchesToCreate));
-		matches.stream().filter(this::exist).collect(Collectors.toCollection(() -> matchesToUpdate));
-
-		if (matchesToCreate.size() == 0 && matchesToUpdate.size() == 0) {
-			log.info("No data will be saved in the data base");
-			return;
-		}
-
-		log.info("Sending to data base..");
-		footballMatchService.createMatches(matchesToCreate);
-		footballMatchService.updateMatches(matchesToUpdate);
-		log.info("Done..");
+		footballMatchService.updateMatches(matchesWithoutPrediction);
 	}
 
 	private boolean exist(FootballMatch match) {

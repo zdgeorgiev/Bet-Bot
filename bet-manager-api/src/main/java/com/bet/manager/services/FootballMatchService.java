@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,11 @@ public class FootballMatchService {
 	private FootballMatchRepository footballMatchRepository;
 
 	public int createMatches(List<FootballMatch> matches) {
+
+		if (CollectionUtils.isEmpty(matches)) {
+			log.warn("List with matches to create is empty.. breaking..");
+			return 0;
+		}
 
 		int successfullyCreated = 0;
 
@@ -146,11 +152,17 @@ public class FootballMatchService {
 				.collect(Collectors.toList());
 	}
 
-	public List<FootballMatch> updateMatches(List<FootballMatch> matches) {
+	public int updateMatches(List<FootballMatch> matches) {
 
-		List<FootballMatch> updatedMatches = new ArrayList<>(matches.size());
+		if (CollectionUtils.isEmpty(matches)) {
+			log.warn("List with matches to update is empty.. breaking..");
+			return 0;
+		}
+
+		int successfullyUpdate = 0;
 
 		for (FootballMatch match : matches) {
+
 			if (!exist(match))
 				throw new FootballMatchNotFoundExceptions(
 						String.format("Football match %s doesnt exist in th e db", match.getSummary()));
@@ -171,10 +183,11 @@ public class FootballMatchService {
 					.build();
 
 			footballMatchRepository.save(updated);
-			updatedMatches.add(updated);
+			successfullyUpdate++;
 		}
 
-		return updatedMatches;
+		log.info("Successfully updated {} of {} matches", successfullyUpdate, matches.size());
+		return successfullyUpdate;
 	}
 
 	public int correctPredictedMatchesCount() {

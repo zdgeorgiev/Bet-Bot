@@ -106,25 +106,16 @@ public class MatchMetaData implements Serializable {
 
 		MatchMetaData that = (MatchMetaData) o;
 
-		if (!homeTeam.equals(that.homeTeam))
+		if (!homeTeamMetaData.equals(that.homeTeamMetaData))
 			return false;
-		if (!awayTeam.equals(that.awayTeam))
-			return false;
-		if (homeTeamMetaData != null ? !homeTeamMetaData.equals(that.homeTeamMetaData) : that.homeTeamMetaData != null)
-			return false;
-		if (awayTeamMetaData != null ? !awayTeamMetaData.equals(that.awayTeamMetaData) : that.awayTeamMetaData != null)
-			return false;
-		return result != null ? result.equals(that.result) : that.result == null;
+		return awayTeamMetaData.equals(that.awayTeamMetaData);
 
 	}
 
 	@Override public int hashCode() {
-		int result1 = homeTeam.hashCode();
-		result1 = 31 * result1 + awayTeam.hashCode();
-		result1 = 31 * result1 + (homeTeamMetaData != null ? homeTeamMetaData.hashCode() : 0);
-		result1 = 31 * result1 + (awayTeamMetaData != null ? awayTeamMetaData.hashCode() : 0);
-		result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
-		return result1;
+		int result = homeTeamMetaData.hashCode();
+		result = 31 * result + awayTeamMetaData.hashCode();
+		return result;
 	}
 
 	@Entity

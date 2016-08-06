@@ -40,8 +40,8 @@ public class FootballMatchRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public String updateMatches(@RequestBody List<FootballMatch> matches) throws JsonProcessingException {
 
-		List<FootballMatch> updatedMatches = footballMatchService.updateMatches(matches);
-		return String.format("Successfully updated %s out of %s total.", updatedMatches.size(), matches.size());
+		int successfullyUpdated = footballMatchService.updateMatches(matches);
+		return String.format("Successfully updated %s out of %s total.", successfullyUpdated, matches.size());
 	}
 
 	@ResponseBody
