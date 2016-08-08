@@ -105,7 +105,7 @@ public class WebCrawler {
 						"Content of the page '" + page.toString() + "' cannot be empty.");
 			}
 
-			log.info("Successfully crawled url - '{}'", page.toString());
+			log.debug("Successfully crawled url - '{}'", page.toString());
 			return content;
 
 		} catch (Exception e) {

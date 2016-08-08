@@ -15,14 +15,15 @@
   <context:property-placeholder location="classpath*:META-INF/*.properties"/>
 
   <task:annotation-driven scheduler="updateScheduler"/>
+  <!-- Thread should be only one to be possible to synchronize the task executed in the correct sequence -->
   <task:scheduler id="updateScheduler" pool-size="1"/>
 
   <bean id="dataManager" class="com.bet.manager.core.data.DataManager">
+	<!-- Only for testing there is false -->
 	<constructor-arg type="boolean" value="false"/>
   </bean>
 
   <bean id="predictor" class="com.bet.manager.core.ai.SimplePredictor"/>
-  <bean id="crawler" class="com.bet.manager.core.WebCrawler"/>
   <bean id="matchParser" class="com.bet.manager.core.LiveScoreMatchParser"/>
 
 </beans:beans>

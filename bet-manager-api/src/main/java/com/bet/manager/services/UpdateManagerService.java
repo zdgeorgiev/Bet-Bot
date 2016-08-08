@@ -1,5 +1,6 @@
 package com.bet.manager.services;
 
+import com.bet.manager.commons.util.PerformanceUtils;
 import com.bet.manager.core.IMatchParser;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.ai.IPredictor;
@@ -44,6 +45,7 @@ public class UpdateManagerService {
 	@Scheduled(initialDelay = 5 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void fetch() throws MalformedURLException, InterruptedException {
 
+		log.info("Starting to fetch matches from source [%s]", FETCH_BASE_URL);
 		String content = WebCrawler.crawl(new URL(FETCH_BASE_URL));
 
 		List<FootballMatch> newMatches = fetchMatches(content).stream().filter(m -> !exist(m)).collect(Collectors.toList());
@@ -58,6 +60,9 @@ public class UpdateManagerService {
 	@Scheduled(initialDelay = 10 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void process() {
 
+		long start = System.currentTimeMillis();
+		log.info("Starting to make meta data for the matches..");
+
 		footballMatchRepository.findAll().stream()
 				.filter(m -> exist(m) && retrieve(m).getMatchMetaData() == null)
 				.forEach(m -> {
@@ -67,17 +72,25 @@ public class UpdateManagerService {
 										m.getHomeTeam(), m.getAwayTeam(), m.getYear(), m.getRound()).getMatchMetaData())
 								.build();
 					} catch (Exception e) {
-						log.error("Error occur during creation metadata for match {}", m.getSummary(), e);
+						log.error("Error occur during creating metadata for match {}", m.getSummary(), e);
 					}
 				});
+
+		long end = System.currentTimeMillis();
+		log.info("Meta data creation finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 	}
 
 	@Scheduled(initialDelay = 15 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void predict() {
 
 		List<FootballMatch> matchesWithoutPrediction = footballMatchRepository.findAll().stream()
-				.filter(m -> m.getPredictionType().equals(PredictionType.NOT_PREDICTED))
+				.filter(m -> m.getPredictionType().equals(PredictionType.NOT_PREDICTED) && m.getMatchMetaData() != null)
 				.collect(Collectors.toList());
+
+		if (matchesWithoutPrediction.size() == 0) {
+			log.warn("Not found matches without prediction.. breaking..");
+			return;
+		}
 
 		log.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
 		matchesWithoutPrediction.stream()
