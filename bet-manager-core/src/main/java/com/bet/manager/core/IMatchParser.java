@@ -12,7 +12,7 @@ public interface IMatchParser {
 	 * Parse all matches from given content and store them in <class>List</class>
 	 *
 	 * @param content - html content containing the matches
-	 * @return the collection from all successfully parsed matches
+	 * @return the collection from all successfully parsed matches in categories of {@link MatchStatus}
 	 */
 	Map<MatchStatus, List<FootballMatch>> parse(String content);
 }
