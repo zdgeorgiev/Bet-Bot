@@ -42,6 +42,9 @@ public class FootballMatch implements Serializable {
 	@Column(name = "last_modified")
 	private Date lastModified;
 
+	@Column(name = "matchStatus")
+	private MatchStatus matchStatus;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private MatchMetaData matchMetaData;
 
@@ -56,10 +59,6 @@ public class FootballMatch implements Serializable {
 
 	@Column(name = "predictionType")
 	private PredictionType predictionType;
-
-	@JsonIgnore
-	@Column(name = "finished")
-	private boolean finished;
 
 	/**
 	 * score delimiter for the result example : 4-2
@@ -179,12 +178,12 @@ public class FootballMatch implements Serializable {
 		this.round = round;
 	}
 
-	public boolean isFinished() {
-		return finished;
+	public MatchStatus getMatchStatus() {
+		return matchStatus;
 	}
 
-	public void setFinished(boolean finished) {
-		this.finished = finished;
+	public void setMatchStatus(MatchStatus matchStatus) {
+		this.matchStatus = matchStatus;
 	}
 
 	@JsonIgnore

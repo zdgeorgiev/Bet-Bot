@@ -4,7 +4,7 @@
         <sports-title>Team-Statistics-Round</sports-title>
     </sports-metadata>
     <sports-event id="267">
-        <event-metadata id="E_160380" event-key="160380" event-status="post-event">
+        <event-metadata id="E_160380" event-key="160380" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -25,7 +25,7 @@
         </team>
     </sports-event>
     <sports-event id="43">
-        <event-metadata id="E_160383" event-key="160383" event-status="post-event">
+        <event-metadata id="E_160383" event-key="160383" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -46,7 +46,7 @@
         </team>
     </sports-event>
     <sports-event id="11">
-        <event-metadata id="E_160383" event-key="160383" event-status="post-event">
+        <event-metadata id="E_160383" event-key="160383" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -67,7 +67,7 @@
         </team>
     </sports-event>
     <sports-event id="34">
-        <event-metadata id="E_160377" event-key="160377" event-status="post-event">
+        <event-metadata id="E_160377" event-key="160377" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -88,7 +88,7 @@
         </team>
     </sports-event>
     <sports-event id="18">
-        <event-metadata id="E_160385" event-key="160385" event-status="post-event">
+        <event-metadata id="E_160385" event-key="160385" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -109,7 +109,7 @@
         </team>
     </sports-event>
     <sports-event id="12">
-        <event-metadata id="E_160380" event-key="160380" event-status="post-event">
+        <event-metadata id="E_160380" event-key="160380" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -130,7 +130,7 @@
         </team>
     </sports-event>
     <sports-event id="13">
-        <event-metadata id="E_160379" event-key="160379" event-status="post-event">
+        <event-metadata id="E_160379" event-key="160379" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -151,7 +151,7 @@
         </team>
     </sports-event>
     <sports-event id="44">
-        <event-metadata id="E_160382" event-key="160382" event-status="post-event">
+        <event-metadata id="E_160382" event-key="160382" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -172,7 +172,7 @@
         </team>
     </sports-event>
     <sports-event id="3084">
-        <event-metadata id="E_160384" event-key="160384" event-status="post-event">
+        <event-metadata id="E_160384" event-key="160384" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -193,7 +193,7 @@
         </team>
     </sports-event>
     <sports-event id="4158">
-        <event-metadata id="E_160385" event-key="160385" event-status="post-event">
+        <event-metadata id="E_160385" event-key="160385" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -214,7 +214,7 @@
         </team>
     </sports-event>
     <sports-event id="15">
-        <event-metadata id="E_160381" event-key="160381" event-status="post-event">
+        <event-metadata id="E_160381" event-key="160381" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -235,7 +235,7 @@
         </team>
     </sports-event>
     <sports-event id="16">
-        <event-metadata id="E_160382" event-key="160382" event-status="post-event">
+        <event-metadata id="E_160382" event-key="160382" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -256,7 +256,7 @@
         </team>
     </sports-event>
     <sports-event id="17">
-        <event-metadata id="E_160378" event-key="160378" event-status="post-event">
+        <event-metadata id="E_160378" event-key="160378" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -277,7 +277,7 @@
         </team>
     </sports-event>
     <sports-event id="36">
-        <event-metadata id="E_160378" event-key="160378" event-status="post-event">
+        <event-metadata id="E_160378" event-key="160378" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -298,7 +298,7 @@
         </team>
     </sports-event>
     <sports-event id="10">
-        <event-metadata id="E_160384" event-key="160384" event-status="post-event">
+        <event-metadata id="E_160384" event-key="160384" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -319,7 +319,7 @@
         </team>
     </sports-event>
     <sports-event id="24">
-        <event-metadata id="E_160377" event-key="160377" event-status="post-event">
+        <event-metadata id="E_160377" event-key="160377" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -340,7 +340,7 @@
         </team>
     </sports-event>
     <sports-event id="14">
-        <event-metadata id="E_160379" event-key="160379" event-status="post-event">
+        <event-metadata id="E_160379" event-key="160379" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>
@@ -361,7 +361,7 @@
         </team>
     </sports-event>
     <sports-event id="56">
-        <event-metadata id="E_160381" event-key="160381" event-status="post-event">
+        <event-metadata id="E_160381" event-key="160381" event-matchStatus="post-event">
             <sports-property formal-name="tracking-live-home" value="1"/>
             <sports-property formal-name="tracking-live-away" value="1"/>
             <sports-property formal-name="tracking-live-ball" value="1"/>

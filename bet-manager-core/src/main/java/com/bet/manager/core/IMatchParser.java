@@ -1,8 +1,10 @@
 package com.bet.manager.core;
 
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchStatus;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IMatchParser {
 
@@ -12,5 +14,5 @@ public interface IMatchParser {
 	 * @param content - html content containing the matches
 	 * @return the collection from all successfully parsed matches
 	 */
-	List<FootballMatch> parse(String content);
+	Map<MatchStatus, List<FootballMatch>> parse(String content);
 }

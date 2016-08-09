@@ -3,6 +3,7 @@ package com.bet.manager.model.util;
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.exceptions.EmptyTeamNameException;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
@@ -86,11 +87,6 @@ public class FootballMatchBuilder {
 		return this;
 	}
 
-	private void setFinished() {
-		if (!match.getWinner().equals(ResultMessages.UNKNOWN_WINNER))
-			match.setFinished(true);
-	}
-
 	private String getWinnerFromResult(FootballMatch match, String result) {
 		String winner;
 		String[] tokens = result.split(match.getResultDelimiter());
@@ -143,6 +139,11 @@ public class FootballMatchBuilder {
 		return this;
 	}
 
+	public FootballMatchBuilder setStatus(MatchStatus status) {
+		this.match.setMatchStatus(status);
+		return this;
+	}
+
 	private void setLastModified() {
 		match.setLastModified(new Date());
 	}
@@ -161,7 +162,7 @@ public class FootballMatchBuilder {
 		setRound(match.getRound());
 		setYear(match.getYear());
 		setWinner();
-		setFinished();
+		setStatus(match.getMatchStatus());
 		setPrediction(match.getPrediction());
 		setCorrectlyPredicted();
 		setLastModified();

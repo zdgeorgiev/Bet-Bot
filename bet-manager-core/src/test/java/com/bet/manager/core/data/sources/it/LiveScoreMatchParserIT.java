@@ -2,8 +2,10 @@ package com.bet.manager.core.data.sources.it;
 
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.util.ClasspathUtils;
-import com.bet.manager.core.LiveScoreMatchParser;
+import com.bet.manager.core.FootballDataMatchParser;
+import com.bet.manager.core.IMatchParser;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -13,118 +15,132 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class LiveScoreMatchParserIT {
 
-	private static LiveScoreMatchParser parser;
+	private static IMatchParser parser;
 
 	@BeforeClass
 	public static void init() {
-		parser = new LiveScoreMatchParser();
+		parser = new FootballDataMatchParser();
+	}
+
+	@Test
+	public void skipAllMatchesForMatchDayOne() {
+
+		// 18 matches with 9 for round 1
+		String content = ClasspathUtils.getContentUTF8("footballData-matches-for-different-matchday.txt");
+
+		Map<MatchStatus, List<FootballMatch>> actual = parser.parse(content);
+
+		Assert.assertNotNull(actual);
+		Assert.assertEquals(9, actual.get(MatchStatus.NOT_STARTED).size());
 	}
 
 	@Test
 	public void testWithFullContentWithMatchesWithoutResults() {
-		String content =
-				ClasspathUtils.getContentUTF8("live-score-full-content-with-no-results.txt");
 
-		List<FootballMatch> actual = parser.parse(content);
+		String content = ClasspathUtils.getContentUTF8("footballData-matches-samples.txt");
+
+		Map<MatchStatus, List<FootballMatch>> actual = parser.parse(content);
 
 		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
-				//12 January
-				add(createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45"));
-				add(createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45"));
-				add(createMatch("Newcastle United", "Manchester United", "January 12 2016 21:45"));
-
-				//13 January
-				add(createMatch("Chelsea", "West Bromwich Albion", "January 13 2016 21:45"));
-				add(createMatch("Manchester City", "Everton", "January 13 2016 21:45"));
-				add(createMatch("Southampton", "Watford", "January 13 2016 21:45"));
-				add(createMatch("Stoke City", "Norwich City", "January 13 2016 21:45"));
-				add(createMatch("Swansea City", "Sunderland", "January 13 2016 21:45"));
-				add(createMatch("Liverpool", "Arsenal", "January 13 2016 22:00"));
-				add(createMatch("Tottenham Hotspur", "Leicester City", "January 13 2016 22:00"));
+				add(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"));
+				add(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"));
+				add(createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z"));
+				add(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"));
 			}
 		};
 
-		Assert.assertEquals(actual.size(), expected.size());
-		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertEquals(actual.get(i), expected.get(i));
-		}
+		assertEqualNotFinishedMatches(actual, expected);
 	}
 
 	@Test
 	public void testWithFullContentWithMatchesWithResults() {
-		String content =
-				ClasspathUtils.getContentUTF8("live-score-matches-with-results.txt");
 
-		List<FootballMatch> actual = parser.parse(content);
+		String content = ClasspathUtils.getContentUTF8("footballData-matches-with-results.txt");
 
-		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
-			{
-				FootballMatch m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
-				new FootballMatchBuilder(m).setResult("3-3");
-				add(m);
-
-				FootballMatch m2 = createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45");
-				new FootballMatchBuilder(m2).setResult("2-1");
-				add(m2);
-			}
-		};
-
-		Assert.assertEquals(actual.size(), expected.size());
-		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertEquals(actual.get(i), expected.get(i));
-		}
-	}
-
-	@Test
-	public void testWithFullContentWithMatchesWithResultsAndSomeWithout() {
-		String content =
-				ClasspathUtils.getContentUTF8("live-score-matches-with-results-and-without.txt");
-
-		List<FootballMatch> actual = parser.parse(content);
+		Map<MatchStatus, List<FootballMatch>> actual = parser.parse(content);
 
 		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
-				FootballMatch m = createMatch("AFC Bournemouth", "West Ham United", "January 12 2016 21:45");
-				new FootballMatchBuilder(m).setResult("3-3");
-				add(m);
-
-				add(createMatch("Aston Villa", "Crystal Palace", "January 12 2016 21:45"));
-
-				FootballMatch m2 = createMatch("Levski", "CSKA", "January 12 2016 21:45");
-				new FootballMatchBuilder(m2).setResult("2-3");
-				add(m2);
+				add(new FootballMatchBuilder(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"))
+						.setResult("2-2").build());
+				add(new FootballMatchBuilder(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"))
+						.setResult("3-5").build());
+				add(new FootballMatchBuilder(createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z"))
+						.setResult("1-1").build());
+				add(new FootballMatchBuilder(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"))
+						.setResult("2-1").build());
 			}
 		};
 
-		Assert.assertEquals(actual.size(), expected.size());
-		for (int i = 0; i < actual.size(); i++) {
-			Assert.assertEquals(actual.get(i), expected.get(i));
-		}
+		assertEqualFinishedMatches(actual, expected);
 	}
 
 	@Test
-	public void testWithFullContentButOnlyOneValidMatchOutOf5() {
-		String content = ClasspathUtils
-				.getContentUTF8("live-score-full-content-with-only-one-valid-match.txt");
+	public void testCorrectDeterminateMatchesByTheirMatchStatus() {
 
-		List<FootballMatch> actual = parser.parse(content);
+		String content = ClasspathUtils.getContentUTF8("footballData-matches-with-different-statuses.txt");
 
-		FootballMatch expected = createMatch("Manchester City", "Everton", "January 13 2016 21:45");
+		Map<MatchStatus, List<FootballMatch>> actual = parser.parse(content);
 
-		Assert.assertEquals(actual.size(), 1);
-		Assert.assertEquals(actual.get(0), expected);
+		List<FootballMatch> finished = new ArrayList<FootballMatch>() {
+			{
+				add(new FootballMatchBuilder(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"))
+						.setResult("2-2").build());
+				add(new FootballMatchBuilder(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"))
+						.setResult("3-5").build());
+			}
+		};
+
+		List<FootballMatch> notFinished = new ArrayList<FootballMatch>() {
+			{
+				add(createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z"));
+			}
+		};
+
+		List<FootballMatch> started = new ArrayList<FootballMatch>() {
+			{
+
+				add(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"));
+			}
+		};
+
+		assertEqualFinishedMatches(actual, finished);
+		assertEqualNotFinishedMatches(actual, notFinished);
+		assertEqualStartedMatches(actual, started);
 	}
 
-	private FootballMatch createMatch(String homeTeam, String awayTeam, String date) {
+	private void assertEqualStartedMatches(Map<MatchStatus, List<FootballMatch>> actual, List<FootballMatch> expected) {
+		Assert.assertEquals(actual.get(MatchStatus.STARTED).size(), expected.size());
+		for (int i = 0; i < actual.get(MatchStatus.STARTED).size(); i++) {
+			Assert.assertEquals(actual.get(MatchStatus.STARTED).get(i), expected.get(i));
+		}
+	}
+
+	private void assertEqualNotFinishedMatches(Map<MatchStatus, List<FootballMatch>> actual, List<FootballMatch> expected) {
+		Assert.assertEquals(actual.get(MatchStatus.NOT_STARTED).size(), expected.size());
+		for (int i = 0; i < actual.get(MatchStatus.NOT_STARTED).size(); i++) {
+			Assert.assertEquals(actual.get(MatchStatus.NOT_STARTED).get(i), expected.get(i));
+		}
+	}
+
+	private void assertEqualFinishedMatches(Map<MatchStatus, List<FootballMatch>> actual, List<FootballMatch> expected) {
+		Assert.assertEquals(actual.get(MatchStatus.FINISHED).size(), expected.size());
+		for (int i = 0; i < actual.get(MatchStatus.FINISHED).size(); i++) {
+			Assert.assertEquals(actual.get(MatchStatus.FINISHED).get(i), expected.get(i));
+		}
+	}
+
+	private FootballMatch createMatch(Integer year, Integer round, String homeTeam, String awayTeam, String date) {
 
 		Date startDate;
 
 		try {
-			startDate = DateFormats.LIVE_SCORE_MATCH_DATE_FORMATTED.parse(date);
+			startDate = DateFormats.FOOTBALL_DATA_DATE_FORMAT.parse(date);
 		} catch (ParseException e) {
 			throw new IllegalArgumentException("Start date cannot be parsed.");
 		}
@@ -133,6 +149,8 @@ public class LiveScoreMatchParserIT {
 				.setHomeTeamName(homeTeam)
 				.setAwayTeamName(awayTeam)
 				.setStartDate(startDate)
+				.setRound(round)
+				.setYear(year)
 				.build();
 	}
 }

@@ -1,0 +1,109 @@
+{
+  "count": 4,
+  "fixtures": [
+    {
+      "_links": {
+        "self": {
+          "href": "http://api.football-data.org/v1/fixtures/152241"
+        },
+        "competition": {
+          "href": "http://api.football-data.org/v1/competitions/430"
+        },
+        "homeTeam": {
+          "href": "http://api.football-data.org/v1/teams/3"
+        },
+        "awayTeam": {
+          "href": "http://api.football-data.org/v1/teams/7"
+        }
+      },
+      "date": "2016-09-10T13:30:00Z",
+      "status": "FINISHED",
+      "matchday": 2,
+      "homeTeamName": "Bayer Leverkusen",
+      "awayTeamName": "Hamburger SV",
+      "result": {
+        "goalsHomeTeam": 2,
+        "goalsAwayTeam": 2
+      },
+      "odds": null
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "http://api.football-data.org/v1/fixtures/152242"
+        },
+        "competition": {
+          "href": "http://api.football-data.org/v1/competitions/430"
+        },
+        "homeTeam": {
+          "href": "http://api.football-data.org/v1/teams/55"
+        },
+        "awayTeam": {
+          "href": "http://api.football-data.org/v1/teams/19"
+        }
+      },
+      "date": "2016-09-10T13:30:00Z",
+      "status": "FINISHED",
+      "matchday": 2,
+      "homeTeamName": "SV Darmstadt 98",
+      "awayTeamName": "Eintracht Frankfurt",
+      "result": {
+        "goalsHomeTeam": 3,
+        "goalsAwayTeam": 5
+      },
+      "odds": null
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "http://api.football-data.org/v1/fixtures/152243"
+        },
+        "competition": {
+          "href": "http://api.football-data.org/v1/competitions/430"
+        },
+        "homeTeam": {
+          "href": "http://api.football-data.org/v1/teams/17"
+        },
+        "awayTeam": {
+          "href": "http://api.football-data.org/v1/teams/18"
+        }
+      },
+      "date": "2016-09-10T13:30:00Z",
+      "status": "SCHEDULED",
+      "matchday": 2,
+      "homeTeamName": "SC Freiburg",
+      "awayTeamName": "Bor. Mönchengladbach",
+      "result": {
+        "goalsHomeTeam": null,
+        "goalsAwayTeam": null
+      },
+      "odds": null
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "http://api.football-data.org/v1/fixtures/152245"
+        },
+        "competition": {
+          "href": "http://api.football-data.org/v1/competitions/430"
+        },
+        "homeTeam": {
+          "href": "http://api.football-data.org/v1/teams/15"
+        },
+        "awayTeam": {
+          "href": "http://api.football-data.org/v1/teams/2"
+        }
+      },
+      "date": "2016-09-10T13:30:00Z",
+      "status": "IN_PLAY",
+      "matchday": 2,
+      "homeTeamName": "1. FSV Mainz 05",
+      "awayTeamName": "TSG 1899 Hoffenheim",
+      "result": {
+        "goalsHomeTeam": null,
+        "goalsAwayTeam": null
+      },
+      "odds": null
+    }
+  ]
+}

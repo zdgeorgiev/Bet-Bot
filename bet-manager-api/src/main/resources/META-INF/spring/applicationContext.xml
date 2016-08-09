@@ -24,6 +24,6 @@
   </bean>
 
   <bean id="predictor" class="com.bet.manager.core.ai.SimplePredictor"/>
-  <bean id="matchParser" class="com.bet.manager.core.LiveScoreMatchParser"/>
+  <bean id="matchParser" class="com.bet.manager.core.FootballDataMatchParser"/>
 
 </beans:beans>

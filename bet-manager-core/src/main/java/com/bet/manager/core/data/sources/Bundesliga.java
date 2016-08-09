@@ -133,13 +133,12 @@ public class Bundesliga {
 
 	private static boolean checkForValidMappingBundesligaIdToTeam(int id, String bundesLigaTeam) {
 		log.debug("Searching for valid mapping from BundesligaID => BundesligaName");
-		if (TeamsMapping.bundesligaIdToName.get(id).equals(bundesLigaTeam)) {
+
+		if (TeamsMapping.bundesligaIdToName.get(id).equals(bundesLigaTeam))
 			return true;
-		}
 
 		throw new IllegalTeamMappingException("Team with id " + id + " is mapped to " + bundesLigaTeam +
-				", but in the xml team node id " + id + " is mapped to " + TeamsMapping.bundesligaIdToName
-				.get(id));
+				", but in the xml team node id " + id + " is mapped to " + TeamsMapping.bundesligaIdToName.get(id));
 	}
 
 	/**

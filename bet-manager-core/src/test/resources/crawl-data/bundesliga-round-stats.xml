@@ -4,7 +4,7 @@
     <sports-title>Team-Statistics-Round</sports-title>
   </sports-metadata>
   <sports-event id="267">
-    <event-metadata id="E_160368" event-key="160368" event-status="post-event">...</event-metadata>
+    <event-metadata id="E_160368" event-key="160368" event-matchStatus="post-event">...</event-metadata>
     <team>
       <team-metadata team-key="267">...</team-metadata>
       <team-stats date-coverage-type="event">

@@ -3,6 +3,7 @@ package com.bet.manager.services;
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
 import com.bet.manager.exceptions.FootballMatchNotFoundExceptions;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
@@ -32,7 +33,7 @@ public class FootballMatchService {
 	public int createMatches(List<FootballMatch> matches) {
 
 		if (CollectionUtils.isEmpty(matches)) {
-			log.warn("List with matches to create is empty.. breaking..");
+			log.warn("List with matches to create is empty");
 			return 0;
 		}
 
@@ -55,6 +56,10 @@ public class FootballMatchService {
 
 		log.info("Created {} of {} matches in the data base", successfullyCreated, matches.size());
 		return successfullyCreated;
+	}
+
+	public List<FootballMatch> findAll() {
+		return footballMatchRepository.findAll();
 	}
 
 	private boolean exist(FootballMatch match) {
@@ -148,14 +153,14 @@ public class FootballMatchService {
 			return filtered;
 
 		return filtered.stream()
-				.filter(m1 -> m1.isFinished() == finished.get())
+				.filter(m1 -> m1.getMatchStatus().equals(MatchStatus.FINISHED))
 				.collect(Collectors.toList());
 	}
 
 	public int updateMatches(List<FootballMatch> matches) {
 
 		if (CollectionUtils.isEmpty(matches)) {
-			log.warn("List with matches to update is empty.. breaking..");
+			log.warn("List with matches to update is empty");
 			return 0;
 		}
 
@@ -171,13 +176,15 @@ public class FootballMatchService {
 			FootballMatch retrievedMatch = retrieve(match);
 
 			// Don't perform update if the retrieved match is finished and have prediction
-			if (retrievedMatch.isFinished() && !retrievedMatch.getPredictionType().equals(PredictionType.NOT_PREDICTED)) {
+			if (retrievedMatch.getMatchStatus().equals(MatchStatus.FINISHED) &&
+					!retrievedMatch.getPredictionType().equals(PredictionType.NOT_PREDICTED)) {
 				log.warn("The match {} in the data base is considered already finished. No changes will apply",
 						retrievedMatch.getSummary());
 				continue;
 			}
 
 			FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
+					.setMatchMetaData(match.getMatchMetaData())
 					.setPrediction(match.getPrediction())
 					.setResult(match.getResult())
 					.build();
@@ -191,11 +198,11 @@ public class FootballMatchService {
 	}
 
 	public int correctPredictedMatchesCount() {
-		return footballMatchRepository.findByPredictionTypeAndFinishedTrue(PredictionType.CORRECT).size();
+		return footballMatchRepository.findByPredictionTypeAndMatchStatus(PredictionType.CORRECT, MatchStatus.FINISHED).size();
 	}
 
 	public int incorrectPredictedMatchesCount() {
-		return footballMatchRepository.findByPredictionTypeAndFinishedTrue(PredictionType.INCORRECT).size();
+		return footballMatchRepository.findByPredictionTypeAndMatchStatus(PredictionType.INCORRECT, MatchStatus.FINISHED).size();
 	}
 
 	public int matchesCount() {
