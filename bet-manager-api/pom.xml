@@ -63,6 +63,29 @@
 	  <version>${jackson.version}</version>
 	</dependency>
 
+	<!--Metrics-->
+	<dependency>
+	  <groupId>com.codahale.metrics</groupId>
+	  <artifactId>metrics-core</artifactId>
+	  <version>${metrics.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>healthcheck-commons</groupId>
+	  <artifactId>healthcheck-commons</artifactId>
+	  <version>${healthcheck-commons.version}</version>
+	</dependency>
+
+	<dependency>
+	  <groupId>xml-apis</groupId>
+	  <artifactId>xml-apis</artifactId>
+	  <version>${xml-apis.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>javax.servlet</groupId>
+	  <artifactId>servlet-api</artifactId>
+	  <version>${servlet-api.version}</version>
+	</dependency>
+
 	<!-- Logback dependencies -->
 	<dependency>
 	  <groupId>ch.qos.logback</groupId>
@@ -89,10 +112,10 @@
 	<dependency>
 	  <groupId>org.hibernate</groupId>
 	  <artifactId>hibernate-entitymanager</artifactId>
-	  <version>4.3.6.Final</version>
+	  <version>${hibernate.version}</version>
 	</dependency>
 
-	<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+	<!--// TODO : Temporary!!-->
 	<dependency>
 	  <groupId>com.h2database</groupId>
 	  <artifactId>h2</artifactId>

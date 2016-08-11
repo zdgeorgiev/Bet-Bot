@@ -49,10 +49,6 @@ public class FootballMatchBuilder {
 
 	public FootballMatchBuilder setStartDate(Date startDate) {
 
-		if (startDate == null) {
-			logger.warn("Star date for the match " + match.getSummary() + " is not present. Check if everything is fine.");
-		}
-
 		match.setStartDate(startDate);
 		return this;
 	}

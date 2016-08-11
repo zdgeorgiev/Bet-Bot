@@ -11,6 +11,7 @@
   <context:annotation-config/>
 
   <context:component-scan base-package="com.bet.manager.services"/>
+  <context:component-scan base-package="com.bet.manager.metrics"/>
 
   <context:property-placeholder location="classpath*:META-INF/*.properties"/>
 
@@ -25,5 +26,8 @@
 
   <bean id="predictor" class="com.bet.manager.core.ai.SimplePredictor"/>
   <bean id="matchParser" class="com.bet.manager.core.FootballDataMatchParser"/>
+
+  <bean id="metricRegistry" class="com.codahale.metrics.MetricRegistry"/>
+  <bean id="healthCheckRegistry" class="com.codahale.metrics.health.HealthCheckRegistry"/>
 
 </beans:beans>

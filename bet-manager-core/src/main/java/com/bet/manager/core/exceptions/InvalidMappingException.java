@@ -1,4 +1,4 @@
-package com.bet.manager.core.data.sources.exceptions;
+package com.bet.manager.core.exceptions;
 
 public class InvalidMappingException extends RuntimeException {
 

@@ -1,7 +1,7 @@
 package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
-import com.bet.manager.core.data.sources.exceptions.MatchResultNotFound;
+import com.bet.manager.core.exceptions.MatchResultNotFound;
 import com.bet.manager.model.dao.MatchMetaData;
 import org.junit.Assert;
 import org.junit.Test;

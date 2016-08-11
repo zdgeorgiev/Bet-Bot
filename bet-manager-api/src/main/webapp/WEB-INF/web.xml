@@ -58,6 +58,30 @@
 	<load-on-startup>1</load-on-startup>
   </servlet>
 
+  <servlet>
+	<servlet-name>admin</servlet-name>
+	<servlet-class>com.codahale.metrics.servlets.AdminServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+	<servlet-name>admin</servlet-name>
+	<url-pattern>/admin/*</url-pattern>
+  </servlet-mapping>
+
+  <listener>
+	<listener-class>com.bet.manager.metrics.HealthChecksSpringContextListener</listener-class>
+  </listener>
+
+  <servlet>
+	<servlet-name>metrics</servlet-name>
+	<servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+	<servlet-name>metrics</servlet-name>
+	<url-pattern>/metrics</url-pattern>
+  </servlet-mapping>
+
   <session-config>
 	<session-timeout>10</session-timeout>
   </session-config>

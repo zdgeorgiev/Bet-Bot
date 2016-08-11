@@ -5,6 +5,7 @@ import com.bet.manager.core.IMatchParser;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.ai.IPredictor;
 import com.bet.manager.core.data.DataManager;
+import com.bet.manager.metrics.MetricsCounterContainer;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.dao.PredictionType;
@@ -43,6 +44,9 @@ public class UpdateManagerService {
 	@Autowired
 	private IMatchParser matchParser;
 
+	@Autowired
+	private MetricsCounterContainer metricsCounterContainer;
+
 	@Scheduled(initialDelay = 5 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void fetch() throws MalformedURLException, InterruptedException {
 
@@ -51,17 +55,19 @@ public class UpdateManagerService {
 
 		Map<MatchStatus, List<FootballMatch>> fixtures = matchParser.parse(content);
 
-		footballMatchService.createMatches(fixtures.get(MatchStatus.NOT_STARTED));
+		footballMatchService.createMatches(fixtures.get(MatchStatus.NOT_STARTED).stream()
+				.filter(m -> !footballMatchService.exist(m))
+				.collect(Collectors.toList()));
 		footballMatchService.updateMatches(fixtures.get(MatchStatus.FINISHED));
 	}
 
 	@Scheduled(initialDelay = 10 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void process() {
 
+		List<FootballMatch> predictedMatches = new ArrayList<>();
+
 		long start = System.currentTimeMillis();
 		log.info("Starting to create meta data for the matches");
-
-		List<FootballMatch> predictedMatches = new ArrayList<>();
 
 		footballMatchService.findAll().stream()
 				.filter(m -> m.getMatchMetaData() == null)
@@ -72,18 +78,21 @@ public class UpdateManagerService {
 										dataManager.createFootballMatch(m.getHomeTeam(), m.getAwayTeam(), m.getYear(),
 												m.getRound()).getMatchMetaData())
 										.build());
+						metricsCounterContainer.incMetadataSuccesses();
 					} catch (Exception e) {
+						metricsCounterContainer.incMetadataFailures();
 						log.error("Error occur during creating metadata for match {}", m.getSummary(), e);
 					}
 				});
+
+		long end = System.currentTimeMillis();
+		log.info("Meta data creation finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 
 		if (predictedMatches.size() == 0) {
 			log.info("Not found matches without metadata");
 			return;
 		}
 
-		long end = System.currentTimeMillis();
-		log.info("Meta data creation finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 		footballMatchService.updateMatches(predictedMatches);
 	}
 
@@ -94,14 +103,24 @@ public class UpdateManagerService {
 				.filter(m -> m.getPredictionType().equals(PredictionType.NOT_PREDICTED) && m.getMatchMetaData() != null)
 				.collect(Collectors.toList());
 
+		log.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
+
 		if (matchesWithoutPrediction.size() == 0) {
-			log.warn("Matches with meta data and without prediction are not found");
+			log.info("Matches with meta data and without prediction are not found");
 			return;
 		}
 
-		log.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
 		matchesWithoutPrediction.stream()
-				.forEach(m -> m = new FootballMatchBuilder(m).setPrediction(predictor.predict(m)).build());
+				.forEach(m -> {
+					try {
+						m = new FootballMatchBuilder(m).setPrediction(predictor.predict(m)).build();
+						metricsCounterContainer.incPredictionsSuccesses();
+					} catch (Exception e) {
+						metricsCounterContainer.incPredictionsFailures();
+						log.error("Error occur during creation prediction for match {}", m.getSummary(), e);
+					}
+				});
+
 		log.info("Prediction finished");
 
 		footballMatchService.updateMatches(matchesWithoutPrediction);

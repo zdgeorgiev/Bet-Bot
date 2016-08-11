@@ -4,10 +4,9 @@ import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.Espnfc;
 import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
-import com.bet.manager.core.data.sources.exceptions.InvalidMatchRoundIndex;
-import com.bet.manager.core.data.sources.exceptions.InvalidMatchYearIndex;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.exceptions.MetaDataCreationException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import com.bet.manager.model.util.MatchMetaDataUtils;
 import org.apache.commons.lang.StringUtils;
@@ -88,7 +87,8 @@ public class DataManager {
 	 * @param round      match round should be at least 2nd one, because information for round 0 is invalid
 	 * @return Football match for the given year, round
 	 */
-	public FootballMatch createFootballMatch(String firstTeam, String secondTeam, int year, int round) throws Exception {
+	public FootballMatch createFootballMatch(String firstTeam, String secondTeam, int year, int round)
+			throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
 		String firstTeamMetaData = getMetaDataForTeam(firstTeam, year, round);
@@ -116,16 +116,18 @@ public class DataManager {
 		return match;
 	}
 
-	private String getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
+	private String getMetaDataForTeam(String bundesLigaTeam, int year, int round)
+			throws Exception {
 
 		if (StringUtils.isEmpty(bundesLigaTeam))
-			throw new IllegalArgumentException("Team argument cannot be empty");
+			throw new MetaDataCreationException("Team argument cannot be empty");
 
 		if (round < MIN_ROUND || round > MAX_ROUND)
-			throw new InvalidMatchRoundIndex("FootballMatch round " + round + " cannot be less than 2nd one and greater than 34");
+			throw new MetaDataCreationException(
+					"FootballMatch round " + round + " cannot be less than 2nd one and greater than 34");
 
 		if (year < MIN_YEAR || year > MAX_YEAR)
-			throw new InvalidMatchYearIndex("Year '" + year + "' .. should be in range [" + MIN_YEAR + ".." + MAX_YEAR + "]");
+			throw new MetaDataCreationException("Year '" + year + "' .. should be in range [" + MIN_YEAR + ".." + MAX_YEAR + "]");
 
 		StringBuilder currentTeamData = new StringBuilder();
 

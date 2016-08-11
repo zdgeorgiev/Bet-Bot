@@ -2,18 +2,25 @@ package com.bet.manager.services;
 
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
 import com.bet.manager.exceptions.FootballMatchNotFoundExceptions;
+import com.bet.manager.metrics.MetricsCounterContainer;
+import com.bet.manager.metrics.SuccessRatioGauge;
+import com.bet.manager.metrics.SuccessRatioHealthCheck;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.RatioGauge;
+import com.codahale.metrics.health.HealthCheckRegistry;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
 
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,14 +37,31 @@ public class FootballMatchService {
 	@Autowired
 	private FootballMatchRepository footballMatchRepository;
 
-	public int createMatches(List<FootballMatch> matches) {
+	@Inject
+	private MetricsCounterContainer metricsCounterHolder;
 
-		if (CollectionUtils.isEmpty(matches)) {
-			log.warn("List with matches to create is empty");
-			return 0;
-		}
+	@Inject
+	private MetricRegistry metricRegistry;
 
-		int successfullyCreated = 0;
+	@Inject
+	private HealthCheckRegistry healthCheckRegistry;
+
+	@PostConstruct
+	public void init() {
+
+		RatioGauge successMetadataRatio = metricRegistry.register(
+				MetricRegistry.name(FootballMatchService.class, "success-meta-data-ratio"),
+				new SuccessRatioGauge(metricsCounterHolder.getMetadataSuccess(), metricsCounterHolder.getMetadataFailures()));
+
+		RatioGauge successPredictionsRatio = metricRegistry.register(
+				MetricRegistry.name(FootballMatchService.class, "success-predictions-ratio"),
+				new SuccessRatioGauge(metricsCounterHolder.getPredictionsSuccess(), metricsCounterHolder.getPredictionsFailures()));
+
+		healthCheckRegistry.register("success-metadata-ratio-check", new SuccessRatioHealthCheck(successMetadataRatio));
+		healthCheckRegistry.register("success-predictions-ratio-check", new SuccessRatioHealthCheck(successPredictionsRatio));
+	}
+
+	public void createMatches(List<FootballMatch> matches) {
 
 		for (FootballMatch match : matches) {
 			try {
@@ -47,22 +71,19 @@ public class FootballMatchService {
 							String.format("Football Match '%s' already exist", match.getSummary()));
 
 				footballMatchRepository.save(match);
-				successfullyCreated++;
+				log.info("Successfully created MATCH {}", match.getSummary());
 
 			} catch (Exception e) {
 				log.warn("Failed to save football match in the database", e);
 			}
 		}
-
-		log.info("Created {} of {} matches in the data base", successfullyCreated, matches.size());
-		return successfullyCreated;
 	}
 
 	public List<FootballMatch> findAll() {
 		return footballMatchRepository.findAll();
 	}
 
-	private boolean exist(FootballMatch match) {
+	public boolean exist(FootballMatch match) {
 		return retrieve(match) != null;
 	}
 
@@ -157,44 +178,38 @@ public class FootballMatchService {
 				.collect(Collectors.toList());
 	}
 
-	public int updateMatches(List<FootballMatch> matches) {
-
-		if (CollectionUtils.isEmpty(matches)) {
-			log.warn("List with matches to update is empty");
-			return 0;
-		}
-
-		int successfullyUpdate = 0;
+	public void updateMatches(List<FootballMatch> matches) {
 
 		for (FootballMatch match : matches) {
 
-			if (!exist(match))
-				throw new FootballMatchNotFoundExceptions(
-						String.format("Football match %s doesnt exist in th e db", match.getSummary()));
+			try {
+				if (!exist(match))
+					throw new FootballMatchNotFoundExceptions(
+							String.format("Football match %s doesnt exist in th e db", match.getSummary()));
 
-			// Retrieve the match from the data base
-			FootballMatch retrievedMatch = retrieve(match);
+				// Retrieve the match from the data base
+				FootballMatch retrievedMatch = retrieve(match);
 
-			// Don't perform update if the retrieved match is finished and have prediction
-			if (retrievedMatch.getMatchStatus().equals(MatchStatus.FINISHED) &&
-					!retrievedMatch.getPredictionType().equals(PredictionType.NOT_PREDICTED)) {
-				log.warn("The match {} in the data base is considered already finished. No changes will apply",
-						retrievedMatch.getSummary());
-				continue;
+				// Don't perform update if the retrieved match is finished and have prediction
+				if (retrievedMatch.getMatchStatus().equals(MatchStatus.FINISHED) &&
+						!retrievedMatch.getPredictionType().equals(PredictionType.NOT_PREDICTED)) {
+					log.warn("The match {} in the data base is considered already finished. No changes will apply",
+							retrievedMatch.getSummary());
+					continue;
+				}
+
+				FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
+						.setMatchMetaData(match.getMatchMetaData())
+						.setPrediction(match.getPrediction())
+						.setResult(match.getResult())
+						.build();
+
+				footballMatchRepository.save(updated);
+
+			} catch (Exception e) {
+				log.error("Failed to update match {}", match.getSummary(), e);
 			}
-
-			FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
-					.setMatchMetaData(match.getMatchMetaData())
-					.setPrediction(match.getPrediction())
-					.setResult(match.getResult())
-					.build();
-
-			footballMatchRepository.save(updated);
-			successfullyUpdate++;
 		}
-
-		log.info("Successfully updated {} of {} matches", successfullyUpdate, matches.size());
-		return successfullyUpdate;
 	}
 
 	public int correctPredictedMatchesCount() {

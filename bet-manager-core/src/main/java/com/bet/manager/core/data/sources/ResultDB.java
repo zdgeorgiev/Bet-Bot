@@ -3,8 +3,8 @@ package com.bet.manager.core.data.sources;
 import com.bet.manager.commons.util.URLUtils;
 import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
-import com.bet.manager.core.data.sources.exceptions.InvalidMappingException;
-import com.bet.manager.core.data.sources.exceptions.MatchResultNotFound;
+import com.bet.manager.core.exceptions.InvalidMappingException;
+import com.bet.manager.core.exceptions.MatchResultNotFound;
 import com.bet.manager.model.dao.MatchMetaData;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
@@ -185,7 +185,7 @@ public class ResultDB implements ISecondarySource {
 
 		try {
 			result = parseMatchResult(round, allMatchesHTML);
-		} catch (MatchResultNotFound e) {
+		} catch (Exception e) {
 			log.error("Result for team {} in round {} year {} is not found."
 					+ " Maybe the match is not started or over yet.", bundesLigaTeam, round, year);
 		}

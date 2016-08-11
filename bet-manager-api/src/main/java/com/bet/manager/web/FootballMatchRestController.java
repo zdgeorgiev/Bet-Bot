@@ -29,19 +29,17 @@ public class FootballMatchRestController {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public String createMatches(@RequestBody List<FootballMatch> matches) {
+	public void createMatches(@RequestBody List<FootballMatch> matches) {
 
-		int createdCount = footballMatchService.createMatches(matches);
-		return String.format("Successfully created %s out of %s matches", createdCount, matches.size());
+		footballMatchService.createMatches(matches);
 	}
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	public String updateMatches(@RequestBody List<FootballMatch> matches) throws JsonProcessingException {
+	public void updateMatches(@RequestBody List<FootballMatch> matches) throws JsonProcessingException {
 
-		int successfullyUpdated = footballMatchService.updateMatches(matches);
-		return String.format("Successfully updated %s out of %s total.", successfullyUpdated, matches.size());
+		footballMatchService.updateMatches(matches);
 	}
 
 	@ResponseBody
