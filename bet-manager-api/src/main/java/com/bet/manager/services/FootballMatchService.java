@@ -50,6 +50,10 @@ public class FootballMatchService {
 	@PostConstruct
 	public void init() {
 
+		RatioGauge successMatchesRatio = metricRegistry.register(
+				MetricRegistry.name(FootballMatchService.class, "success-matches-ratio"),
+				new SuccessRatioGauge(metricsCounterHolder.getMatchesSuccess(), metricsCounterHolder.getMatchesFailures()));
+
 		RatioGauge successMetadataRatio = metricRegistry.register(
 				MetricRegistry.name(FootballMatchService.class, "success-meta-data-ratio"),
 				new SuccessRatioGauge(metricsCounterHolder.getMetadataSuccess(), metricsCounterHolder.getMetadataFailures()));
@@ -58,6 +62,7 @@ public class FootballMatchService {
 				MetricRegistry.name(FootballMatchService.class, "success-predictions-ratio"),
 				new SuccessRatioGauge(metricsCounterHolder.getPredictionsSuccess(), metricsCounterHolder.getPredictionsFailures()));
 
+		healthCheckRegistry.register("success-matches-ratio-check", new SuccessRatioHealthCheck(successMatchesRatio));
 		healthCheckRegistry.register("success-metadata-ratio-check", new SuccessRatioHealthCheck(successMetadataRatio));
 		healthCheckRegistry.register("success-predictions-ratio-check", new SuccessRatioHealthCheck(successPredictionsRatio));
 	}
