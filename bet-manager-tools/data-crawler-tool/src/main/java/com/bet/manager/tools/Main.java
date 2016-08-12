@@ -6,6 +6,7 @@ import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.io.FileUtils;
@@ -151,6 +152,7 @@ public class Main {
 					teamBlackList.add(secondTeam);
 
 					FootballMatch currentMatch = dm.createFootballMatch(firstTeam, secondTeam, year, round);
+					currentMatch.setMatchStatus(MatchStatus.FINISHED);
 
 					log.info("({}/{}) Match '{}'-'{}' was successfully created", currentData.size() + 1,
 							currentRoundTeams.getLength() / 2, currentMatch.getHomeTeam(), currentMatch.getAwayTeam());

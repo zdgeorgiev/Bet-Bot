@@ -14,6 +14,9 @@ public class MetricsCounterContainer {
 	@Inject
 	private MetricRegistry metricRegistry;
 
+	private Counter matchesSuccess;
+	private Counter matchesFailures;
+
 	private Counter metadataSuccess;
 	private Counter metadataFailures;
 
@@ -23,11 +26,22 @@ public class MetricsCounterContainer {
 	@PostConstruct
 	public void init() {
 
+		matchesSuccess = metricRegistry.counter(MetricRegistry.name(FootballMatchService.class, "matches-successes"));
+		matchesFailures = metricRegistry.counter(MetricRegistry.name(FootballMatchService.class, "matches-failures"));
+
 		metadataSuccess = metricRegistry.counter(MetricRegistry.name(FootballMatchService.class, "meta-data-successes"));
 		metadataFailures = metricRegistry.counter(MetricRegistry.name(FootballMatchService.class, "meta-data-failures"));
 
 		predictionsSuccess = metricRegistry.counter(MetricRegistry.name(FootballMatchService.class, "predictions-successes"));
 		predictionsFailures = metricRegistry.counter(MetricRegistry.name(FootballMatchService.class, "predictions-failures"));
+	}
+
+	public Counter getMatchesSuccess() {
+		return matchesSuccess;
+	}
+
+	public Counter getMatchesFailures() {
+		return matchesFailures;
 	}
 
 	public Counter getMetadataSuccess() {
@@ -44,6 +58,14 @@ public class MetricsCounterContainer {
 
 	public Counter getPredictionsFailures() {
 		return predictionsFailures;
+	}
+
+	public void incMatchesSuccesses() {
+		matchesSuccess.inc();
+	}
+
+	public void incMatchesFailures() {
+		matchesFailures.inc();
 	}
 
 	public void incMetadataSuccesses() {

@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,9 +28,11 @@ public class UpdateManagerService {
 
 	private static final Logger log = LoggerFactory.getLogger(UpdateManagerService.class);
 
-	//	private static final String FETCH_BASE_URL = "http://api.football-data.org/v1/fixtures?league=BL1";
 	private static final String FETCH_BASE_URL =
-			"http://api.football-data.org/v1/fixtures?league=BL1&timeFrameStart=2016-08-25&timeFrameEnd=2016-09-10";
+			"http://api.football-data.org/v1/fixtures?league=BL1&timeFrameStart=%s&timeFrameEnd=%s";
+
+	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	private static final Calendar CALENDAR = Calendar.getInstance();
 
 	@Autowired
 	private FootballMatchService footballMatchService;
@@ -50,15 +52,29 @@ public class UpdateManagerService {
 	@Scheduled(initialDelay = 5 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void fetch() throws MalformedURLException, InterruptedException {
 
-		log.info("Starting to fetch matches from source [{}]", FETCH_BASE_URL);
-		String content = WebCrawler.crawl(new URL(FETCH_BASE_URL));
+		String startDate = getDateAfterDays(-3);
+		String endDate = getDateAfterDays(14);
+
+		String matchesURL = String.format(FETCH_BASE_URL, startDate, endDate);
+
+		log.info("Starting to fetch matches from source [{}]", matchesURL);
+		String content = WebCrawler.crawl(new URL(matchesURL));
 
 		Map<MatchStatus, List<FootballMatch>> fixtures = matchParser.parse(content);
 
 		footballMatchService.createMatches(fixtures.get(MatchStatus.NOT_STARTED).stream()
 				.filter(m -> !footballMatchService.exist(m))
 				.collect(Collectors.toList()));
+
+		footballMatchService.updateMatches(fixtures.get(MatchStatus.STARTED));
 		footballMatchService.updateMatches(fixtures.get(MatchStatus.FINISHED));
+	}
+
+	private String getDateAfterDays(int days) {
+
+		CALENDAR.setTime(new Date());
+		CALENDAR.add(Calendar.DATE, days);
+		return DATE_FORMAT.format(CALENDAR.getTime());
 	}
 
 	@Scheduled(initialDelay = 10 * 1000, fixedDelay = 60 * 60 * 1000)

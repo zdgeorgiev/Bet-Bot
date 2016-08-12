@@ -1,5 +1,6 @@
 package com.bet.manager.services;
 
+import com.bet.manager.commons.util.LookUpEnumUtils;
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
 import com.bet.manager.exceptions.FootballMatchNotFoundExceptions;
 import com.bet.manager.metrics.MetricsCounterContainer;
@@ -71,9 +72,11 @@ public class FootballMatchService {
 							String.format("Football Match '%s' already exist", match.getSummary()));
 
 				footballMatchRepository.save(match);
+				metricsCounterHolder.incMatchesSuccesses();
 				log.info("Successfully created MATCH {}", match.getSummary());
 
 			} catch (Exception e) {
+				metricsCounterHolder.incMatchesFailures();
 				log.warn("Failed to save football match in the database", e);
 			}
 		}
@@ -94,7 +97,7 @@ public class FootballMatchService {
 	}
 
 	public List<FootballMatch> retrieveMatches(String team1, String team2, Optional<Integer> year, Optional<Integer> round,
-			String predictionType, Optional<Boolean> finished, int limit, int offset) {
+			String predictionType, String matchStatus, int limit, int offset) {
 
 		List<FootballMatch> filtered = footballMatchRepository.findAll();
 
@@ -103,7 +106,7 @@ public class FootballMatchService {
 		filtered = filterByYear(filtered, year);
 		filtered = filterByRound(filtered, round);
 		filtered = filterByPredictionType(filtered, predictionType);
-		filtered = filterByFinished(filtered, finished);
+		filtered = filterByMatchStatus(filtered, matchStatus);
 
 		return filtered.stream()
 				.sorted(comparing(FootballMatch::getYear).reversed().thenComparing(FootballMatch::getRound))
@@ -163,18 +166,18 @@ public class FootballMatchService {
 
 		return filtered.stream()
 				.filter(m -> !StringUtils.isBlank(predictionType) ?
-						m.getPredictionType().equals(PredictionType.valueOf(predictionType)) :
+						m.getPredictionType().equals(LookUpEnumUtils.lookup(PredictionType.class, predictionType)) :
 						predictionTypes.contains(m.getPredictionType()))
 				.collect(Collectors.toList());
 	}
 
-	private List<FootballMatch> filterByFinished(List<FootballMatch> filtered, Optional<Boolean> finished) {
+	private List<FootballMatch> filterByMatchStatus(List<FootballMatch> filtered, String matchStatus) {
 
-		if (!finished.isPresent())
+		if (StringUtils.isBlank(matchStatus))
 			return filtered;
 
 		return filtered.stream()
-				.filter(m1 -> m1.getMatchStatus().equals(MatchStatus.FINISHED))
+				.filter(m1 -> m1.getMatchStatus().equals(LookUpEnumUtils.lookup(MatchStatus.class, matchStatus)))
 				.collect(Collectors.toList());
 	}
 

@@ -51,11 +51,11 @@ public class FootballMatchRestController {
 			@RequestParam(name = "year", required = false) Optional<Integer> year,
 			@RequestParam(name = "round", required = false) Optional<Integer> round,
 			@RequestParam(name = "predictionType", required = false) String predictionType,
-			@RequestParam(name = "finished", required = false) Optional<Boolean> finished,
+			@RequestParam(name = "matchStatus", required = false) String matchStatus,
 			@RequestParam(name = "limit", defaultValue = "10", required = false) int limit,
 			@RequestParam(name = "offset", defaultValue = "0", required = false) int offset) {
 
-		return footballMatchService.retrieveMatches(team1, team2, year, round, predictionType, finished, limit, offset);
+		return footballMatchService.retrieveMatches(team1, team2, year, round, predictionType, matchStatus, limit, offset);
 	}
 
 	@ResponseBody
