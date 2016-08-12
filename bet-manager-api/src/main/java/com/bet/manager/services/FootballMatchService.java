@@ -18,7 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
-@Repository
+@Service
 public class FootballMatchService {
 
 	private static Logger log = LoggerFactory.getLogger(FootballMatchService.class);
