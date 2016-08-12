@@ -9,18 +9,17 @@ public class DateFormats {
 	private DateFormats() {
 	}
 
-	public final static DateFormat LIVE_SCORE_MATCH_DATE_FORMATTED = new SimpleDateFormat("MMMMM d yyyy HH:mm");
-	public final static DateFormat LIVE_SCORE_MATCH_START_DATE_AND_TIME = new SimpleDateFormat("yyyyMMddHHmmss");
-	public static final DateFormat FOOTBALL_DATA_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
+	public final static DateFormat MATCH_DATE_AND_TIME_FORMATTED = new SimpleDateFormat("MMMMM d yyyy HH:mm");
+	public final static DateFormat CONCATED_DATE_AND_TIME = new SimpleDateFormat("yyyyMMddHHmmss");
+	public static final DateFormat FOOTBALL_DATA_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	static {
-		LIVE_SCORE_MATCH_DATE_FORMATTED.setTimeZone(TimeZone.getTimeZone("EET"));
-		LIVE_SCORE_MATCH_START_DATE_AND_TIME.setTimeZone(TimeZone.getTimeZone("EET"));
-		//FOOTBALL_DATA_DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("EET"));
+		MATCH_DATE_AND_TIME_FORMATTED.setTimeZone(TimeZone.getTimeZone("UTC"));
+		CONCATED_DATE_AND_TIME.setTimeZone(TimeZone.getTimeZone("UTC"));
+		FOOTBALL_DATA_DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-		LIVE_SCORE_MATCH_DATE_FORMATTED.setLenient(false);
-		LIVE_SCORE_MATCH_START_DATE_AND_TIME.setLenient(false);
-		//FOOTBALL_DATA_DATE_FORMAT.setLenient(false);
+		MATCH_DATE_AND_TIME_FORMATTED.setLenient(false);
+		CONCATED_DATE_AND_TIME.setLenient(false);
 	}
 
 }
