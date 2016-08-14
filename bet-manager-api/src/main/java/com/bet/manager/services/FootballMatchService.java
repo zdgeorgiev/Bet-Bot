@@ -1,5 +1,6 @@
 package com.bet.manager.services;
 
+import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.commons.util.LookUpEnumUtils;
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
 import com.bet.manager.exceptions.FootballMatchNotFoundExceptions;
@@ -7,6 +8,7 @@ import com.bet.manager.metrics.MetricsCounterContainer;
 import com.bet.manager.metrics.SuccessRatioGauge;
 import com.bet.manager.metrics.SuccessRatioHealthCheck;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
@@ -193,7 +195,7 @@ public class FootballMatchService {
 			try {
 				if (!exist(match))
 					throw new FootballMatchNotFoundExceptions(
-							String.format("Football match %s doesnt exist in th e db", match.getSummary()));
+							String.format("Cannot update football match %s. Doesnt exist in the data base", match.getSummary()));
 
 				// Retrieve the match from the data base
 				FootballMatch retrievedMatch = retrieve(match);
@@ -207,17 +209,46 @@ public class FootballMatchService {
 				}
 
 				FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
-						.setMatchMetaData(match.getMatchMetaData())
-						.setPrediction(match.getPrediction())
-						.setResult(match.getResult())
+						.setStatus(updatedStatus(retrievedMatch.getMatchStatus(), match.getMatchStatus()))
+						.setMatchMetaData(updatedMetadata(retrievedMatch.getMatchMetaData(), match.getMatchMetaData()))
+						.setPrediction(updatedPrediction(retrievedMatch.getPrediction(), match.getPrediction()))
+						.setResult(updatedResult(retrievedMatch.getResult(), match.getResult()))
 						.build();
 
 				footballMatchRepository.save(updated);
+				log.info("--MATCH {} updated.", updated.getSummary());
 
 			} catch (Exception e) {
 				log.error("Failed to update match {}", match.getSummary(), e);
 			}
 		}
+	}
+
+	private MatchStatus updatedStatus(MatchStatus m1, MatchStatus m2) {
+
+		if (m2 == null)
+			return m1;
+
+		if (!m2.equals(MatchStatus.NOT_STARTED))
+			return m2;
+
+		return m1.equals(MatchStatus.NOT_STARTED) ? m2 : m1;
+	}
+
+	private MatchMetaData updatedMetadata(MatchMetaData m1, MatchMetaData m2) {
+		return m1 == null ? m2 : m1;
+	}
+
+	private String updatedPrediction(String p1, String p2) {
+		return StringUtils.isBlank(p1) ? p2 : p1;
+	}
+
+	private String updatedResult(String r1, String r2) {
+
+		if (StringUtils.isBlank(r2))
+			return r1;
+
+		return StringUtils.isBlank(r1) || r1.equals(ResultMessages.UNKNOWN_RESULT) ? r2 : r1;
 	}
 
 	public int correctPredictedMatchesCount() {

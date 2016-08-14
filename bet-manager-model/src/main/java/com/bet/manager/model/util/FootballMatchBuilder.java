@@ -73,10 +73,11 @@ public class FootballMatchBuilder {
 
 		String winner;
 
-		if (match.getResult().equals(ResultMessages.UNKNOWN_RESULT)) {
+		if (match.getResult().equals(ResultMessages.UNKNOWN_RESULT) || !match.getMatchStatus().equals(MatchStatus.FINISHED)) {
 			winner = ResultMessages.UNKNOWN_WINNER;
 		} else {
 			winner = getWinnerFromResult(match, match.getResult());
+			setStatus(MatchStatus.FINISHED);
 		}
 
 		match.setWinner(winner);

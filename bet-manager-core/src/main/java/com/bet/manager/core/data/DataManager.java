@@ -75,7 +75,7 @@ public class DataManager {
 	}
 
 	/**
-	 * Method creates {@link FootballMatch} for given two teams, year and round. When will use this method
+	 * Method creates {@link FootballMatch} with its meta data for given two teams, year and round. When will use this method
 	 * to get information about future match just give the current year and current round of the league.
 	 * FootballMatch which is created also hold its {@link MatchMetaData} information. NOTE that this method
 	 * is using internal crawling so its required network connection, also NOTE that its possible to pass teams
@@ -85,7 +85,7 @@ public class DataManager {
 	 * @param secondTeam secondTeam as Bundesliga name ( NOTE : second team will be correctly parsed as home or away depends on the match)
 	 * @param year       match year
 	 * @param round      match round should be at least 2nd one, because information for round 0 is invalid
-	 * @return Football match for the given year, round
+	 * @return Football match with its meta data for the given year, round
 	 */
 	public FootballMatch createFootballMatch(String firstTeam, String secondTeam, int year, int round)
 			throws Exception {
@@ -120,7 +120,7 @@ public class DataManager {
 			throws Exception {
 
 		if (StringUtils.isEmpty(bundesLigaTeam))
-			throw new MetaDataCreationException("Team argument cannot be empty");
+			throw new MetaDataCreationException("Team name cannot be empty");
 
 		if (round < MIN_ROUND || round > MAX_ROUND)
 			throw new MetaDataCreationException(
