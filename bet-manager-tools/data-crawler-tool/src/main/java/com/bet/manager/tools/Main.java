@@ -106,7 +106,7 @@ public class Main {
 		List<FootballMatch> allData = new ArrayList<>();
 
 		// We skip the first round because for the current match we only looking for the previous one data
-		for (int round = 0; round <= ROUNDS; round++) {
+		for (int round = 2; round <= ROUNDS; round++) {
 
 			log.info("Start collecting data for year {} round {}", year, round);
 
