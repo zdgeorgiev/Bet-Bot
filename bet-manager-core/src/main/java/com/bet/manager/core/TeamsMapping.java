@@ -75,8 +75,8 @@ public class TeamsMapping {
 		resultDBToBundesliga.put("Fortuna Düsseldorf", "Fortuna Düsseldorf");
 		resultDBToBundesliga.put("Greuther Fürth", "SpVgg Greuther Fürth");
 		resultDBToBundesliga.put("Paderborn 07", "SC Paderborn 07");
-		resultDBToBundesliga.put("darmstadt-98", "SV Darmstadt 98");
-		bundesligaToResultDB.put("ingolstadt", "Ingolstadt");
+		resultDBToBundesliga.put("Darmstadt 98", "SV Darmstadt 98");
+		resultDBToBundesliga.put("Ingolstadt", "FC Ingolstadt 04");
 		//		bundesligaToResultDB.put("leipzig", "RB Leipzig");
 
 		bundesligaToResultDB.put("Borussia Dortmund", "borussia-dortmund");
@@ -105,8 +105,8 @@ public class TeamsMapping {
 		bundesligaToResultDB.put("Fortuna Düsseldorf", "fortuna-düsseldorf");
 		bundesligaToResultDB.put("SC Paderborn 07", "Paderborn 07");
 		bundesligaToResultDB.put("SpVgg Greuther Fürth", "Greuther Fürth");
-		bundesligaToResultDB.put("SV Darmstadt 98", "darmstadt-98");
-		bundesligaToResultDB.put("Ingolstadt", "ingolstadt");
+		bundesligaToResultDB.put("SV Darmstadt 98", "Darmstadt 98");
+		bundesligaToResultDB.put("FC Ingolstadt 04", "Ingolstadt");
 		//		bundesligaToResultDB.put("RB Leipzig", "leipzig");
 
 		footballDataToBundesliga.put("Borussia Dortmund", "Borussia Dortmund");
@@ -129,7 +129,7 @@ public class TeamsMapping {
 		footballDataToBundesliga.put("Hannover 96", "Hannover 96");
 		footballDataToBundesliga.put("VfB Stuttgart", "VfB Stuttgart");
 		footballDataToBundesliga.put("Red Bull Leipzig", "RB Leipzig");
-		footballDataToBundesliga.put("FC Ingolstadt 04", "ingolstadt");
+		footballDataToBundesliga.put("FC Ingolstadt 04", "FC Ingolstadt 04");
 
 		footballDataToBundesliga.put("FC Köln", "1.FC Köln");
 		footballDataToBundesliga.put("Nürnberg", "1.FC Nürnberg");

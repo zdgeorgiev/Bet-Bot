@@ -55,6 +55,7 @@ public class UpdateManagerService {
 		String startDate = getDateAfterDays(-3);
 		String endDate = getDateAfterDays(14);
 
+		//		String matchesURL = "http://api.football-data.org/v1/fixtures?league=BL1&timeFrameStart=2016-08-25&timeFrameEnd=2016-09-10";
 		String matchesURL = String.format(FETCH_BASE_URL, startDate, endDate);
 
 		log.info("Starting to fetch matches from source [{}]", matchesURL);

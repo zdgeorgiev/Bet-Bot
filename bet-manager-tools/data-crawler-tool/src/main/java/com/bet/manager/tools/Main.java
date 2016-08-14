@@ -138,15 +138,21 @@ public class Main {
 			throw new IllegalStateException(String.format("Failed to create match table for %s year %s round", year, round));
 		}
 
+		String firstTeam = null;
+		String secondTeam = null;
+		int matchIndex = 0;
+
 		for (int i = 0; i < currentRoundTeams.getLength(); i++) {
 
 			try {
 				Node currentTeam = currentRoundTeams.item(i);
 
-				String firstTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
-				String secondTeam = secondarySource.getTeamOpponent(firstTeam, year, round, crawledPages);
+				firstTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
+				secondTeam = secondarySource.getTeamOpponent(firstTeam, year, round, crawledPages);
 
 				if (!teamBlackList.contains(firstTeam) && !teamBlackList.contains(secondTeam)) {
+
+					matchIndex++;
 
 					teamBlackList.add(firstTeam);
 					teamBlackList.add(secondTeam);
@@ -154,13 +160,14 @@ public class Main {
 					FootballMatch currentMatch = dm.createFootballMatch(firstTeam, secondTeam, year, round);
 					currentMatch.setMatchStatus(MatchStatus.FINISHED);
 
-					log.info("({}/{}) Match '{}'-'{}' was successfully created", currentData.size() + 1,
+					log.info("({}/{}) Match '{}'-'{}' was successfully created", matchIndex,
 							currentRoundTeams.getLength() / 2, currentMatch.getHomeTeam(), currentMatch.getAwayTeam());
 
 					currentData.add(currentMatch);
 				}
 			} catch (Exception e) {
-				log.error("Failed to create matches for year {} round {}.", year, round, e);
+				log.error("Failed to create match {} [{}] - [{}] for year {} round {}.",
+						matchIndex, firstTeam, secondTeam, year, round, e);
 			}
 		}
 

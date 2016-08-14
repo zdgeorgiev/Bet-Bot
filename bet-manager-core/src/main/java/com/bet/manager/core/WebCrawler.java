@@ -22,13 +22,13 @@ public class WebCrawler {
 	}
 
 	/**
-	 * Crawl specifig page
+	 * Crawl specific page with ISO8859_9 Encoding by default!!
 	 *
 	 * @param url url of the page
 	 * @return the content of a page
 	 */
 	public static String crawl(URL url) throws InterruptedException {
-		return crawl(url, Collections.emptyMap(), 3, 5);
+		return crawl(url, Collections.emptyMap());
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class WebCrawler {
 	 * @return the content of a page
 	 */
 	public static String crawl(URL url, Map<URL, String> crawledPages) throws InterruptedException {
-		return crawl(url, crawledPages, 3, 5);
+		return crawl(url, crawledPages, "ISO8859_9", 3, 5);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class WebCrawler {
 	 * @param maxSecondsSleep maximum sleep time between each request
 	 * @return the content of a page
 	 */
-	public static String crawl(URL url, Map<URL, String> crawledPages, int minSecondsSleep, int maxSecondsSleep)
+	public static String crawl(URL url, Map<URL, String> crawledPages, String encoding, int minSecondsSleep, int maxSecondsSleep)
 			throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
 			log.debug("Returning cached copy of '{}'", url);
@@ -63,7 +63,7 @@ public class WebCrawler {
 		Thread.sleep(
 				new Random().nextInt((maxSecondsSleep - minSecondsSleep) * 1000) + minSecondsSleep * 1000);
 
-		String contentOfPage = getContent(url);
+		String contentOfPage = getContent(url, encoding);
 
 		try {
 			crawledPages.put(url, contentOfPage);
@@ -75,7 +75,7 @@ public class WebCrawler {
 		return contentOfPage;
 	}
 
-	private static String getContent(URL page) {
+	private static String getContent(URL page, String encoding) {
 
 		String content;
 
@@ -87,7 +87,7 @@ public class WebCrawler {
 			log.debug("Sending 'GET' request to URL : {}", page);
 
 			try (BufferedReader in = new BufferedReader(
-					new InputStreamReader(con.getInputStream(), "UTF-8"))) {
+					new InputStreamReader(con.getInputStream(), encoding))) {
 				String inputLine;
 				StringBuilder response = new StringBuilder();
 
