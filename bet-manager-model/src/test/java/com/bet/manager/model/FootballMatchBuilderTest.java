@@ -3,6 +3,7 @@ package com.bet.manager.model;
 import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import junit.framework.Assert;
@@ -29,6 +30,7 @@ public class FootballMatchBuilderTest {
 		FootballMatch match = builder
 				.setStartDate(DateFormats.CONCATED_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("2-1")
+				.setStatus(MatchStatus.FINISHED)
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());
@@ -44,6 +46,7 @@ public class FootballMatchBuilderTest {
 		FootballMatch match = builder
 				.setStartDate(DateFormats.CONCATED_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("2-2")
+				.setStatus(MatchStatus.FINISHED)
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());

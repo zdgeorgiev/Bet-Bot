@@ -73,7 +73,7 @@ public class FootballMatchBuilder {
 
 		String winner;
 
-		if (match.getResult().equals(ResultMessages.UNKNOWN_RESULT) || !match.getMatchStatus().equals(MatchStatus.FINISHED)) {
+		if (!match.getMatchStatus().equals(MatchStatus.FINISHED)) {
 			winner = ResultMessages.UNKNOWN_WINNER;
 		} else {
 			winner = getWinnerFromResult(match, match.getResult());
@@ -137,7 +137,10 @@ public class FootballMatchBuilder {
 	}
 
 	public FootballMatchBuilder setStatus(MatchStatus status) {
-		this.match.setMatchStatus(status);
+		if (status == null)
+			this.match.setMatchStatus(MatchStatus.NOT_STARTED);
+		else
+			this.match.setMatchStatus(status);
 		return this;
 	}
 
@@ -154,12 +157,12 @@ public class FootballMatchBuilder {
 					"FootballMatch home team " + match.getHomeTeam() + " cannot be the same as the away team.");
 		}
 
+		setStatus(match.getMatchStatus());
 		setStartDate(match.getStartDate());
 		setResult(match.getResult());
 		setRound(match.getRound());
 		setYear(match.getYear());
 		setWinner();
-		setStatus(match.getMatchStatus());
 		setPrediction(match.getPrediction());
 		setCorrectlyPredicted();
 		setLastModified();

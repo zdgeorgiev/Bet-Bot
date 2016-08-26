@@ -100,8 +100,8 @@
       "homeTeamName": "1. FSV Mainz 05",
       "awayTeamName": "TSG 1899 Hoffenheim",
       "result": {
-        "goalsHomeTeam": null,
-        "goalsAwayTeam": null
+        "goalsHomeTeam": 1,
+        "goalsAwayTeam": 0
       },
       "odds": null
     }

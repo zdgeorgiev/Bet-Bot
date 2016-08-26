@@ -51,8 +51,10 @@ public class FootballDataMatchParser implements IMatchParser {
 
 				if (status.equals(MatchStatus.FINISHED) || status.equals(MatchStatus.STARTED)) {
 					JSONObject result = (JSONObject) ((JSONObject) matchObject).get("result");
-					homeTeamGoals = Integer.parseInt(result.get("goalsHomeTeam").toString());
-					awayTeamGoals = Integer.parseInt(result.get("goalsAwayTeam").toString());
+					homeTeamGoals =
+							result.has("goalsHomeTeam") ? Integer.parseInt(result.get("goalsHomeTeam").toString()) : -1;
+					awayTeamGoals =
+							result.has("goalsAwayTeam") ? Integer.parseInt(result.get("goalsAwayTeam").toString()) : -1;
 				}
 
 				Integer matchDay = Integer.parseInt(getProperty(matchObject, "matchday"));
@@ -65,10 +67,10 @@ public class FootballDataMatchParser implements IMatchParser {
 				FootballMatch match = new FootballMatchBuilder()
 						.setHomeTeamName(homeTeam)
 						.setAwayTeamName(awayTeam)
+						.setStatus(status)
 						.setStartDate(startDate)
 						.setRound(matchDay)
 						.setYear(CAL.get(Calendar.YEAR)) // this get the year from the object
-						.setStatus(status)
 						.setResult(homeTeamGoals == -1 || awayTeamGoals == -1 ? ResultMessages.UNKNOWN_RESULT :
 								String.format("%s%s%s", homeTeamGoals, RESULT_DELIMITER, awayTeamGoals))
 						.build();
