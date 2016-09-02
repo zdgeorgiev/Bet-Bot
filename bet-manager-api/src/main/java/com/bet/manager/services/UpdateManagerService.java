@@ -9,6 +9,7 @@ import com.bet.manager.metrics.MetricsCounterContainer;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.dao.PredictionType;
+import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,9 @@ public class UpdateManagerService {
 	private FootballMatchService footballMatchService;
 
 	@Autowired
+	private FootballMatchRepository footballMatchRepository;
+
+	@Autowired
 	private IPredictor predictor;
 
 	@Autowired
@@ -55,19 +59,33 @@ public class UpdateManagerService {
 		String startDate = getDateAfterDays(-3);
 		String endDate = getDateAfterDays(14);
 
+		int acceptedRound = getAcceptedRound();
+
 		String matchesURL = String.format(FETCH_BASE_URL, startDate, endDate);
 
-		log.info("Starting to fetch matches from source [{}]", matchesURL);
+		log.info("Starting to fetch matches for round [{}] from source [{}]", acceptedRound, matchesURL);
 		String content = WebCrawler.crawl(new URL(matchesURL));
+
+		updateDataBase(content, acceptedRound);
+
+		log.info("Finished fetching");
+	}
+
+	private void updateDataBase(String content, int acceptedRound) {
 
 		Map<MatchStatus, List<FootballMatch>> fixtures = matchParser.parse(content);
 
 		footballMatchService.createMatches(fixtures.get(MatchStatus.NOT_STARTED).stream()
-				.filter(m -> !footballMatchService.exist(m))
+				.filter(m -> m.getRound() == acceptedRound && !footballMatchService.exist(m))
 				.collect(Collectors.toList()));
 
-		footballMatchService.updateMatches(fixtures.get(MatchStatus.STARTED));
-		footballMatchService.updateMatches(fixtures.get(MatchStatus.FINISHED));
+		footballMatchService.updateMatches(fixtures.get(MatchStatus.STARTED).stream()
+				.filter(m -> m.getRound() == acceptedRound)
+				.collect(Collectors.toList()));
+
+		footballMatchService.updateMatches(fixtures.get(MatchStatus.FINISHED).stream()
+				.filter(m -> m.getRound() == acceptedRound)
+				.collect(Collectors.toList()));
 	}
 
 	private String getDateAfterDays(int days) {
@@ -75,6 +93,21 @@ public class UpdateManagerService {
 		CALENDAR.setTime(new Date());
 		CALENDAR.add(Calendar.DATE, days);
 		return DATE_FORMAT.format(CALENDAR.getTime());
+	}
+
+	private int getAcceptedRound() {
+		Optional<FootballMatch> match = footballMatchRepository.findAll().stream()
+				.filter(m ->
+						m.getMatchStatus().equals(MatchStatus.FINISHED) && m.getMatchMetaData() != null)
+				.sorted((FootballMatch m1, FootballMatch m2) ->
+						Integer.compare(m1.getRound(), m2.getRound()))
+				.findFirst();
+
+		if (match.isPresent())
+			return match.get().getRound() + 1;
+
+		// We accept matches for at least 2nd round
+		return 2;
 	}
 
 	@Scheduled(initialDelay = 10 * 1000, fixedDelay = 60 * 60 * 1000)

@@ -14,7 +14,7 @@ public class ResultDBTest {
 
 	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
-	ISecondarySource source = new ResultDB();
+	private ResultDB source = new ResultDB();
 
 	@Test
 	public void testCorrectGettingTheFirstRoundOpponent() {

@@ -22,7 +22,7 @@ public class DataManager {
 
 	private static final Logger log = LoggerFactory.getLogger(DataManager.class);
 
-	private static final int MIN_ROUND = 2;
+	private static final int MIN_ROUND = 1;
 	private static final int MAX_ROUND = 34;
 	private static final int MIN_YEAR = 2011;
 	private static final int MAX_YEAR = Calendar.getInstance().get(Calendar.YEAR);
@@ -91,8 +91,8 @@ public class DataManager {
 			throws Exception {
 
 		StringBuilder currentMatchData = new StringBuilder();
-		String firstTeamMetaData = getMetaDataForTeam(firstTeam, year, round);
-		String secondTeamMetaData = getMetaDataForTeam(secondTeam, year, round);
+		String firstTeamMetaData = getMetaDataForTeam(firstTeam, year, round - 1);
+		String secondTeamMetaData = getMetaDataForTeam(secondTeam, year, round - 1);
 
 		currentMatchData
 				.append(firstTeam).append(DELIMITER)
@@ -135,7 +135,7 @@ public class DataManager {
 				.append(Bundesliga.getTeamRankingPlace(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
 				.append(Bundesliga.getCurrentRankingStats(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
 				.append(secondarySource.getMatchVenue(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
-				.append(Bundesliga.getTeamPerformance(bundesLigaTeam, year, round - 1, crawledPages)).append(DELIMITER)
+				.append(Bundesliga.getTeamPerformance(bundesLigaTeam, year, round, crawledPages)).append(DELIMITER)
 				.append(secondarySource.getLastFiveGamesForTeam(bundesLigaTeam, year, round, crawledPages));
 
 		if (crawledPages.size() > 100)

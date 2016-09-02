@@ -55,7 +55,6 @@ public class ResultDB implements ISecondarySource {
 		return parseLastFiveGamesForTeam(content, round);
 	}
 
-	@Override
 	public String parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
 
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
@@ -100,7 +99,6 @@ public class ResultDB implements ISecondarySource {
 		return parseTeamOpponent(content, round);
 	}
 
-	@Override
 	public String parseTeamOpponent(String allMatchesHTML, int round) {
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
@@ -128,7 +126,6 @@ public class ResultDB implements ISecondarySource {
 		return parseMatchVenue(content, round);
 	}
 
-	@Override
 	public String parseMatchVenue(String allMatchesHTML, int round) {
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
@@ -141,7 +138,6 @@ public class ResultDB implements ISecondarySource {
 		return venue.equals(AWAY_TEAM_LITERAL) ? "-1" : "1";
 	}
 
-	@Override
 	public void addMatchToNormalizationArray(String result, String score, int[] matchesNormalization) {
 
 		String[] rawNumbers = score.split(RESULT_SPLITERATOR);
@@ -193,7 +189,6 @@ public class ResultDB implements ISecondarySource {
 		return result;
 	}
 
-	@Override
 	public String parseMatchResult(int round, String allMatchesHTML) {
 
 		log.debug("Getting result for the match..");

@@ -74,8 +74,6 @@ public class MatchMetaDataUtils {
 
 		secondTeamMetaData.setLastFiveMatchesPerformance(secondTeamLastFiveMatchesPerformance);
 
-		matchMetaData.setResult(params[30]);
-
 		boolean teamsRightOrder = true;
 
 		// Should do swap if the first team is away
@@ -88,6 +86,9 @@ public class MatchMetaDataUtils {
 
 		matchMetaData.setHomeTeamMetaData(teamsRightOrder ? firstTeamMetaData : secondTeamMetaData);
 		matchMetaData.setAwayTeamMetaData(teamsRightOrder ? secondTeamMetaData : firstTeamMetaData);
+
+		// Have result
+		matchMetaData.setResult(params[30].equals("null") ? null : params[30]);
 
 		return matchMetaData;
 	}

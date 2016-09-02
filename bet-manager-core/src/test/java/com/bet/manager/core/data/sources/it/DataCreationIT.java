@@ -3,7 +3,6 @@ package com.bet.manager.core.data.sources.it;
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.commons.util.DocumentUtils;
 import com.bet.manager.core.data.sources.Bundesliga;
-import com.bet.manager.core.data.sources.ISecondarySource;
 import com.bet.manager.core.data.sources.ResultDB;
 import com.bet.manager.model.dao.MatchMetaData;
 import junit.framework.Assert;
@@ -19,7 +18,7 @@ public class DataCreationIT {
 
 	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
-	private ISecondarySource secondarySource = new ResultDB();
+	private ResultDB secondarySource = new ResultDB();
 
 	@Test
 	public void testGettingDataForMatchFromPreviousSeason() {
