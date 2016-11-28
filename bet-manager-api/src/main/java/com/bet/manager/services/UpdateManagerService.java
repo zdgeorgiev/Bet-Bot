@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class UpdateManagerService {
@@ -59,33 +60,33 @@ public class UpdateManagerService {
 		String startDate = getDateAfterDays(-3);
 		String endDate = getDateAfterDays(14);
 
-		int acceptedRound = getAcceptedRound();
-
 		String matchesURL = String.format(FETCH_BASE_URL, startDate, endDate);
 
-		log.info("Starting to fetch matches for round [{}] from source [{}]", acceptedRound, matchesURL);
+		log.info("Starting to fetch matches for round from source [{}]", matchesURL);
 		String content = WebCrawler.crawl(new URL(matchesURL));
 
-		updateDataBase(content, acceptedRound);
+		updateDataBase(content);
 
 		log.info("Finished fetching");
 	}
 
-	private void updateDataBase(String content, int acceptedRound) {
+	private void updateDataBase(String content) {
+
+		int acceptedRound = getAcceptedRound();
 
 		Map<MatchStatus, List<FootballMatch>> fixtures = matchParser.parse(content);
 
 		footballMatchService.createMatches(fixtures.get(MatchStatus.NOT_STARTED).stream()
-				.filter(m -> m.getRound() == acceptedRound && !footballMatchService.exist(m))
+				.filter(m -> m.getRound() >= acceptedRound && !footballMatchService.exist(m))
 				.collect(Collectors.toList()));
 
-		footballMatchService.updateMatches(fixtures.get(MatchStatus.STARTED).stream()
-				.filter(m -> m.getRound() == acceptedRound)
-				.collect(Collectors.toList()));
-
-		footballMatchService.updateMatches(fixtures.get(MatchStatus.FINISHED).stream()
-				.filter(m -> m.getRound() == acceptedRound)
-				.collect(Collectors.toList()));
+		footballMatchService.updateMatches(
+				Stream.concat(
+						fixtures.get(MatchStatus.STARTED).stream(),
+						fixtures.get(MatchStatus.FINISHED).stream()).collect(Collectors.toList())
+						.stream()
+						.filter(m -> m.getRound() >= acceptedRound && footballMatchService.exist(m))
+						.collect(Collectors.toList()));
 	}
 
 	private String getDateAfterDays(int days) {
