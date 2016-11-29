@@ -39,7 +39,7 @@ public class WebCrawler {
 	 * @return the content of a page
 	 */
 	public static String crawl(URL url, Map<URL, String> crawledPages) throws InterruptedException {
-		return crawl(url, crawledPages, "UTF-8", 3, 5);
+		return crawl(url, crawledPages, "ISO8859_9", 3, 5);
 	}
 
 	/**

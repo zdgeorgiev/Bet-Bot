@@ -194,8 +194,8 @@ public class FootballMatch implements Serializable {
 
 	@JsonIgnore
 	@Transient
-	public String getMetaDataNNOutput() {
-		return String.format("%s %s", round, matchMetaData.toString());
+	public String getMetaDataNNInput() {
+		return String.format("%s%s%s", round, MatchMetaData.SPLITERATOR, matchMetaData);
 	}
 
 	@Override public boolean equals(Object o) {

@@ -5,7 +5,6 @@ import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.exceptions.InvalidMappingException;
 import com.bet.manager.core.exceptions.MatchResultNotFound;
-import com.bet.manager.model.dao.MatchMetaData;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -13,16 +12,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ResultDB implements ISecondarySource {
+public class ResultDB {
 
 	private static final Logger log = LoggerFactory.getLogger(ResultDB.class);
 
 	private static final String RESULTDB_DOMAIN = "http://www.resultdb.com/";
 	private static final String RESULTDB_MATCHES_FOR_TEAM_URL = "germany/%s/%s/";
-
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	private static final String TABLE_SELECTOR = "table.results";
 
@@ -32,11 +30,16 @@ public class ResultDB implements ISecondarySource {
 	private static final String LOSE_GAME_LITERAL = "L";
 	private static final String RESULT_SPLITERATOR = "-";
 
+	private static final String HUGE_WINS = "hugeWins";
+	private static final String HUGE_LOSES = "hugeLoses";
+	private static final String WINS = "wins";
+	private static final String LOSES = "loses";
+	private static final String DRAWS = "draws";
+
 	public ResultDB() {
 	}
 
-	@Override
-	public String getLastFiveGamesForTeam(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static Map<String, Integer> getLastFiveGames(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
@@ -55,7 +58,14 @@ public class ResultDB implements ISecondarySource {
 		return parseLastFiveGamesForTeam(content, round);
 	}
 
-	public String parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
+	public static Map<String, Integer> parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
+
+		Map<String, Integer> lastFiveMatchesHistogram = new LinkedHashMap<>();
+		lastFiveMatchesHistogram.put(HUGE_WINS, 0);
+		lastFiveMatchesHistogram.put(HUGE_LOSES, 0);
+		lastFiveMatchesHistogram.put(WINS, 0);
+		lastFiveMatchesHistogram.put(LOSES, 0);
+		lastFiveMatchesHistogram.put(DRAWS, 0);
 
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
@@ -63,7 +73,6 @@ public class ResultDB implements ISecondarySource {
 		int matchesCount = e.children().get(0).children().size() - 1;
 		log.debug("Found {} matches total.", matchesCount);
 
-		int[] matchesNormalization = new int[5];
 		int matchesToLook = Math.min(round - 1, 5);
 		log.debug("Getting last {} matches.", matchesToLook);
 
@@ -72,20 +81,41 @@ public class ResultDB implements ISecondarySource {
 
 			String result = currentMatch.children().get(3).text();
 			String score = currentMatch.children().get(4).text();
-			addMatchToNormalizationArray(result, score, matchesNormalization);
-		}
-
-		StringBuilder output = new StringBuilder();
-		for (int match : matchesNormalization) {
-			output.append(match).append(DELIMITER);
+			addToHistogram(result, score, lastFiveMatchesHistogram);
 		}
 
 		log.debug("Successfully get information about last {} matches", matchesToLook);
-		return output.substring(0, output.length() - 1);
+		return lastFiveMatchesHistogram;
 	}
 
-	@Override
-	public String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static void addToHistogram(String result, String score, Map<String, Integer> lastFiveMatchesHistogram) {
+
+		String[] rawNumbers = score.split(RESULT_SPLITERATOR);
+		int differenceInScore =
+				Math.abs(Integer.parseInt(rawNumbers[0].trim()) - Integer.parseInt(rawNumbers[1].trim()));
+
+		switch (result) {
+		case DRAW_GAME_LITERAL:
+			lastFiveMatchesHistogram.put(DRAWS, lastFiveMatchesHistogram.get(DRAWS) + 1);
+			break;
+		case WIN_GAME_LITERAL:
+			if (differenceInScore > 1)
+				lastFiveMatchesHistogram.put(HUGE_WINS, lastFiveMatchesHistogram.get(HUGE_WINS) + 1);
+			else
+				lastFiveMatchesHistogram.put(WINS, lastFiveMatchesHistogram.get(WINS) + 1);
+			break;
+		case LOSE_GAME_LITERAL:
+			if (differenceInScore > 1)
+				lastFiveMatchesHistogram.put(HUGE_LOSES, lastFiveMatchesHistogram.get(HUGE_LOSES) + 1);
+			else
+				lastFiveMatchesHistogram.put(LOSES, lastFiveMatchesHistogram.get(LOSES) + 1);
+			break;
+		default:
+			throw new IllegalArgumentException("Invalid result state " + result);
+		}
+	}
+
+	public static String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
 		log.debug("Getting opponent for team '{}' for match in year {} round {}", bundesLigaTeam, year, round);
@@ -99,7 +129,7 @@ public class ResultDB implements ISecondarySource {
 		return parseTeamOpponent(content, round);
 	}
 
-	public String parseTeamOpponent(String allMatchesHTML, int round) {
+	public static String parseTeamOpponent(String allMatchesHTML, int round) {
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
 
@@ -111,8 +141,7 @@ public class ResultDB implements ISecondarySource {
 		return mappedOpponent;
 	}
 
-	@Override
-	public String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
 		log.debug("Getting opponent for team '{}' for match in year {} round {}", bundesLigaTeam, year, round);
@@ -126,7 +155,7 @@ public class ResultDB implements ISecondarySource {
 		return parseMatchVenue(content, round);
 	}
 
-	public String parseMatchVenue(String allMatchesHTML, int round) {
+	public static String parseMatchVenue(String allMatchesHTML, int round) {
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
 
@@ -138,37 +167,7 @@ public class ResultDB implements ISecondarySource {
 		return venue.equals(AWAY_TEAM_LITERAL) ? "-1" : "1";
 	}
 
-	public void addMatchToNormalizationArray(String result, String score, int[] matchesNormalization) {
-
-		String[] rawNumbers = score.split(RESULT_SPLITERATOR);
-		int differenceInScore =
-				Math.abs(Integer.parseInt(rawNumbers[0].trim()) - Integer.parseInt(rawNumbers[1].trim()));
-
-		switch (result) {
-		case DRAW_GAME_LITERAL:
-			matchesNormalization[4]++;
-			break;
-		case WIN_GAME_LITERAL:
-			if (differenceInScore > 1) {
-				matchesNormalization[0]++;
-			} else {
-				matchesNormalization[2]++;
-			}
-			break;
-		case LOSE_GAME_LITERAL:
-			if (differenceInScore > 1) {
-				matchesNormalization[1]++;
-			} else {
-				matchesNormalization[3]++;
-			}
-			break;
-		default:
-			throw new IllegalArgumentException("Invalid result state " + result);
-		}
-	}
-
-	@Override
-	public String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
 		String resultDBTeam = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
@@ -189,7 +188,7 @@ public class ResultDB implements ISecondarySource {
 		return result;
 	}
 
-	public String parseMatchResult(int round, String allMatchesHTML) {
+	public static String parseMatchResult(int round, String allMatchesHTML) {
 
 		log.debug("Getting result for the match..");
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);

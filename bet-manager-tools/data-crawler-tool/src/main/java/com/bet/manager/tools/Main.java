@@ -1,12 +1,13 @@
 package com.bet.manager.tools;
 
 import com.bet.manager.commons.util.PerformanceUtils;
-import com.bet.manager.core.data.DataManager;
+import com.bet.manager.core.data.FootballDataManager;
 import com.bet.manager.core.data.sources.Bundesliga;
-import com.bet.manager.core.data.sources.ISecondarySource;
-import com.bet.manager.core.data.sources.ResultDB;
+import com.bet.manager.core.data.sources.FootBallDataUtils;
 import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.dao.MatchStatus;
+import com.bet.manager.model.util.FootballMatchBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.io.FileUtils;
@@ -31,16 +32,15 @@ public class Main {
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 	}
 
-	private static final int ROUNDS = 34;
+	private static final int ROUNDS = 3;
 
-	private static DataManager dm;
-	private static ISecondarySource secondarySource = new ResultDB();
+	private static FootballDataManager dm;
 
 	private static final Map<URL, String> crawledPages = new HashMap<>();
 
 	public static void main(String[] args) throws IOException {
 
-		dm = new DataManager(false, crawledPages);
+		dm = new FootballDataManager(crawledPages);
 
 		int startYear;
 		int endYear;
@@ -63,15 +63,21 @@ public class Main {
 
 			if (currentYearData.size() != 0) {
 
-				File textFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches_metadata.txt");
-				for (FootballMatch footballMatch : currentYearData)
-					FileUtils.write(textFile, footballMatch.getMetaDataNNOutput() + System.lineSeparator(), true);
+				File textFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches_nn_input.txt");
+				writeMatchesNNInput(currentYearData, textFile);
 
 				File jsonFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches.json");
-				FileUtils.writeLines(jsonFile,
-						Collections.singleton(objectMapper.writeValueAsString(currentYearData)), true);
+				FileUtils.writeLines(jsonFile, Collections.singleton(objectMapper.writeValueAsString(currentYearData)), true);
 			} else
 				throw new IllegalStateException("There is no information for year later than " + (year - 1));
+		}
+	}
+
+	private static void writeMatchesNNInput(List<FootballMatch> currentYearData, File textFile) throws IOException {
+
+		for (FootballMatch footballMatch : currentYearData) {
+			FileUtils.write(textFile, footballMatch.getMetaDataNNInput() + MatchMetaData.SPLITERATOR
+					+ footballMatch.getResult() + System.lineSeparator(), true);
 		}
 	}
 
@@ -148,7 +154,7 @@ public class Main {
 				Node currentTeam = currentRoundTeams.item(i);
 
 				firstTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
-				secondTeam = secondarySource.getTeamOpponent(firstTeam, year, round, crawledPages);
+				secondTeam = FootBallDataUtils.getTeamOpponent(firstTeam, year, round, crawledPages);
 
 				if (!teamBlackList.contains(firstTeam) && !teamBlackList.contains(secondTeam)) {
 
@@ -157,8 +163,18 @@ public class Main {
 					teamBlackList.add(firstTeam);
 					teamBlackList.add(secondTeam);
 
-					FootballMatch currentMatch = dm.createFootballMatch(firstTeam, secondTeam, year, round);
-					currentMatch.setMatchStatus(MatchStatus.FINISHED);
+					FootballMatch currentMatch = new FootballMatchBuilder()
+							.setHomeTeamName(firstTeam)
+							.setAwayTeamName(secondTeam)
+							.setYear(year)
+							.setRound(round)
+							.build();
+
+					dm.createData(currentMatch);
+
+					currentMatch = new FootballMatchBuilder(currentMatch)
+							.setStatus(MatchStatus.FINISHED)
+							.build();
 
 					log.info("({}/{}) Match '{}'-'{}' was successfully created", matchIndex,
 							currentRoundTeams.getLength() / 2, currentMatch.getHomeTeam(), currentMatch.getAwayTeam());

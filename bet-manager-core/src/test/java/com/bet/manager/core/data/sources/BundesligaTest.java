@@ -2,26 +2,23 @@ package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.commons.util.DocumentUtils;
-import com.bet.manager.model.dao.MatchMetaData;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BundesligaTest {
 
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
+	private static final String TEAM_ATTR = "team";
 
 	@Test
 	public void testCorrectRankingParsing() {
 
-		Document doc =
-				DocumentUtils.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml"));
+		Document doc = DocumentUtils.parse(ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml"));
+
 		Map<String, Integer> actual = Bundesliga.createRankingTable(doc);
 
 		Map<String, Integer> expected = new HashMap<>();
@@ -50,10 +47,8 @@ public class BundesligaTest {
 	@Test
 	public void testCorrectParsingPreviousRoundStatsForTeams() {
 
-		Map<String, Integer> actual =
-				Bundesliga
-						.parseAverageRoundStats(
-								ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
+		Map<String, Integer> actual = Bundesliga.parseAverageRoundStats(
+				ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round-stats.xml"));
 
 		Map<String, Integer> expected = new HashMap<>();
 
@@ -79,13 +74,14 @@ public class BundesligaTest {
 		prevRoundStats.put("shots-total", 12);
 		prevRoundStats.put("fouls-committed", 14);
 
-		String actual =
-				Bundesliga.parseTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05",
-						prevRoundStats);
+		Map<String, Integer> actual = Bundesliga.parseTeamPerformance(prevRoundTeamStatsXML, "1.FSV Mainz 05", prevRoundStats);
 
-		List<String> stats = Arrays.asList("125042", "184", "320", "13", "11");
-		String expected = stats.stream()
-				.collect(Collectors.joining(DELIMITER));
+		Map<String, Integer> expected = new LinkedHashMap<>();
+		expected.put("distance", 125042);
+		expected.put("sprints", 184);
+		expected.put("passes", 320);
+		expected.put("shots", 13);
+		expected.put("fouls", 11);
 
 		Assert.assertEquals(expected, actual);
 	}
@@ -93,8 +89,7 @@ public class BundesligaTest {
 	@Test
 	public void testCorrectStatsForMatchWhichHaveEmptyDistanceAttributeAndShouldGetFromThePrevRound() {
 
-		String prevRoundTeamStatsXML =
-				ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
+		String prevRoundTeamStatsXML = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches.xml");
 
 		Map<String, Integer> prevRoundStats = new HashMap<>();
 		prevRoundStats.put("imp:tracking-distance", 111923);
@@ -103,46 +98,55 @@ public class BundesligaTest {
 		prevRoundStats.put("shots-total", 12);
 		prevRoundStats.put("fouls-committed", 14);
 
-		String actual =
-				Bundesliga
-						.parseTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München",
-								prevRoundStats);
+		Map<String, Integer> actual = Bundesliga.parseTeamPerformance(prevRoundTeamStatsXML, "FC Bayern München", prevRoundStats);
 
-		List<String> stats = Arrays.asList("111923", "189", "579", "21", "15");
-		String expected = stats.stream()
-				.collect(Collectors.joining(DELIMITER));
+		Map<String, Integer> expected = new LinkedHashMap<>();
+		expected.put("distance", 111923);
+		expected.put("sprints", 189);
+		expected.put("passes", 579);
+		expected.put("shots", 21);
+		expected.put("fouls", 15);
 
 		Assert.assertEquals(expected, actual);
+	}
+
+	@Test
+	public void testGoalDifferenceForRound1() {
+
+		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-bayern-round-1.xml");
+		Document doc = DocumentUtils.parse(content);
+
+		int actual = Bundesliga.parseGoalDifference(doc.getElementsByTagName(TEAM_ATTR).item(0));
+		Assert.assertEquals(-1, actual);
+	}
+
+	@Test
+	public void testGoalDifferenceForRound15() {
+
+		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-borussia-round-15.xml");
+		Document doc = DocumentUtils.parse(content);
+
+		int actual = Bundesliga.parseGoalDifference(doc.getElementsByTagName(TEAM_ATTR).item(0));
+		Assert.assertEquals(14, actual);
 	}
 
 	@Test
 	public void testRankingStatsForTeamForRound1() {
 
-		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-round.xml");
+		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-bayern-round-1.xml");
 		Document doc = DocumentUtils.parse(content);
 
-		String actual = Bundesliga.parseCurrentRankingStats("FC Bayern München", doc);
-
-		List<String> rankingStats = Arrays.asList("0", "-1");
-		String expected = rankingStats.stream()
-				.collect(Collectors.joining(DELIMITER));
-
-		Assert.assertEquals(expected, actual);
+		int actual = Bundesliga.parsePoints(doc.getElementsByTagName(TEAM_ATTR).item(0));
+		Assert.assertEquals(0, actual);
 	}
 
 	@Test
 	public void testRankingStatsForTeamForRound15() {
 
-		String content =
-				ClasspathUtils.getContentUTF8("crawl-data/bundesliga-stats-for-matches-round-15.xml");
+		String content = ClasspathUtils.getContentUTF8("crawl-data/bundesliga-borussia-round-15.xml");
 		Document doc = DocumentUtils.parse(content);
 
-		String actual = Bundesliga.parseCurrentRankingStats("Borussia M'gladbach", doc);
-
-		List<String> rankingStats = Arrays.asList("30", "14");
-		String expected = rankingStats.stream()
-				.collect(Collectors.joining(DELIMITER));
-
-		Assert.assertEquals(expected, actual);
+		int actual = Bundesliga.parsePoints(doc.getElementsByTagName(TEAM_ATTR).item(0));
+		Assert.assertEquals(30, actual);
 	}
 }

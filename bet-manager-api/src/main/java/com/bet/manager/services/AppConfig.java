@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories("com.bet.manager.model.repository")
-class AppConfig {
+public class AppConfig {
 
 	@Bean
 	public DataSource dataSource() {

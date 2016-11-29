@@ -89,18 +89,20 @@ public class FootballMatchService {
 		}
 	}
 
-	public List<FootballMatch> findAll() {
-		return footballMatchRepository.findAll();
-	}
-
 	public boolean exist(FootballMatch match) {
 		return retrieve(match) != null;
 	}
 
 	private FootballMatch retrieve(FootballMatch match) {
-		return footballMatchRepository
-				.findByHomeTeamAndAwayTeamAndYearAndRound(match.getHomeTeam(), match.getAwayTeam(), match.getYear(),
-						match.getRound());
+		FootballMatch target = footballMatchRepository
+				.findByHomeTeamAndAwayTeamAndYearAndRound(
+						match.getHomeTeam(), match.getAwayTeam(), match.getYear(), match.getRound());
+
+		// The target may be null, because we swap the home team and away team while parsing the metadata
+		// so if its null we will try to get the reversed teams for the same year and round
+		return target != null ? target : footballMatchRepository
+				.findByHomeTeamAndAwayTeamAndYearAndRound(
+						match.getAwayTeam(), match.getHomeTeam(), match.getYear(), match.getRound());
 	}
 
 	public List<FootballMatch> retrieveMatches(String team1, String team2, Optional<Integer> year, Optional<Integer> round,
