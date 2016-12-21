@@ -99,7 +99,7 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 		currentTeamData.put(GOAL_DIFFERENCE, getGoalDifference(bundesLigaTeam, year, round, crawledPages));
 		currentTeamData.put(VENUE, getMatchVenue(bundesLigaTeam, year, round + 1, crawledPages));
 		currentTeamData.put(PREVIOUS_ROUND_STATS, getTeamPerformance(bundesLigaTeam, year, round, crawledPages));
-		currentTeamData.put(LAST_FIVE_GAMES, getLastFiveGames(bundesLigaTeam, year, round, crawledPages));
+		currentTeamData.put(LAST_FIVE_GAMES, getLastFiveGames(bundesLigaTeam, year, round + 1, crawledPages));
 
 		if (crawledPages.size() > 100)
 			clearCache();

@@ -16,13 +16,11 @@ public class ResultDBTest {
 	private static final String LOSES = "loses";
 	private static final String DRAWS = "draws";
 
-	private ResultDB source = new ResultDB();
-
 	@Test
 	public void testCorrectGettingTheFirstRoundOpponent() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = source.parseTeamOpponent(content, 2);
+		String actual = ResultDB.parseTeamOpponent(content, 2);
 		String expected = "Borussia M'gladbach";
 		Assert.assertEquals(expected, actual);
 	}
@@ -31,7 +29,7 @@ public class ResultDBTest {
 	public void testCorrectGettingTheFirstRoundVenue() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = source.parseMatchVenue(content, 2);
+		String actual = ResultDB.parseMatchVenue(content, 2);
 		Assert.assertEquals("-1", actual);
 	}
 
@@ -39,7 +37,7 @@ public class ResultDBTest {
 	public void testCorrectGettingThirdRoundOpponent() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = source.parseTeamOpponent(content, 3);
+		String actual = ResultDB.parseTeamOpponent(content, 3);
 		String expected = "Bayer 04 Leverkusen";
 		Assert.assertEquals(expected, actual);
 	}
@@ -48,7 +46,7 @@ public class ResultDBTest {
 	public void testCorrectGettingThirdRoundVenue() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = source.parseMatchVenue(content, 3);
+		String actual = ResultDB.parseMatchVenue(content, 3);
 		Assert.assertEquals("1", actual);
 	}
 
@@ -56,7 +54,7 @@ public class ResultDBTest {
 	public void testCorrectGettingLastFiveMatches() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		Map<String, Integer> actual = source.parseLastFiveGamesForTeam(content, 6);
+		Map<String, Integer> actual = ResultDB.parseLastFiveGamesForTeam(content, 6);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 2);
@@ -72,7 +70,7 @@ public class ResultDBTest {
 	public void testCorrectGettingFiveLastMatchesButContainsOnlyThree() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		Map<String, Integer> actual = source.parseLastFiveGamesForTeam(content, 4);
+		Map<String, Integer> actual = ResultDB.parseLastFiveGamesForTeam(content, 4);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 1);
@@ -88,7 +86,7 @@ public class ResultDBTest {
 	public void testCorrectGettingFiveLastMatchesForRound34() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		Map<String, Integer> actual = source.parseLastFiveGamesForTeam(content, 34);
+		Map<String, Integer> actual = ResultDB.parseLastFiveGamesForTeam(content, 34);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 3);
@@ -112,7 +110,7 @@ public class ResultDBTest {
 
 		String result = "W";
 		String score = "1-0";
-		source.addToHistogram(result, score, actual);
+		ResultDB.addToHistogram(result, score, actual);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 0);
@@ -136,7 +134,7 @@ public class ResultDBTest {
 
 		String result = "D";
 		String score = "1-1";
-		source.addToHistogram(result, score, actual);
+		ResultDB.addToHistogram(result, score, actual);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 0);
@@ -160,7 +158,7 @@ public class ResultDBTest {
 
 		String result = "W";
 		String score = "3-0";
-		source.addToHistogram(result, score, actual);
+		ResultDB.addToHistogram(result, score, actual);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 1);
@@ -184,8 +182,8 @@ public class ResultDBTest {
 
 		String result = "W";
 		String score = "3-0";
-		source.addToHistogram(result, score, actual);
-		source.addToHistogram(result, score, actual);
+		ResultDB.addToHistogram(result, score, actual);
+		ResultDB.addToHistogram(result, score, actual);
 
 		Map<String, Integer> expected = new LinkedHashMap<>();
 		expected.put(HUGE_WINS, 2);
@@ -200,26 +198,26 @@ public class ResultDBTest {
 	@Test
 	public void testCorrectParsingTheResultForFirstMatch() {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String result = source.parseMatchResult(1, content);
+		String result = ResultDB.parseMatchResult(1, content);
 		Assert.assertEquals("3-0", result);
 	}
 
 	@Test
 	public void testCorrectParsingTheResultForLastRound() {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		String result = source.parseMatchResult(34, content);
+		String result = ResultDB.parseMatchResult(34, content);
 		Assert.assertEquals("3-2", result);
 	}
 
 	@Test(expected = MatchResultNotFound.class)
 	public void testCorrectParsingTheResultFor35RoundShouldThrowException() {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		source.parseMatchResult(35, content);
+		ResultDB.parseMatchResult(35, content);
 	}
 
 	@Test(expected = MatchResultNotFound.class)
 	public void testCorrectParsingTheResultFor0RoundShouldThrowException() {
 		String content = ClasspathUtils.getContentUTF8("crawl-data/resultdb-last-matches-for-team.html");
-		source.parseMatchResult(0, content);
+		ResultDB.parseMatchResult(0, content);
 	}
 }

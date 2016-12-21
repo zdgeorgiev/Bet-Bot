@@ -32,7 +32,7 @@ public class Main {
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 	}
 
-	private static final int ROUNDS = 3;
+	private static final int ROUNDS = 34;
 
 	private static FootballDataManager dm;
 

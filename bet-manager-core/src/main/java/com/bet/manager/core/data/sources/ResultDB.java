@@ -79,6 +79,7 @@ public class ResultDB {
 		for (int i = 0; i < matchesToLook; i++) {
 			Element currentMatch = e.children().get(0).children().get(matchesCount - round + 2 + i);
 
+
 			String result = currentMatch.children().get(3).text();
 			String score = currentMatch.children().get(4).text();
 			addToHistogram(result, score, lastFiveMatchesHistogram);

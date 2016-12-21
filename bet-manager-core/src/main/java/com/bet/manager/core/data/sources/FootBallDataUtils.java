@@ -79,6 +79,7 @@ public class FootBallDataUtils {
 	/**
 	 * Collects data for last five matches for given team depends on the given round.
 	 * If the matches before the given round is less than five will take the available ones.
+	 * Previous matches will be in range [round - 5, round)
 	 *
 	 * @param bundesLigaTeam team name
 	 * @param year           year of the match
