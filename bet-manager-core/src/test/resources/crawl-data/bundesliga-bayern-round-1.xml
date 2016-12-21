@@ -1,0 +1,59 @@
+<sports-content xmlns:imp="http://web.impire.de/SportsML/v1.5/doc/index.html">
+  <sports-metadata date-time="20110807T000000+0200" doc-id="standing_2011-01-01_51_1_1" language="de-DE"
+				   date-coverage-type="imp:non-live" date-coverage-value="20110807T000000+0200">
+	<sports-title>Standing Bundesliga</sports-title>
+	<sports-content-codes>
+	  <sports-content-code code-type="sport" code-key="15054000" code-source="iptc.org" code-name="soccer"/>
+	  <sports-content-code code-type="league" code-key="soccer.l_51" code-source="impire.tv" code-name="Bundesliga"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_14" code-source="impire.tv" code-name="VfB Stuttgart"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_56" code-source="impire.tv" code-name="VfL Wolfsburg"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_18" code-source="impire.tv"
+						   code-name="Borussia Dortmund"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_36" code-source="impire.tv" code-name="1.FSV Mainz 05"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_11" code-source="impire.tv"
+						   code-name="SV Werder Bremen"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_44" code-source="impire.tv" code-name="Hannover 96"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_22" code-source="impire.tv" code-name="1.FC Nürnberg"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_17" code-source="impire.tv"
+						   code-name="Borussia M'gladbach"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_267" code-source="impire.tv" code-name="FC Augsburg"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_33" code-source="impire.tv" code-name="SC Freiburg"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_3084" code-source="impire.tv"
+						   code-name="1899 Hoffenheim"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_10" code-source="impire.tv"
+						   code-name="FC Bayern München"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_43" code-source="impire.tv" code-name="Hertha BSC"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_13" code-source="impire.tv" code-name="Hamburger SV"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_9" code-source="impire.tv"
+						   code-name="1.FC Kaiserslautern"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_16" code-source="impire.tv"
+						   code-name="Bayer 04 Leverkusen"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_15" code-source="impire.tv" code-name="1.FC Köln"/>
+	  <sports-content-code code-type="team" code-key="soccer.t_24" code-source="impire.tv" code-name="FC Schalke 04"/>
+	</sports-content-codes>
+  </sports-metadata>
+  <standing>
+	<standing-metadata imp:tournament-name="Fussball Bundesliga" imp:tournament-key="51"
+					   imp:tournament-source="impire.tv" imp:division-name="Hinrunde" imp:division-key="1"
+					   imp:division-source="impire.tv" imp:round-number="1" imp:round-name="round_1" imp:round-key="1"
+					   imp:round-source="impire.tv" alignment-scope="events-all" date-coverage-type="season-full"
+					   date-coverage-value="2011" duration-scope="events-all" stats-coverage="standard"/>
+	<team>
+	  <team-metadata id="O_10" team-key="10">
+		<name full="FC Bayern München" nickname="FC Bayern" imp:dfl-full="FC Bayern München"
+			  imp:dfl-nickname="FC Bayern" imp:dfl-3-letter-code="FCB" imp:dfl-name-international="FC Bayern Munich"/>
+	  </team-metadata>
+	  <team-stats events-played="1">
+		<outcome-totals alignment-scope="events-all" wins="0" ties="0" losses="1" points-scored-for="0"
+						points-scored-against="1" standing-points="0"/>
+		<outcome-totals alignment-scope="events-home" wins="0" ties="0" losses="1" points-scored-for="0"
+						points-scored-against="1" standing-points="0"/>
+		<outcome-totals alignment-scope="events-away" wins="0" ties="0" losses="0" points-scored-for="0"
+						points-scored-against="0" standing-points="0"/>
+		<rank value="12" alignment-scope="events-all"/>
+		<rank value="16" alignment-scope="events-home"/>
+		<rank value="5" alignment-scope="events-away"/>
+	  </team-stats>
+	</team>
+  </standing>
+</sports-content>

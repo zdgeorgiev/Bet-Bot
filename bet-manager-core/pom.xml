@@ -35,11 +35,16 @@
 	  <version>${org.jsoup.version}</version>
 	</dependency>
 
-	<!-- https://mvnrepository.com/artifact/org.json/json -->
 	<dependency>
 	  <groupId>org.json</groupId>
 	  <artifactId>json</artifactId>
 	  <version>20160212</version>
+	</dependency>
+
+	<dependency>
+	  <groupId>commons-collections</groupId>
+	  <artifactId>commons-collections</artifactId>
+	  <version>3.2.2</version>
 	</dependency>
 
 

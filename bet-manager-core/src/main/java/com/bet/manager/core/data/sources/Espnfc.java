@@ -1,11 +1,13 @@
 package com.bet.manager.core.data.sources;
 
+import org.apache.commons.collections.MapUtils;
+
 import java.net.URL;
 import java.util.Map;
 
-public class Espnfc implements ISecondarySource {
+public class Espnfc {
 
-	@Override public String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
@@ -14,7 +16,7 @@ public class Espnfc implements ISecondarySource {
 		return null;
 	}
 
-	@Override public String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
@@ -23,19 +25,18 @@ public class Espnfc implements ISecondarySource {
 		return null;
 	}
 
-	@Override
-	public String getLastFiveGamesForTeam(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public Map<String, Integer> getLastFiveGames(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
-		return "0,0,1,0,2";
+		return MapUtils.EMPTY_MAP;
 	}
 
 	public String parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
 		return null;
 	}
 
-	@Override public String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
-		return "1";
+		return "-1";
 	}
 
 	public String parseMatchVenue(String allMatchesHTML, int round) {

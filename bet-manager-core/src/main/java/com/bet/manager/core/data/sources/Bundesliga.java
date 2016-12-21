@@ -6,7 +6,6 @@ import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.exceptions.IllegalTeamMappingException;
 import com.bet.manager.core.exceptions.InvalidMappingException;
-import com.bet.manager.model.dao.MatchMetaData;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +17,7 @@ import org.w3c.dom.NodeList;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Bundesliga {
@@ -29,8 +29,6 @@ public class Bundesliga {
 			"data/feed/51/%s/post_standing/post_standing_%s.xml?cb=517837";
 	private static final String TEAM_STATS_URL =
 			"data/feed/51/%s/team_stats_round/team_stats_round_%s.xml?cb=544329";
-
-	private static final String DELIMITER = MatchMetaData.CONSTRUCTOR_PARAMS_DELIMITER;
 
 	private static final String TRACK_DIST_ATTR = "imp:tracking-distance";
 	private static final String TRACK_SPRINTS_ATTR = "imp:tracking-sprints";
@@ -50,18 +48,7 @@ public class Bundesliga {
 	private Bundesliga() {
 	}
 
-	/**
-	 * Method which returns the position in the ranking table for team in given
-	 * round and year. This method uses external memorization maps for already crawled
-	 * pages.
-	 *
-	 * @param bundesLigaTeam team name
-	 * @param year           match year
-	 * @param round          match round
-	 * @param crawledPages   memorization map for already crawled pages
-	 * @return current round place
-	 */
-	public static Integer getTeamRankingPlace(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static int getTeamRankingPlace(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		log.debug("Getting information about '{}' rank in round {} year {}", bundesLigaTeam, round, year);
@@ -95,7 +82,7 @@ public class Bundesliga {
 		URL prevRoundMatchesURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
 
-		return WebCrawler.crawl(prevRoundMatchesURL, crawledPages);
+		return WebCrawler.crawl_ISO8858_9(prevRoundMatchesURL, crawledPages);
 	}
 
 	/**
@@ -141,36 +128,54 @@ public class Bundesliga {
 				", but in the xml team node id " + id + " is mapped to " + TeamsMapping.bundesligaIdToName.get(id));
 	}
 
-	/**
-	 * Get the current points and round goals difference for team
-	 *
-	 * @param bundesLigaTeam Team for which you want to get the stats
-	 * @param year           year for the match
-	 * @param round          round fot the match
-	 * @param crawledPages   memorization map for already crawled pages
-	 * @return the ranking stats for team for given year and round
-	 */
-	public static String getCurrentRankingStats(String bundesLigaTeam, int year, int round,
-			Map<URL, String> crawledPages)
+	public static int getPoints(String bundesLigaTeam, int year, int round,
+			Map<URL, String> crawledPages) throws MalformedURLException, InterruptedException {
+
+		NodeList teamNodes = getTeamNodes(year, round, crawledPages);
+
+		for (int i = 0; i < teamNodes.getLength(); i++) {
+
+			Node currentTeam = teamNodes.item(i);
+			String currentTeamName = getNameFromTeamNode(currentTeam);
+
+			if (currentTeamName.equals(bundesLigaTeam))
+				return parsePoints(currentTeam);
+		}
+
+		throw new IllegalStateException(
+				"Cannot get the current points for " + bundesLigaTeam + " year " + year + " round " + round);
+	}
+
+	private static NodeList getTeamNodes(int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		String currentRoundMatchesContent = Bundesliga.getMatches(year, round, crawledPages);
 		Document currentRoundMatches = DocumentUtils.parse(currentRoundMatchesContent);
 
-		log.debug("Getting information for team '{}' in round {} year {} statistics", bundesLigaTeam, round, year);
-		return parseCurrentRankingStats(bundesLigaTeam, currentRoundMatches);
+		return currentRoundMatches.getElementsByTagName(TEAM_ATTR);
 	}
 
-	/**
-	 * @param bundesLigaTeam      team name
-	 * @param currentRoundMatches Document containing statistics for specific round
-	 * @return statistics for round
-	 */
-	public static String parseCurrentRankingStats(String bundesLigaTeam, Document currentRoundMatches) {
+	public static int parsePoints(Node currentTeam) {
 
-		StringBuilder prevRoundStats = new StringBuilder();
+		NamedNodeMap attributes =
+				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
+						.getNextSibling().getAttributes();
 
-		NodeList teamNodes = currentRoundMatches.getElementsByTagName(TEAM_ATTR);
+		int points = Integer.parseInt(attributes.getNamedItem("standing-points").getNodeValue());
+		log.debug("Points : {}", points);
+
+		return points;
+	}
+
+	private static String getNameFromTeamNode(Node team) {
+		return team.getFirstChild().getNextSibling().getFirstChild().getNextSibling().getAttributes()
+				.getNamedItem("full").getNodeValue();
+	}
+
+	public static int getGoalDifference(String bundesLigaTeam, int year, int round,
+			Map<URL, String> crawledPages) throws MalformedURLException, InterruptedException {
+
+		NodeList teamNodes = getTeamNodes(year, round, crawledPages);
 
 		for (int i = 0; i < teamNodes.getLength(); i++) {
 
@@ -178,15 +183,15 @@ public class Bundesliga {
 			String currentTeamName = getNameFromTeamNode(currentTeam);
 
 			if (currentTeamName.equals(bundesLigaTeam)) {
-				prevRoundStats.append(getGoalDifferenceAndPoints(currentTeam));
-				break;
+				return parseGoalDifference(currentTeam);
 			}
 		}
 
-		return prevRoundStats.toString();
+		throw new IllegalStateException(
+				"Cannot get the current goal difference for " + bundesLigaTeam + " year " + year + " round " + round);
 	}
 
-	private static String getGoalDifferenceAndPoints(Node currentTeam) {
+	public static int parseGoalDifference(Node currentTeam) {
 
 		NamedNodeMap attributes =
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
@@ -195,28 +200,13 @@ public class Bundesliga {
 		Integer homeGoals = Integer.parseInt(attributes.getNamedItem("points-scored-for").getNodeValue());
 		Integer awayGoals = Integer.parseInt(attributes.getNamedItem("points-scored-against").getNodeValue());
 
-		Integer goalDifference = homeGoals - awayGoals;
+		int goalDifference = homeGoals - awayGoals;
 		log.debug("Goal difference : {}", goalDifference);
 
-		String points = attributes.getNamedItem("standing-points").getNodeValue();
-		log.debug("Points : {}", points);
-
-		return String.format("%s%s%s", points, DELIMITER, goalDifference);
+		return goalDifference;
 	}
 
-	/**
-	 * Method which is getting information about previous round by given round team performance
-	 * (collects the data about total distance, sprints, passes, shots, fouls and if any of them
-	 * is leaved empty the value from the average round stats will come in place)
-	 * This method using external memorization maps for already crawled pages.
-	 *
-	 * @param bundesLigaTeam which wanna get performance
-	 * @param year           year for match
-	 * @param round          round for match ( the method will call with round - 1, to get the previous )
-	 * @param crawledPages   memorization map for already crawled pages
-	 * @return statistics for team
-	 */
-	public static String getTeamPerformance(String bundesLigaTeam, int year, int round,
+	public static Map<String, Integer> getTeamPerformance(String bundesLigaTeam, int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
@@ -227,26 +217,22 @@ public class Bundesliga {
 		URL prevRoundStatsURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round));
 
-		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
+		String prevRoundTeamStatsXML = WebCrawler.crawl_ISO8858_9(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing the information collect in the previous round", bundesLigaTeam, round, year);
-		return parseTeamPerformance(prevRoundTeamStatsXML, bundesLigaTeam, prevRoundAverageStats);
+		Map<String, Integer> teamPerformance = parseTeamPerformance(prevRoundTeamStatsXML, bundesLigaTeam, prevRoundAverageStats);
+
+		if (teamPerformance.isEmpty())
+			throw new IllegalStateException(
+					"Failed to retrieve team performance for " + bundesLigaTeam + " year " + year + " round " + round);
+
+		return teamPerformance;
 	}
 
-	/**
-	 * Method which is getting information about previous round by given round team performance
-	 * (collects the data about total distance, sprints, passes, shots, fouls and if any of them
-	 * is leaved empty the value from the average round stats will come in place)
-	 *
-	 * @param prevRoundTeamStatsXML represent the prev round statistics as xml
-	 * @param bundesLigaTeam        which wanna get performance
-	 * @param prevRoundAverageStats map containing the average statistics for all teams
-	 * @return statistics for team
-	 */
-	public static String parseTeamPerformance(String prevRoundTeamStatsXML, String bundesLigaTeam,
+	public static Map<String, Integer> parseTeamPerformance(String prevRoundTeamStatsXML, String bundesLigaTeam,
 			Map<String, Integer> prevRoundAverageStats) {
 
-		StringBuilder prevRoundStats = new StringBuilder();
+		Map<String, Integer> teamPerformance = new HashMap<>();
 
 		Document doc = DocumentUtils.parse(prevRoundTeamStatsXML);
 		NodeList teamNodes = doc.getElementsByTagName(TEAM_ATTR);
@@ -257,48 +243,41 @@ public class Bundesliga {
 			String currentTeamName = getNameFromTeamNode(currentTeam);
 
 			if (currentTeamName.equals(bundesLigaTeam)) {
-				prevRoundStats.append(getPrevRoundStats(currentTeam, prevRoundAverageStats));
+				teamPerformance = getPrevRoundStats(currentTeam, prevRoundAverageStats);
 				break;
 			}
 		}
 
-		return prevRoundStats.toString();
+		return teamPerformance;
 	}
 
-	private static String getNameFromTeamNode(Node team) {
-		return team.getFirstChild().getNextSibling().getFirstChild().getNextSibling().getAttributes()
-				.getNamedItem("full").getNodeValue();
-	}
+	private static Map<String, Integer> getPrevRoundStats(Node currentTeam, Map<String, Integer> prevRoundAverageStats) {
 
-	private static String getPrevRoundStats(Node currentTeam, Map<String, Integer> prevRoundAverageStats) {
-
-		StringBuilder output = new StringBuilder();
+		Map<String, Integer> prevRoundStats = new LinkedHashMap<>();
 
 		NamedNodeMap defensiveAttributes =
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
 						.getNextSibling().getAttributes();
 
-		output.append(getAttribute(TRACK_DIST_ATTR, prevRoundAverageStats, defensiveAttributes)).append(DELIMITER);
-		output.append(getAttribute(TRACK_SPRINTS_ATTR, prevRoundAverageStats, defensiveAttributes)).append(DELIMITER);
-		output.append(getAttribute(TRACK_PASSES_ATTR, prevRoundAverageStats, defensiveAttributes)).append(DELIMITER);
-
 		NamedNodeMap offensiveAttributes =
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
 						.getNextSibling().getFirstChild().getNextSibling().getAttributes();
-
-		output.append(getAttribute(TRACK_SHOTS_ATTR, prevRoundAverageStats, offensiveAttributes)).append(DELIMITER);
 
 		NamedNodeMap foulsAttribute =
 				currentTeam.getFirstChild().getNextSibling().getNextSibling().getNextSibling().getFirstChild()
 						.getNextSibling().getFirstChild().getNextSibling().getNextSibling().getNextSibling()
 						.getAttributes();
 
-		output.append(getAttribute(TRACK_FOULS_ATTR, prevRoundAverageStats, foulsAttribute));
+		prevRoundStats.put("distance", getAttribute(TRACK_DIST_ATTR, prevRoundAverageStats, defensiveAttributes));
+		prevRoundStats.put("sprints", getAttribute(TRACK_SPRINTS_ATTR, prevRoundAverageStats, defensiveAttributes));
+		prevRoundStats.put("passes", getAttribute(TRACK_PASSES_ATTR, prevRoundAverageStats, defensiveAttributes));
+		prevRoundStats.put("shots", getAttribute(TRACK_SHOTS_ATTR, prevRoundAverageStats, offensiveAttributes));
+		prevRoundStats.put("fouls", getAttribute(TRACK_FOULS_ATTR, prevRoundAverageStats, foulsAttribute));
 
-		return output.toString().trim();
+		return prevRoundStats;
 	}
 
-	private static String getAttribute(String attrName, Map<String, Integer> prevRoundAverageStats,
+	private static Integer getAttribute(String attrName, Map<String, Integer> prevRoundAverageStats,
 			NamedNodeMap defensiveAttributes) {
 
 		String attrValue;
@@ -315,37 +294,21 @@ public class Bundesliga {
 		}
 
 		log.debug("{} : {}", attrName, attrValue);
-		return attrValue;
+		return Integer.parseInt(attrValue);
 	}
 
-	/**
-	 * Method which creates Map with pairs {key} => {value}
-	 * for different statistics (track distance, sprints, goals, fouls, passes)
-	 *
-	 * @param year         year for the match
-	 * @param round        round for the match
-	 * @param crawledPages memorization map for already crawled pages
-	 * @return Map with average statistics for given round and year
-	 */
 	public static Map<String, Integer> getAverageRoundStats(int year, int round,
 			Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 
 		URL prevRoundStatsURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round));
-		String prevRoundStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
+		String prevRoundStatsXML = WebCrawler.crawl_ISO8858_9(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing average statistics for round {} year {}", round, year);
 		return parseAverageRoundStats(prevRoundStatsXML);
 	}
 
-	/**
-	 * Method which creates Map with pairs {key} => {value}
-	 * for different statistics (track distance, sprints, goals, fouls, passes)
-	 *
-	 * @param prevRoundStatsXML xml containing the previous round statistics
-	 * @return @link Map<String, Double>} with average statistics for given round and year
-	 */
 	public static Map<String, Integer> parseAverageRoundStats(String prevRoundStatsXML) {
 
 		Document doc = DocumentUtils.parse(prevRoundStatsXML);
@@ -372,12 +335,6 @@ public class Bundesliga {
 		averageStats.put(key, value);
 	}
 
-	/**
-	 * Method which returns ID from BundesligaName
-	 *
-	 * @param team team node
-	 * @return Bundesliga ID
-	 */
 	public static String covertIdToTeamNameFromNode(Node team) {
 		Node teamMetaDataNode = team.getFirstChild().getNextSibling();
 		int teamId =
@@ -385,15 +342,6 @@ public class Bundesliga {
 		return TeamsMapping.bundesligaIdToName.get(teamId);
 	}
 
-	/**
-	 * Return only the match table from XML file. This method using external memorization maps
-	 * for already crawled pages and already parsed documents.
-	 *
-	 * @param year         year for match table
-	 * @param round        round for match table
-	 * @param crawledPages memorization map for already crawled pages
-	 * @return return match table as NodeList class
-	 */
 	public static NodeList getMatchTable(int year, int round, Map<URL, String> crawledPages)
 			throws MalformedURLException, InterruptedException {
 

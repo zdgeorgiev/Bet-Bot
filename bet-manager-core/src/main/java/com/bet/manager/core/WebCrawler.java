@@ -22,28 +22,35 @@ public class WebCrawler {
 	}
 
 	/**
-	 * Crawl specific page
+	 * This method crawls with UTF-8 encoding.
 	 *
 	 * @param url url of the page
 	 * @return the content of a page
 	 */
-	public static String crawl(URL url) throws InterruptedException {
-		return crawl(url, Collections.emptyMap());
+	public static String crawl_UTF8(URL url) throws InterruptedException {
+		return crawl_UTF8(url, Collections.emptyMap());
 	}
 
-	/**
-	 * Crawling method which uses a external hashmap for memorization, not to crawl already crawled pages.
-	 *
-	 * @param url          url of the page
-	 * @param crawledPages memorization map
-	 * @return the content of a page
-	 */
-	public static String crawl(URL url, Map<URL, String> crawledPages) throws InterruptedException {
+	public static String crawl_UTF8(URL url, Map<URL, String> crawledPages) throws InterruptedException {
 		return crawl(url, crawledPages, "UTF-8", 3, 5);
 	}
 
 	/**
-	 * Crawling method which uses a external hashmap for memorization, not to crawl already crawled pages.
+	 * This method crawls with ISO8859_9 encoding.
+	 *
+	 * @param url url of the page
+	 * @return the content of a page
+	 */
+	public static String crawl_ISO8858_9(URL url) throws InterruptedException {
+		return crawl_ISO8858_9(url, Collections.emptyMap());
+	}
+
+	public static String crawl_ISO8858_9(URL url, Map<URL, String> crawledPages) throws InterruptedException {
+		return crawl(url, crawledPages, "ISO8859_9", 3, 5);
+	}
+
+	/**
+	 * Crawling method which uses a external hashmap for memorization, not to crawl_ISO8858_9 already crawled pages.
 	 * Also this method is using Thread.sleep() between the requests.
 	 *
 	 * @param url             url of the page

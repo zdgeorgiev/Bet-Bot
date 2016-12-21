@@ -100,7 +100,7 @@ public class FootballDataMatchParser implements IMatchParser {
 		if (TeamsMapping.footballDataToBundesliga.containsKey(footballDataMatchName))
 			return TeamsMapping.footballDataToBundesliga.get(footballDataMatchName);
 
-		throw new IllegalArgumentException("Cannot map football data team [%s] to bundesliga team");
+		throw new IllegalArgumentException("Cannot map football data team [" + footballDataMatchName + "] to bundesliga team");
 	}
 
 	private MatchStatus parseStatus(String status) {

@@ -8,14 +8,10 @@ import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.exceptions.EmptyTeamNameException;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 public class FootballMatchBuilder {
-
-	private static Logger logger = LoggerFactory.getLogger(FootballMatchBuilder.class);
 
 	private FootballMatch match;
 
