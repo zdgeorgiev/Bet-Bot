@@ -47,7 +47,7 @@ public class UpdateManagerService {
 	private IPredictor predictor;
 
 	@Autowired
-	private DataManager dataManager;
+	private DataManager<FootballMatch> dataManager;
 
 	@Autowired
 	private IMatchParser matchParser;
@@ -66,7 +66,7 @@ public class UpdateManagerService {
 		String matchesURL = String.format(FETCH_BASE_URL, startDate, endDate);
 
 		log.info("Starting to fetch matches from [{}]", matchesURL);
-		String matchesFeed = WebCrawler.crawl(new URL(matchesURL), Collections.emptyMap(), "UTF-8", 3, 5);
+		String matchesFeed = WebCrawler.crawl_UTF8(new URL(matchesURL));
 
 		updateDataBase(matchesFeed, acceptedRound);
 

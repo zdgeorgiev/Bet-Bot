@@ -52,7 +52,7 @@ public class ResultDB {
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
+		String content = WebCrawler.crawl_ISO8858_9(allMatchesForTeamURL, crawledPages);
 
 		log.debug("Trying to parse the last five games for team '{}' year {} round {}..", bundesLigaTeam, year, round);
 		return parseLastFiveGamesForTeam(content, round);
@@ -125,7 +125,7 @@ public class ResultDB {
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
+		String content = WebCrawler.crawl_ISO8858_9(allMatchesForTeamURL, crawledPages);
 
 		return parseTeamOpponent(content, round);
 	}
@@ -151,7 +151,7 @@ public class ResultDB {
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
 
-		String content = WebCrawler.crawl(allMatchesForTeamURL, crawledPages);
+		String content = WebCrawler.crawl_ISO8858_9(allMatchesForTeamURL, crawledPages);
 
 		return parseMatchVenue(content, round);
 	}
@@ -175,7 +175,7 @@ public class ResultDB {
 		URL teamMatchesURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeam, year));
 
-		String allMatchesHTML = WebCrawler.crawl(teamMatchesURL, crawledPages);
+		String allMatchesHTML = WebCrawler.crawl_ISO8858_9(teamMatchesURL, crawledPages);
 
 		String result = null;
 

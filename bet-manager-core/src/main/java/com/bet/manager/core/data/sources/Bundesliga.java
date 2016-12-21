@@ -82,7 +82,7 @@ public class Bundesliga {
 		URL prevRoundMatchesURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + ROUND_MATCHES_URL, year, round));
 
-		return WebCrawler.crawl(prevRoundMatchesURL, crawledPages);
+		return WebCrawler.crawl_ISO8858_9(prevRoundMatchesURL, crawledPages);
 	}
 
 	/**
@@ -217,7 +217,7 @@ public class Bundesliga {
 		URL prevRoundStatsURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round));
 
-		String prevRoundTeamStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
+		String prevRoundTeamStatsXML = WebCrawler.crawl_ISO8858_9(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing the information collect in the previous round", bundesLigaTeam, round, year);
 		Map<String, Integer> teamPerformance = parseTeamPerformance(prevRoundTeamStatsXML, bundesLigaTeam, prevRoundAverageStats);
@@ -303,7 +303,7 @@ public class Bundesliga {
 
 		URL prevRoundStatsURL =
 				URLUtils.createSafeURL(String.format(BUNDESLIGA_DOMAIN + TEAM_STATS_URL, year, round));
-		String prevRoundStatsXML = WebCrawler.crawl(prevRoundStatsURL, crawledPages);
+		String prevRoundStatsXML = WebCrawler.crawl_ISO8858_9(prevRoundStatsURL, crawledPages);
 
 		log.debug("Parsing average statistics for round {} year {}", round, year);
 		return parseAverageRoundStats(prevRoundStatsXML);
