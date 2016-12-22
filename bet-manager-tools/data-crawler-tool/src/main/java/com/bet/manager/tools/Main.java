@@ -7,6 +7,7 @@ import com.bet.manager.core.data.sources.FootBallDataUtils;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.dao.MatchStatus;
+import com.bet.manager.model.exceptions.MetaDataCreationException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -69,7 +70,7 @@ public class Main {
 				File jsonFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches.json");
 				FileUtils.writeLines(jsonFile, Collections.singleton(objectMapper.writeValueAsString(currentYearData)), true);
 			} else
-				throw new IllegalStateException("There is no information for year later than " + (year - 1));
+				throw new MetaDataCreationException("There is no information for year later than " + (year - 1));
 		}
 	}
 
@@ -116,11 +117,7 @@ public class Main {
 
 			log.info("Start collecting data for year {} round {}", year, round);
 
-			try {
-				allData.addAll(createMatchesForRound(year, round));
-			} catch (Exception e) {
-				log.error("Failed to create matches", e);
-			}
+			allData.addAll(createMatchesForRound(year, round));
 
 			crawledPages.clear();
 		}
@@ -141,7 +138,7 @@ public class Main {
 		try {
 			currentRoundTeams = Bundesliga.getMatchTable(year, round, crawledPages);
 		} catch (Exception e) {
-			throw new IllegalStateException(String.format("Failed to create match table for %s year %s round", year, round));
+			throw new MetaDataCreationException(String.format("Failed to create match table for %s year %s round", year, round));
 		}
 
 		String firstTeam = null;
