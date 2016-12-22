@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,13 +39,13 @@ public class FootballMatchService {
 	@Autowired
 	private FootballMatchRepository footballMatchRepository;
 
-	@Inject
+	@Autowired
 	private MetricsCounterContainer metricsCounterHolder;
 
-	@Inject
+	@Autowired
 	private MetricRegistry metricRegistry;
 
-	@Inject
+	@Autowired
 	private HealthCheckRegistry healthCheckRegistry;
 
 	@PostConstruct
