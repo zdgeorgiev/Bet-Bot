@@ -28,7 +28,7 @@ public class FootballMatchBuilderTest {
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithHomeTeamWinner() throws ParseException {
 
 		FootballMatch match = builder
-				.setStartDate(DateFormats.CONCATED_DATE_AND_TIME.parse("20160101220000"))
+				.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("2-1")
 				.setStatus(MatchStatus.FINISHED)
 				.build();
@@ -44,7 +44,7 @@ public class FootballMatchBuilderTest {
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithTieResult() throws ParseException {
 
 		FootballMatch match = builder
-				.setStartDate(DateFormats.CONCATED_DATE_AND_TIME.parse("20160101220000"))
+				.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("2-2")
 				.setStatus(MatchStatus.FINISHED)
 				.build();
@@ -60,7 +60,7 @@ public class FootballMatchBuilderTest {
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult() throws ParseException {
 
 		FootballMatch match = builder
-				.setStartDate(DateFormats.CONCATED_DATE_AND_TIME.parse("20160101220000"))
+				.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20160101220000"))
 				.setResult("? - ?")
 				.build();
 
@@ -78,7 +78,7 @@ public class FootballMatchBuilderTest {
 
 	@Test(expected = ParseException.class)
 	public void testMatchWithInvalidStartDate() throws ParseException {
-		builder.setStartDate(DateFormats.CONCATED_DATE_AND_TIME.parse("20165101220000"));
+		builder.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20165101220000"));
 	}
 
 	@Test

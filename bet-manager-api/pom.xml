@@ -15,9 +15,11 @@
   <packaging>war</packaging>
 
   <name>Bet Manager API</name>
+  <description>Bet Manager API is the way to create or update entities in the database.</description>
 
   <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<springfox-swagger2.version>2.6.1</springfox-swagger2.version>
   </properties>
 
   <dependencies>
@@ -54,6 +56,18 @@
 	  <artifactId>spring-test</artifactId>
 	  <version>${spring.version}</version>
 	  <scope>test</scope>
+	</dependency>
+
+	<!-- Swagger -->
+	<dependency>
+	  <groupId>io.springfox</groupId>
+	  <artifactId>springfox-swagger2</artifactId>
+	  <version>${springfox-swagger2.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>io.springfox</groupId>
+	  <artifactId>springfox-swagger-ui</artifactId>
+	  <version>${springfox-swagger2.version}</version>
 	</dependency>
 
 	<!-- Jackson -->
@@ -137,6 +151,13 @@
 
   <build>
 	<finalName>${project.artifactId}</finalName>
+
+	<resources>
+	  <resource>
+		<directory>src/main/resources/</directory>
+		<filtering>true</filtering>
+	  </resource>
+	</resources>
 
 	<plugins>
 

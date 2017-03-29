@@ -9,9 +9,9 @@
 
   <context:annotation-config/>
 
-  <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->
-  <!--<mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>-->
+  <context:property-placeholder location="classpath*:/META-INF/swagger.properties" ignore-unresolvable="true"/>
 
+  <context:component-scan base-package="com.bet.manager.swagger"/>
   <context:component-scan base-package="com.bet.manager.web"/>
 
   <mvc:annotation-driven>

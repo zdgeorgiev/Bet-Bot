@@ -1,3 +1,1 @@
-Services :
-
-// TODO : Integrate with Swagger !!
+API Parameters:

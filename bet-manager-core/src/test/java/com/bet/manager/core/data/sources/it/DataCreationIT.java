@@ -10,8 +10,8 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class DataCreationIT {
 
@@ -33,14 +33,14 @@ public class DataCreationIT {
 		Map<String, Integer> avgStatsPrev =
 				Bundesliga.parseAverageRoundStats(ClasspathUtils.getContentUTF8("crawl-data/bundesliga_team_stats_round_1.xml"));
 
-		LinkedHashMap<String, Object> firstTeamMDATA = new LinkedHashMap<>();
+		TreeMap<String, Object> firstTeamMDATA = new TreeMap<>();
 		firstTeamMDATA.put("1", rankingTable.get(firstTeam));
 		firstTeamMDATA.put("2", Bundesliga.parsePoints(currentRoundDoc.getElementsByTagName("team").item(0)));
 		firstTeamMDATA.put("3", Bundesliga.parseGoalDifference(currentRoundDoc.getElementsByTagName("team").item(0)));
 		firstTeamMDATA.put("4", Bundesliga.parseTeamPerformance(prevRoundStats, firstTeam, avgStatsPrev));
 		firstTeamMDATA.put("5", ResultDB.parseLastFiveGamesForTeam(allMatchesFirstTeamContent, round));
 
-		LinkedHashMap<String, Object> secondTeamMDATA = new LinkedHashMap<>();
+		TreeMap<String, Object> secondTeamMDATA = new TreeMap<>();
 		secondTeamMDATA.put("1", rankingTable.get(secondTeam));
 		secondTeamMDATA.put("2", Bundesliga.parsePoints(currentRoundDoc.getElementsByTagName("team").item(17)));
 		secondTeamMDATA.put("3", Bundesliga.parseGoalDifference(currentRoundDoc.getElementsByTagName("team").item(17)));

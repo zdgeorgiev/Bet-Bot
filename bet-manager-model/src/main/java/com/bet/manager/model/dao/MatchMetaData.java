@@ -3,8 +3,8 @@ package com.bet.manager.model.dao;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Entity
 @Table(name = "match_metadata")
@@ -21,29 +21,29 @@ public class MatchMetaData implements Serializable {
 
 	@Lob
 	@CollectionTable(name = "first_team_metadata")
-	private LinkedHashMap<String, Object> firstTeamMetaData;
+	private TreeMap<String, Object> firstTeamMetaData;
 
 	@Lob
 	@CollectionTable(name = "second_team_metadata")
-	private LinkedHashMap<String, Object> secondTeamMetaData;
+	private TreeMap<String, Object> secondTeamMetaData;
 
 	public MatchMetaData() {
 
 	}
 
-	public LinkedHashMap<String, Object> getFirstTeamMetaData() {
+	public TreeMap<String, Object> getFirstTeamMetaData() {
 		return firstTeamMetaData;
 	}
 
-	public void setFirstTeamMetaData(LinkedHashMap<String, Object> firstTeamMetaData) {
+	public void setFirstTeamMetaData(TreeMap<String, Object> firstTeamMetaData) {
 		this.firstTeamMetaData = firstTeamMetaData;
 	}
 
-	public LinkedHashMap<String, Object> getSecondTeamMetaData() {
+	public TreeMap<String, Object> getSecondTeamMetaData() {
 		return secondTeamMetaData;
 	}
 
-	public void setSecondTeamMetaData(LinkedHashMap<String, Object> secondTeamMetaData) {
+	public void setSecondTeamMetaData(TreeMap<String, Object> secondTeamMetaData) {
 		this.secondTeamMetaData = secondTeamMetaData;
 	}
 

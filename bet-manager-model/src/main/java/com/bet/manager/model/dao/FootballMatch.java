@@ -34,10 +34,12 @@ public class FootballMatch implements Serializable {
 	@Column(name = "start_date")
 	private Date startDate;
 
+	@JsonIgnore
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
 	@Column(name = "date_created")
 	private Date dateCreated;
 
+	@JsonIgnore
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
 	@Column(name = "last_modified")
 	private Date lastModified;

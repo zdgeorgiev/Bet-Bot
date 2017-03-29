@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.bet.manager.core.data.sources.FootBallDataUtils.*;
 
@@ -57,8 +54,8 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 		int year = match.getYear();
 		int round = match.getRound();
 
-		LinkedHashMap<String, Object> firstTeamMetaData = getMetaDataForTeam(firstTeam, year, round - 1);
-		LinkedHashMap<String, Object> secondTeamMetaData = getMetaDataForTeam(secondTeam, year, round - 1);
+		TreeMap<String, Object> firstTeamMetaData = getMetaDataForTeam(firstTeam, year, round - 1);
+		TreeMap<String, Object> secondTeamMetaData = getMetaDataForTeam(secondTeam, year, round - 1);
 
 		MatchMetaData currentMatchMetaData = new MatchMetaData();
 		currentMatchMetaData.setFirstTeamMetaData(firstTeamMetaData);
@@ -79,7 +76,7 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 		log.info("Successfully created metadata for match {}", match.getSummary());
 	}
 
-	private LinkedHashMap<String, Object> getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
+	private TreeMap<String, Object> getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {
 
 		if (StringUtils.isEmpty(bundesLigaTeam))
 			throw new MetaDataCreationException("Team name cannot be empty");
@@ -92,7 +89,7 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 			throw new MetaDataCreationException(
 					"Year '" + year + "' .. should be in range [" + MIN_YEAR + ".." + MAX_YEAR + "]");
 
-		LinkedHashMap<String, Object> currentTeamData = new LinkedHashMap<>();
+		TreeMap<String, Object> currentTeamData = new TreeMap<>();
 
 		currentTeamData.put(POSITION, getTeamRankingPlace(bundesLigaTeam, year, round, crawledPages));
 		currentTeamData.put(POINTS, getPoints(bundesLigaTeam, year, round, crawledPages));
@@ -112,8 +109,8 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 		String secondTeam = match.getAwayTeam();
 		match.setHomeTeam(secondTeam);
 		match.setAwayTeam(firstTeam);
-		LinkedHashMap<String, Object> firstTeamMetData = currentMatchMetaData.getFirstTeamMetaData();
-		LinkedHashMap<String, Object> secondTeamMetData = currentMatchMetaData.getSecondTeamMetaData();
+		TreeMap<String, Object> firstTeamMetData = currentMatchMetaData.getFirstTeamMetaData();
+		TreeMap<String, Object> secondTeamMetData = currentMatchMetaData.getSecondTeamMetaData();
 		currentMatchMetaData.setFirstTeamMetaData(secondTeamMetData);
 		currentMatchMetaData.setSecondTeamMetaData(firstTeamMetData);
 	}
