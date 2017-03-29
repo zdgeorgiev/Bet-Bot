@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/predictions", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class PredictionInfoRestController {
+public class PredictionInfoController {
 
 	@Autowired
 	private PredictionInfoService predictionInfoService;

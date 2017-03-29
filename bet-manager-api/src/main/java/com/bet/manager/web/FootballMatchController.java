@@ -2,9 +2,6 @@ package com.bet.manager.web;
 
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.services.FootballMatchService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,13 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/matches", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class FootballMatchRestController {
-
-	private static final ObjectMapper objectMapper = new ObjectMapper();
-
-	static {
-		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-	}
+public class FootballMatchController {
 
 	@Autowired
 	private FootballMatchService footballMatchService;
@@ -37,7 +28,7 @@ public class FootballMatchRestController {
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	public void updateMatches(@RequestBody List<FootballMatch> matches) throws JsonProcessingException {
+	public void updateMatches(@RequestBody List<FootballMatch> matches) {
 
 		footballMatchService.updateMatches(matches);
 	}

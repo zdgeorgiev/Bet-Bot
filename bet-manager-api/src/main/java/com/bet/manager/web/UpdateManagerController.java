@@ -21,18 +21,21 @@ public class UpdateManagerController {
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void update() throws MalformedURLException, InterruptedException {
+
 		updateManagerService.fetch();
 	}
 
 	@RequestMapping(value = "/process", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void process() {
+
 		updateManagerService.process();
 	}
 
 	@RequestMapping(value = "/predict", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void predict() {
+
 		updateManagerService.predict();
 	}
 }

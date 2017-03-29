@@ -72,7 +72,6 @@ public class FootballMatchService {
 
 		for (FootballMatch match : matches) {
 			try {
-
 				if (exist(match))
 					throw new FootballMatchAlreadyExistException(
 							String.format("Football Match '%s' already exist", match.getSummary()));

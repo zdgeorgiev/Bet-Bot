@@ -106,8 +106,7 @@ public class UpdateManagerService {
 		Optional<FootballMatch> match = footballMatchRepository.findAll().stream()
 				.filter(m ->
 						m.getMatchStatus().equals(MatchStatus.FINISHED) && m.getMatchMetaData() != null)
-				.sorted((FootballMatch m1, FootballMatch m2) ->
-						Integer.compare(m1.getRound(), m2.getRound()))
+				.sorted(Comparator.comparingInt(FootballMatch::getRound))
 				.findFirst();
 
 		if (match.isPresent())
