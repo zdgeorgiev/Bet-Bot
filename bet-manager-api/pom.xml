@@ -65,14 +65,25 @@
 
 	<!--Metrics-->
 	<dependency>
-	  <groupId>com.codahale.metrics</groupId>
+	  <groupId>io.dropwizard.metrics</groupId>
 	  <artifactId>metrics-core</artifactId>
 	  <version>${metrics.version}</version>
 	</dependency>
 	<dependency>
-	  <groupId>healthcheck-commons</groupId>
-	  <artifactId>healthcheck-commons</artifactId>
-	  <version>${healthcheck-commons.version}</version>
+	  <groupId>io.dropwizard.metrics</groupId>
+	  <artifactId>metrics-healthchecks</artifactId>
+	  <version>${metrics.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>io.dropwizard.metrics</groupId>
+	  <artifactId>metrics-servlets</artifactId>
+	  <version>${metrics.version}</version>
+	</dependency>
+
+	<dependency>
+	  <groupId>javax.inject</groupId>
+	  <artifactId>javax.inject</artifactId>
+	  <version>1</version>
 	</dependency>
 
 	<dependency>

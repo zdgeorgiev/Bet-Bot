@@ -43,10 +43,9 @@
 	<swagger-ui.version>2.1.4</swagger-ui.version>
 	<spring-boot.version>1.1.4.RELEASE</spring-boot.version>
 	<spring.version>4.2.3.RELEASE</spring.version>
-	<spring-data-jpa.version>1.9.0.DATAJPA-775-SNAPSHOT</spring-data-jpa.version>
+	<spring-data-jpa.version>1.11.0.RELEASE</spring-data-jpa.version>
 	<jackson.version>2.6.0</jackson.version>
-	<metrics.version>3.0.0</metrics.version>
-	<healthcheck-commons.version>2.0.0</healthcheck-commons.version>
+	<metrics.version>3.2.2</metrics.version>
 	<xml-apis.version>1.4.01</xml-apis.version>
 	<servlet-api.version>2.5</servlet-api.version>
   </properties>
