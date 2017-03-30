@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-public class FootBallDataUtils {
+public class FootballDataUtils {
 
-	private FootBallDataUtils() {
+	private FootballDataUtils() {
 	}
 
 	/**

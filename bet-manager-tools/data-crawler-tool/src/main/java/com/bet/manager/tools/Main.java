@@ -3,7 +3,7 @@ package com.bet.manager.tools;
 import com.bet.manager.commons.util.PerformanceUtils;
 import com.bet.manager.core.data.FootballDataManager;
 import com.bet.manager.core.data.sources.Bundesliga;
-import com.bet.manager.core.data.sources.FootBallDataUtils;
+import com.bet.manager.core.data.sources.FootballDataUtils;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchMetaData;
 import com.bet.manager.model.dao.MatchStatus;
@@ -56,7 +56,7 @@ public class Main {
 			throw new IllegalStateException("Less arguments than required.");
 		}
 
-		File destinationFolder = initializeDestinationFolder(args);
+		File destinationFolder = initDestinationFolder(args);
 
 		for (int year = startYear; year <= endYear; year++) {
 
@@ -64,8 +64,8 @@ public class Main {
 
 			if (currentYearData.size() != 0) {
 
-				File textFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches_nn_input.txt");
-				writeMatchesNNInput(currentYearData, textFile);
+				File nnInput = new File(destinationFolder + File.separator + year + "_bundesliga_matches_nn_input.txt");
+				writeMatchesNNInput(currentYearData, nnInput);
 
 				File jsonFile = new File(destinationFolder + File.separator + year + "_bundesliga_matches.json");
 				FileUtils.writeLines(jsonFile, Collections.singleton(objectMapper.writeValueAsString(currentYearData)), true);
@@ -74,15 +74,7 @@ public class Main {
 		}
 	}
 
-	private static void writeMatchesNNInput(List<FootballMatch> currentYearData, File textFile) throws IOException {
-
-		for (FootballMatch footballMatch : currentYearData) {
-			FileUtils.write(textFile, footballMatch.getMetaDataNNInput() + MatchMetaData.SPLITERATOR
-					+ footballMatch.getResult() + System.lineSeparator(), true);
-		}
-	}
-
-	private static File initializeDestinationFolder(String[] args) {
+	private static File initDestinationFolder(String[] args) {
 
 		File destinationFolder;
 
@@ -100,10 +92,25 @@ public class Main {
 	}
 
 	/**
-	 * This method creating matches for given year in the bundesliga german football league.
+	 * This method create matches for given year in the bundesliga german football league.
 	 * This method is using crawling which requiring network connection.
 	 *
-	 * @param year for which want to get the data. The year should be at least 2011
+	 * @param matches         {@link List <{@link FootballMatch}> } contains football matches
+	 * @param destinationFile is the output file to write on
+	 */
+	private static void writeMatchesNNInput(List<FootballMatch> matches, File destinationFile) throws IOException {
+
+		for (FootballMatch footballMatch : matches) {
+			FileUtils.write(destinationFile, footballMatch.getMetaDataNNInput() + MatchMetaData.SPLITERATOR
+					+ footballMatch.getResult() + System.lineSeparator(), true);
+		}
+	}
+
+	/**
+	 * This method create matches for given year in the bundesliga german football league.
+	 * This method is using crawling which requiring network connection.
+	 *
+	 * @param year for which you want to get the data. Year must be at least 2011
 	 * @return {@link List <{@link FootballMatch}> } containing all matches for the year
 	 */
 	private static List<FootballMatch> getAllMatches(int year) throws MalformedURLException {
@@ -129,6 +136,14 @@ public class Main {
 		return allData;
 	}
 
+	/**
+	 * This method create matches for specific year and round in the bundesliga german football league.
+	 * This method is using crawling which requiring network connection.
+	 *
+	 * @param year  for which you want to get the data. Year must be at least 2011
+	 * @param round for which round you want to get the data. Round must be at least 2
+	 * @return {@link List <{@link FootballMatch}> } containing all matches for the year
+	 */
 	private static List<FootballMatch> createMatchesForRound(int year, int round) {
 
 		Set<String> teamBlackList = new HashSet<>();
@@ -151,7 +166,7 @@ public class Main {
 				Node currentTeam = currentRoundTeams.item(i);
 
 				firstTeam = Bundesliga.covertIdToTeamNameFromNode(currentTeam);
-				secondTeam = FootBallDataUtils.getTeamOpponent(firstTeam, year, round, crawledPages);
+				secondTeam = FootballDataUtils.getTeamOpponent(firstTeam, year, round, crawledPages);
 
 				if (!teamBlackList.contains(firstTeam) && !teamBlackList.contains(secondTeam)) {
 

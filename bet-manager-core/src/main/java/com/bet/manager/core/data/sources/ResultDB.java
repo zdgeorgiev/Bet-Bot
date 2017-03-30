@@ -36,7 +36,7 @@ public class ResultDB {
 	private static final String LOSES = "loses";
 	private static final String DRAWS = "draws";
 
-	public ResultDB() {
+	private ResultDB() {
 	}
 
 	public static Map<String, Integer> getLastFiveGames(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
@@ -78,7 +78,6 @@ public class ResultDB {
 
 		for (int i = 0; i < matchesToLook; i++) {
 			Element currentMatch = e.children().get(0).children().get(matchesCount - round + 2 + i);
-
 
 			String result = currentMatch.children().get(3).text();
 			String score = currentMatch.children().get(4).text();

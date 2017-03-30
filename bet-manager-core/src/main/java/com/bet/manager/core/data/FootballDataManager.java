@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.util.*;
 
-import static com.bet.manager.core.data.sources.FootBallDataUtils.*;
+import static com.bet.manager.core.data.sources.FootballDataUtils.*;
 
 public class FootballDataManager implements DataManager<FootballMatch> {
 

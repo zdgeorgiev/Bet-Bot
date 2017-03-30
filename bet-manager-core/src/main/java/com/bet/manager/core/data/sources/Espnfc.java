@@ -7,43 +7,47 @@ import java.util.Map;
 
 public class Espnfc {
 
-	public String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	private Espnfc() {
+
+	}
+
+	public static String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
 
-	public String parseTeamOpponent(String allMatchesHTML, int round) {
+	public static String parseTeamOpponent(String allMatchesHTML, int round) {
 		return null;
 	}
 
-	public String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return null;
 	}
 
-	public String parseMatchResult(int round, String allMatchesHTML) {
+	public static String parseMatchResult(int round, String allMatchesHTML) {
 		return null;
 	}
 
-	public Map<String, Integer> getLastFiveGames(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static Map<String, Integer> getLastFiveGames(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return MapUtils.EMPTY_MAP;
 	}
 
-	public String parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
+	public static String parseLastFiveGamesForTeam(String allMatchesHTML, int round) {
 		return null;
 	}
 
-	public String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 		return "-1";
 	}
 
-	public String parseMatchVenue(String allMatchesHTML, int round) {
+	public static String parseMatchVenue(String allMatchesHTML, int round) {
 		return null;
 	}
 
-	public void addMatchToNormalizationArray(String result, String score, int[] matchesNormalization) {
+	public static void addMatchToNormalizationArray(String result, String score, int[] matchesNormalization) {
 
 	}
 }
