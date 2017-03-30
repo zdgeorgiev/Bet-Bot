@@ -17,6 +17,7 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.RatioGauge;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,9 @@ public class FootballMatchService {
 	}
 
 	public void createMatches(List<FootballMatch> matches) {
+
+		List<FootballMatch> validatedMatches = new ArrayList<>();
+		matches.forEach(m -> validatedMatches.add(new FootballMatchBuilder(m).build()));
 
 		for (FootballMatch match : matches) {
 			try {
@@ -209,6 +213,7 @@ public class FootballMatchService {
 				}
 
 				FootballMatch updated = new FootballMatchBuilder(retrievedMatch)
+						.setStartDate(updateStartDate(retrievedMatch.getStartDate(), match.getStartDate()))
 						.setStatus(updatedStatus(retrievedMatch.getMatchStatus(), match.getMatchStatus()))
 						.setMatchMetaData(updatedMetadata(retrievedMatch.getMatchMetaData(), match.getMatchMetaData()))
 						.setPrediction(updatedPrediction(retrievedMatch.getPrediction(), match.getPrediction()))
@@ -222,6 +227,10 @@ public class FootballMatchService {
 				log.error("Failed to update match {}", match.getSummary(), e);
 			}
 		}
+	}
+
+	private DateTime updateStartDate(DateTime m1, DateTime m2) {
+		return m1 == null ? m2 : m1;
 	}
 
 	private MatchStatus updatedStatus(MatchStatus m1, MatchStatus m2) {
