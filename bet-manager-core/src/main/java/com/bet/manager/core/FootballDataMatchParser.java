@@ -1,11 +1,11 @@
 package com.bet.manager.core;
 
-import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.exceptions.MatchStatusNotExist;
 import com.bet.manager.model.util.FootballMatchBuilder;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -24,9 +24,6 @@ public class FootballDataMatchParser implements IMatchParser {
 	private static final String TIMED_TAG = "TIMED";
 	private static final String CANCELED_TAG = "CANCELED";
 
-	private static final String RESULT_DELIMITER = new FootballMatch().getResultDelimiter();
-	private static final Calendar CAL = Calendar.getInstance();
-
 	@Override
 	public Map<MatchStatus, List<FootballMatch>> parse(String content) {
 
@@ -38,8 +35,7 @@ public class FootballDataMatchParser implements IMatchParser {
 
 			try {
 
-				Date startDate = DateFormats.FOOTBALL_DATA_DATE_FORMAT.parse(getProperty(matchObject, "date"));
-				CAL.setTime(startDate);
+				DateTime startDate = DateTime.parse(getProperty(matchObject, "date"));
 
 				String homeTeam = convertToBundesligaTeam(getProperty(matchObject, "homeTeamName"));
 				String awayTeam = convertToBundesligaTeam(getProperty(matchObject, "awayTeamName"));
@@ -70,9 +66,9 @@ public class FootballDataMatchParser implements IMatchParser {
 						.setStatus(status)
 						.setStartDate(startDate)
 						.setRound(matchDay)
-						.setYear(CAL.get(Calendar.YEAR)) // this get the year from the object
+						.setYear(startDate.getYear())
 						.setResult(homeTeamGoals == -1 || awayTeamGoals == -1 ? ResultMessages.UNKNOWN_RESULT :
-								String.format("%s%s%s", homeTeamGoals, RESULT_DELIMITER, awayTeamGoals))
+								String.format("%s-%s", homeTeamGoals, awayTeamGoals))
 						.build();
 
 				matches.get(match.getMatchStatus()).add(match);

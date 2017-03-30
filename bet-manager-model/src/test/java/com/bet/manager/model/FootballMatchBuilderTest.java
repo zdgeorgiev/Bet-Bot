@@ -1,21 +1,25 @@
 package com.bet.manager.model;
 
-import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.ResultMessages;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import junit.framework.Assert;
+import org.joda.time.DateTime;
+import org.joda.time.IllegalFieldValueException;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.text.ParseException;
-import java.util.Date;
 
 public class FootballMatchBuilderTest {
 
 	private static FootballMatchBuilder builder;
+
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm");
 
 	@Before
 	public void init() {
@@ -28,15 +32,14 @@ public class FootballMatchBuilderTest {
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithHomeTeamWinner() throws ParseException {
 
 		FootballMatch match = builder
-				.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20160101220000"))
+				.setStartDate(DateTime.parse("2016-01-01T22:00"))
 				.setResult("2-1")
 				.setStatus(MatchStatus.FINISHED)
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());
 		Assert.assertEquals("CSKA", match.getAwayTeam());
-		Assert.assertEquals("January 1 2016 22:00",
-				DateFormats.MATCH_DATE_AND_TIME_FORMATTED.format(match.getStartDate()));
+		Assert.assertEquals("2016-01-01T22:00", DATE_FORMATTER.print(match.getStartDate()));
 		Assert.assertEquals(match.getHomeTeam(), match.getWinner());
 	}
 
@@ -44,15 +47,14 @@ public class FootballMatchBuilderTest {
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithTieResult() throws ParseException {
 
 		FootballMatch match = builder
-				.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20160101220000"))
+				.setStartDate(DateTime.parse("2016-01-01T22:00"))
 				.setResult("2-2")
 				.setStatus(MatchStatus.FINISHED)
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());
 		Assert.assertEquals("CSKA", match.getAwayTeam());
-		Assert.assertEquals("January 1 2016 22:00",
-				DateFormats.MATCH_DATE_AND_TIME_FORMATTED.format(match.getStartDate()));
+		Assert.assertEquals("2016-01-01T22:00", DATE_FORMATTER.print(match.getStartDate()));
 		Assert.assertEquals(ResultMessages.TIE_RESULT, match.getWinner());
 	}
 
@@ -60,14 +62,13 @@ public class FootballMatchBuilderTest {
 	public void testMatchBuilderWithValidHomeAwayTeamsAndDateWithUnknownResult() throws ParseException {
 
 		FootballMatch match = builder
-				.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20160101220000"))
+				.setStartDate(DateTime.parse("2016-01-01T22:00"))
 				.setResult("? - ?")
 				.build();
 
 		Assert.assertEquals("Levski", match.getHomeTeam());
 		Assert.assertEquals("CSKA", match.getAwayTeam());
-		Assert.assertEquals("January 1 2016 22:00",
-				DateFormats.MATCH_DATE_AND_TIME_FORMATTED.format(match.getStartDate()));
+		Assert.assertEquals("2016-01-01T22:00", DATE_FORMATTER.print(match.getStartDate()));
 		Assert.assertEquals(ResultMessages.UNKNOWN_WINNER, match.getWinner());
 	}
 
@@ -76,13 +77,13 @@ public class FootballMatchBuilderTest {
 		builder.setAwayTeamName("Levski").build();
 	}
 
-	@Test(expected = ParseException.class)
+	@Test(expected = IllegalFieldValueException.class)
 	public void testMatchWithInvalidStartDate() throws ParseException {
-		builder.setStartDate(DateFormats.CONCATENATED_DATE_AND_TIME.parse("20165101220000"));
+		builder.setStartDate(DateTime.parse("2016-13-10T12:20"));
 	}
 
 	@Test
 	public void testMatchWinnerWithNoGivenResult() {
-		Assert.assertEquals(ResultMessages.UNKNOWN_WINNER, builder.setStartDate(new Date()).build().getWinner());
+		Assert.assertEquals(ResultMessages.UNKNOWN_WINNER, builder.setStartDate(new DateTime()).build().getWinner());
 	}
 }

@@ -48,6 +48,7 @@
 	<metrics.version>3.2.2</metrics.version>
 	<xml-apis.version>1.4.01</xml-apis.version>
 	<servlet-api.version>2.5</servlet-api.version>
+	<joda-time.version>2.9.9</joda-time.version>
   </properties>
 
   <dependencies>

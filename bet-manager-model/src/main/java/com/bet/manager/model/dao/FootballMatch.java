@@ -2,10 +2,11 @@ package com.bet.manager.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
 @Table(name = "matches")
@@ -30,19 +31,22 @@ public class FootballMatch implements Serializable {
 	@Column(name = "round")
 	private int round;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "start_date")
-	private Date startDate;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime startDate;
 
 	@JsonIgnore
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "date_created")
-	private Date dateCreated;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime dateCreated;
 
 	@JsonIgnore
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "EET")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "last_modified")
-	private Date lastModified;
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+	private DateTime lastModified;
 
 	@Column(name = "matchStatus")
 	private MatchStatus matchStatus;
@@ -62,17 +66,9 @@ public class FootballMatch implements Serializable {
 	@Column(name = "predictionType")
 	private PredictionType predictionType;
 
-	/**
-	 * score delimiter for the result example : 4-2
-	 * delimiter is "-"
-	 */
-	@Transient
-	@JsonIgnore
-	private String resultDelimiter = "-";
-
 	public FootballMatch() {
-		this.dateCreated = new Date();
-		this.lastModified = new Date();
+		this.dateCreated = new DateTime();
+		this.lastModified = new DateTime();
 		predictionType = PredictionType.NOT_PREDICTED;
 	}
 
@@ -84,16 +80,12 @@ public class FootballMatch implements Serializable {
 		return awayTeam;
 	}
 
-	public Date getStartDate() {
+	public DateTime getStartDate() {
 		return startDate;
 	}
 
 	public String getResult() {
 		return result;
-	}
-
-	public String getResultDelimiter() {
-		return resultDelimiter;
 	}
 
 	public String getWinner() {
@@ -108,16 +100,12 @@ public class FootballMatch implements Serializable {
 		this.awayTeam = awayTeam;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(DateTime startDate) {
 		this.startDate = startDate;
 	}
 
 	public void setResult(String result) {
 		this.result = result;
-	}
-
-	public void setResultDelimiter(String resultDelimiter) {
-		this.resultDelimiter = resultDelimiter;
 	}
 
 	public void setWinner(String winner) {
@@ -148,19 +136,19 @@ public class FootballMatch implements Serializable {
 		this.predictionType = predictionType;
 	}
 
-	public Date getDateCreated() {
+	public DateTime getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Date dateCreated) {
+	public void setDateCreated(DateTime dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
-	public Date getLastModified() {
+	public DateTime getLastModified() {
 		return lastModified;
 	}
 
-	public void setLastModified(Date lastModified) {
+	public void setLastModified(DateTime lastModified) {
 		this.lastModified = lastModified;
 	}
 

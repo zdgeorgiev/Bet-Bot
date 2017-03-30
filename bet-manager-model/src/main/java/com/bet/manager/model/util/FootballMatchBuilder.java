@@ -8,8 +8,7 @@ import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.exceptions.EmptyTeamNameException;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.Date;
+import org.joda.time.DateTime;
 
 public class FootballMatchBuilder {
 
@@ -43,7 +42,7 @@ public class FootballMatchBuilder {
 		return this;
 	}
 
-	public FootballMatchBuilder setStartDate(Date startDate) {
+	public FootballMatchBuilder setStartDate(DateTime startDate) {
 
 		match.setStartDate(startDate);
 		return this;
@@ -62,9 +61,9 @@ public class FootballMatchBuilder {
 
 	private FootballMatchBuilder setWinner() {
 
-		if (!match.getResult().contains(match.getResultDelimiter())) {
+		if (!match.getResult().contains("-")) {
 			throw new IllegalArgumentException(
-					"Result " + match.getResult() + " not contains the delimiter " + match.getResultDelimiter());
+					"Result " + match.getResult() + " not contains the delimiter -");
 		}
 
 		String winner;
@@ -82,7 +81,7 @@ public class FootballMatchBuilder {
 
 	private String getWinnerFromResult(FootballMatch match, String result) {
 		String winner;
-		String[] tokens = result.split(match.getResultDelimiter());
+		String[] tokens = result.split("-");
 		Integer homeTeamGoals = Integer.parseInt(tokens[0].trim());
 		Integer awayTeamGoals = Integer.parseInt(tokens[1].trim());
 
@@ -141,7 +140,7 @@ public class FootballMatchBuilder {
 	}
 
 	private void setLastModified() {
-		match.setLastModified(new Date());
+		match.setLastModified(new DateTime());
 	}
 
 	public FootballMatch build() {

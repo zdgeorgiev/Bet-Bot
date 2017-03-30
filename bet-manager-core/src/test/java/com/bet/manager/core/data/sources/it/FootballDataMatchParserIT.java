@@ -1,19 +1,17 @@
 package com.bet.manager.core.data.sources.it;
 
-import com.bet.manager.commons.DateFormats;
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.FootballDataMatchParser;
 import com.bet.manager.core.IMatchParser;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.util.FootballMatchBuilder;
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +27,7 @@ public class FootballDataMatchParserIT {
 	@Test
 	public void skipAllMatchesForMatchDayOne() {
 
-		// 18 matches with 9 for round 1
+		// 18 matches with 9 that arent started for round 1
 		String content = ClasspathUtils.getContentUTF8("footballData-matches-for-different-matchday.txt");
 
 		Map<MatchStatus, List<FootballMatch>> actual = parser.parse(content);
@@ -137,11 +135,11 @@ public class FootballDataMatchParserIT {
 
 	private FootballMatch createMatch(Integer year, Integer round, String homeTeam, String awayTeam, String date) {
 
-		Date startDate;
+		DateTime startDate;
 
 		try {
-			startDate = DateFormats.FOOTBALL_DATA_DATE_FORMAT.parse(date);
-		} catch (ParseException e) {
+			startDate = DateTime.parse(date);
+		} catch (Exception e) {
 			throw new IllegalArgumentException("Start date cannot be parsed.");
 		}
 
