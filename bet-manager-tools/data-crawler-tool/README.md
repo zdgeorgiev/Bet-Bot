@@ -4,7 +4,8 @@
 The tools creates 2 files in the destination folder each for every given year. First file is .json containing all matches representations
 and the second .txt file contains each match match metadata Neural Network representation (NOTE : Also containing the result as last column)
 
-##Usage : After the mvn clean install should run:
+
+## Usage : After the mvn clean install should run:
 
 * First build the whole project with <code>mvn clean install</code>
 * <code>java -jar target/data-crawler-tool.jar [start.year] [end.year] [path.to.destination.folder]</code>
