@@ -6,11 +6,12 @@ import com.bet.manager.core.IMatchParser;
 import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.util.FootballMatchBuilder;
-import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class FootballDataMatchParserIT {
 
 	private static IMatchParser parser;
+
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	@BeforeClass
 	public static void init() {
@@ -135,10 +138,10 @@ public class FootballDataMatchParserIT {
 
 	private FootballMatch createMatch(Integer year, Integer round, String homeTeam, String awayTeam, String date) {
 
-		DateTime startDate;
+		LocalDateTime startDate;
 
 		try {
-			startDate = DateTime.parse(date);
+			startDate = LocalDateTime.parse(date, DATE_FORMATTER);
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Start date cannot be parsed.");
 		}

@@ -2,11 +2,10 @@ package com.bet.manager.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "matches")
@@ -15,9 +14,9 @@ public class FootballMatch implements Serializable {
 	private static final long serialVersionUID = -7470593573172210843L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Long id;
 
 	@Column(name = "home_team")
 	private String homeTeam;
@@ -33,25 +32,23 @@ public class FootballMatch implements Serializable {
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "start_date")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-	private DateTime startDate;
+	private LocalDateTime startDate;
 
 	@JsonIgnore
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "date_created")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-	private DateTime dateCreated;
+	private LocalDateTime dateCreated;
 
 	@JsonIgnore
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "last_modified")
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-	private DateTime lastModified;
+	private LocalDateTime lastModified;
 
 	@Column(name = "matchStatus")
 	private MatchStatus matchStatus;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "metadata_id")
 	private MatchMetaData matchMetaData;
 
 	@Column(name = "result")
@@ -67,89 +64,33 @@ public class FootballMatch implements Serializable {
 	private PredictionType predictionType;
 
 	public FootballMatch() {
-		this.dateCreated = new DateTime();
-		this.lastModified = new DateTime();
+		this.dateCreated = LocalDateTime.now();
+		this.lastModified = LocalDateTime.now();
 		predictionType = PredictionType.NOT_PREDICTED;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getHomeTeam() {
 		return homeTeam;
 	}
 
-	public String getAwayTeam() {
-		return awayTeam;
-	}
-
-	public DateTime getStartDate() {
-		return startDate;
-	}
-
-	public String getResult() {
-		return result;
-	}
-
-	public String getWinner() {
-		return winner;
-	}
-
 	public void setHomeTeam(String homeTeam) {
 		this.homeTeam = homeTeam;
 	}
 
+	public String getAwayTeam() {
+		return awayTeam;
+	}
+
 	public void setAwayTeam(String awayTeam) {
 		this.awayTeam = awayTeam;
-	}
-
-	public void setStartDate(DateTime startDate) {
-		this.startDate = startDate;
-	}
-
-	public void setResult(String result) {
-		this.result = result;
-	}
-
-	public void setWinner(String winner) {
-		this.winner = winner;
-	}
-
-	public String getPrediction() {
-		return prediction;
-	}
-
-	public void setPrediction(String prediction) {
-		this.prediction = prediction;
-	}
-
-	public MatchMetaData getMatchMetaData() {
-		return matchMetaData;
-	}
-
-	public void setMatchMetaData(MatchMetaData matchMetaData) {
-		this.matchMetaData = matchMetaData;
-	}
-
-	public PredictionType getPredictionType() {
-		return predictionType;
-	}
-
-	public void setPredictionType(PredictionType predictionType) {
-		this.predictionType = predictionType;
-	}
-
-	public DateTime getDateCreated() {
-		return dateCreated;
-	}
-
-	public void setDateCreated(DateTime dateCreated) {
-		this.dateCreated = dateCreated;
-	}
-
-	public DateTime getLastModified() {
-		return lastModified;
-	}
-
-	public void setLastModified(DateTime lastModified) {
-		this.lastModified = lastModified;
 	}
 
 	public int getYear() {
@@ -168,12 +109,76 @@ public class FootballMatch implements Serializable {
 		this.round = round;
 	}
 
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(LocalDateTime dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public LocalDateTime getLastModified() {
+		return lastModified;
+	}
+
+	public void setLastModified(LocalDateTime lastModified) {
+		this.lastModified = lastModified;
+	}
+
 	public MatchStatus getMatchStatus() {
 		return matchStatus;
 	}
 
 	public void setMatchStatus(MatchStatus matchStatus) {
 		this.matchStatus = matchStatus;
+	}
+
+	public MatchMetaData getMatchMetaData() {
+		return matchMetaData;
+	}
+
+	public void setMatchMetaData(MatchMetaData matchMetaData) {
+		this.matchMetaData = matchMetaData;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String getWinner() {
+		return winner;
+	}
+
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
+
+	public String getPrediction() {
+		return prediction;
+	}
+
+	public void setPrediction(String prediction) {
+		this.prediction = prediction;
+	}
+
+	public PredictionType getPredictionType() {
+		return predictionType;
+	}
+
+	public void setPredictionType(PredictionType predictionType) {
+		this.predictionType = predictionType;
 	}
 
 	@JsonIgnore

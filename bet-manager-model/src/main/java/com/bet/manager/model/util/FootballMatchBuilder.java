@@ -8,7 +8,8 @@ import com.bet.manager.model.dao.PredictionType;
 import com.bet.manager.model.exceptions.EmptyTeamNameException;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
+
+import java.time.LocalDateTime;
 
 public class FootballMatchBuilder {
 
@@ -42,7 +43,7 @@ public class FootballMatchBuilder {
 		return this;
 	}
 
-	public FootballMatchBuilder setStartDate(DateTime startDate) {
+	public FootballMatchBuilder setStartDate(LocalDateTime startDate) {
 
 		match.setStartDate(startDate);
 		return this;
@@ -140,7 +141,7 @@ public class FootballMatchBuilder {
 	}
 
 	private void setLastModified() {
-		match.setLastModified(new DateTime());
+		match.setLastModified(LocalDateTime.now());
 	}
 
 	public FootballMatch build() {

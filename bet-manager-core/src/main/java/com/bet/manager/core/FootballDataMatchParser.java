@@ -5,17 +5,20 @@ import com.bet.manager.model.dao.FootballMatch;
 import com.bet.manager.model.dao.MatchStatus;
 import com.bet.manager.model.exceptions.MatchStatusNotExist;
 import com.bet.manager.model.util.FootballMatchBuilder;
-import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class FootballDataMatchParser implements IMatchParser {
 
 	private static final Logger log = LoggerFactory.getLogger(FootballDataMatchParser.class);
+
+	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	private static final String FINISHED_TAG = "FINISHED";
 	private static final String PROCESS_TAG = "IN_PLAY";
@@ -35,7 +38,7 @@ public class FootballDataMatchParser implements IMatchParser {
 
 			try {
 
-				DateTime startDate = DateTime.parse(getProperty(matchObject, "date"));
+				LocalDateTime startDate = LocalDateTime.parse(getProperty(matchObject, "date"), DATE_FORMATTER);
 
 				String homeTeam = convertToBundesligaTeam(getProperty(matchObject, "homeTeamName"));
 				String awayTeam = convertToBundesligaTeam(getProperty(matchObject, "awayTeamName"));

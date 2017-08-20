@@ -17,13 +17,13 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.RatioGauge;
 import com.codahale.metrics.health.HealthCheckRegistry;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -229,7 +229,7 @@ public class FootballMatchService {
 		}
 	}
 
-	private DateTime updateStartDate(DateTime m1, DateTime m2) {
+	private LocalDateTime updateStartDate(LocalDateTime m1, LocalDateTime m2) {
 		return m1 == null ? m2 : m1;
 	}
 

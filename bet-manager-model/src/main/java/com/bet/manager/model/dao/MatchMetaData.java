@@ -1,5 +1,7 @@
 package com.bet.manager.model.dao;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
@@ -10,12 +12,14 @@ import java.util.TreeMap;
 @Table(name = "match_metadata")
 public class MatchMetaData implements Serializable {
 
+	@Ignore
+	@Transient
 	public static final String SPLITERATOR = ",";
 
 	private static final long serialVersionUID = -2793064452086787994L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
@@ -45,16 +49,6 @@ public class MatchMetaData implements Serializable {
 
 	public void setSecondTeamMetaData(TreeMap<String, Object> secondTeamMetaData) {
 		this.secondTeamMetaData = secondTeamMetaData;
-	}
-
-	public String teamMetaDataToString(Map<String, Object> teamMetaData) {
-
-		StringBuilder output = new StringBuilder();
-
-		appendProperties(output, teamMetaData);
-
-		output.setLength(output.length() - 1);
-		return output.toString();
 	}
 
 	@Override
@@ -91,7 +85,6 @@ public class MatchMetaData implements Serializable {
 		MatchMetaData that = (MatchMetaData) o;
 
 		return firstTeamMetaData.equals(that.firstTeamMetaData) && secondTeamMetaData.equals(that.secondTeamMetaData);
-
 	}
 
 	@Override
