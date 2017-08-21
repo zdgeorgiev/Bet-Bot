@@ -35,14 +35,6 @@ public class MatchMetaData implements Serializable {
 
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public TreeMap<String, Object> getFirstTeamMetaData() {
 		return firstTeamMetaData;
 	}

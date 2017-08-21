@@ -30,17 +30,15 @@ public class FootballMatch implements Serializable {
 	@Column(name = "round")
 	private int round;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "start_date")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	private LocalDateTime startDate;
 
 	@JsonIgnore
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "date_created")
 	private LocalDateTime dateCreated;
 
 	@JsonIgnore
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "EET")
 	@Column(name = "last_modified")
 	private LocalDateTime lastModified;
 
@@ -67,14 +65,6 @@ public class FootballMatch implements Serializable {
 		this.dateCreated = LocalDateTime.now();
 		this.lastModified = LocalDateTime.now();
 		predictionType = PredictionType.NOT_PREDICTED;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getHomeTeam() {
@@ -193,7 +183,8 @@ public class FootballMatch implements Serializable {
 		return String.format("%s%s%s", round, MatchMetaData.SPLITERATOR, matchMetaData);
 	}
 
-	@Override public boolean equals(Object o) {
+	@Override
+	public boolean equals(Object o) {
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())
