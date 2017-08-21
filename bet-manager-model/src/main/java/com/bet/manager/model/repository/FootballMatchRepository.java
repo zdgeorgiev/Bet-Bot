@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 
 @Repository
-public interface FootballMatchRepository extends JpaRepository<FootballMatch, Integer> {
+public interface FootballMatchRepository extends JpaRepository<FootballMatch, Long> {
 
 	Collection<FootballMatch> findByPredictionTypeAndMatchStatus(PredictionType predictionType, MatchStatus matchStatus);
 

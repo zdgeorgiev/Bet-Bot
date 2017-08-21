@@ -140,11 +140,10 @@
 	  <version>${hibernate.version}</version>
 	</dependency>
 
-	<!--// TODO : Temporary!!-->
 	<dependency>
-	  <groupId>com.h2database</groupId>
-	  <artifactId>h2</artifactId>
-	  <version>1.4.192</version>
+	  <groupId>mysql</groupId>
+	  <artifactId>mysql-connector-java</artifactId>
+	  <version>6.0.6</version>
 	</dependency>
 
   </dependencies>
@@ -160,7 +159,6 @@
 	</resources>
 
 	<plugins>
-
 	  <plugin>
 		<groupId>org.apache.maven.plugins</groupId>
 		<artifactId>maven-war-plugin</artifactId>
@@ -171,7 +169,6 @@
 		  <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
 		</configuration>
 	  </plugin>
-
 	</plugins>
   </build>
 

@@ -21,7 +21,7 @@ public class MatchMetaData implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Long id;
 
 	@Lob
 	@CollectionTable(name = "first_team_metadata")
@@ -33,6 +33,14 @@ public class MatchMetaData implements Serializable {
 
 	public MatchMetaData() {
 
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public TreeMap<String, Object> getFirstTeamMetaData() {

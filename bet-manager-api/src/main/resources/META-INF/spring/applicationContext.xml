@@ -4,9 +4,12 @@
 			 xmlns:beans="http://www.springframework.org/schema/beans"
 			 xmlns:context="http://www.springframework.org/schema/context"
 			 xmlns:task="http://www.springframework.org/schema/task"
+			 xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+        http://www.springframework.org/schema/data/jpa
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
   <context:annotation-config/>
 
@@ -14,6 +17,37 @@
   <context:component-scan base-package="com.bet.manager.metrics"/>
 
   <context:property-placeholder location="classpath*:META-INF/*.properties"/>
+
+  <jpa:repositories base-package="com.bet.manager.model.repository"/>
+
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<property name="dataSource" ref="dataSource"/>
+	<property name="packagesToScan" value="com.bet.manager.model"/>
+	<property name="jpaVendorAdapter">
+	  <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+	</property>
+	<property name="jpaProperties">
+	  <props>
+		<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+		<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+		<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+	  </props>
+	</property>
+  </bean>
+
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<property name="driverClassName" value="${jdbc.driver}"/>
+	<property name="url" value="${jdbc.url}" />
+	<property name="username" value="${jdbc.username}" />
+	<property name="password" value="${jdbc.password}" />
+  </bean>
+
+  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<property name="entityManagerFactory" ref="entityManagerFactory"/>
+  </bean>
+
+  <bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
   <task:annotation-driven scheduler="updateScheduler"/>
   <!-- Thread should be only one to be possible to synchronize the task executed in the correct sequence -->
