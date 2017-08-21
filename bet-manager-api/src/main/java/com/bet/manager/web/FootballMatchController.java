@@ -79,7 +79,7 @@ public class FootballMatchController {
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Return matches count in the database.")
-	public int matchesCount() {
+	public long matchesCount() {
 
 		return footballMatchService.matchesCount();
 	}

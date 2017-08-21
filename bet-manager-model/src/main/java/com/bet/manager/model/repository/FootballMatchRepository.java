@@ -6,12 +6,16 @@ import com.bet.manager.model.dao.PredictionType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface FootballMatchRepository extends JpaRepository<FootballMatch, Long> {
 
-	Collection<FootballMatch> findByPredictionTypeAndMatchStatus(PredictionType predictionType, MatchStatus matchStatus);
+	List<FootballMatch> findByPredictionTypeAndMatchStatus(PredictionType predictionType, MatchStatus matchStatus);
+
+	List<FootballMatch> findByPredictionType(PredictionType predictionType);
+
+	List<FootballMatch> findByMatchStatus(MatchStatus matchStatus);
 
 	FootballMatch findByHomeTeamAndAwayTeamAndYearAndRound(String homeTeam, String awayTeam, int year, int round);
 }

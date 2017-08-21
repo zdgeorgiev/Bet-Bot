@@ -96,15 +96,9 @@ public class FootballMatchService {
 	}
 
 	private FootballMatch retrieve(FootballMatch match) {
-		FootballMatch target = footballMatchRepository
+		return footballMatchRepository
 				.findByHomeTeamAndAwayTeamAndYearAndRound(
 						match.getHomeTeam(), match.getAwayTeam(), match.getYear(), match.getRound());
-
-		// The target may be null, because we swap the home team and away team while parsing the metadata
-		// so if its null we will try to get the reversed teams for the same year and round
-		return target != null ? target : footballMatchRepository
-				.findByHomeTeamAndAwayTeamAndYearAndRound(
-						match.getAwayTeam(), match.getHomeTeam(), match.getYear(), match.getRound());
 	}
 
 	public List<FootballMatch> retrieveMatches(String team1, String team2, Optional<Integer> year, Optional<Integer> round,
@@ -194,6 +188,8 @@ public class FootballMatchService {
 
 	public void updateMatches(List<FootballMatch> matches) {
 
+		int updatedMatches = 0;
+
 		for (FootballMatch match : matches) {
 
 			try {
@@ -221,12 +217,15 @@ public class FootballMatchService {
 						.build();
 
 				footballMatchRepository.save(updated);
-				log.info("--MATCH {} updated.", updated.getSummary());
+				updatedMatches++;
+				log.debug("--MATCH {} updated.", updated.getSummary());
 
 			} catch (Exception e) {
 				log.error("Failed to update match {}", match.getSummary(), e);
 			}
 		}
+
+		log.info("Successfully updated {} matches", updatedMatches);
 	}
 
 	private LocalDateTime updateStartDate(LocalDateTime m1, LocalDateTime m2) {
@@ -268,13 +267,13 @@ public class FootballMatchService {
 		return footballMatchRepository.findByPredictionTypeAndMatchStatus(PredictionType.INCORRECT, MatchStatus.FINISHED).size();
 	}
 
-	public int matchesCount() {
-		return (int) footballMatchRepository.count();
+	public long matchesCount() {
+		return footballMatchRepository.count();
 	}
 
 	public void deleteAll() {
 		footballMatchRepository.deleteAll();
-		log.info("All matches are successfully deleted");
+		log.info("All matches are deleted successfully");
 	}
 
 }

@@ -21,7 +21,7 @@ public class UpdateManagerController {
 
 	@RequestMapping(value = "/fetch", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.OK)
-	@ApiOperation(value = "Fetch matches from the source.")
+	@ApiOperation(value = "Fetch the new matches and update that already exists.")
 	public void update() throws MalformedURLException, InterruptedException {
 
 		updateManagerService.fetch();

@@ -19,11 +19,11 @@ import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UpdateManagerService {
@@ -32,10 +32,6 @@ public class UpdateManagerService {
 
 	private static final String FETCH_BASE_URL =
 			"http://api.football-data.org/v1/fixtures?league=BL1&timeFrameStart=%s&timeFrameEnd=%s";
-
-	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private static final Calendar CALENDAR = Calendar.getInstance();
-	private static final int ROUNDS = 34;
 
 	@Autowired
 	private FootballMatchService footballMatchService;
@@ -58,22 +54,20 @@ public class UpdateManagerService {
 	@Scheduled(initialDelay = 5 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void fetch() throws MalformedURLException, InterruptedException {
 
-		String startDate = getDateAfterDays(-3);
-		String endDate = getDateAfterDays(14);
+		LocalDate now = LocalDate.now();
 
-		int acceptedRound = getAcceptedRound();
-
-		String matchesURL = String.format(FETCH_BASE_URL, startDate, endDate);
+		String matchesURL = String.format(FETCH_BASE_URL,
+				now.minusDays(3),
+				now.plusDays(14));
 
 		log.info("Starting to fetch matches from [{}]", matchesURL);
-		String matchesFeed = WebCrawler.crawl_UTF8(new URL(matchesURL));
+		String matchesContentFeed = WebCrawler.crawl_UTF8(new URL(matchesURL));
 
-		updateDataBase(matchesFeed, acceptedRound);
-
+		updateDataBase(matchesContentFeed);
 		log.info("Finished fetching");
 	}
 
-	private void updateDataBase(String matchesFeed, int acceptedRound) {
+	private void updateDataBase(String matchesFeed) {
 
 		Map<MatchStatus, List<FootballMatch>> fixtures = matchParser.parse(matchesFeed);
 
@@ -84,36 +78,10 @@ public class UpdateManagerService {
 
 		footballMatchService.createMatches(
 				allMatches.stream()
-						.filter(m -> m.getRound() >= acceptedRound && !footballMatchService.exist(m))
+						.filter(m -> !footballMatchService.exist(m))
 						.collect(Collectors.toList()));
 
-		footballMatchService.updateMatches(
-				Stream.concat(
-						fixtures.get(MatchStatus.STARTED).stream(),
-						fixtures.get(MatchStatus.FINISHED).stream()).collect(Collectors.toList())
-						.stream()
-						.filter(m -> m.getRound() >= acceptedRound && footballMatchService.exist(m))
-						.collect(Collectors.toList()));
-	}
-
-	private String getDateAfterDays(int days) {
-		CALENDAR.setTime(new Date());
-		CALENDAR.add(Calendar.DATE, days);
-		return DATE_FORMAT.format(CALENDAR.getTime());
-	}
-
-	private int getAcceptedRound() {
-		Optional<FootballMatch> match = footballMatchRepository.findAll().stream()
-				.filter(m ->
-						m.getMatchStatus().equals(MatchStatus.FINISHED) && m.getMatchMetaData() != null)
-				.sorted(Comparator.comparingInt(FootballMatch::getRound))
-				.findFirst();
-
-		if (match.isPresent())
-			return match.get().getRound() + 1 > ROUNDS ? 1 : match.get().getRound() + 1;
-
-		// We accept matches for at least 2nd round
-		return 2;
+		footballMatchService.updateMatches(allMatches);
 	}
 
 	@Scheduled(initialDelay = 10 * 1000, fixedDelay = 60 * 60 * 1000)
@@ -122,7 +90,7 @@ public class UpdateManagerService {
 		List<FootballMatch> matchesWithoutMetadata = new ArrayList<>();
 
 		long start = System.currentTimeMillis();
-		log.info("Starting to create meta data for the matches");
+		log.info("Starting to create metadata for the matches");
 
 		footballMatchRepository.findAll().stream()
 				.filter(m -> m.getMatchMetaData() == null)
@@ -142,29 +110,21 @@ public class UpdateManagerService {
 		long end = System.currentTimeMillis();
 		log.info("Metadata creation finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 
-		if (matchesWithoutMetadata.size() == 0) {
-			log.info("Not found matches without metadata");
-			return;
-		}
-
 		footballMatchService.updateMatches(matchesWithoutMetadata);
 	}
 
 	@Scheduled(initialDelay = 15 * 1000, fixedDelay = 60 * 60 * 1000)
 	public void predict() {
 
-		List<FootballMatch> matchesWithoutPrediction = footballMatchRepository.findAll().stream()
-				.filter(m -> m.getPredictionType().equals(PredictionType.NOT_PREDICTED) && m.getMatchMetaData() != null)
-				.collect(Collectors.toList());
+		List<FootballMatch> matchesWithoutPrediction =
+				footballMatchRepository.findByPredictionType(PredictionType.NOT_PREDICTED).stream()
+						.filter(m -> m.getMatchMetaData() != null)
+						.collect(Collectors.toList());
 
+		long start = System.currentTimeMillis();
 		log.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
 
-		if (matchesWithoutPrediction.size() == 0) {
-			log.info("Matches with metadata and without prediction are not found");
-			return;
-		}
-
-		matchesWithoutPrediction.stream()
+		matchesWithoutPrediction
 				.forEach(m -> {
 					try {
 						m = new FootballMatchBuilder(m).setPrediction(predictor.predict(m)).build();
@@ -175,7 +135,8 @@ public class UpdateManagerService {
 					}
 				});
 
-		log.info("Prediction finished");
+		long end = System.currentTimeMillis();
+		log.info("Prediction finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 
 		footballMatchService.updateMatches(matchesWithoutPrediction);
 	}
