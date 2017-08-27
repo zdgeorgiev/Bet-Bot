@@ -1,0 +1,9 @@
+SELECT m FROM FootballMatch AS m
+
+WHERE
+m.homeTeam = %s AND
+m.awayTeam = %s AND
+m.round = %s AND
+m.year = %s AND
+m.predictionType = %s AND
+m.matchStatus = %s

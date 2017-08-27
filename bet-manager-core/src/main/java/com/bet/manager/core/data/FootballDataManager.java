@@ -1,7 +1,7 @@
 package com.bet.manager.core.data;
 
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchMetaData;
 import com.bet.manager.model.exceptions.MetaDataCreationException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import org.apache.commons.lang.StringUtils;
@@ -15,7 +15,7 @@ import static com.bet.manager.core.data.sources.FootballDataUtils.*;
 
 public class FootballDataManager implements DataManager<FootballMatch> {
 
-	private static final Logger log = LoggerFactory.getLogger(FootballDataManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FootballDataManager.class);
 
 	private static final int MIN_ROUND = 1;
 	private static final int MAX_ROUND = 34;
@@ -73,7 +73,7 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 				.setResult(getMatchResult(firstTeam, year, round, crawledPages))
 				.build();
 
-		log.info("Successfully created metadata for match {}", match.getSummary());
+		LOG.info("Successfully created metadata for match {}", match.getSummary());
 	}
 
 	private TreeMap<String, Object> getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {

@@ -16,6 +16,22 @@ public class PredictionInfoController {
 	private PredictionInfoService predictionInfoService;
 
 	@ResponseBody
+	@RequestMapping(value = "/info/correct", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation(value = "Get number of correctly predicted matches.")
+	public int getIncorrectMatchesCount() {
+		return predictionInfoService.correctPredictedMatchesCount();
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/info/incorrect", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation(value = "Get number of not correctly predicted matches.")
+	public int getCorrectMatchesCount() {
+		return predictionInfoService.incorrectPredictedMatchesCount();
+	}
+
+	@ResponseBody
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Get predictions statistics.")

@@ -1,8 +1,8 @@
 package com.bet.manager.model;
 
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchStatus;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchStatus;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import junit.framework.Assert;

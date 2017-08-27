@@ -1,7 +1,7 @@
 package com.bet.manager.core.ai;
 
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.entity.FootballMatch;
 
 import java.util.Random;
 

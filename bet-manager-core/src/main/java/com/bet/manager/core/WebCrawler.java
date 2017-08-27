@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class WebCrawler {
 
-	private static final Logger log = LoggerFactory.getLogger(WebCrawler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(WebCrawler.class);
 
 	private static final String USER_AGENT = "Mozilla/5.0";
 
@@ -62,7 +62,7 @@ public class WebCrawler {
 	public static String crawl(URL url, Map<URL, String> crawledPages, String encoding, int minSecondsSleep, int maxSecondsSleep)
 			throws InterruptedException {
 		if (crawledPages.containsKey(url)) {
-			log.debug("Returning cached copy of '{}'", url);
+			LOG.debug("Returning cached copy of '{}'", url);
 			return crawledPages.get(url);
 		}
 
@@ -91,7 +91,7 @@ public class WebCrawler {
 			con.setRequestMethod("GET");
 			con.setRequestProperty("User-Agent", USER_AGENT);
 
-			log.debug("Sending 'GET' request to URL : {}", page);
+			LOG.debug("Sending 'GET' request to URL : {}", page);
 
 			try (BufferedReader in = new BufferedReader(
 					new InputStreamReader(con.getInputStream(), encoding))) {
@@ -112,7 +112,7 @@ public class WebCrawler {
 						"Content of the page '" + page.toString() + "' cannot be empty.");
 			}
 
-			log.debug("Successfully crawled url - '{}'", page.toString());
+			LOG.debug("Successfully crawled url - '{}'", page.toString());
 			return content;
 
 		} catch (Exception e) {

@@ -1,7 +1,7 @@
 package com.bet.manager.core;
 
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchStatus;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchStatus;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.bet.manager.model.dao;
+package com.bet.manager.model.entity;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
 

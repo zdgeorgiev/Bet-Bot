@@ -1,4 +1,4 @@
-package com.bet.manager.model.dao;
+package com.bet.manager.model.entity;
 
 public enum MatchStatus {
 

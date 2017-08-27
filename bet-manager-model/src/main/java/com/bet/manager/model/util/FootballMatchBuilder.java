@@ -1,10 +1,10 @@
 package com.bet.manager.model.util;
 
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchMetaData;
-import com.bet.manager.model.dao.MatchStatus;
-import com.bet.manager.model.dao.PredictionType;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchMetaData;
+import com.bet.manager.model.entity.MatchStatus;
+import com.bet.manager.model.entity.PredictionType;
 import com.bet.manager.model.exceptions.EmptyTeamNameException;
 import com.bet.manager.model.exceptions.EqualHomeAndAwayTeamException;
 import org.apache.commons.lang.StringUtils;
@@ -60,7 +60,7 @@ public class FootballMatchBuilder {
 		return this;
 	}
 
-	private FootballMatchBuilder setWinner() {
+	private void setWinner() {
 
 		if (!match.getResult().contains("-")) {
 			throw new IllegalArgumentException(
@@ -77,7 +77,6 @@ public class FootballMatchBuilder {
 		}
 
 		match.setWinner(winner);
-		return this;
 	}
 
 	private String getWinnerFromResult(FootballMatch match, String result) {
@@ -116,9 +115,9 @@ public class FootballMatchBuilder {
 			return;
 		}
 
-		if (match.getPrediction().equals(match.getWinner())) {
+		if (match.getPrediction().equals(match.getWinner()))
 			match.setPredictionType(PredictionType.CORRECT);
-		} else
+		else
 			match.setPredictionType(PredictionType.INCORRECT);
 	}
 
@@ -142,6 +141,42 @@ public class FootballMatchBuilder {
 
 	private void setLastModified() {
 		match.setLastModified(LocalDateTime.now());
+	}
+
+	public FootballMatchBuilder updateStartDate(LocalDateTime startDate) {
+		if (startDate != null)
+			return setStartDate(startDate);
+
+		return this;
+	}
+
+	public FootballMatchBuilder updatedStatus(MatchStatus status) {
+		if (!status.equals(MatchStatus.NOT_STARTED))
+			return setStatus(status);
+
+		return this;
+	}
+
+	public FootballMatchBuilder updatedMetadata(MatchMetaData metaData) {
+		if (metaData != null)
+			return setMatchMetaData(metaData);
+
+		return this;
+	}
+
+	public FootballMatchBuilder updatedPrediction(String prediction) {
+		if (prediction != null)
+			return setPrediction(prediction);
+
+		return this;
+	}
+
+	public FootballMatchBuilder updatedResult(String result) {
+
+		if (!result.equals(ResultMessages.UNKNOWN_RESULT))
+			return setResult(result);
+
+		return this;
 	}
 
 	public FootballMatch build() {

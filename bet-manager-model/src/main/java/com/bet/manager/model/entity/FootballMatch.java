@@ -1,4 +1,4 @@
-package com.bet.manager.model.dao;
+package com.bet.manager.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -9,7 +9,7 @@ public class PredictionsInfo implements Serializable {
 
 	private static final long serialVersionUID = 1436475920667815001L;
 
-	private static final Logger logger = LoggerFactory.getLogger(PredictionsInfo.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PredictionsInfo.class);
 
 	private String correctness;
 	private int correct;
@@ -22,7 +22,7 @@ public class PredictionsInfo implements Serializable {
 			this.correctness = String.format("%.2f%s", (correctOnes / (totalPredicted * 1.0) * 100), "%");
 		} else {
 			this.correctness = "0.00%";
-			logger.warn("Predicted matches may not be finished yet or no predictions at all");
+			LOG.warn("Predicted matches may not be finished yet or no predictions at all");
 		}
 
 		this.correct = correctOnes;

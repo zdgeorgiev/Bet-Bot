@@ -4,9 +4,9 @@ import com.bet.manager.commons.util.PerformanceUtils;
 import com.bet.manager.core.data.FootballDataManager;
 import com.bet.manager.core.data.sources.Bundesliga;
 import com.bet.manager.core.data.sources.FootballDataUtils;
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchMetaData;
-import com.bet.manager.model.dao.MatchStatus;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchMetaData;
+import com.bet.manager.model.entity.MatchStatus;
 import com.bet.manager.model.exceptions.MetaDataCreationException;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +25,7 @@ import java.util.*;
 
 public class Main {
 
-	private static final Logger log = LoggerFactory.getLogger(Main.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -122,7 +122,7 @@ public class Main {
 		// We skip the first round because for the current match we only looking for the previous one data
 		for (int round = 2; round <= ROUNDS; round++) {
 
-			log.info("Start collecting data for year {} round {}", year, round);
+			LOG.info("Start collecting data for year {} round {}", year, round);
 
 			allData.addAll(createMatchesForRound(year, round));
 
@@ -132,7 +132,7 @@ public class Main {
 		long finishTime = System.currentTimeMillis();
 		String elapsedTime = PerformanceUtils.convertToHumanReadable(finishTime - startTime);
 
-		log.info("Successfully created {} match entries for year {}. Finished in {}", allData.size(), year, elapsedTime);
+		LOG.info("Successfully created {} match entries for year {}. Finished in {}", allData.size(), year, elapsedTime);
 		return allData;
 	}
 
@@ -188,18 +188,18 @@ public class Main {
 							.setStatus(MatchStatus.FINISHED)
 							.build();
 
-					log.info("({}/{}) Match '{}'-'{}' was successfully created", matchIndex,
+					LOG.info("({}/{}) Match '{}'-'{}' was successfully created", matchIndex,
 							currentRoundTeams.getLength() / 2, currentMatch.getHomeTeam(), currentMatch.getAwayTeam());
 
 					currentData.add(currentMatch);
 				}
 			} catch (Exception e) {
-				log.error("Failed to create match {} [{}] - [{}] for year {} round {}.",
+				LOG.error("Failed to create match {} [{}] - [{}] for year {} round {}.",
 						matchIndex, firstTeam, secondTeam, year, round, e);
 			}
 		}
 
-		log.info("Successfully created {} matches for year {} round {}.", currentData.size(), year, round);
+		LOG.info("Successfully created {} matches for year {} round {}.", currentData.size(), year, round);
 		return currentData;
 	}
 }

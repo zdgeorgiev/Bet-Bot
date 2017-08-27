@@ -1,8 +1,8 @@
 package com.bet.manager.core;
 
 import com.bet.manager.commons.ResultMessages;
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchStatus;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchStatus;
 import com.bet.manager.model.exceptions.MatchStatusNotExist;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import org.json.JSONArray;
@@ -16,7 +16,7 @@ import java.util.*;
 
 public class FootballDataMatchParser implements IMatchParser {
 
-	private static final Logger log = LoggerFactory.getLogger(FootballDataMatchParser.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FootballDataMatchParser.class);
 
 	private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -59,7 +59,7 @@ public class FootballDataMatchParser implements IMatchParser {
 				Integer matchDay = Integer.parseInt(getProperty(matchObject, "matchday"));
 
 				if (matchDay < 2) {
-					log.warn("Found match for round 1.. skipping..");
+					LOG.warn("Found match for round 1.. skipping..");
 					continue;
 				}
 
@@ -77,7 +77,7 @@ public class FootballDataMatchParser implements IMatchParser {
 				matches.get(match.getMatchStatus()).add(match);
 
 			} catch (Exception e) {
-				log.error("Error occur during fetching fixture matches..", e);
+				LOG.error("Error occur during fetching fixture matches..", e);
 			}
 		}
 

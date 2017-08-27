@@ -1,7 +1,7 @@
 package com.bet.manager.core.data;
 
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchMetaData;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchMetaData;
 
 public interface DataManager<T extends FootballMatch> {
 

@@ -6,9 +6,9 @@ import com.bet.manager.core.WebCrawler;
 import com.bet.manager.core.ai.IPredictor;
 import com.bet.manager.core.data.DataManager;
 import com.bet.manager.metrics.MetricsCounterContainer;
-import com.bet.manager.model.dao.FootballMatch;
-import com.bet.manager.model.dao.MatchStatus;
-import com.bet.manager.model.dao.PredictionType;
+import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchStatus;
+import com.bet.manager.model.entity.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class UpdateManagerService {
 
-	private static final Logger log = LoggerFactory.getLogger(UpdateManagerService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UpdateManagerService.class);
 
 	private static final String FETCH_BASE_URL =
 			"http://api.football-data.org/v1/fixtures?league=BL1&timeFrameStart=%s&timeFrameEnd=%s";
@@ -60,11 +60,11 @@ public class UpdateManagerService {
 				now.minusDays(3),
 				now.plusDays(14));
 
-		log.info("Starting to fetch matches from [{}]", matchesURL);
+		LOG.info("Starting to fetch matches from [{}]", matchesURL);
 		String matchesContentFeed = WebCrawler.crawl_UTF8(new URL(matchesURL));
 
 		updateDataBase(matchesContentFeed);
-		log.info("Finished fetching");
+		LOG.info("Finished fetching");
 	}
 
 	private void updateDataBase(String matchesFeed) {
@@ -78,7 +78,7 @@ public class UpdateManagerService {
 
 		footballMatchService.createMatches(
 				allMatches.stream()
-						.filter(m -> !footballMatchService.exist(m))
+						.filter(m -> !footballMatchRepository.exist(m))
 						.collect(Collectors.toList()));
 
 		footballMatchService.updateMatches(allMatches);
@@ -90,7 +90,7 @@ public class UpdateManagerService {
 		List<FootballMatch> matchesWithoutMetadata = new ArrayList<>();
 
 		long start = System.currentTimeMillis();
-		log.info("Starting to create metadata for the matches");
+		LOG.info("Starting to create metadata for the matches");
 
 		footballMatchRepository.findAll().stream()
 				.filter(m -> m.getMatchMetaData() == null)
@@ -103,12 +103,12 @@ public class UpdateManagerService {
 						metricsCounterContainer.incMetadataSuccesses();
 					} catch (Exception e) {
 						metricsCounterContainer.incMetadataFailures();
-						log.error("Error occur during creating metadata for match {}", m.getSummary(), e);
+						LOG.error("Error occur during creating metadata for match {}", m.getSummary(), e);
 					}
 				});
 
 		long end = System.currentTimeMillis();
-		log.info("Metadata creation finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
+		LOG.info("Metadata creation finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 
 		footballMatchService.updateMatches(matchesWithoutMetadata);
 	}
@@ -122,7 +122,7 @@ public class UpdateManagerService {
 						.collect(Collectors.toList());
 
 		long start = System.currentTimeMillis();
-		log.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
+		LOG.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
 
 		matchesWithoutPrediction
 				.forEach(m -> {
@@ -131,12 +131,12 @@ public class UpdateManagerService {
 						metricsCounterContainer.incPredictionsSuccesses();
 					} catch (Exception e) {
 						metricsCounterContainer.incPredictionsFailures();
-						log.error("Error occur during creation prediction for match {}", m.getSummary(), e);
+						LOG.error("Error occur during creation prediction for match {}", m.getSummary(), e);
 					}
 				});
 
 		long end = System.currentTimeMillis();
-		log.info("Prediction finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
+		LOG.info("Prediction finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 
 		footballMatchService.updateMatches(matchesWithoutPrediction);
 	}

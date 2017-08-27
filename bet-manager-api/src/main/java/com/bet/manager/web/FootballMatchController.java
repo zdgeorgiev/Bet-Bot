@@ -1,6 +1,6 @@
 package com.bet.manager.web;
 
-import com.bet.manager.model.dao.FootballMatch;
+import com.bet.manager.model.entity.FootballMatch;
 import com.bet.manager.services.FootballMatchService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/matches", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -53,17 +52,15 @@ public class FootballMatchController {
 			@RequestParam(name = "team2", required = false) String team2,
 
 			@ApiParam(name = "year", value = "Year of the match")
-			@RequestParam(name = "year", required = false) Optional<Integer> year,
+			@RequestParam(name = "year", required = false) Integer year,
 
 			@ApiParam(name = "round", value = "Round of the match")
-			@RequestParam(name = "round", required = false) Optional<Integer> round,
+			@RequestParam(name = "round", required = false) Integer round,
 
-			@ApiParam(name = "predictionType", value = "Prediction type of a match",
-					defaultValue = "NOT_PREDICTED", allowableValues = "CORRECT, NOT_PREDICTED, INCORRECT")
+			@ApiParam(name = "predictionType", value = "Prediction type of a match", allowableValues = "CORRECT, NOT_PREDICTED, INCORRECT")
 			@RequestParam(name = "predictionType", required = false) String predictionType,
 
-			@ApiParam(name = "matchStatus", value = "Status of a match",
-					defaultValue = "NOT_STARTED", allowableValues = "NOT_STARTED, STARTED, FINISHED")
+			@ApiParam(name = "matchStatus", value = "Status of a match", allowableValues = "NOT_STARTED, STARTED, FINISHED")
 			@RequestParam(name = "matchStatus", required = false) String matchStatus,
 
 			@ApiParam(name = "limit", value = "Limit of the result", defaultValue = "10")
