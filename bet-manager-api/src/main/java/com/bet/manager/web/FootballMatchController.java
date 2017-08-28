@@ -47,11 +47,11 @@ public class FootballMatchController {
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Search for specific match.")
 	public List<FootballMatch> retrieveMatches(
-			@ApiParam(name = "team1", value = "First team name")
-			@RequestParam(name = "team1", required = false) String team1,
+			@ApiParam(name = "homeTeam", value = "First team name")
+			@RequestParam(name = "homeTeam", required = false) String homeTeam,
 
-			@ApiParam(name = "team2", value = "Second team name")
-			@RequestParam(name = "team2", required = false) String team2,
+			@ApiParam(name = "awayTeam", value = "Second team name")
+			@RequestParam(name = "awayTeam", required = false) String awayTeam,
 
 			@ApiParam(name = "year", value = "Year of the match")
 			@RequestParam(name = "year", required = false) Integer year,
@@ -71,7 +71,7 @@ public class FootballMatchController {
 			@ApiParam(name = "offset", value = "Offset of the result", defaultValue = "0")
 			@RequestParam(name = "offset", defaultValue = "0", required = false) int offset) {
 
-		return footballMatchService.retrieveMatches(team1, team2, year, round, predictionType, matchStatus, limit, offset);
+		return footballMatchService.retrieveMatches(homeTeam, awayTeam, year, round, predictionType, matchStatus, limit, offset);
 	}
 
 	@ResponseBody
@@ -85,6 +85,17 @@ public class FootballMatchController {
 
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation(value = "Delete specific match from the database.")
+	public void deleteMatch(
+			@ApiParam(name = "match", value = "Match to delete.")
+			@RequestBody FootballMatch match) {
+
+		footballMatchService.deleteMatch(match);
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/all", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Delete all matches from the database.")
 	public String deleteAll() {

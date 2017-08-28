@@ -154,6 +154,17 @@ public class FootballMatchService {
 		return footballMatchRepository.count();
 	}
 
+	public void deleteMatch(FootballMatch match) {
+		FootballMatch retrievedMatch = footballMatchRepository.retrieve(match);
+
+		if (retrievedMatch == null)
+			throw new FootballMatchNotFoundExceptions(
+					String.format("Cannot delete football match %s. Doesnt exist in the data base", match.getSummary()));
+
+		footballMatchRepository.delete(retrievedMatch);
+		LOG.info("Successfully deleted match [{}]", match.getSummary());
+	}
+
 	public void deleteAll() {
 		footballMatchRepository.deleteAll();
 		LOG.info("All matches are deleted successfully");
