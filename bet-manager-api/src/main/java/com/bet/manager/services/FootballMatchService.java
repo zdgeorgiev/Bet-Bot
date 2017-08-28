@@ -1,6 +1,5 @@
 package com.bet.manager.services;
 
-import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.exceptions.FootballMatchAlreadyExistException;
 import com.bet.manager.exceptions.FootballMatchNotFoundExceptions;
 import com.bet.manager.metrics.MetricsCounterContainer;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -29,9 +27,6 @@ import java.util.List;
 public class FootballMatchService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FootballMatchService.class);
-
-	@Autowired
-	private EntityManager em;
 
 	@Autowired
 	private FootballMatchRepository footballMatchRepository;
@@ -84,25 +79,6 @@ public class FootballMatchService {
 				LOG.warn("Failed to save football match in the database", e);
 			}
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<FootballMatch> retrieveMatches(String homeTeam, String awayTeam, Integer year, Integer round,
-			PredictionType predictionType, MatchStatus matchStatus, int limit, int offset) {
-
-		String matchQuery = ClasspathUtils.getContentUTF8("queries/matchSearchQuery.rq");
-
-		return (List<FootballMatch>) em.createQuery(
-				String.format(matchQuery,
-						homeTeam == null ? "homeTeam" : homeTeam,
-						awayTeam == null ? "awayTeam" : awayTeam,
-						round == null ? "round" : round,
-						year == null ? "year" : year,
-						predictionType == null ? "predictionType" : predictionType.ordinal(),
-						matchStatus == null ? "matchStatus" : matchStatus.ordinal()))
-				.setMaxResults(limit)
-				.setFirstResult(offset)
-				.getResultList();
 	}
 
 	public void updateMatches(List<FootballMatch> matches) {
