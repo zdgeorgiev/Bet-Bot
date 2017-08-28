@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -68,16 +67,15 @@ public class FootballMatchService {
 
 	public void createMatches(List<FootballMatch> matches) {
 
-		List<FootballMatch> validatedMatches = new ArrayList<>();
-		matches.forEach(m -> validatedMatches.add(new FootballMatchBuilder(m).build()));
-
 		for (FootballMatch match : matches) {
 			try {
-				if (footballMatchRepository.exist(match))
+				FootballMatch validatedMatch = new FootballMatchBuilder(match).build();
+
+				if (footballMatchRepository.exist(validatedMatch))
 					throw new FootballMatchAlreadyExistException(
 							String.format("Football Match '%s' already exist", match.getSummary()));
 
-				footballMatchRepository.save(match);
+				footballMatchRepository.save(validatedMatch);
 				metricsCounterHolder.incMatchesSuccesses();
 				LOG.info("Successfully created MATCH {}", match.getSummary());
 
@@ -89,19 +87,19 @@ public class FootballMatchService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<FootballMatch> retrieveMatches(String team1, String team2, Integer year, Integer round,
-			String predictionType, String matchStatus, int limit, int offset) {
+	public List<FootballMatch> retrieveMatches(String homeTeam, String awayTeam, Integer year, Integer round,
+			PredictionType predictionType, MatchStatus matchStatus, int limit, int offset) {
 
 		String matchQuery = ClasspathUtils.getContentUTF8("queries/matchSearchQuery.rq");
 
 		return (List<FootballMatch>) em.createQuery(
 				String.format(matchQuery,
-						team1 == null ? "homeTeam" : team1,
-						team2 == null ? "awayTeam" : team2,
+						homeTeam == null ? "homeTeam" : homeTeam,
+						awayTeam == null ? "awayTeam" : awayTeam,
 						round == null ? "round" : round,
 						year == null ? "year" : year,
-						predictionType == null ? "predictionType" : PredictionType.valueOf(predictionType).ordinal(),
-						matchStatus == null ? "matchStatus" : MatchStatus.valueOf(matchStatus).ordinal()))
+						predictionType == null ? "predictionType" : predictionType.ordinal(),
+						matchStatus == null ? "matchStatus" : matchStatus.ordinal()))
 				.setMaxResults(limit)
 				.setFirstResult(offset)
 				.getResultList();

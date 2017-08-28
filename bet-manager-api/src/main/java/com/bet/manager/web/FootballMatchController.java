@@ -1,6 +1,8 @@
 package com.bet.manager.web;
 
 import com.bet.manager.model.entity.FootballMatch;
+import com.bet.manager.model.entity.MatchStatus;
+import com.bet.manager.model.entity.PredictionType;
 import com.bet.manager.services.FootballMatchService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -58,10 +60,10 @@ public class FootballMatchController {
 			@RequestParam(name = "round", required = false) Integer round,
 
 			@ApiParam(name = "predictionType", value = "Prediction type of a match", allowableValues = "CORRECT, NOT_PREDICTED, INCORRECT")
-			@RequestParam(name = "predictionType", required = false) String predictionType,
+			@RequestParam(name = "predictionType", required = false) PredictionType predictionType,
 
 			@ApiParam(name = "matchStatus", value = "Status of a match", allowableValues = "NOT_STARTED, STARTED, FINISHED")
-			@RequestParam(name = "matchStatus", required = false) String matchStatus,
+			@RequestParam(name = "matchStatus", required = false) MatchStatus matchStatus,
 
 			@ApiParam(name = "limit", value = "Limit of the result", defaultValue = "10")
 			@RequestParam(name = "limit", defaultValue = "10", required = false) int limit,
