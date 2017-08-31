@@ -1,4 +1,4 @@
-package com.bet.manager.core.data.sources.it;
+package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.FootballDataMatchParser;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class FootballDataMatchParserIT {
+public class FootballDataMatchParserTest {
 
 	private static IMatchParser parser;
 
@@ -48,10 +48,11 @@ public class FootballDataMatchParserIT {
 
 		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
-				add(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"));
-				add(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"));
-				add(createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z"));
-				add(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"));
+				add(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z", MatchStatus.NOT_STARTED));
+				add(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z",
+						MatchStatus.NOT_STARTED));
+				add(createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z", MatchStatus.NOT_STARTED));
+				add(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z", MatchStatus.NOT_STARTED));
 			}
 		};
 
@@ -67,14 +68,25 @@ public class FootballDataMatchParserIT {
 
 		List<FootballMatch> expected = new ArrayList<FootballMatch>() {
 			{
-				add(new FootballMatchBuilder(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"))
-						.setResult("2-2").build());
+				add(new FootballMatchBuilder(
+						createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"))
+						.setResult("2-2")
+						.setStatus(MatchStatus.FINISHED)
+						.build());
 				add(new FootballMatchBuilder(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"))
-						.setResult("3-5").build());
-				add(new FootballMatchBuilder(createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z"))
-						.setResult("1-1").build());
-				add(new FootballMatchBuilder(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"))
-						.setResult("2-1").build());
+						.setResult("3-5")
+						.setStatus(MatchStatus.FINISHED)
+						.build());
+				add(new FootballMatchBuilder(
+						createMatch(2016, 2, "SC Freiburg", "Borussia M'gladbach", "2016-09-10T13:30:00Z"))
+						.setResult("1-1")
+						.setStatus(MatchStatus.FINISHED)
+						.build());
+				add(new FootballMatchBuilder(
+						createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"))
+						.setResult("2-1")
+						.setStatus(MatchStatus.FINISHED)
+						.build());
 			}
 		};
 
@@ -90,10 +102,16 @@ public class FootballDataMatchParserIT {
 
 		List<FootballMatch> finished = new ArrayList<FootballMatch>() {
 			{
-				add(new FootballMatchBuilder(createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"))
-						.setResult("2-2").build());
-				add(new FootballMatchBuilder(createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"))
-						.setResult("3-5").build());
+				add(new FootballMatchBuilder(
+						createMatch(2016, 2, "Bayer 04 Leverkusen", "Hamburger SV", "2016-09-10T13:30:00Z"))
+						.setResult("2-2")
+						.setStatus(MatchStatus.FINISHED)
+						.build());
+				add(new FootballMatchBuilder(
+						createMatch(2016, 2, "SV Darmstadt 98", "Eintracht Frankfurt", "2016-09-10T13:30:00Z"))
+						.setResult("3-5")
+						.setStatus(MatchStatus.FINISHED)
+						.build());
 			}
 		};
 
@@ -106,7 +124,10 @@ public class FootballDataMatchParserIT {
 		List<FootballMatch> started = new ArrayList<FootballMatch>() {
 			{
 
-				add(createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z"));
+				add(new FootballMatchBuilder(
+						createMatch(2016, 2, "1.FSV Mainz 05", "1899 Hoffenheim", "2016-09-10T13:30:00Z", MatchStatus.STARTED))
+						.setResult("1-0")
+						.build());
 			}
 		};
 
@@ -137,6 +158,11 @@ public class FootballDataMatchParserIT {
 	}
 
 	private FootballMatch createMatch(Integer year, Integer round, String homeTeam, String awayTeam, String date) {
+		return createMatch(year, round, homeTeam, awayTeam, date, MatchStatus.NOT_STARTED);
+	}
+
+	private FootballMatch createMatch(Integer year, Integer round, String homeTeam, String awayTeam, String date,
+			MatchStatus status) {
 
 		LocalDateTime startDate;
 
@@ -152,6 +178,7 @@ public class FootballDataMatchParserIT {
 				.setStartDate(startDate)
 				.setRound(round)
 				.setYear(year)
+				.setStatus(status)
 				.build();
 	}
 }

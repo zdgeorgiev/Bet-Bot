@@ -1,4 +1,4 @@
-package com.bet.manager.core.data.sources.it;
+package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.commons.util.DocumentUtils;
@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class DataCreationIT {
+public class DataCreationTest {
 
 	@Test
 	public void testCreatingCorrectMetaDataForMatch() {

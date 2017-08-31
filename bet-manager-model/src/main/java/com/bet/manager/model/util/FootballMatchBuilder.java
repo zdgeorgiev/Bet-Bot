@@ -20,7 +20,19 @@ public class FootballMatchBuilder {
 	}
 
 	public FootballMatchBuilder(FootballMatch match) {
-		this.match = match;
+		this.match = new FootballMatchBuilder()
+				.setHomeTeamName(match.getHomeTeam())
+				.setAwayTeamName(match.getAwayTeam())
+				.setYear(match.getYear())
+				.setRound(match.getRound())
+				.setResult(match.getResult())
+				.setPrediction(match.getPrediction())
+				.setMatchMetaData(match.getMatchMetaData())
+				.setStatus(match.getMatchStatus())
+				.setStartDate(match.getStartDate())
+				.build();
+
+		this.match.setId(match.getId());
 	}
 
 	public FootballMatchBuilder setHomeTeamName(String homeTeamName) {

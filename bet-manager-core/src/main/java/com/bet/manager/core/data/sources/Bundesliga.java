@@ -4,9 +4,9 @@ import com.bet.manager.commons.util.DocumentUtils;
 import com.bet.manager.commons.util.URLUtils;
 import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
-import com.bet.manager.core.exceptions.IllegalTeamMappingException;
 import com.bet.manager.core.exceptions.InvalidMappingException;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Bundesliga {
+public final class Bundesliga {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Bundesliga.class);
 
@@ -107,7 +107,7 @@ public class Bundesliga {
 				String teamName = attributes.getNamedItem(CODE_NAME_ATTR).getNodeValue();
 
 				LOG.debug("Team {}. -> '{}'", ranking.size() + 1, teamName);
-				checkForValidMappingBundesligaIdToTeam(teamId, teamName);
+				assertValidMappingBundesligaIdToTeam(teamId, teamName);
 
 				ranking.put(teamName, ranking.size() + 1);
 			}
@@ -116,14 +116,15 @@ public class Bundesliga {
 		return ranking;
 	}
 
-	private static boolean checkForValidMappingBundesligaIdToTeam(int id, String bundesLigaTeam) {
-		LOG.debug("Searching for valid mapping from BundesligaID => BundesligaName");
+	private static void assertValidMappingBundesligaIdToTeam(int id, String bundesLigaTeam) {
+		LOG.debug("Assert valid mapping BundesligaID({}) => BundesligaName({})", id, bundesLigaTeam);
 
-		if (TeamsMapping.bundesligaIdToName.get(id).equals(bundesLigaTeam))
-			return true;
+		if (!TeamsMapping.bundesligaIdToName.containsKey(id))
+			throw new IllegalStateException("Id('" + id + "') doesnt exist in the bungesligaIdToName map.");
 
-		throw new IllegalTeamMappingException("Team with id " + id + " is mapped to " + bundesLigaTeam +
-				", but in the xml team node id " + id + " is mapped to " + TeamsMapping.bundesligaIdToName.get(id));
+		Assert.assertEquals(
+				"Team with id " + id + " is mapped to " + bundesLigaTeam + ", but in the xml team node id " + id + " is mapped to "
+						+ TeamsMapping.bundesligaIdToName.get(id), TeamsMapping.bundesligaIdToName.get(id), bundesLigaTeam);
 	}
 
 	public static int getPoints(String bundesLigaTeam, int year, int round,

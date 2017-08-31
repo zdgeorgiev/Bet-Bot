@@ -7,12 +7,12 @@ import com.bet.manager.metrics.SuccessRatioGauge;
 import com.bet.manager.metrics.SuccessRatioHealthCheck;
 import com.bet.manager.model.entity.FootballMatch;
 import com.bet.manager.model.entity.MatchStatus;
-import com.bet.manager.model.entity.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.RatioGauge;
 import com.codahale.metrics.health.HealthCheckRegistry;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +95,7 @@ public class FootballMatchService {
 				// Retrieve the match from the data base
 				FootballMatch retrievedMatch = footballMatchRepository.retrieve(match);
 
-				if (isMatchFinishedAndPredicted(match)) {
+				if (isMatchFinishedAndPredicted(retrievedMatch)) {
 					LOG.debug("The match {} in the db is considered finished. No changes will apply", retrievedMatch.getSummary());
 					continue;
 				}
@@ -108,7 +108,7 @@ public class FootballMatchService {
 						.updatedResult(match.getResult())
 						.build();
 
-				if (!updated.equals(match)) {
+				if (!updated.equals(retrievedMatch)) {
 					footballMatchRepository.save(updated);
 					updatedMatches++;
 					LOG.debug("--MATCH {} updated.", updated.getSummary());
@@ -123,7 +123,7 @@ public class FootballMatchService {
 
 	private boolean isMatchFinishedAndPredicted(FootballMatch match) {
 		return match.getMatchStatus().equals(MatchStatus.FINISHED) &&
-				!match.getPredictionType().equals(PredictionType.NOT_PREDICTED);
+				!StringUtils.isBlank(match.getPrediction());
 	}
 
 	public long matchesCount() {

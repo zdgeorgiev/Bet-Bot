@@ -3,11 +3,14 @@ package com.bet.manager.core;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TeamsMapping {
+public final class TeamsMapping {
 
 	public static Map<Integer, String> bundesligaIdToName;
 	public static Map<String, String> resultDBToBundesliga;
 	public static Map<String, String> bundesligaToResultDB;
+	public static Map<String, String> bundesligaToESPNFC;
+	public static Map<String, String> ESPNFCToURI;
+	public static Map<String, String> ESPNFCToBundesliga;
 	public static Map<String, String> footballDataToBundesliga;
 
 	private TeamsMapping() {
@@ -17,6 +20,9 @@ public class TeamsMapping {
 		bundesligaIdToName = new HashMap<>();
 		resultDBToBundesliga = new HashMap<>();
 		bundesligaToResultDB = new HashMap<>();
+		bundesligaToESPNFC = new HashMap<>();
+		ESPNFCToURI = new HashMap<>();
+		ESPNFCToBundesliga = new HashMap<>();
 		footballDataToBundesliga = new HashMap<>();
 
 		bundesligaIdToName.put(18, "Borussia Dortmund");
@@ -77,7 +83,7 @@ public class TeamsMapping {
 		resultDBToBundesliga.put("Paderborn 07", "SC Paderborn 07");
 		resultDBToBundesliga.put("Darmstadt 98", "SV Darmstadt 98");
 		resultDBToBundesliga.put("Ingolstadt", "FC Ingolstadt 04");
-		//		bundesligaToResultDB.put("leipzig", "RB Leipzig");
+		bundesligaToResultDB.put("leipzig", "RB Leipzig");
 
 		bundesligaToResultDB.put("Borussia Dortmund", "borussia-dortmund");
 		bundesligaToResultDB.put("FC Bayern München", "bayern-munich");
@@ -107,7 +113,7 @@ public class TeamsMapping {
 		bundesligaToResultDB.put("SpVgg Greuther Fürth", "Greuther Fürth");
 		bundesligaToResultDB.put("SV Darmstadt 98", "Darmstadt 98");
 		bundesligaToResultDB.put("FC Ingolstadt 04", "Ingolstadt");
-		//		bundesligaToResultDB.put("RB Leipzig", "leipzig");
+		bundesligaToResultDB.put("RB Leipzig", "leipzig");
 
 		footballDataToBundesliga.put("Borussia Dortmund", "Borussia Dortmund");
 		footballDataToBundesliga.put("FC Bayern München", "FC Bayern München");
@@ -130,7 +136,6 @@ public class TeamsMapping {
 		footballDataToBundesliga.put("VfB Stuttgart", "VfB Stuttgart");
 		footballDataToBundesliga.put("Red Bull Leipzig", "RB Leipzig");
 		footballDataToBundesliga.put("FC Ingolstadt 04", "FC Ingolstadt 04");
-
 		footballDataToBundesliga.put("FC Köln", "1.FC Köln");
 		footballDataToBundesliga.put("Nürnberg", "1.FC Nürnberg");
 		footballDataToBundesliga.put("St. Pauli", "FC St. Pauli");
@@ -142,5 +147,93 @@ public class TeamsMapping {
 		footballDataToBundesliga.put("Greuther Fürth", "SpVgg Greuther Fürth");
 		footballDataToBundesliga.put("Paderborn 07", "SC Paderborn 07");
 
+		bundesligaToESPNFC.put("Borussia Dortmund", "Borussia Dortmund");
+		bundesligaToESPNFC.put("FC Bayern München", "Bayern Munich");
+		bundesligaToESPNFC.put("VfL Wolfsburg", "VfL Wolfsburg");
+		bundesligaToESPNFC.put("1.FC Köln", "FC Cologne");
+		bundesligaToESPNFC.put("1.FSV Mainz 05", "Mainz");
+		bundesligaToESPNFC.put("Bayer 04 Leverkusen", "Bayer Leverkusen");
+		bundesligaToESPNFC.put("Eintracht Frankfurt", "Eintracht Frankfurt");
+		bundesligaToESPNFC.put("FC Schalke 04", "Schalke 04");
+		bundesligaToESPNFC.put("Hertha BSC", "Hertha Berlin");
+		bundesligaToESPNFC.put("SV Werder Bremen", "Werder Bremen");
+		bundesligaToESPNFC.put("Hamburger SV", "Hamburg SV");
+		bundesligaToESPNFC.put("1899 Hoffenheim", "TSG Hoffenheim");
+		bundesligaToESPNFC.put("FC Augsburg", "FC Augsburg");
+		bundesligaToESPNFC.put("Hannover 96", "Hannover 96");
+		bundesligaToESPNFC.put("VfB Stuttgart", "VfB Stuttgart");
+		bundesligaToESPNFC.put("Borussia M'gladbach", "Borussia Monchengladbach");
+		bundesligaToESPNFC.put("SC Freiburg", "SC Freiburg");
+		bundesligaToESPNFC.put("1.FC Nürnberg", "Nurnberg");
+		bundesligaToESPNFC.put("FC St. Pauli", "St Pauli");
+		bundesligaToESPNFC.put("Eintracht Braunschweig", "TSV Eintracht Braunschweig");
+		bundesligaToESPNFC.put("VfL Bochum", "vfl-bochum");
+		bundesligaToESPNFC.put("1.FC Kaiserslautern", "Kaiserslautern");
+		bundesligaToESPNFC.put("Arminia Bielefeld", "Arminia Bielefeld");
+		bundesligaToESPNFC.put("Fortuna Düsseldorf", "Fortuna Düsseldorf");
+		bundesligaToESPNFC.put("SC Paderborn 07", "SC Paderborn 07");
+		bundesligaToESPNFC.put("SpVgg Greuther Fürth", "SpVgg Greuther Furth");
+		bundesligaToESPNFC.put("SV Darmstadt 98", "SV Darmstadt 98");
+		bundesligaToESPNFC.put("FC Ingolstadt 04", "FC Ingolstadt 04");
+		bundesligaToESPNFC.put("RB Leipzig", "RB Leipzig");
+
+		ESPNFCToBundesliga.put("Borussia Dortmund", "Borussia Dortmund");
+		ESPNFCToBundesliga.put("Bayern Munich", "FC Bayern München");
+		ESPNFCToBundesliga.put("VfL Wolfsburg", "VfL Wolfsburg");
+		ESPNFCToBundesliga.put("FC Cologne", "1.FC Köln");
+		ESPNFCToBundesliga.put("Mainz", "1.FSV Mainz 05");
+		ESPNFCToBundesliga.put("Bayer Leverkusen", "Bayer 04 Leverkusen");
+		ESPNFCToBundesliga.put("Eintracht Frankfurt", "Eintracht Frankfurt");
+		ESPNFCToBundesliga.put("Schalke 04", "FC Schalke 04");
+		ESPNFCToBundesliga.put("Hertha Berlin", "Hertha BS");
+		ESPNFCToBundesliga.put("Werder Bremen", "SV Werder Bremen");
+		ESPNFCToBundesliga.put("Hamburg SV", "Hamburger SV");
+		ESPNFCToBundesliga.put("TSG Hoffenheim", "1899 Hoffenheim");
+		ESPNFCToBundesliga.put("FC Augsburg", "FC Augsburg");
+		ESPNFCToBundesliga.put("Hannover 96", "Hannover 96");
+		ESPNFCToBundesliga.put("VfB Stuttgart", "VfB Stuttgart");
+		ESPNFCToBundesliga.put("Borussia Monchengladbach", "Borussia M'gladbach");
+		ESPNFCToBundesliga.put("SC Freiburg", "SC Freiburg");
+		ESPNFCToBundesliga.put("Nurnberg", "1.FC Nürnberg");
+		ESPNFCToBundesliga.put("St Pauli", "FC St. Pauli");
+		ESPNFCToBundesliga.put("TSV Eintracht Braunschweig", "Eintracht Braunschweig");
+		ESPNFCToBundesliga.put("vfl-bochum", "VfL Bochum");
+		ESPNFCToBundesliga.put("Kaiserslautern", "1.FC Kaiserslautern");
+		ESPNFCToBundesliga.put("Arminia Bielefeld", "Arminia Bielefeld");
+		ESPNFCToBundesliga.put("Fortuna Düsseldorf", "Fortuna Düsseldorf");
+		ESPNFCToBundesliga.put("SC Paderborn 07", "SC Paderborn 07");
+		ESPNFCToBundesliga.put("SpVgg Greuther Furth", "SpVgg Greuther Fürth");
+		ESPNFCToBundesliga.put("SV Darmstadt 98", "SV Darmstadt 98");
+		ESPNFCToBundesliga.put("FC Ingolstadt 04", "FC Ingolstadt 04");
+		ESPNFCToBundesliga.put("RB Leipzig", "RB Leipzig");
+
+		ESPNFCToURI.put("Borussia Dortmund", "borussia-dortmund/124");
+		ESPNFCToURI.put("Bayer Leverkusen", "bayer-leverkusen/131");
+		ESPNFCToURI.put("Bayern Munich", "bayern-munich/132");
+		ESPNFCToURI.put("Borussia Monchengladbach", "borussia-monchengladbach/268");
+		ESPNFCToURI.put("Eintracht Frankfurt", "eintracht-frankfurt/125");
+		ESPNFCToURI.put("FC Augsburg", "fc-augsburg/3841");
+		ESPNFCToURI.put("FC Cologne", "fc-cologne/122");
+		ESPNFCToURI.put("Hamburg SV", "hamburg-sv/127");
+		ESPNFCToURI.put("Hannover 96", "hannover-96/2428");
+		ESPNFCToURI.put("Hertha Berlin", "hertha-berlin/129");
+		ESPNFCToURI.put("Mainz", "mainz/2950");
+		ESPNFCToURI.put("RB Leipzig", "rb-leipzig/11420");
+		ESPNFCToURI.put("SC Freiburg", "sc-freiburg/126");
+		ESPNFCToURI.put("Schalke 04", "schalke-04/133");
+		ESPNFCToURI.put("TSG Hoffenheim", "tsg-hoffenheim/7911");
+		ESPNFCToURI.put("VfB Stuttgart", "vfb-stuttgart/134");
+		ESPNFCToURI.put("VfL Wolfsburg", "vfl-wolfsburg/138");
+		ESPNFCToURI.put("Werder Bremen", "werder-bremen/137");
+		ESPNFCToURI.put("FC Ingolstadt 04", "fc-ingolstadt-04/6367");
+		ESPNFCToURI.put("SV Darmstadt 98", "sv-darmstadt-98/3812");
+		ESPNFCToURI.put("St Pauli", "st-pauli/27");
+		ESPNFCToURI.put("Nurnberg", "nurnberg/269");
+		ESPNFCToURI.put("TSV Eintracht Braunschweig", "tsv-eintracht-braunschweig/3067");
+		ESPNFCToURI.put("SpVgg Greuther Furth", "spvgg-greuther-furth/3070");
+		ESPNFCToURI.put("Kaiserslautern", "kaiserslautern/130");
+		ESPNFCToURI.put("Arminia Bielefeld", "arminia-bielefeld/250");
+		ESPNFCToURI.put("Fortuna Düsseldorf", "fortuna-dusseldorf/9707");
+		ESPNFCToURI.put("SC Paderborn 07", "sc-paderborn-07/3307");
 	}
 }

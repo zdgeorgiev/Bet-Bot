@@ -11,6 +11,7 @@ import com.bet.manager.model.entity.MatchStatus;
 import com.bet.manager.model.entity.PredictionType;
 import com.bet.manager.model.repository.FootballMatchRepository;
 import com.bet.manager.model.util.FootballMatchBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,8 +98,8 @@ public class UpdateManagerService {
 				.forEach(m -> {
 					try {
 
-						dataManager.createData(m);
-						matchesWithoutMetadata.add(m);
+						FootballMatch updatedMatch = dataManager.createData(m);
+						matchesWithoutMetadata.add(updatedMatch);
 
 						metricsCounterContainer.incMetadataSuccesses();
 					} catch (Exception e) {
@@ -118,16 +119,24 @@ public class UpdateManagerService {
 
 		List<FootballMatch> matchesWithoutPrediction =
 				footballMatchRepository.findByPredictionType(PredictionType.NOT_PREDICTED).stream()
-						.filter(m -> m.getMatchMetaData() != null)
+						.filter(m -> m.getMatchMetaData() != null && StringUtils.isBlank(m.getPrediction()))
 						.collect(Collectors.toList());
+
+		if (matchesWithoutPrediction.size() == 0) {
+			LOG.info("All matches in db are predicted or that who arent dont have metadata.");
+			return;
+		}
 
 		long start = System.currentTimeMillis();
 		LOG.info("Starting to make predictions for {} matches", matchesWithoutPrediction.size());
+
+		List<FootballMatch> predicted = new ArrayList<>();
 
 		matchesWithoutPrediction
 				.forEach(m -> {
 					try {
 						m = new FootballMatchBuilder(m).setPrediction(predictor.predict(m)).build();
+						predicted.add(m);
 						metricsCounterContainer.incPredictionsSuccesses();
 					} catch (Exception e) {
 						metricsCounterContainer.incPredictionsFailures();
@@ -138,6 +147,6 @@ public class UpdateManagerService {
 		long end = System.currentTimeMillis();
 		LOG.info("Prediction finished in {}", PerformanceUtils.convertToHumanReadable(end - start));
 
-		footballMatchService.updateMatches(matchesWithoutPrediction);
+		footballMatchService.updateMatches(predicted);
 	}
 }

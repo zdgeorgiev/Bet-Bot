@@ -2,6 +2,7 @@ package com.bet.manager.core.data.sources;
 
 import com.bet.manager.commons.util.ClasspathUtils;
 import com.bet.manager.core.exceptions.MatchResultNotFound;
+import com.bet.manager.model.entity.MatchVenueType;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,8 +30,8 @@ public class ResultDBTest {
 	public void testCorrectGettingTheFirstRoundVenue() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = ResultDB.parseMatchVenue(content, 2);
-		Assert.assertEquals("-1", actual);
+		MatchVenueType actual = ResultDB.parseMatchVenue(content, 2);
+		Assert.assertEquals(MatchVenueType.AWAY, actual);
 	}
 
 	@Test
@@ -46,8 +47,8 @@ public class ResultDBTest {
 	public void testCorrectGettingThirdRoundVenue() {
 
 		String content = ClasspathUtils.getContentISO("crawl-data/resultdb-last-matches-for-team.html");
-		String actual = ResultDB.parseMatchVenue(content, 3);
-		Assert.assertEquals("1", actual);
+		MatchVenueType actual = ResultDB.parseMatchVenue(content, 3);
+		Assert.assertEquals(MatchVenueType.HOME, actual);
 	}
 
 	@Test

@@ -3,9 +3,8 @@ package com.bet.manager.core.data.sources;
 import com.bet.manager.commons.util.URLUtils;
 import com.bet.manager.core.TeamsMapping;
 import com.bet.manager.core.WebCrawler;
-import com.bet.manager.core.exceptions.InvalidMappingException;
 import com.bet.manager.core.exceptions.MatchResultNotFound;
-import org.apache.commons.lang.StringUtils;
+import com.bet.manager.model.entity.MatchVenueType;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
@@ -15,7 +14,8 @@ import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ResultDB {
+@Deprecated
+public final class ResultDB {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ResultDB.class);
 
@@ -43,11 +43,6 @@ public class ResultDB {
 			throws Exception {
 
 		String resultDBTeamName = TeamsMapping.bundesligaToResultDB.get(bundesLigaTeam);
-
-		if (StringUtils.isBlank(resultDBTeamName)) {
-			throw new InvalidMappingException(
-					"Cannot find any mapping to team '" + bundesLigaTeam + "' in bundesliga to resultdb HashMap.");
-		}
 
 		URL allMatchesForTeamURL = URLUtils.createSafeURL(
 				String.format(RESULTDB_DOMAIN + RESULTDB_MATCHES_FOR_TEAM_URL, resultDBTeamName, year));
@@ -141,7 +136,7 @@ public class ResultDB {
 		return mappedOpponent;
 	}
 
-	public static String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+	public static MatchVenueType getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
 
 		LOG.debug("Getting opponent for team '{}' for match in year {} round {}", bundesLigaTeam, year, round);
@@ -155,7 +150,7 @@ public class ResultDB {
 		return parseMatchVenue(content, round);
 	}
 
-	public static String parseMatchVenue(String allMatchesHTML, int round) {
+	public static MatchVenueType parseMatchVenue(String allMatchesHTML, int round) {
 		org.jsoup.nodes.Document doc = Jsoup.parse(allMatchesHTML);
 		Element e = doc.body().select(TABLE_SELECTOR).get(0);
 
@@ -164,7 +159,7 @@ public class ResultDB {
 
 		String venue = currentMatch.children().get(2).text();
 		LOG.debug("Venue : {}", venue);
-		return venue.equals(AWAY_TEAM_LITERAL) ? "-1" : "1";
+		return venue.equals(AWAY_TEAM_LITERAL) ? MatchVenueType.AWAY : MatchVenueType.HOME;
 	}
 
 	public static String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
@@ -176,16 +171,7 @@ public class ResultDB {
 
 		String allMatchesHTML = WebCrawler.crawl_ISO8858_9(teamMatchesURL, crawledPages);
 
-		String result = null;
-
-		try {
-			result = parseMatchResult(round, allMatchesHTML);
-		} catch (Exception e) {
-			LOG.error("Result for team {} in round {} year {} is not found."
-					+ " Maybe the match is not started or over yet.", bundesLigaTeam, round, year);
-		}
-
-		return result;
+		return parseMatchResult(round, allMatchesHTML);
 	}
 
 	public static String parseMatchResult(int round, String allMatchesHTML) {
@@ -202,9 +188,8 @@ public class ResultDB {
 
 		Element currentMatch = e.children().get(0).children().get(matchesCount - round + 1);
 
-		String score = currentMatch.children().get(4).text();
-		LOG.debug("Result found : {}", score);
-
-		return score.trim();
+		String result = currentMatch.children().get(4).text();
+		LOG.debug("Result found : {}", result);
+		return result.trim();
 	}
 }

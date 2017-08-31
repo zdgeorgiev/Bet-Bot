@@ -16,6 +16,7 @@ public class FootballMatch implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@JsonIgnore
 	private Long id;
 
 	@Column(name = "home_team")
@@ -45,7 +46,7 @@ public class FootballMatch implements Serializable {
 	@Column(name = "matchStatus")
 	private MatchStatus matchStatus;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "metadata_id")
 	private MatchMetaData matchMetaData;
 
@@ -65,6 +66,14 @@ public class FootballMatch implements Serializable {
 		this.dateCreated = LocalDateTime.now();
 		this.lastModified = LocalDateTime.now();
 		predictionType = PredictionType.NOT_PREDICTED;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getHomeTeam() {
@@ -187,7 +196,7 @@ public class FootballMatch implements Serializable {
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
-		if (o == null || getClass() != o.getClass())
+		if (!(o instanceof FootballMatch))
 			return false;
 
 		FootballMatch that = (FootballMatch) o;
@@ -200,16 +209,26 @@ public class FootballMatch implements Serializable {
 			return false;
 		if (!awayTeam.equals(that.awayTeam))
 			return false;
-
-		return true;
+		if (matchStatus != that.matchStatus)
+			return false;
+		if (matchMetaData != null ? !matchMetaData.equals(that.matchMetaData) : that.matchMetaData != null)
+			return false;
+		if (result != null ? !result.equals(that.result) : that.result != null)
+			return false;
+		return prediction != null ? prediction.equals(that.prediction) : that.prediction == null;
 	}
 
-	@Override public int hashCode() {
-		int result = homeTeam.hashCode();
-		result = 31 * result + awayTeam.hashCode();
-		result = 31 * result + year;
-		result = 31 * result + round;
-		return result;
+	@Override
+	public int hashCode() {
+		int result1 = homeTeam.hashCode();
+		result1 = 31 * result1 + awayTeam.hashCode();
+		result1 = 31 * result1 + year;
+		result1 = 31 * result1 + round;
+		result1 = 31 * result1 + (matchStatus != null ? matchStatus.hashCode() : 0);
+		result1 = 31 * result1 + (matchMetaData != null ? matchMetaData.hashCode() : 0);
+		result1 = 31 * result1 + (result != null ? result.hashCode() : 0);
+		result1 = 31 * result1 + (prediction != null ? prediction.hashCode() : 0);
+		return result1;
 	}
 
 	@Override public String toString() {

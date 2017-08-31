@@ -1,5 +1,6 @@
 package com.bet.manager.core.data;
 
+import com.bet.manager.model.entity.MatchVenueType;
 import com.bet.manager.model.entity.FootballMatch;
 import com.bet.manager.model.entity.MatchMetaData;
 import com.bet.manager.model.exceptions.MetaDataCreationException;
@@ -9,7 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static com.bet.manager.core.data.sources.FootballDataUtils.*;
 
@@ -46,8 +50,10 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 	 * but the returned information obviously will be incorrect
 	 *
 	 * @param match match with team in Bundesliga format and valid year and round
+	 * @return match with his metadata in it
 	 */
-	public void createData(FootballMatch match) throws Exception {
+	@Override
+	public FootballMatch createData(FootballMatch match) throws Exception {
 
 		String firstTeam = match.getHomeTeam();
 		String secondTeam = match.getAwayTeam();
@@ -61,19 +67,18 @@ public class FootballDataManager implements DataManager<FootballMatch> {
 		currentMatchMetaData.setFirstTeamMetaData(firstTeamMetaData);
 		currentMatchMetaData.setSecondTeamMetaData(secondTeamMetaData);
 
-		if (firstTeamMetaData.get(VENUE).equals("-1"))
+		if (firstTeamMetaData.get(VENUE).equals(MatchVenueType.AWAY))
 			swapFirstAndSecondTeam(match, currentMatchMetaData);
 
 		// Remove the venue property because we know which one is home and which is away team
 		currentMatchMetaData.getFirstTeamMetaData().remove(VENUE);
 		currentMatchMetaData.getSecondTeamMetaData().remove(VENUE);
 
-		match = new FootballMatchBuilder(match)
+		LOG.info("Successfully created metadata for match {}", match.getSummary());
+		return new FootballMatchBuilder(match)
 				.setMatchMetaData(currentMatchMetaData)
 				.setResult(getMatchResult(firstTeam, year, round, crawledPages))
 				.build();
-
-		LOG.info("Successfully created metadata for match {}", match.getSummary());
 	}
 
 	private TreeMap<String, Object> getMetaDataForTeam(String bundesLigaTeam, int year, int round) throws Exception {

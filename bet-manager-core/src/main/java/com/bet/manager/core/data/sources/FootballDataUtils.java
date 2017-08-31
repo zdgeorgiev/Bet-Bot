@@ -1,10 +1,12 @@
 package com.bet.manager.core.data.sources;
 
+import com.bet.manager.model.entity.MatchVenueType;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
-public class FootballDataUtils {
+public final class FootballDataUtils {
 
 	private FootballDataUtils() {
 	}
@@ -71,9 +73,11 @@ public class FootballDataUtils {
 	 * @param round          to know which match should look for
 	 * @param year           year for the match
 	 * @param crawledPages   memorization for already crawled pages
+	 * @return Match venue
 	 */
-	public static String getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages) throws Exception {
-		return ResultDB.getMatchVenue(bundesLigaTeam, year, round, crawledPages);
+	public static MatchVenueType getMatchVenue(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
+			throws Exception {
+		return Espnfc.getMatchVenue(bundesLigaTeam, year, round, crawledPages);
 	}
 
 	/**
@@ -84,10 +88,11 @@ public class FootballDataUtils {
 	 * @param bundesLigaTeam team name
 	 * @param year           year of the match
 	 * @param round          round of the match
+	 * @return laste five matches performance distributed in specific categories
 	 */
 	public static Map<String, Integer> getLastFiveGames(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
-		return ResultDB.getLastFiveGames(bundesLigaTeam, year, round, crawledPages);
+		return Espnfc.getLastFiveGames(bundesLigaTeam, year, round, crawledPages);
 	}
 
 	/**
@@ -98,11 +103,11 @@ public class FootballDataUtils {
 	 * @param year           year for match
 	 * @param round          round for match
 	 * @param crawledPages   memorization map
-	 * @return the result in string format (X-Y) if this exist
+	 * @return the result in string format (X-Y) if this exist or ?-? if the match is not finished and cannot get the result
 	 */
 	public static String getMatchResult(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
-		return ResultDB.getMatchResult(bundesLigaTeam, year, round, crawledPages);
+		return Espnfc.getMatchResult(bundesLigaTeam, year, round, crawledPages);
 	}
 
 	/**
@@ -113,9 +118,10 @@ public class FootballDataUtils {
 	 * @param round          to know which match should look for
 	 * @param year           year for the match
 	 * @param crawledPages   memorization for already crawled pages
+	 * @return Football team name in Bundesliga format
 	 */
 	public static String getTeamOpponent(String bundesLigaTeam, int year, int round, Map<URL, String> crawledPages)
 			throws Exception {
-		return ResultDB.getTeamOpponent(bundesLigaTeam, year, round, crawledPages);
+		return Espnfc.getTeamOpponent(bundesLigaTeam, year, round, crawledPages);
 	}
 }

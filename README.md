@@ -12,10 +12,9 @@ matches.
 
 # Not implemented things
 * Acceptance tests for the API
-* Espnfc support (required for new matches)
 * Neural Networks
     * pick appropriate ML algorithm (NN probably with softmax)
     * test predictions precision (80%/20% train/test)
     * integrate the pre-trained NN to be used for predictions
      (Here only the weights of the final NN are required)
-* Spring security to some of the endpoints
+* UI

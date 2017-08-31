@@ -151,7 +151,9 @@ public class FootballMatchBuilderTest {
 				.setRound(4)
 				.build();
 
-		new FootballMatchBuilder(initialMatch).updatedStatus(MatchStatus.STARTED).build();
+		initialMatch = new FootballMatchBuilder(initialMatch)
+				.updatedStatus(MatchStatus.STARTED)
+				.build();
 
 		Assert.assertEquals(MatchStatus.STARTED, initialMatch.getMatchStatus());
 	}
